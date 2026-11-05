@@ -5,6 +5,10 @@ DirectoryIndex index.php index.html
 RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /secure-centric/
+
+# Redirect any cached or direct requests for index.html to WordPress index.php
+RewriteRule ^index\.html$ /secure-centric/ [R=302,L]
+
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

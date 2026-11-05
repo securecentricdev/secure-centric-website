@@ -2,33 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0; url=demo/" />
-  <title>Secure-Centric | Loading Interactive Prototype...</title>
+  <title>Secure-Centric</title>
   <script>
-    window.location.replace("demo/" + window.location.hash);
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      window.location.replace("index.php" + window.location.search + window.location.hash);
+    } else {
+      window.location.replace("demo/" + window.location.hash);
+    }
   </script>
-  <style>
-    body {
-      background-color: #060B24;
-      color: #FFFFFF;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-    a {
-      color: #00D4FF;
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body>
-  <div>
-    <h2>Loading Secure-Centric Design Prototype...</h2>
-    <p>If you are not redirected automatically, <a href="demo/">click here to view the prototype</a>.</p>
-  </div>
+  <p>Loading...</p>
 </body>
 </html>
