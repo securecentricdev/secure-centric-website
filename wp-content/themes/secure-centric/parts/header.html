@@ -1,22 +1,82 @@
-<!-- wp:group {"tagName":"header","align":"full","style":{"color":{"background":"var:preset|color|midnight"}},"layout":{"type":"constrained"}} -->
-<header class="wp-block-group alignfull has-midnight-background-color has-background">
-  <!-- wp:group {"align":"wide","layout":{"type":"flex","justifyContent":"space-between"}} -->
-  <div class="wp-block-group alignwide">
-    <!-- wp:site-logo {"width":180} /-->
-    <!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} -->
-      <!-- wp:navigation-link {"label":"Services","url":"/services/cmmc-compliance/"} /-->
-      <!-- wp:navigation-link {"label":"CMMC Process","url":"/cmmc/cmmc-process/"} /-->
-      <!-- wp:navigation-link {"label":"Resources","url":"/cmmc/"} /-->
-      <!-- wp:navigation-link {"label":"About","url":"/about/"} /-->
-    <!-- /wp:navigation -->
-    <!-- wp:buttons -->
-    <div class="wp-block-buttons">
-      <!-- wp:button {"backgroundColor":"electric-blue","textColor":"white","style":{"border":{"radius":"6px"}}} -->
-      <div class="wp-block-button"><a class="wp-block-button__link has-white-color has-electric-blue-background-color has-text-color has-background wp-element-button" href="/services/cmmc-compliance/">Talk to an expert &rarr;</a></div>
-      <!-- /wp:button -->
+<header class="site-header-sticky-wrapper wp-block-inspect" id="site-header-wrapper" data-wp-block="wp:template-part {slug:'header-sticky-group'}">
+  <!-- Global Top Bar -->
+  <div class="site-top-bar wp-block-inspect" data-wp-block="wp:template-part {slug:'header-top-bar'}">
+    <div class="site-container">
+      <div class="inner">
+        <div class="top-bar-badge-row">
+          <span style="font-weight: 700; color: #fff;">NIST SP 800-171 / CMMC Compliance Consultants</span>
+          <span class="top-bar-divider" style="color: var(--color-slate);">|</span>
+          <span style="color: var(--color-cyber-cyan); font-weight: 600;">Cyber AB Registered Provider Organization</span>
+        </div>
+        <div class="top-bar-contact-row">
+          <a href="mailto:info@secure-centric.com">info@secure-centric.com</a>
+          <span class="top-bar-divider" style="color: var(--color-slate);">|</span>
+          <a href="tel:323-410-5941">(323) 410-5941</a>
+        </div>
+      </div>
     </div>
-    <!-- /wp:buttons -->
   </div>
-  <!-- /wp:group -->
+
+  <!-- Navigation Header -->
+  <div class="site-header wp-block-inspect" data-wp-block="wp:template-part {slug:'header'}">
+    <div class="site-container">
+      <div class="header-inner">
+        <a href="/secure-centric/" class="site-logo">
+          <img src="/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img">
+          <span>Secure-Centric</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main Navigation">
+          <ul class="nav-links">
+            <!-- Services Dropdown -->
+            <li class="nav-item">
+              <a href="/secure-centric/services/cmmc-compliance/" class="nav-link">
+                Services <span style="font-size: 0.7rem;">▾</span>
+              </a>
+              <div class="dropdown-menu">
+                <a href="/secure-centric/services/cmmc-consulting/" class="dropdown-item">
+                  <b>CMMC Consulting</b>
+                  <small>Tailored by ICP role &amp; supply chain tier</small>
+                </a>
+                <a href="/secure-centric/services/nist-800-171-compliance/" class="dropdown-item">
+                  <b>NIST SP 800-171 Compliance</b>
+                  <small>DFARS 7012 remediation &amp; SPRS score</small>
+                </a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a href="/secure-centric/cmmc/cmmc-process/" class="nav-link">CMMC Process</a>
+            </li>
+
+            <!-- Resources Dropdown -->
+            <li class="nav-item nav-item-dropdown">
+              <a href="/secure-centric/resources/cmmc-level-2-checklist/" class="nav-link">
+                Resources <span style="font-size: 0.7rem;">▾</span>
+              </a>
+              <div class="dropdown-menu">
+                <a href="/secure-centric/resources/cmmc-level-2-checklist/" class="dropdown-item">
+                  <b>Level 2 Compliance Checklist</b>
+                  <small>Excel and PDF download (110 controls)</small>
+                </a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a href="/secure-centric/about/" class="nav-link">About</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/secure-centric/contact/" class="nav-link">Contact</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <a href="/secure-centric/contact/" class="btn btn-primary">Talk to an Expert →</a>
+          <button type="button" class="nav-mobile-toggle" onclick="window.openMobileDrawer ? window.openMobileDrawer() : null" aria-label="Toggle navigation">☰</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
-<!-- /wp:group -->

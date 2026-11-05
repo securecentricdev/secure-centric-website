@@ -1,27 +1,39 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/accordion-faq",
-  "version": "1.0.0",
-  "title": "FAQ Accordion & Questions",
-  "category": "secure-centric-process",
-  "icon": "list-view",
-  "description": "Expandable defense contractor FAQ accordion with clean typography and schema.org markup.",
-  "keywords": ["faq", "accordion", "questions", "answers", "cmmc"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// FREQUENTLY ASKED QUESTIONS"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/accordion-faq",
+    "version": "1.0.0",
+    "title": "FAQ Accordion & Questions",
+    "category": "secure-centric-process",
+    "icon": "list-view",
+    "description": "Expandable defense contractor FAQ accordion with clean typography and schema.org markup.",
+    "keywords": [
+        "faq",
+        "accordion",
+        "questions",
+        "answers",
+        "cmmc"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// FREQUENTLY ASKED QUESTIONS"
+        },
+        "title": {
+            "type": "string",
+            "default": "Common questions"
+        },
+        "description": {
+            "default": "Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner."
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Everything You Need to Know About CMMC Compliance"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "render": "file:./render.php"
 }

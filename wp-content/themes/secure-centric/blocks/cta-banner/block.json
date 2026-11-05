@@ -1,39 +1,49 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/cta-banner",
-  "version": "1.0.0",
-  "title": "Call-to-Action Conversion Band",
-  "category": "secure-centric-cta",
-  "icon": "megaphone",
-  "description": "High-converting global CTA band with discovery call booking, bilateral NDA pledge, and direct phone link.",
-  "keywords": ["cta", "banner", "call", "contact", "book", "scoping"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// GET STARTED TODAY"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/cta-banner",
+    "version": "1.0.0",
+    "title": "Call-to-Action Conversion Band",
+    "category": "secure-centric-cta",
+    "icon": "megaphone",
+    "description": "High-converting global CTA band with discovery call booking, bilateral NDA pledge, and direct phone link.",
+    "keywords": [
+        "cta",
+        "banner",
+        "call",
+        "contact",
+        "book",
+        "scoping"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// GET STARTED TODAY"
+        },
+        "title": {
+            "type": "string",
+            "default": "Planning to get started on CMMC?"
+        },
+        "description": {
+            "type": "string",
+            "default": "Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes."
+        },
+        "primaryBtnText": {
+            "type": "string",
+            "default": "Book a Scoping Call"
+        },
+        "primaryBtnUrl": {
+            "type": "string",
+            "default": "#page-2"
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Prepare for Your CMMC Level 2 Audit with Certainty"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "description": {
-      "type": "string",
-      "default": "Book a confidential 30-minute scoping call with an Authorized Cyber AB Registered Practitioner. We review your CUI boundary, contract requirements, and audit timeline under bilateral NDA."
-    },
-    "primaryBtnText": {
-      "type": "string",
-      "default": "Book a Scoping Call"
-    },
-    "primaryBtnUrl": {
-      "type": "string",
-      "default": "#page-2"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php"
 }

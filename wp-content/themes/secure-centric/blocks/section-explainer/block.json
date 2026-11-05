@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/section-explainer",
+  "version": "1.0.0",
+  "title": "Section Explainer",
+  "category": "secure-centric-process",
+  "icon": "info-outline",
+  "description": "Explainer section introducing core defense compliance regulations and boundaries.",
+  "keywords": ["explainer", "cmmc", "intro", "compliance"],
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// SECTION EXPLAINER"
+    },
+    "title": {
+      "type": "string",
+      "default": "What is CMMC compliance?"
+    },
+    "p1": {
+      "type": "string",
+      "default": "CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense subcontractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI)."
+    },
+    "p2": {
+      "type": "string",
+      "default": "Under 32 CFR Part 170 and DFARS 252.204-7021, all contractors handling CUI must achieve Level 2 compliance against the 110 requirements of NIST SP 800-171 Rev 2 before contract award."
+    },
+    "p3": {
+      "type": "string",
+      "default": "Our Cyber AB Registered Practitioners conduct on-site facility walkthroughs, map exact CUI boundaries, guide technical remediation, and co-author your assessor-ready System Security Plan (SSP)."
+    }
+  },
+  "supports": {
+    "align": ["full", "wide"],
+    "html": false
+  },
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-blocks-editor",
+  "render": "file:./render.php"
+}

@@ -13,14 +13,14 @@ $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// 
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Why Secure-Centric';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.';
 $link_text   = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Full Company Credentials →';
-$link_url    = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : '#page-n1';
+$link_url    = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/about/' );
 
 $stats = array(
     array(
         'number' => '120+',
         'label'  => 'Defense contractors prepared for CMMC & NIST SP 800-171 audits',
         'date'   => 'As of Q4 2026',
-        'color'  => 'blue',
+        'color'  => '',
     ),
     array(
         'number' => '100%',
@@ -50,7 +50,7 @@ $reasons = array(
 );
 ?>
 
-<section class="section-white py-section wp-block-inspect" data-wp-pattern="secure-centric/why-proof-badges">
+<section class="section-white py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/why-proof-badges">
   <div class="site-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
       <div style="max-width: 780px;">
@@ -68,31 +68,34 @@ $reasons = array(
       <div style="display: flex; flex-direction: column; gap: 16px;">
         <?php foreach ( $stats as $s ) : ?>
           <div class="stats-number-block">
-            <div class="number <?php echo ( 'violet' === $s['color'] ) ? 'violet' : ''; ?>"><?php echo esc_html( $s['number'] ); ?></div>
+            <div class="number <?php echo esc_attr( $s['color'] ); ?>"><?php echo esc_html( $s['number'] ); ?></div>
             <div class="label"><?php echo esc_html( $s['label'] ); ?></div>
             <div class="date"><?php echo esc_html( $s['date'] ); ?></div>
           </div>
         <?php endforeach; ?>
       </div>
 
-      <!-- Right 4 Key Differentiators -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <!-- Right 4 Reasons Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
         <?php foreach ( $reasons as $r ) : ?>
-          <div class="card card-white" style="padding: 24px;">
-            <div class="feature-icon" style="margin-bottom: 14px;">🛡️</div>
-            <h4 style="font-size: 1.0625rem; margin-bottom: 8px; color: var(--color-navy);"><?php echo esc_html( $r['title'] ); ?></h4>
-            <p style="font-size: 0.9375rem; color: var(--color-body-text); line-height: 1.5; margin: 0;"><?php echo esc_html( $r['text'] ); ?></p>
+          <div class="card-white" style="padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+            <div class="card-icon-box" style="width: 36px; height: 36px; font-size: 1.1rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;">🛡️</div>
+            <h4 style="font-size: 1.0625rem; margin-top: 4px; color: var(--color-navy);"><?php echo esc_html( $r['title'] ); ?></h4>
+            <p style="font-size: 0.875rem; color: var(--color-body-text); line-height: 1.55; margin: 0;"><?php echo esc_html( $r['text'] ); ?></p>
           </div>
         <?php endforeach; ?>
       </div>
     </div>
 
-    <!-- Official Credentials Badges Row -->
-    <div class="badge-credential-row" style="margin-top: 36px;">
-      <span class="badge-pill">🛡️ Cyber AB RPO #3942</span>
-      <span class="badge-pill">⭐ Inc. 5000 #452 Fastest Growing</span>
-      <span class="badge-pill">🔒 Bilateral NDA Standard</span>
-      <span style="font-size: 0.8125rem; color: var(--color-slate); margin-left: auto;">Los Angeles, California &bull; Nationwide Defense Engagements</span>
+    <!-- Verified Credentials Bottom Strip -->
+    <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-slate); font-weight: 700;">Official Badges:</span>
+        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;">🛡️ Cyber AB RPO #3942</span>
+        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;">⭐ Inc. 5000 #452 Fastest Growing</span>
+        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;">🔒 Bilateral NDA Standard</span>
+      </div>
+      <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);">Los Angeles, California · Nationwide On-Site Deployments</span>
     </div>
   </div>
 </section>

@@ -1,27 +1,36 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/resource-cards",
-  "version": "1.0.0",
-  "title": "CMMC Guides & Checklist Cards Grid",
-  "category": "secure-centric-proof",
-  "icon": "portfolio",
-  "description": "Grid of downloadable CMMC checklists, NIST guides, and readiness score tools.",
-  "keywords": ["resources", "cards", "checklists", "guides", "cmmc"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// COMPLIANCE KNOWLEDGE BASE"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/resource-cards",
+    "version": "1.0.0",
+    "title": "CMMC Guides & Checklist Cards Grid",
+    "category": "secure-centric-proof",
+    "icon": "portfolio",
+    "description": "Grid of downloadable CMMC checklists, NIST guides, and readiness score tools.",
+    "keywords": [
+        "resources",
+        "cards",
+        "checklists",
+        "guides",
+        "cmmc"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// COMPLIANCE KNOWLEDGE BASE"
+        },
+        "title": {
+            "type": "string",
+            "default": "CMMC guides, checklists and tools"
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Free Tools, Checklists & In-Depth CMMC Guides"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "render": "file:./render.php"
 }

@@ -30,6 +30,7 @@ add_action( 'after_setup_theme', 'secure_centric_setup' );
 function secure_centric_register_custom_blocks() {
     $blocks = array(
         'hero',
+        'section-explainer',
         'roadmap-stepper',
         'testimonials',
         'why-proof',

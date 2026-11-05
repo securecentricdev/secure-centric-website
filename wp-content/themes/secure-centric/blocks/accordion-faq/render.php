@@ -9,51 +9,66 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// FREQUENTLY ASKED QUESTIONS';
-$title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Everything You Need to Know About CMMC Compliance';
+$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// FREQUENTLY ASKED QUESTIONS';
+$title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Common questions';
+$description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
+$btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
+$btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : '#contact';
 
 $faqs = array(
     array(
-        'q' => 'What is the difference between CMMC Level 1 and Level 2?',
-        'a' => 'CMMC Level 1 covers Federal Contract Information (FCI) across 15 basic safeguarding controls, verified via an annual self-assessment. CMMC Level 2 covers Controlled Unclassified Information (CUI) across all 110 NIST SP 800-171 controls and requires an independent assessment by an Authorized C3PAO.',
+        'q' => 'What is CMMC compliance?',
+        'a' => 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).',
     ),
     array(
-        'q' => 'How long does it take to prepare for a CMMC Level 2 audit?',
-        'a' => 'Most defense suppliers take 4 to 9 months depending on network complexity and current SSP documentation. Our on-site scoping and remediation sprints condense this timeline by isolating CUI enclaves rather than overhauling your entire corporate enterprise.',
+        'q' => 'Do you come to our site?',
+        'a' => 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.',
     ),
     array(
-        'q' => 'Can our existing Managed Service Provider (MSP) handle our CMMC audit?',
-        'a' => 'Most commercial MSPs lack Cyber AB Registered Practitioner certification and cannot legally defend evidence during a DIBCAC or C3PAO audit. We partner collaboratively with your existing MSP to provide the specialized compliance blueprints, technical remediation, and audit defense without replacing them.',
+        'q' => 'Do you only work on CMMC and NIST SP 800-171?',
+        'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
     ),
     array(
-        'q' => 'What happens if a defense contractor fails to achieve CMMC compliance?',
-        'a' => 'Under DFARS 252.204-7021, DoD contracting officers cannot award new defense contracts or extend existing options to non-compliant suppliers. Furthermore, false SPRS score attestations expose contractors to severe False Claims Act liabilities.',
+        'q' => 'What happens after I book a discovery call?',
+        'a' => 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.',
+    ),
+    array(
+        'q' => 'Who will we work with day to day?',
+        'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
     ),
 );
 ?>
 
-<section class="section-white py-section wp-block-inspect" data-wp-pattern="secure-centric/faq-accordion">
+<section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:details-group" data-wp-pattern="secure-centric/faq-accordion">
   <div class="site-container">
-    <div class="section-heading-center" style="margin-bottom: 40px;">
-      <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
-      <h2><?php echo esc_html( $title ); ?></h2>
-      <p style="color: var(--color-slate); max-width: 600px; margin: 8px auto 0;">
-        Clear answers on scoping, assessor expectations, timelines, and SPRS scoring.
-      </p>
-    </div>
+    <div class="faq-grid-layout">
+      <div class="faq-intro-col">
+        <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+        <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
+        <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: 24px;">
+          <?php echo esc_html( $description ); ?>
+        </p>
+        <a href="<?php echo esc_url( $btn_url ); ?>" class="btn btn-secondary-outline"><?php echo esc_html( $btn_text ); ?></a>
+      </div>
 
-    <div style="max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px;">
-      <?php foreach ( $faqs as $idx => $faq ) : ?>
-        <div class="accordion-item <?php echo ( 0 === $idx ) ? 'active' : ''; ?>">
-          <button type="button" class="accordion-header" onclick="this.closest('.accordion-item').classList.toggle('active')" aria-expanded="<?php echo ( 0 === $idx ) ? 'true' : 'false'; ?>">
-            <span><?php echo esc_html( $faq['q'] ); ?></span>
-            <span class="accordion-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p><?php echo esc_html( $faq['a'] ); ?></p>
+      <div class="accordion-group">
+        <?php foreach ( $faqs as $idx => $faq ) : ?>
+          <div class="accordion-item <?php echo ( 0 === $idx ) ? 'active' : ''; ?>">
+            <div class="accordion-header" onclick="window.toggleAccordion ? window.toggleAccordion(this) : this.closest('.accordion-item').classList.toggle('active')">
+              <span class="accordion-title"><?php echo esc_html( $faq['q'] ); ?></span>
+              <span class="accordion-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+            </div>
+            <div class="accordion-content">
+              <?php echo esc_html( $faq['a'] ); ?>
+            </div>
           </div>
-        </div>
-      <?php endforeach; ?>
+        <?php endforeach; ?>
+      </div>
     </div>
   </div>
 </section>

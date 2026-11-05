@@ -1,51 +1,63 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/hero",
-  "version": "1.0.0",
-  "title": "Secure-Centric Hero (Multi-Layout)",
-  "category": "secure-centric-heroes",
-  "icon": "cover-image",
-  "description": "Multi-layout hero block supporting Home (with readiness card), Service (with deliverables), and Guide layouts.",
-  "keywords": ["hero", "header", "cmmc", "defense", "scoping"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "layout": {
-      "type": "string",
-      "default": "home"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/hero",
+    "version": "1.0.0",
+    "title": "Secure-Centric Hero (Multi-Layout)",
+    "category": "secure-centric-heroes",
+    "icon": "cover-image",
+    "description": "Multi-layout hero block supporting Home (with readiness card), Service (with deliverables), and Guide layouts.",
+    "keywords": [
+        "hero",
+        "header",
+        "cmmc",
+        "defense",
+        "scoping"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "layout": {
+            "type": "string",
+            "default": "home"
+        },
+        "eyebrow": {
+            "type": "string",
+            "default": "// DEFENSE CYBERSECURITY COMPLIANCE"
+        },
+        "title": {
+            "type": "string",
+            "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB RPO"
+        },
+        "description": {
+            "type": "string",
+            "default": "We scope your Controlled Unclassified Information (CUI) boundary on site, eliminate compliance gaps, and build defensible evidence before your official C3PAO audit."
+        },
+        "primaryBtnText": {
+            "type": "string",
+            "default": "Book a Scoping Call"
+        },
+        "primaryBtnUrl": {
+            "type": "string",
+            "default": "#page-2"
+        },
+        "secondaryBtnText": {
+            "type": "string",
+            "default": "Explore the 8-Step Process \u2192"
+        },
+        "secondaryBtnUrl": {
+            "type": "string",
+            "default": "#roadmap-section"
+        },
+        "highlightText": {
+            "default": "Cyber AB RPO"
+        }
     },
-    "eyebrow": {
-      "type": "string",
-      "default": "// DEFENSE CYBERSECURITY COMPLIANCE"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "title": {
-      "type": "string",
-      "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB Registered Provider Organization"
-    },
-    "description": {
-      "type": "string",
-      "default": "We scope your Controlled Unclassified Information (CUI) boundary on site, eliminate compliance gaps, and build defensible evidence before your official C3PAO audit."
-    },
-    "primaryBtnText": {
-      "type": "string",
-      "default": "Book a Scoping Call"
-    },
-    "primaryBtnUrl": {
-      "type": "string",
-      "default": "#page-2"
-    },
-    "secondaryBtnText": {
-      "type": "string",
-      "default": "Explore the 8-Step Process →"
-    },
-    "secondaryBtnUrl": {
-      "type": "string",
-      "default": "#roadmap-section"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php"
 }

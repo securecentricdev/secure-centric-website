@@ -3471,6 +3471,15 @@
     handleRoute();
   } else {
     // WordPress page: initialize active interactive blocks directly from DOM
+    const heroVideos = document.querySelectorAll('.hero-video-bg');
+    heroVideos.forEach(video => {
+      video.muted = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.play().catch(() => {});
+    });
+
     if (document.getElementById('roadmap-section')) {
       setTimeout(() => {
         alignWalkerToActiveStep(true);

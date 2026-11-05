@@ -1,60 +1,84 @@
-<!-- wp:group {"tagName":"footer","align":"full","style":{"color":{"background":"var:preset|color|midnight","text":"var:preset|color|text-on-dark"}},"layout":{"type":"constrained"}} -->
-<footer class="wp-block-group alignfull has-text-on-dark-color has-midnight-background-color has-text-color has-background">
-  <!-- wp:columns {"align":"wide"} -->
-  <div class="wp-block-columns alignwide">
-    <!-- wp:column {"width":"35%"} -->
-    <div class="wp-block-column" style="flex-basis:35%">
-      <!-- wp:site-logo /-->
-      <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.875rem"}}} -->
-      <p style="font-size:0.875rem">Cyber AB Registered Provider Organization (RPO) dedicated strictly to defense contractor CMMC and NIST SP 800-171 compliance.</p>
-      <!-- /wp:paragraph -->
+<footer class="site-footer wp-block-inspect" data-wp-block="wp:template-part {slug:'footer'}">
+  <div class="site-container">
+    <div class="footer-grid">
+      <!-- Column 1: Brand & Credentials -->
+      <div class="footer-col">
+        <a href="/secure-centric/" class="site-logo" style="margin-bottom: 14px;">
+          <img src="/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img">
+          <span>Secure-Centric</span>
+        </a>
+        <p style="font-size: 0.875rem; color: var(--color-text-on-dark); margin-bottom: 16px; line-height: 1.5;">
+          Cyber AB Registered Provider Organization (RPO) dedicated strictly to defense contractor CMMC and NIST SP 800-171 compliance.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+          <span style="color: #fff;">📍 Los Angeles, California</span>
+          <a href="mailto:info@secure-centric.com" style="color: var(--color-cyber-cyan);">info@secure-centric.com</a>
+          <a href="tel:323-410-5941" style="color: var(--color-text-on-dark);">(323) 410-5941</a>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+          <span class="badge-chip dark" style="font-size: 0.65rem;">Cyber AB RPO #3942</span>
+          <span class="badge-chip dark" style="font-size: 0.65rem;">Inc. 5000 #452</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Core Services -->
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul class="footer-links">
+          <li><a href="/secure-centric/services/cmmc-consulting/">CMMC Consulting</a></li>
+          <li><a href="/secure-centric/services/nist-800-171-compliance/">NIST SP 800-171 Compliance</a></li>
+          <li><a href="/secure-centric/services/cmmc-compliance/">Readiness Assessments</a></li>
+          <li><a href="/secure-centric/services/cmmc-compliance/">Gap &amp; Mock Assessments</a></li>
+          <li><a href="/secure-centric/services/cmmc-consulting/">Virtual CISO (vCISO)</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Learn & Knowledge Pillars -->
+      <div class="footer-col">
+        <h5>Learn &amp; Pillars</h5>
+        <ul class="footer-links">
+          <li><a href="/secure-centric/cmmc/">CMMC Complete Guide</a></li>
+          <li><a href="/secure-centric/cmmc/level-2/">CMMC Level 2 Guide</a></li>
+          <li><a href="/secure-centric/services/nist-800-171-compliance/">NIST SP 800-171 Explained</a></li>
+          <li><a href="/secure-centric/cui/">Controlled Unclassified Info</a></li>
+          <li><a href="/secure-centric/cmmc/cmmc-process/">The 8-Step CMMC Process</a></li>
+          <li><a href="/secure-centric/about/">What is a CMMC RPO?</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Checklists & Resources -->
+      <div class="footer-col">
+        <h5>Resources &amp; Tools</h5>
+        <ul class="footer-links">
+          <li><a href="/secure-centric/resources/cmmc-level-2-checklist/">Level 2 (110 Controls) Checklist</a></li>
+          <li><a href="/secure-centric/resources/cmmc-level-2-checklist/">Unmarked CUI Checklist</a></li>
+          <li><a href="/secure-centric/resources/cmmc-level-2-checklist/">Level 1 Readiness Checklist</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 5: Newsletter & Updates -->
+      <div class="footer-col">
+        <h5>DIB Intelligence</h5>
+        <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 12px;">
+          Get critical rulemaking updates on DFARS 252.204-7021 and CMMC enforcement timelines.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Subscribed to CMMC Defense Updates!');">
+          <input type="email" class="form-input" placeholder="Your work email" required style="margin-bottom: 8px; height: 38px;">
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 8px 16px; font-size: 0.8125rem;">
+            Subscribe →
+          </button>
+        </form>
+      </div>
     </div>
-    <!-- /wp:column -->
-    <!-- wp:column {"width":"20%"} -->
-    <div class="wp-block-column" style="flex-basis:20%">
-      <!-- wp:heading {"level":5,"textColor":"white"} -->
-      <h5 class="wp-block-heading has-white-color has-text-color">Services</h5>
-      <!-- /wp:heading -->
-      <!-- wp:list -->
-      <ul>
-        <li><a href="/services/cmmc-compliance/">CMMC Compliance</a></li>
-        <li><a href="/services/cmmc-consulting/">CMMC Consulting</a></li>
-        <li><a href="/services/nist-800-171-compliance/">NIST SP 800-171</a></li>
-      </ul>
-      <!-- /wp:list -->
+
+    <!-- Footer Bottom Legal Notice -->
+    <div class="footer-bottom">
+      <p class="legal-notice">
+        Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We provide cybersecurity readiness preparation, documentation, and advisory services. We are not a Certified Third-Party Assessment Organization (C3PAO) and do not issue official CMMC certifications.
+      </p>
+      <div style="font-size: 0.75rem; color: var(--color-slate);">
+        © 2026 Secure-Centric LLC. All rights reserved.
+      </div>
     </div>
-    <!-- /wp:column -->
-    <!-- wp:column {"width":"20%"} -->
-    <div class="wp-block-column" style="flex-basis:20%">
-      <!-- wp:heading {"level":5,"textColor":"white"} -->
-      <h5 class="wp-block-heading has-white-color has-text-color">Knowledge Pillars</h5>
-      <!-- /wp:heading -->
-      <!-- wp:list -->
-      <ul>
-        <li><a href="/cmmc/">CMMC Guide</a></li>
-        <li><a href="/cmmc/level-2/">Level 2 Guide</a></li>
-        <li><a href="/cui/">CUI Complete Guide</a></li>
-      </ul>
-      <!-- /wp:list -->
-    </div>
-    <!-- /wp:column -->
-    <!-- wp:column {"width":"25%"} -->
-    <div class="wp-block-column" style="flex-basis:25%">
-      <!-- wp:heading {"level":5,"textColor":"white"} -->
-      <h5 class="wp-block-heading has-white-color has-text-color">Contact</h5>
-      <!-- /wp:heading -->
-      <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.875rem"}}} -->
-      <p style="font-size:0.875rem">Los Angeles, California<br><a href="mailto:info@secure-centric.com">info@secure-centric.com</a><br>(323) 410-5941</p>
-      <!-- /wp:paragraph -->
-    </div>
-    <!-- /wp:column -->
   </div>
-  <!-- /wp:columns -->
-  <!-- wp:separator {"backgroundColor":"dark-line"} -->
-  <hr class="wp-block-separator has-text-color has-dark-line-color has-alpha-channel-opacity has-dark-line-background-color has-background"/>
-  <!-- /wp:separator -->
-  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.75rem"},"color":{"text":"var:preset|color|slate"}}} -->
-  <p class="has-text-align-center" style="color:var(--wp--preset--color--slate);font-size:0.75rem">Registered Provider Organization (RPO), not a C3PAO. We do not certify. &copy; 2026 Secure-Centric LLC.</p>
-  <!-- /wp:paragraph -->
 </footer>
-<!-- /wp:group -->
