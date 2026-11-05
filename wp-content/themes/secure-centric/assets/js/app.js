@@ -71,6 +71,7 @@
       }
     });
 
+    if (!pageSelectDropdown) return;
     pageSelectDropdown.innerHTML = html;
     pageSelectDropdown.value = currentPageId;
 
@@ -2566,6 +2567,7 @@
   }
 
   function renderCurrentPage() {
+    if (!mainAppContainer) return;
     const page = getPage(currentPageId);
     if (!page) return;
 
@@ -3462,7 +3464,24 @@
   window.addEventListener('hashchange', handleRoute);
 
   // Initialize
-  initHudDropdown();
-  handleRoute();
+  if (pageSelectDropdown) {
+    initHudDropdown();
+  }
+  if (mainAppContainer) {
+    handleRoute();
+  } else {
+    // WordPress page: initialize active interactive blocks directly from DOM
+    if (document.getElementById('roadmap-section')) {
+      setTimeout(() => {
+        alignWalkerToActiveStep(true);
+        initRoadmapAutoplay();
+      }, 100);
+    }
+    if (document.getElementById('testimonials-section')) {
+      setTimeout(() => {
+        initTestimonialsCarousel();
+      }, 100);
+    }
+  }
 
 })();
