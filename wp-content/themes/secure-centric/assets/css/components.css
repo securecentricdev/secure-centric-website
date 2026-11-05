@@ -1797,3 +1797,41 @@ body,
     display: block !important;
   }
 }
+
+/* ==========================================================================
+   Gutenberg Editor Block Wrapper & Selection States
+   Allows seamless clicking and selecting of dynamic ServerSideRender blocks
+   ========================================================================== */
+.sc-gutenberg-block-wrapper {
+  position: relative;
+  cursor: pointer !important;
+  transition: box-shadow 0.2s ease, outline 0.2s ease;
+  user-select: none;
+}
+
+/* Ensure clicks anywhere on preview elements select the Gutenberg block */
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper a,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper button,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper form,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper input,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper video,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper a,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper button,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper form,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper input,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper video {
+  pointer-events: none !important;
+}
+
+.sc-gutenberg-block-wrapper:hover {
+  outline: 1px dashed rgba(47, 91, 255, 0.45) !important;
+  outline-offset: -1px;
+}
+
+.is-selected .sc-gutenberg-block-wrapper,
+.sc-gutenberg-block-wrapper.is-selected,
+.wp-block.is-selected > .sc-gutenberg-block-wrapper {
+  outline: 2px solid #2F5BFF !important;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 1px #FFFFFF, 0 4px 20px rgba(47, 91, 255, 0.15) !important;
+}

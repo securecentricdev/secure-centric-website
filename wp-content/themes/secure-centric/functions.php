@@ -32,7 +32,7 @@ function secure_centric_register_custom_blocks() {
         'secure-centric-editor-blocks',
         get_template_directory_uri() . '/assets/js/editor.js',
         array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-server-side-render', 'wp-block-editor', 'wp-data' ),
-        '3.9.6',
+        '3.9.7',
         false
     );
 
@@ -165,7 +165,7 @@ function secure_centric_editor_assets() {
         'secure-centric-editor-blocks',
         get_template_directory_uri() . '/assets/js/editor.js',
         array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-server-side-render', 'wp-block-editor' ),
-        '3.9.6',
+        '3.9.7',
         false
     );
 }

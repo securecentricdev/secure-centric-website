@@ -9,8 +9,9 @@
 
   const { registerBlockType } = wp.blocks;
   const { createElement: el, Fragment } = wp.element;
-  const { InspectorControls } = wp.blockEditor || wp.editor;
-  const { PanelBody, TextControl, TextareaControl, SelectControl, ToggleControl } = wp.components;
+  const blockEditor = wp.blockEditor || wp.editor;
+  const { InspectorControls, useBlockProps } = blockEditor;
+  const { PanelBody, TextControl, TextareaControl, SelectControl } = wp.components;
   const ServerSideRender = wp.serverSideRender;
 
   /**
@@ -23,7 +24,26 @@
       category: config.category || 'secure-centric-process',
       attributes: config.attributes || {},
       edit: function (props) {
-        const { attributes, setAttributes } = props;
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        // Gutenberg Block Props for selection, focus, toolbar, and click handling
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function (event) {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function (event) {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
 
         // Build Sidebar Controls
         const inspectorControls = config.controls ? el(
@@ -48,7 +68,7 @@
                 return el(SelectControl, {
                   key: i,
                   label: ctrl.label,
-                  value: attributes[ctrl.attr] || ctrl.options[0].value,
+                  value: attributes[ctrl.attr] || (ctrl.options[0] ? ctrl.options[0].value : ''),
                   options: ctrl.options,
                   onChange: function (val) {
                     const update = {};
@@ -72,21 +92,47 @@
           )
         ) : null;
 
+        // Visual Click-to-Edit Badge at top of each block in editor
+        const editBadge = el('div', {
+          className: 'sc-editor-block-badge',
+          style: {
+            position: 'absolute',
+            top: '8px',
+            right: '12px',
+            zIndex: 100,
+            background: isSelected ? '#2F5BFF' : '#0B1437',
+            color: '#FFFFFF',
+            fontSize: '0.6875rem',
+            fontFamily: 'var(--font-mono, monospace)',
+            fontWeight: 700,
+            padding: '4px 10px',
+            borderRadius: '4px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            pointerEvents: 'none',
+            letterSpacing: '0.04em'
+          }
+        }, isSelected ? `Editing: ${config.title}` : `Click to Edit: ${config.title}`);
+
         // Live ServerSideRender Preview
         const preview = ServerSideRender ? el(ServerSideRender, {
           block: blockName,
           attributes: attributes,
           EmptyResponsePlaceholder: () => el('div', {
-            style: { padding: '24px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px', textAlign: 'center' }
+            style: { padding: '36px 20px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px', textAlign: 'center' }
           }, `Loading ${config.title} preview...`),
           ErrorResponsePlaceholder: () => el('div', {
-            style: { padding: '24px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px', textAlign: 'center', color: '#0B1437' }
+            style: { padding: '36px 20px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px', textAlign: 'center', color: '#0B1437' }
           }, el('h4', { style: { margin: '0 0 8px 0' } }, config.title), el('p', { style: { margin: 0, fontSize: '0.875rem', color: '#8A93B2' } }, 'Configure attributes in the right sidebar.'))
         }) : el('div', {
-          style: { padding: '24px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px' }
+          style: { padding: '36px 20px', background: '#F5F7FF', border: '1px solid #DCE4FF', borderRadius: '8px' }
         }, el('b', {}, config.title));
 
-        return el(Fragment, {}, inspectorControls, el('div', { className: 'sc-gutenberg-block-wrapper' }, preview));
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el('div', blockProps, editBadge, preview)
+        );
       },
       save: function () {
         // Dynamic PHP render template handled via render.php
@@ -311,5 +357,5 @@
     ]
   });
 
-  console.log('Secure-Centric Gutenberg Blocks Registered successfully!');
+  console.log('Secure-Centric Gutenberg Blocks Registered with direct selectBlock on click!');
 })(window.wp);
