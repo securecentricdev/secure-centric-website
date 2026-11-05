@@ -3,23 +3,26 @@
     "apiVersion": 3,
     "name": "secure-centric/form-embed",
     "version": "1.0.0",
-    "title": "CMMC Scoping & Pathfinder Form Embed",
+    "title": "Forminator Lead Capture Embed",
     "category": "secure-centric-cta",
     "icon": "feedback",
-    "description": "Embeds Forminator forms or the interactive 5-minute CMMC Pathfinder assessment with database logging and email routing.",
+    "description": "Embeds Forminator dual-email lead capture form with instant failover fallback.",
     "keywords": [
         "form",
-        "scoping",
-        "pathfinder",
+        "forminator",
         "lead",
         "contact",
-        "email"
+        "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
         "formId": {
             "type": "string",
             "default": ""
+        },
+        "badgeText": {
+            "type": "string",
+            "default": "BILATERAL NDA GUARANTEE"
         },
         "title": {
             "type": "string",

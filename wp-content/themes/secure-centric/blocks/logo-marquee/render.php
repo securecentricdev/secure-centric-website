@@ -9,16 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Organizations that have worked with Secure-Centric';
-
-$logos = array(
-    'Tower Semiconductor',
-    'Safran Federal Systems',
-    'Goodwin & Associates',
-    'HRD Aero Systems',
-    'Precision Aerospace',
-    'Defense Dynamics',
-);
+$title      = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Organizations that have worked with Secure-Centric';
+$logos_str  = ! empty( $attributes['logosList'] ) ? $attributes['logosList'] : 'Tower Semiconductor, Safran Federal Systems, Goodwin & Associates, HRD Aero Systems, Precision Aerospace, Defense Dynamics';
+$logos      = array_map( 'trim', explode( ',', $logos_str ) );
 ?>
 
 <section class="logos-band-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'white'}" data-wp-pattern="secure-centric/client-logos-marquee">

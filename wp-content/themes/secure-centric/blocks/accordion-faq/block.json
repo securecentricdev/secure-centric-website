@@ -3,16 +3,16 @@
     "apiVersion": 3,
     "name": "secure-centric/accordion-faq",
     "version": "1.0.0",
-    "title": "FAQ Accordion & Questions",
+    "title": "FAQ Accordion (Interactive)",
     "category": "secure-centric-process",
-    "icon": "list-view",
-    "description": "Expandable defense contractor FAQ accordion with clean typography and schema.org markup.",
+    "icon": "editor-help",
+    "description": "Interactive animated accordion of defense contractor CMMC questions and expert answers.",
     "keywords": [
         "faq",
         "accordion",
         "questions",
-        "answers",
-        "cmmc"
+        "help",
+        "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
@@ -25,7 +25,56 @@
             "default": "Common questions"
         },
         "description": {
+            "type": "string",
             "default": "Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner."
+        },
+        "btnText": {
+            "type": "string",
+            "default": "Book a Discovery Call →"
+        },
+        "btnUrl": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "faq1Q": {
+            "type": "string",
+            "default": "What is CMMC compliance?"
+        },
+        "faq1A": {
+            "type": "string",
+            "default": "CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI)."
+        },
+        "faq2Q": {
+            "type": "string",
+            "default": "Do you come to our site?"
+        },
+        "faq2A": {
+            "type": "string",
+            "default": "Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person."
+        },
+        "faq3Q": {
+            "type": "string",
+            "default": "Do you only work on CMMC and NIST SP 800-171?"
+        },
+        "faq3A": {
+            "type": "string",
+            "default": "Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards."
+        },
+        "faq4Q": {
+            "type": "string",
+            "default": "What happens after I book a discovery call?"
+        },
+        "faq4A": {
+            "type": "string",
+            "default": "Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive."
+        },
+        "faq5Q": {
+            "type": "string",
+            "default": "Who will we work with day to day?"
+        },
+        "faq5A": {
+            "type": "string",
+            "default": "Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards."
         }
     },
     "supports": {

@@ -18,28 +18,32 @@ $primary_btn_text   = ! empty( $attributes['primaryBtnText'] ) ? $attributes['pr
 $primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : '#contact';
 $sub_text           = ! empty( $attributes['subText'] ) ? $attributes['subText'] : '30 min · No sales pitch · Signed NDA';
 
+// Topic Pills
+$topic1_title = ! empty( $attributes['topic1Title'] ) ? $attributes['topic1Title'] : 'CMMC';
+$topic1_desc  = ! empty( $attributes['topic1Desc'] ) ? $attributes['topic1Desc'] : 'Maturity levels & framework';
+$topic1_url   = ! empty( $attributes['topic1Url'] ) ? $attributes['topic1Url'] : home_url( '/cmmc/' );
+
+$topic2_title = ! empty( $attributes['topic2Title'] ) ? $attributes['topic2Title'] : 'NIST SP 800-171';
+$topic2_desc  = ! empty( $attributes['topic2Desc'] ) ? $attributes['topic2Desc'] : '110 controls & DFARS 7012';
+$topic2_url   = ! empty( $attributes['topic2Url'] ) ? $attributes['topic2Url'] : home_url( '/services/nist-800-171-compliance/' );
+
+$topic3_title = ! empty( $attributes['topic3Title'] ) ? $attributes['topic3Title'] : 'CUI';
+$topic3_desc  = ! empty( $attributes['topic3Desc'] ) ? $attributes['topic3Desc'] : 'Controlled Unclassified Info';
+$topic3_url   = ! empty( $attributes['topic3Url'] ) ? $attributes['topic3Url'] : home_url( '/cui/' );
+
+// Quiz Card
+$quiz_badge       = ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : 'CMMC READINESS CHECK · 3 MINUTES';
+$quiz_chip        = ! empty( $attributes['quizChip'] ) ? $attributes['quizChip'] : 'Free Tool';
+$quiz_title       = ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Find out where you stand';
+$quiz_desc        = ! empty( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.';
+$quiz_placeholder = ! empty( $attributes['quizPlaceholder'] ) ? $attributes['quizPlaceholder'] : 'Enter corporate work email';
+$quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Start 3-Minute Readiness Check →';
+$quiz_note        = ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : '🔒 Work email required. Never submit classified or CUI information.';
+
 // Video paths
 $theme_uri  = get_template_directory_uri();
 $video_mp4  = $theme_uri . '/assets/video/cmmc-concept.mp4';
 $poster_jpg = $theme_uri . '/assets/video/cmmc-concept-poster.jpg';
-
-$topics = array(
-    array(
-        'title' => 'CMMC',
-        'desc'  => 'Maturity levels & framework',
-        'url'   => home_url( '/cmmc/' ),
-    ),
-    array(
-        'title' => 'NIST SP 800-171',
-        'desc'  => '110 controls & DFARS 7012',
-        'url'   => home_url( '/services/nist-800-171-compliance/' ),
-    ),
-    array(
-        'title' => 'CUI',
-        'desc'  => 'Controlled Unclassified Info',
-        'url'   => home_url( '/cui/' ),
-    ),
-);
 ?>
 
 <?php if ( 'service' === $layout ) : ?>
@@ -76,7 +80,7 @@ $topics = array(
     </div>
   </section>
 <?php else : ?>
-  <!-- Home Layout matching Demo 1:1 -->
+  <!-- Home Layout -->
   <section class="hero-home-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" data-wp-pattern="secure-centric/hero-home">
     <div class="hero-video-bg-container" aria-hidden="true">
       <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_jpg ); ?>" src="<?php echo esc_url( $video_mp4 ); ?>">
@@ -90,7 +94,7 @@ $topics = array(
           <span class="section-eyebrow dark"><?php echo esc_html( $eyebrow ); ?></span>
           <h1>
             <?php
-            if ( false !== strpos( $title, $highlight_text ) ) {
+            if ( ! empty( $highlight_text ) && false !== strpos( $title, $highlight_text ) ) {
                 $parts = explode( $highlight_text, $title );
                 echo esc_html( $parts[0] ) . '<span class="cyan-highlight">' . esc_html( $highlight_text ) . '</span>' . esc_html( $parts[1] );
             } else {
@@ -104,34 +108,42 @@ $topics = array(
             <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);"><?php echo esc_html( $sub_text ); ?></span>
           </div>
           <div class="hero-topic-cards">
-            <?php foreach ( $topics as $topic ) : ?>
-              <a href="<?php echo esc_url( $topic['url'] ); ?>" class="hero-topic-card">
-                <b><?php echo esc_html( $topic['title'] ); ?> &rarr;</b>
-                <span><?php echo esc_html( $topic['desc'] ); ?></span>
-              </a>
-            <?php endforeach; ?>
+            <a href="<?php echo esc_url( $topic1_url ); ?>" class="hero-topic-card">
+              <b><?php echo esc_html( $topic1_title ); ?> &rarr;</b>
+              <span><?php echo esc_html( $topic1_desc ); ?></span>
+            </a>
+            <a href="<?php echo esc_url( $topic2_url ); ?>" class="hero-topic-card">
+              <b><?php echo esc_html( $topic2_title ); ?> &rarr;</b>
+              <span><?php echo esc_html( $topic2_desc ); ?></span>
+            </a>
+            <a href="<?php echo esc_url( $topic3_url ); ?>" class="hero-topic-card">
+              <b><?php echo esc_html( $topic3_title ); ?> &rarr;</b>
+              <span><?php echo esc_html( $topic3_desc ); ?></span>
+            </a>
           </div>
         </div>
 
         <div class="hero-readiness-card">
           <div class="eyebrow">
-            <span>CMMC READINESS CHECK · 3 MINUTES</span>
-            <span class="badge-chip accent" style="font-size: 0.65rem;">Free Tool</span>
+            <span><?php echo esc_html( $quiz_badge ); ?></span>
+            <?php if ( ! empty( $quiz_chip ) ) : ?>
+              <span class="badge-chip accent" style="font-size: 0.65rem;"><?php echo esc_html( $quiz_chip ); ?></span>
+            <?php endif; ?>
           </div>
-          <h3>Find out where you stand</h3>
+          <h3><?php echo esc_html( $quiz_title ); ?></h3>
           <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px;">
-            Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.
+            <?php echo esc_html( $quiz_desc ); ?>
           </p>
           <form class="readiness-inline-form" onsubmit="event.preventDefault(); if (typeof window.triggerToolModal === 'function') { window.triggerToolModal(); } else { window.location.href='#contact'; }">
             <div style="margin-bottom: 12px;">
-              <input type="email" class="form-input" placeholder="Enter corporate work email" required>
+              <input type="email" class="form-input" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" required>
             </div>
             <button type="submit" class="btn btn-primary" style="width: 100%;">
-              Start 3-Minute Readiness Check &rarr;
+              <?php echo esc_html( $quiz_btn_text ); ?>
             </button>
           </form>
           <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 10px; text-align: center;">
-            🔒 Work email required. Never submit classified or CUI information.
+            <?php echo esc_html( $quiz_note ); ?>
           </p>
         </div>
       </div>

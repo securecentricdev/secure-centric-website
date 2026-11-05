@@ -3,26 +3,118 @@
     "apiVersion": 3,
     "name": "secure-centric/resource-cards",
     "version": "1.0.0",
-    "title": "CMMC Guides & Checklist Cards Grid",
-    "category": "secure-centric-proof",
+    "title": "Resource Guides & Checklists Grid",
+    "category": "secure-centric-process",
     "icon": "portfolio",
-    "description": "Grid of downloadable CMMC checklists, NIST guides, and readiness score tools.",
+    "description": "Grid of downloadable CMMC guides, templates, and compliance checklists.",
     "keywords": [
         "resources",
-        "cards",
-        "checklists",
         "guides",
-        "cmmc"
+        "checklists",
+        "downloads",
+        "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
-        "eyebrow": {
-            "type": "string",
-            "default": "// COMPLIANCE KNOWLEDGE BASE"
-        },
         "title": {
             "type": "string",
             "default": "CMMC guides, checklists and tools"
+        },
+        "card1Title": {
+            "type": "string",
+            "default": "CMMC Complete Guide"
+        },
+        "card1Desc": {
+            "type": "string",
+            "default": "The definitive executive and technical overview of CMMC levels, rulemaking, and audits."
+        },
+        "card1Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card1Icon": {
+            "type": "string",
+            "default": "📁"
+        },
+        "card2Title": {
+            "type": "string",
+            "default": "CMMC Level 2 Guide"
+        },
+        "card2Desc": {
+            "type": "string",
+            "default": "110 requirements across 14 security families: technical breakdown and scoping rules."
+        },
+        "card2Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card2Icon": {
+            "type": "string",
+            "default": "📘"
+        },
+        "card3Title": {
+            "type": "string",
+            "default": "NIST SP 800-171 Standard"
+        },
+        "card3Desc": {
+            "type": "string",
+            "default": "The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications."
+        },
+        "card3Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card3Icon": {
+            "type": "string",
+            "default": "🛡️"
+        },
+        "card4Title": {
+            "type": "string",
+            "default": "CUI Scoping & Handling Guide"
+        },
+        "card4Desc": {
+            "type": "string",
+            "default": "Controlled Unclassified Information: identification, markings, and boundary isolation."
+        },
+        "card4Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card4Icon": {
+            "type": "string",
+            "default": "🔒"
+        },
+        "card5Title": {
+            "type": "string",
+            "default": "CMMC Enclave Advisory"
+        },
+        "card5Desc": {
+            "type": "string",
+            "default": "How segregating your CUI network saves months of implementation and audit costs."
+        },
+        "card5Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card5Icon": {
+            "type": "string",
+            "default": "🏗️"
+        },
+        "card6Title": {
+            "type": "string",
+            "default": "Level 2 Compliance Checklist"
+        },
+        "card6Desc": {
+            "type": "string",
+            "default": "Downloadable 110-control Excel checklist with ownership and objective columns."
+        },
+        "card6Link": {
+            "type": "string",
+            "default": "#contact"
+        },
+        "card6Icon": {
+            "type": "string",
+            "default": "📊"
         }
     },
     "supports": {

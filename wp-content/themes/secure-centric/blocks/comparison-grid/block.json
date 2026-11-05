@@ -3,17 +3,16 @@
     "apiVersion": 3,
     "name": "secure-centric/comparison-grid",
     "version": "1.0.0",
-    "title": "Comparison Grid (DIY vs MSP vs RPO)",
-    "category": "secure-centric-proof",
+    "title": "Three Approaches Comparison Grid",
+    "category": "secure-centric-process",
     "icon": "columns",
-    "description": "Comparative audit readiness matrix contrasting DIY compliance, generic IT MSPs, and Secure-Centric.",
+    "description": "Side-by-side comparison of DIY, Generic MSP, and Secure-Centric Independent Advisory.",
     "keywords": [
         "comparison",
-        "grid",
-        "diy",
+        "options",
         "msp",
-        "rpo",
-        "audit"
+        "advisory",
+        "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
@@ -24,6 +23,70 @@
         "title": {
             "type": "string",
             "default": "Three Ways Defense Subcontractors Approach CMMC"
+        },
+        "description": {
+            "type": "string",
+            "default": "Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility."
+        },
+        "opt1Badge": {
+            "type": "string",
+            "default": "Option 1"
+        },
+        "opt1Title": {
+            "type": "string",
+            "default": "DIY / In-House IT"
+        },
+        "opt1Desc": {
+            "type": "string",
+            "default": "Internal IT teams download templates and attempt to interpret all 110 NIST controls alone."
+        },
+        "opt1RiskTitle": {
+            "type": "string",
+            "default": "❌ High Audit Failure Risk"
+        },
+        "opt1RiskDesc": {
+            "type": "string",
+            "default": "Massive scope sprawl. Incomplete evidence packages fail official C3PAO audits on Day 1."
+        },
+        "opt2Badge": {
+            "type": "string",
+            "default": "Option 2"
+        },
+        "opt2Title": {
+            "type": "string",
+            "default": "Generic Managed MSP"
+        },
+        "opt2Desc": {
+            "type": "string",
+            "default": "IT vendors sell bundled cloud licenses and automated compliance portal subscriptions."
+        },
+        "opt2RiskTitle": {
+            "type": "string",
+            "default": "⚠️ Conflict of Interest"
+        },
+        "opt2RiskDesc": {
+            "type": "string",
+            "default": "MSPs grade their own homework. Portal checkmarks crumble during rigorous in-person DIBCAC interviews."
+        },
+        "opt3Badge": {
+            "type": "string",
+            "default": "Option 3: Secure-Centric"
+        },
+        "opt3Title": {
+            "type": "string",
+            "default": "Independent RPO Advisory"
+        },
+        "opt3Desc": {
+            "type": "string",
+            "default": "Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit."
+        },
+        "opt3RiskTitle": {
+            "type": "string",
+            "default": "✅ 100% First-Pass Defensibility"
+        },
+        "opt3RiskDesc": {
+            "type": "string",
+            "default": "Rigorous mock assessments, verified SSP documentation, and scope reduction saving $50k+."
         }
     },
     "supports": {

@@ -797,7 +797,8 @@
    * Render Block HTML: 8-Step CMMC Journey Roadmap
    */
   function renderJourney(block) {
-    const rawItems = (block && block.items && block.items.length) ? block.items : DEFAULT_JOURNEY_STEPS;
+    const baseItems = (window.scRoadmapData && window.scRoadmapData.length) ? window.scRoadmapData : DEFAULT_JOURNEY_STEPS;
+    const rawItems = (block && block.items && block.items.length) ? block.items : baseItems;
     const items = DEFAULT_JOURNEY_STEPS.map((defStep, i) => {
       const raw = rawItems[i];
       if (typeof raw === 'object' && raw !== null && raw.name) {

@@ -5,15 +5,14 @@
     "version": "1.0.0",
     "title": "Why Secure-Centric & Proof Grid",
     "category": "secure-centric-proof",
-    "icon": "shield",
-    "description": "Proof numbers (120+, 100%), 4-card differentiator grid, and Cyber AB RPO badge credentials.",
+    "icon": "awards",
+    "description": "Accredited RPO stats, pass rates, core value differentiators, and credentials badge strip.",
     "keywords": [
-        "why",
         "proof",
+        "why us",
         "credentials",
-        "badges",
         "stats",
-        "audit"
+        "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
@@ -31,11 +30,99 @@
         },
         "linkText": {
             "type": "string",
-            "default": "Full Company Credentials \u2192"
+            "default": "Full Company Credentials →"
         },
         "linkUrl": {
             "type": "string",
-            "default": "#page-n1"
+            "default": "#contact"
+        },
+        "stat1Number": {
+            "type": "string",
+            "default": "120+"
+        },
+        "stat1Label": {
+            "type": "string",
+            "default": "Defense contractors prepared for CMMC & NIST SP 800-171 audits"
+        },
+        "stat1Date": {
+            "type": "string",
+            "default": "As of Q4 2026"
+        },
+        "stat2Number": {
+            "type": "string",
+            "default": "100%"
+        },
+        "stat2Label": {
+            "type": "string",
+            "default": "First-time pass record with Authorized C3PAO and DIBCAC assessors"
+        },
+        "stat2Date": {
+            "type": "string",
+            "default": "Level 2 CMMC audits"
+        },
+        "card1Title": {
+            "type": "string",
+            "default": "Cyber AB Authorized RPO"
+        },
+        "card1Text": {
+            "type": "string",
+            "default": "Formally credentialed by the Cyber AB (RPO #3942) with certified Registered Practitioners (RPs) leading every client engagement on site."
+        },
+        "card1Icon": {
+            "type": "string",
+            "default": "🛡️"
+        },
+        "card2Title": {
+            "type": "string",
+            "default": "Exclusive CMMC & NIST Focus"
+        },
+        "card2Text": {
+            "type": "string",
+            "default": "We do not sell generic IT services or managed antivirus. Our sole specialization is defense cybersecurity compliance and C3PAO audit readiness."
+        },
+        "card2Icon": {
+            "type": "string",
+            "default": "🎯"
+        },
+        "card3Title": {
+            "type": "string",
+            "default": "On-Site Physical & Technical Walkthrough"
+        },
+        "card3Text": {
+            "type": "string",
+            "default": "We walk your facilities, shop floors, and secure server rooms to physically map CUI flows and isolate enclave boundaries."
+        },
+        "card3Icon": {
+            "type": "string",
+            "default": "🏭"
+        },
+        "card4Title": {
+            "type": "string",
+            "default": "Independent & Scope-Shrinking Advisory"
+        },
+        "card4Text": {
+            "type": "string",
+            "default": "We provide vendor-neutral advisory to shrink your assessment scope, saving tens of thousands in hardware, software, and audit fees."
+        },
+        "card4Icon": {
+            "type": "string",
+            "default": "📐"
+        },
+        "badge1Text": {
+            "type": "string",
+            "default": "🛡️ Cyber AB RPO #3942"
+        },
+        "badge2Text": {
+            "type": "string",
+            "default": "⭐ Inc. 5000 #452 Fastest Growing"
+        },
+        "badge3Text": {
+            "type": "string",
+            "default": "🔒 Bilateral NDA Standard"
+        },
+        "badgeNote": {
+            "type": "string",
+            "default": "Los Angeles, California · Nationwide On-Site Deployments"
         }
     },
     "supports": {

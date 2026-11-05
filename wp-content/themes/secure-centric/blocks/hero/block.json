@@ -1,64 +1,44 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "secure-centric/hero",
-    "version": "1.0.0",
-    "title": "Secure-Centric Hero (Multi-Layout)",
-    "category": "secure-centric-heroes",
-    "icon": "cover-image",
-    "description": "Multi-layout hero block supporting Home (with readiness card), Service (with deliverables), and Guide layouts.",
-    "keywords": [
-        "hero",
-        "header",
-        "cmmc",
-        "defense",
-        "scoping"
-    ],
-    "textdomain": "secure-centric",
-    "attributes": {
-        "layout": {
-            "type": "string",
-            "default": "home"
-        },
-        "eyebrow": {
-            "type": "string",
-            "default": "// DEFENSE CYBERSECURITY COMPLIANCE"
-        },
-        "title": {
-            "type": "string",
-            "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB RPO"
-        },
-        "description": {
-            "type": "string",
-            "default": "We scope your Controlled Unclassified Information (CUI) boundary on site, eliminate compliance gaps, and build defensible evidence before your official C3PAO audit."
-        },
-        "primaryBtnText": {
-            "type": "string",
-            "default": "Book a Scoping Call"
-        },
-        "primaryBtnUrl": {
-            "type": "string",
-            "default": "#page-2"
-        },
-        "secondaryBtnText": {
-            "type": "string",
-            "default": "Explore the 8-Step Process \u2192"
-        },
-        "secondaryBtnUrl": {
-            "type": "string",
-            "default": "#roadmap-section"
-        },
-        "highlightText": {
-            "default": "Cyber AB RPO"
-        }
-    },
-    "supports": {
-        "html": false,
-        "align": [
-            "wide",
-            "full"
-        ]
-    },
-    "render": "file:./render.php",
-    "editorScript": "secure-centric-editor-blocks"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/hero",
+  "version": "1.0.0",
+  "title": "Secure-Centric Hero (Multi-Layout)",
+  "category": "secure-centric-heroes",
+  "icon": "cover-image",
+  "description": "Multi-layout hero block with fully editable headlines, topics, and interactive readiness quiz card.",
+  "keywords": ["hero", "header", "cmmc", "defense", "scoping"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "attributes": {
+    "layout": { "type": "string", "default": "home" },
+    "eyebrow": { "type": "string", "default": "// NIST SP 800-171 / CMMC Compliance Consultants" },
+    "title": { "type": "string", "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB RPO" },
+    "highlightText": { "type": "string", "default": "Cyber AB RPO" },
+    "description": { "type": "string", "default": "We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation." },
+    "primaryBtnText": { "type": "string", "default": "Book a Discovery Call →" },
+    "primaryBtnUrl": { "type": "string", "default": "#contact" },
+    "subText": { "type": "string", "default": "30 min · No sales pitch · Signed NDA" },
+    "topic1Title": { "type": "string", "default": "CMMC" },
+    "topic1Desc": { "type": "string", "default": "Maturity levels & framework" },
+    "topic1Url": { "type": "string", "default": "/secure-centric/cmmc/" },
+    "topic2Title": { "type": "string", "default": "NIST SP 800-171" },
+    "topic2Desc": { "type": "string", "default": "110 controls & DFARS 7012" },
+    "topic2Url": { "type": "string", "default": "/secure-centric/services/nist-800-171-compliance/" },
+    "topic3Title": { "type": "string", "default": "CUI" },
+    "topic3Desc": { "type": "string", "default": "Controlled Unclassified Info" },
+    "topic3Url": { "type": "string", "default": "/secure-centric/cui/" },
+    "quizBadge": { "type": "string", "default": "CMMC READINESS CHECK · 3 MINUTES" },
+    "quizChip": { "type": "string", "default": "Free Tool" },
+    "quizTitle": { "type": "string", "default": "Find out where you stand" },
+    "quizDesc": { "type": "string", "default": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit." },
+    "quizPlaceholder": { "type": "string", "default": "Enter corporate work email" },
+    "quizBtnText": { "type": "string", "default": "Start 3-Minute Readiness Check →" },
+    "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "render": "file:./render.php"
 }

@@ -15,28 +15,37 @@ $description = ! empty( $attributes['description'] ) ? $attributes['description'
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
 $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : '#contact';
 
-$faqs = array(
-    array(
+$default_faqs = array(
+    1 => array(
         'q' => 'What is CMMC compliance?',
         'a' => 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).',
     ),
-    array(
+    2 => array(
         'q' => 'Do you come to our site?',
         'a' => 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.',
     ),
-    array(
+    3 => array(
         'q' => 'Do you only work on CMMC and NIST SP 800-171?',
         'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
     ),
-    array(
+    4 => array(
         'q' => 'What happens after I book a discovery call?',
         'a' => 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.',
     ),
-    array(
+    5 => array(
         'q' => 'Who will we work with day to day?',
         'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
     ),
 );
+
+$faqs = array();
+for ( $i = 1; $i <= 5; $i++ ) {
+    $def = $default_faqs[ $i ];
+    $faqs[] = array(
+        'q' => ! empty( $attributes[ 'faq' . $i . 'Q' ] ) ? $attributes[ 'faq' . $i . 'Q' ] : $def['q'],
+        'a' => ! empty( $attributes[ 'faq' . $i . 'A' ] ) ? $attributes[ 'faq' . $i . 'A' ] : $def['a'],
+    );
+}
 ?>
 
 <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:details-group" data-wp-pattern="secure-centric/faq-accordion">
