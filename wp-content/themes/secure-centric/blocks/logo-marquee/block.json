@@ -1,23 +1,33 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/logo-marquee",
-  "version": "1.0.0",
-  "title": "Defense Supplier Logo Marquee",
-  "category": "secure-centric-proof",
-  "icon": "images-alt2",
-  "description": "Continuous smooth horizontal logo marquee of defense contractors and aerospace suppliers.",
-  "keywords": ["logos", "marquee", "clients", "contractors", "aerospace"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "title": {
-      "type": "string",
-      "default": "TRUSTED BY DEFENSE INDUSTRIAL BASE CONTRACTORS & PRIME SUPPLIERS NATIONWIDE"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/logo-marquee",
+    "version": "1.0.0",
+    "title": "Defense Supplier Logo Marquee",
+    "category": "secure-centric-proof",
+    "icon": "images-alt2",
+    "description": "Continuous smooth horizontal logo marquee of defense contractors and aerospace suppliers.",
+    "keywords": [
+        "logos",
+        "marquee",
+        "clients",
+        "contractors",
+        "aerospace"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "TRUSTED BY DEFENSE INDUSTRIAL BASE CONTRACTORS & PRIME SUPPLIERS NATIONWIDE"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

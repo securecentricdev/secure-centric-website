@@ -1,35 +1,45 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/testimonials",
-  "version": "1.0.0",
-  "title": "Defense Client Testimonials (Carousel & Grid)",
-  "category": "secure-centric-proof",
-  "icon": "format-quote",
-  "description": "Infinite smooth testimonials carousel or static 3+2 grid with verified LinkedIn verification badges.",
-  "keywords": ["testimonials", "reviews", "carousel", "quotes", "defense"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "displayMode": {
-      "type": "string",
-      "default": "carousel"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/testimonials",
+    "version": "1.0.0",
+    "title": "Defense Client Testimonials (Carousel & Grid)",
+    "category": "secure-centric-proof",
+    "icon": "format-quote",
+    "description": "Infinite smooth testimonials carousel or static 3+2 grid with verified LinkedIn verification badges.",
+    "keywords": [
+        "testimonials",
+        "reviews",
+        "carousel",
+        "quotes",
+        "defense"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "displayMode": {
+            "type": "string",
+            "default": "carousel"
+        },
+        "eyebrow": {
+            "type": "string",
+            "default": "// CLIENT TESTIMONIALS"
+        },
+        "title": {
+            "type": "string",
+            "default": "What Defense Contractors Say About Working With Us"
+        },
+        "holdDelay": {
+            "type": "number",
+            "default": 3500
+        }
     },
-    "eyebrow": {
-      "type": "string",
-      "default": "// CLIENT TESTIMONIALS"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "title": {
-      "type": "string",
-      "default": "What Defense Contractors Say About Working With Us"
-    },
-    "holdDelay": {
-      "type": "number",
-      "default": 3500
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

@@ -1,39 +1,50 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/roadmap-stepper",
-  "version": "1.0.0",
-  "title": "CMMC 8-Step Interactive Journey Stepper",
-  "category": "secure-centric-process",
-  "icon": "location-alt",
-  "description": "Interactive 8-step CMMC roadmap stepper with walking character animation, progress rail, and focus-based continuous autoplay.",
-  "keywords": ["cmmc", "roadmap", "process", "stepper", "steps", "journey"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// THE CMMC PROCESS"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/roadmap-stepper",
+    "version": "1.0.0",
+    "title": "CMMC 8-Step Interactive Journey Stepper",
+    "category": "secure-centric-process",
+    "icon": "location-alt",
+    "description": "Interactive 8-step CMMC roadmap stepper with walking character animation, progress rail, and focus-based continuous autoplay.",
+    "keywords": [
+        "cmmc",
+        "roadmap",
+        "process",
+        "stepper",
+        "steps",
+        "journey"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// THE CMMC PROCESS"
+        },
+        "title": {
+            "type": "string",
+            "default": "Your CMMC journey, step by step"
+        },
+        "linkText": {
+            "type": "string",
+            "default": "View Detailed 8-Step Process \u2192"
+        },
+        "linkUrl": {
+            "type": "string",
+            "default": "#page-19"
+        },
+        "autoplayDelay": {
+            "type": "number",
+            "default": 3800
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Your CMMC journey, step by step"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "linkText": {
-      "type": "string",
-      "default": "View Detailed 8-Step Process →"
-    },
-    "linkUrl": {
-      "type": "string",
-      "default": "#page-19"
-    },
-    "autoplayDelay": {
-      "type": "number",
-      "default": 3800
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

@@ -1,27 +1,38 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/comparison-grid",
-  "version": "1.0.0",
-  "title": "Comparison Grid (DIY vs MSP vs RPO)",
-  "category": "secure-centric-proof",
-  "icon": "columns",
-  "description": "Comparative audit readiness matrix contrasting DIY compliance, generic IT MSPs, and Secure-Centric.",
-  "keywords": ["comparison", "grid", "diy", "msp", "rpo", "audit"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// APPROACH COMPARISON"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/comparison-grid",
+    "version": "1.0.0",
+    "title": "Comparison Grid (DIY vs MSP vs RPO)",
+    "category": "secure-centric-proof",
+    "icon": "columns",
+    "description": "Comparative audit readiness matrix contrasting DIY compliance, generic IT MSPs, and Secure-Centric.",
+    "keywords": [
+        "comparison",
+        "grid",
+        "diy",
+        "msp",
+        "rpo",
+        "audit"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// APPROACH COMPARISON"
+        },
+        "title": {
+            "type": "string",
+            "default": "Three Ways Defense Subcontractors Approach CMMC"
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Three Ways Defense Subcontractors Approach CMMC"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

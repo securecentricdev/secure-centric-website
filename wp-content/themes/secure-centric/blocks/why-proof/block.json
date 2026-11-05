@@ -1,39 +1,50 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/why-proof",
-  "version": "1.0.0",
-  "title": "Why Secure-Centric & Proof Grid",
-  "category": "secure-centric-proof",
-  "icon": "shield",
-  "description": "Proof numbers (120+, 100%), 4-card differentiator grid, and Cyber AB RPO badge credentials.",
-  "keywords": ["why", "proof", "credentials", "badges", "stats", "audit"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "eyebrow": {
-      "type": "string",
-      "default": "// PROOF & CREDENTIALS"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/why-proof",
+    "version": "1.0.0",
+    "title": "Why Secure-Centric & Proof Grid",
+    "category": "secure-centric-proof",
+    "icon": "shield",
+    "description": "Proof numbers (120+, 100%), 4-card differentiator grid, and Cyber AB RPO badge credentials.",
+    "keywords": [
+        "why",
+        "proof",
+        "credentials",
+        "badges",
+        "stats",
+        "audit"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "eyebrow": {
+            "type": "string",
+            "default": "// PROOF & CREDENTIALS"
+        },
+        "title": {
+            "type": "string",
+            "default": "Why Secure-Centric"
+        },
+        "description": {
+            "type": "string",
+            "default": "Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence."
+        },
+        "linkText": {
+            "type": "string",
+            "default": "Full Company Credentials \u2192"
+        },
+        "linkUrl": {
+            "type": "string",
+            "default": "#page-n1"
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Why Secure-Centric"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "description": {
-      "type": "string",
-      "default": "Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence."
-    },
-    "linkText": {
-      "type": "string",
-      "default": "Full Company Credentials →"
-    },
-    "linkUrl": {
-      "type": "string",
-      "default": "#page-n1"
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

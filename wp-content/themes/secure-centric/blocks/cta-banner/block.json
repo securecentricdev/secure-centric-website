@@ -45,5 +45,6 @@
             "full"
         ]
     },
-    "render": "file:./render.php"
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }

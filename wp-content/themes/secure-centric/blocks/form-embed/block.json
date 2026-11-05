@@ -1,31 +1,42 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "secure-centric/form-embed",
-  "version": "1.0.0",
-  "title": "CMMC Scoping & Pathfinder Form Embed",
-  "category": "secure-centric-cta",
-  "icon": "feedback",
-  "description": "Embeds Forminator forms or the interactive 5-minute CMMC Pathfinder assessment with database logging and email routing.",
-  "keywords": ["form", "scoping", "pathfinder", "lead", "contact", "email"],
-  "textdomain": "secure-centric",
-  "attributes": {
-    "formId": {
-      "type": "string",
-      "default": ""
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "secure-centric/form-embed",
+    "version": "1.0.0",
+    "title": "CMMC Scoping & Pathfinder Form Embed",
+    "category": "secure-centric-cta",
+    "icon": "feedback",
+    "description": "Embeds Forminator forms or the interactive 5-minute CMMC Pathfinder assessment with database logging and email routing.",
+    "keywords": [
+        "form",
+        "scoping",
+        "pathfinder",
+        "lead",
+        "contact",
+        "email"
+    ],
+    "textdomain": "secure-centric",
+    "attributes": {
+        "formId": {
+            "type": "string",
+            "default": ""
+        },
+        "title": {
+            "type": "string",
+            "default": "Book a 30-Minute Scoping Call"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Strictly confidential under Bilateral NDA. We review your CUI boundary and timeline."
+        }
     },
-    "title": {
-      "type": "string",
-      "default": "Book a 30-Minute Scoping Call"
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
     },
-    "subtitle": {
-      "type": "string",
-      "default": "Strictly confidential under Bilateral NDA. We review your CUI boundary and timeline."
-    }
-  },
-  "supports": {
-    "html": false,
-    "align": ["wide", "full"]
-  },
-  "render": "file:./render.php"
+    "render": "file:./render.php",
+    "editorScript": "secure-centric-editor-blocks"
 }
