@@ -1,307 +1,336 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/theme.json",
-  "version": 3,
-  "customTemplates": [
-    {
-      "name": "front-page",
-      "title": "Front Page (Interactive Stepper & Testimonials)",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-service",
-      "title": "Service & Engagement Stage Template",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-pillar",
-      "title": "Pillar & Long-Form Guide Template",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-about",
-      "title": "About & Credentials Proof Template",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-resource",
-      "title": "Gated Resource & Checklist Template",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-contact",
-      "title": "Contact & Discovery Booking Template",
-      "postTypes": ["page"]
-    }
-  ],
-  "settings": {
-    "appearanceTools": true,
-    "layout": {
-      "contentSize": "1200px",
-      "wideSize": "1440px"
-    },
-    "color": {
-      "custom": true,
-      "customDuotone": false,
-      "customGradient": true,
-      "defaultGradients": false,
-      "defaultPalette": false,
-      "palette": [
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "customTemplates": [
         {
-          "slug": "midnight",
-          "color": "#060B24",
-          "name": "Midnight (Darkest Backgrounds)"
+            "name": "front-page",
+            "title": "Front Page (Interactive Stepper & Testimonials)",
+            "postTypes": [
+                "page"
+            ]
         },
         {
-          "slug": "navy",
-          "color": "#0B1437",
-          "name": "Navy (Headings, Dark Cards)"
+            "name": "page-service",
+            "title": "Service & Engagement Stage Template",
+            "postTypes": [
+                "page"
+            ]
         },
         {
-          "slug": "electric-blue",
-          "color": "#2F5BFF",
-          "name": "Electric Blue (Primary CTA, Links)"
+            "name": "page-pillar",
+            "title": "Pillar & Long-Form Guide Template",
+            "postTypes": [
+                "page"
+            ]
         },
         {
-          "slug": "violet",
-          "color": "#7B5CFF",
-          "name": "Violet (Secondary Accent)"
+            "name": "page-about",
+            "title": "About & Credentials Proof Template",
+            "postTypes": [
+                "page"
+            ]
         },
         {
-          "slug": "cyber-cyan",
-          "color": "#00D4FF",
-          "name": "Cyber Cyan (Accents on Dark Only)"
+            "name": "page-resource",
+            "title": "Gated Resource & Checklist Template",
+            "postTypes": [
+                "page"
+            ]
         },
         {
-          "slug": "white",
-          "color": "#FFFFFF",
-          "name": "White (Cards, Surfaces)"
-        },
-        {
-          "slug": "ice",
-          "color": "#F5F7FF",
-          "name": "Ice (Light Sections)"
-        },
-        {
-          "slug": "soft-blue",
-          "color": "#EEF2FF",
-          "name": "Soft Blue (Panels, Soft Buttons)"
-        },
-        {
-          "slug": "soft-blue-line",
-          "color": "#DCE4FF",
-          "name": "Soft Blue Line (Panel Borders)"
-        },
-        {
-          "slug": "border",
-          "color": "#E2E8F5",
-          "name": "Border (Card Borders, Inputs)"
-        },
-        {
-          "slug": "slate",
-          "color": "#8A93B2",
-          "name": "Slate (Placeholders, Muted)"
-        },
-        {
-          "slug": "body-text",
-          "color": "#4A5578",
-          "name": "Body Text (Paragraphs on Light)"
-        },
-        {
-          "slug": "text-on-dark",
-          "color": "#B8C1E0",
-          "name": "Text on Dark (Paragraphs on Dark)"
-        },
-        {
-          "slug": "dark-line",
-          "color": "#1E2A5A",
-          "name": "Dark Line (Dividers on Dark)"
-        },
-        {
-          "slug": "dark-outline",
-          "color": "#3A4A85",
-          "name": "Dark Outline (Outline Buttons on Dark)"
-        },
-        {
-          "slug": "light-on-blue",
-          "color": "#E6ECFF",
-          "name": "Light on Blue (Text on Blue Blocks)"
-        },
-        {
-          "slug": "status-success",
-          "color": "#12B886",
-          "name": "Status Success"
-        },
-        {
-          "slug": "status-warning",
-          "color": "#FFB020",
-          "name": "Status Warning"
-        },
-        {
-          "slug": "status-error",
-          "color": "#F0445A",
-          "name": "Status Error"
+            "name": "page-contact",
+            "title": "Contact & Discovery Booking Template",
+            "postTypes": [
+                "page"
+            ]
         }
-      ],
-      "gradients": [
-        {
-          "slug": "signature-gradient",
-          "gradient": "linear-gradient(135deg, #2F5BFF 0%, #7B5CFF 55%, #00D4FF 100%)",
-          "name": "Signature Gradient (Use Sparingly)"
-        }
-      ]
-    },
-    "typography": {
-      "fontFamilies": [
-        {
-          "fontFamily": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-          "slug": "primary",
-          "name": "Plus Jakarta Sans"
+    ],
+    "settings": {
+        "appearanceTools": true,
+        "layout": {
+            "contentSize": "1200px",
+            "wideSize": "1440px"
         },
-        {
-          "fontFamily": "'JetBrains Mono', Consolas, Menlo, Monaco, monospace",
-          "slug": "mono",
-          "name": "JetBrains Mono"
-        }
-      ],
-      "fontSizes": [
-        {
-          "slug": "eyebrow",
-          "size": "0.75rem",
-          "name": "Eyebrow (12px Mono)"
-        },
-        {
-          "slug": "small",
-          "size": "0.875rem",
-          "name": "Small (14px)"
-        },
-        {
-          "slug": "medium",
-          "size": "1rem",
-          "name": "Medium (16px)"
-        },
-        {
-          "slug": "large",
-          "size": "1.125rem",
-          "name": "Large (18px)"
-        },
-        {
-          "slug": "h3",
-          "size": "1.375rem",
-          "name": "Heading 3 (22px)"
-        },
-        {
-          "slug": "h2",
-          "size": "2.25rem",
-          "name": "Heading 2 (36px)"
-        },
-        {
-          "slug": "h1",
-          "size": "3rem",
-          "name": "Heading 1 (48px)"
-        }
-      ]
-    },
-    "spacing": {
-      "units": ["px", "rem", "%", "vh"],
-      "spacingScale": {
-        "operator": "*",
-        "increment": 1.5,
-        "steps": 7,
-        "mediumStep": 1.5,
-        "unit": "rem"
-      }
-    }
-  },
-  "styles": {
-    "color": {
-      "background": "var(--wp--preset--color--white)",
-      "text": "var(--wp--preset--color--body-text)"
-    },
-    "typography": {
-      "fontFamily": "var(--wp--preset--font-family--primary)",
-      "fontSize": "var(--wp--preset--font-size--medium)",
-      "lineHeight": "1.6"
-    },
-    "elements": {
-      "heading": {
         "color": {
-          "text": "var(--wp--preset--color--navy)"
+            "custom": true,
+            "customDuotone": false,
+            "customGradient": true,
+            "defaultGradients": false,
+            "defaultPalette": false,
+            "palette": [
+                {
+                    "slug": "midnight",
+                    "color": "#060B24",
+                    "name": "Midnight (Darkest Backgrounds)"
+                },
+                {
+                    "slug": "navy",
+                    "color": "#0B1437",
+                    "name": "Navy (Headings, Dark Cards)"
+                },
+                {
+                    "slug": "electric-blue",
+                    "color": "#2F5BFF",
+                    "name": "Electric Blue (Primary CTA, Links)"
+                },
+                {
+                    "slug": "violet",
+                    "color": "#7B5CFF",
+                    "name": "Violet (Secondary Accent)"
+                },
+                {
+                    "slug": "cyber-cyan",
+                    "color": "#00D4FF",
+                    "name": "Cyber Cyan (Accents on Dark Only)"
+                },
+                {
+                    "slug": "white",
+                    "color": "#FFFFFF",
+                    "name": "White (Cards, Surfaces)"
+                },
+                {
+                    "slug": "ice",
+                    "color": "#F5F7FF",
+                    "name": "Ice (Light Sections)"
+                },
+                {
+                    "slug": "soft-blue",
+                    "color": "#EEF2FF",
+                    "name": "Soft Blue (Panels, Soft Buttons)"
+                },
+                {
+                    "slug": "soft-blue-line",
+                    "color": "#DCE4FF",
+                    "name": "Soft Blue Line (Panel Borders)"
+                },
+                {
+                    "slug": "border",
+                    "color": "#E2E8F5",
+                    "name": "Border (Card Borders, Inputs)"
+                },
+                {
+                    "slug": "slate",
+                    "color": "#8A93B2",
+                    "name": "Slate (Placeholders, Muted)"
+                },
+                {
+                    "slug": "body-text",
+                    "color": "#4A5578",
+                    "name": "Body Text (Paragraphs on Light)"
+                },
+                {
+                    "slug": "text-on-dark",
+                    "color": "#B8C1E0",
+                    "name": "Text on Dark (Paragraphs on Dark)"
+                },
+                {
+                    "slug": "dark-line",
+                    "color": "#1E2A5A",
+                    "name": "Dark Line (Dividers on Dark)"
+                },
+                {
+                    "slug": "dark-outline",
+                    "color": "#3A4A85",
+                    "name": "Dark Outline (Outline Buttons on Dark)"
+                },
+                {
+                    "slug": "light-on-blue",
+                    "color": "#E6ECFF",
+                    "name": "Light on Blue (Text on Blue Blocks)"
+                },
+                {
+                    "slug": "status-success",
+                    "color": "#12B886",
+                    "name": "Status Success"
+                },
+                {
+                    "slug": "status-warning",
+                    "color": "#FFB020",
+                    "name": "Status Warning"
+                },
+                {
+                    "slug": "status-error",
+                    "color": "#F0445A",
+                    "name": "Status Error"
+                }
+            ],
+            "gradients": [
+                {
+                    "slug": "signature-gradient",
+                    "gradient": "linear-gradient(135deg, #2F5BFF 0%, #7B5CFF 55%, #00D4FF 100%)",
+                    "name": "Signature Gradient (Use Sparingly)"
+                }
+            ]
         },
         "typography": {
-          "fontFamily": "var(--wp--preset--font-family--primary)",
-          "fontWeight": "800",
-          "lineHeight": "1.2"
-        }
-      },
-      "h1": {
-        "typography": {
-          "fontSize": "var(--wp--preset--font-size--h1)",
-          "letterSpacing": "-0.02em"
-        }
-      },
-      "h2": {
-        "typography": {
-          "fontSize": "var(--wp--preset--font-size--h2)",
-          "letterSpacing": "-0.015em"
-        }
-      },
-      "h3": {
-        "typography": {
-          "fontSize": "var(--wp--preset--font-size--h3)"
-        }
-      },
-      "link": {
-        "color": {
-          "text": "var(--wp--preset--color--electric-blue)"
-        },
-        ":hover": {
-          "color": {
-            "text": "var(--wp--preset--color--violet)"
-          }
-        }
-      },
-      "button": {
-        "color": {
-          "background": "var(--wp--preset--color--electric-blue)",
-          "text": "var(--wp--preset--color--white)"
-        },
-        "border": {
-          "radius": "6px"
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                    "slug": "primary",
+                    "name": "Plus Jakarta Sans"
+                },
+                {
+                    "fontFamily": "'JetBrains Mono', Consolas, Menlo, Monaco, monospace",
+                    "slug": "mono",
+                    "name": "JetBrains Mono"
+                }
+            ],
+            "fontSizes": [
+                {
+                    "slug": "eyebrow",
+                    "size": "0.75rem",
+                    "name": "Eyebrow (12px Mono)"
+                },
+                {
+                    "slug": "small",
+                    "size": "0.875rem",
+                    "name": "Small (14px)"
+                },
+                {
+                    "slug": "medium",
+                    "size": "1rem",
+                    "name": "Medium (16px)"
+                },
+                {
+                    "slug": "large",
+                    "size": "1.125rem",
+                    "name": "Large (18px)"
+                },
+                {
+                    "slug": "h3",
+                    "size": "1.375rem",
+                    "name": "Heading 3 (22px)"
+                },
+                {
+                    "slug": "h2",
+                    "size": "2.25rem",
+                    "name": "Heading 2 (36px)"
+                },
+                {
+                    "slug": "h1",
+                    "size": "3rem",
+                    "name": "Heading 1 (48px)"
+                }
+            ]
         },
         "spacing": {
-          "padding": {
-            "top": "12px",
-            "bottom": "12px",
-            "left": "24px",
-            "right": "24px"
-          }
+            "units": [
+                "px",
+                "rem",
+                "%",
+                "vh"
+            ],
+            "spacingScale": {
+                "operator": "*",
+                "increment": 1.5,
+                "steps": 7,
+                "mediumStep": 1.5,
+                "unit": "rem"
+            },
+            "blockGap": "0px"
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#FFFFFF",
+            "text": "var(--wp--preset--color--body-text)"
         },
         "typography": {
-          "fontFamily": "var(--wp--preset--font-family--primary)",
-          "fontSize": "0.9375rem",
-          "fontWeight": "700"
-        }
-      }
-    },
-    "blocks": {
-      "core/details": {
-        "border": {
-          "color": "var(--wp--preset--color--border)",
-          "width": "1px",
-          "radius": "8px"
+            "fontFamily": "var(--wp--preset--font-family--primary)",
+            "fontSize": "var(--wp--preset--font-size--medium)",
+            "lineHeight": "1.6"
         },
-        "color": {
-          "background": "var(--wp--preset--color--white)"
+        "elements": {
+            "heading": {
+                "color": {
+                    "text": "var(--wp--preset--color--navy)"
+                },
+                "typography": {
+                    "fontFamily": "var(--wp--preset--font-family--primary)",
+                    "fontWeight": "800",
+                    "lineHeight": "1.2"
+                }
+            },
+            "h1": {
+                "typography": {
+                    "fontSize": "var(--wp--preset--font-size--h1)",
+                    "letterSpacing": "-0.02em"
+                }
+            },
+            "h2": {
+                "typography": {
+                    "fontSize": "var(--wp--preset--font-size--h2)",
+                    "letterSpacing": "-0.015em"
+                }
+            },
+            "h3": {
+                "typography": {
+                    "fontSize": "var(--wp--preset--font-size--h3)"
+                }
+            },
+            "link": {
+                "color": {
+                    "text": "var(--wp--preset--color--electric-blue)"
+                },
+                ":hover": {
+                    "color": {
+                        "text": "var(--wp--preset--color--violet)"
+                    }
+                }
+            },
+            "button": {
+                "color": {
+                    "background": "var(--wp--preset--color--electric-blue)",
+                    "text": "var(--wp--preset--color--white)"
+                },
+                "border": {
+                    "radius": "6px"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "12px",
+                        "bottom": "12px",
+                        "left": "24px",
+                        "right": "24px"
+                    }
+                },
+                "typography": {
+                    "fontFamily": "var(--wp--preset--font-family--primary)",
+                    "fontSize": "0.9375rem",
+                    "fontWeight": "700"
+                }
+            }
+        },
+        "blocks": {
+            "core/details": {
+                "border": {
+                    "color": "var(--wp--preset--color--border)",
+                    "width": "1px",
+                    "radius": "8px"
+                },
+                "color": {
+                    "background": "var(--wp--preset--color--white)"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "16px",
+                        "bottom": "16px",
+                        "left": "20px",
+                        "right": "20px"
+                    }
+                }
+            }
         },
         "spacing": {
-          "padding": {
-            "top": "16px",
-            "bottom": "16px",
-            "left": "20px",
-            "right": "20px"
-          }
+            "blockGap": "0px",
+            "margin": {
+                "top": "0px",
+                "bottom": "0px"
+            },
+            "padding": {
+                "top": "0px",
+                "bottom": "0px"
+            }
         }
-      }
     }
-  }
 }
