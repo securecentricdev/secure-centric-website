@@ -91,19 +91,19 @@ function secure_centric_enqueue_assets() {
         'secure-centric-variables',
         get_template_directory_uri() . '/assets/css/variables.css',
         array(),
-        '3.9.3'
+        '3.9.4'
     );
     wp_enqueue_style(
         'secure-centric-components',
         get_template_directory_uri() . '/assets/css/components.css',
         array( 'secure-centric-variables' ),
-        '3.9.3'
+        '3.9.4'
     );
     wp_enqueue_style(
         'secure-centric-pages',
         get_template_directory_uri() . '/assets/css/pages.css',
         array( 'secure-centric-components' ),
-        '3.9.3'
+        '3.9.4'
     );
 
     // Frontend Interactive Scripts (Roadmap Stepper, Testimonials Controller, Navigation)
@@ -111,14 +111,14 @@ function secure_centric_enqueue_assets() {
         'secure-centric-data',
         get_template_directory_uri() . '/assets/js/data.js',
         array(),
-        '3.9.3',
+        '3.9.4',
         true
     );
     wp_enqueue_script(
         'secure-centric-app',
         get_template_directory_uri() . '/assets/js/app.js',
         array( 'secure-centric-data' ),
-        '3.9.3',
+        '3.9.4',
         true
     );
 }
@@ -138,19 +138,19 @@ function secure_centric_editor_assets() {
         'secure-centric-editor-styles',
         get_template_directory_uri() . '/assets/css/variables.css',
         array(),
-        '3.9.3'
+        '3.9.4'
     );
     wp_enqueue_style(
         'secure-centric-editor-components',
         get_template_directory_uri() . '/assets/css/components.css',
         array( 'secure-centric-editor-styles' ),
-        '3.9.3'
+        '3.9.4'
     );
     wp_enqueue_style(
         'secure-centric-editor-pages',
         get_template_directory_uri() . '/assets/css/pages.css',
         array( 'secure-centric-editor-components' ),
-        '3.9.3'
+        '3.9.4'
     );
 }
 add_action( 'enqueue_block_editor_assets', 'secure_centric_editor_assets' );

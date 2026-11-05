@@ -181,7 +181,7 @@
               <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
                 In-person physical &amp; technical walkthrough of facilities, server rooms, and shop-floor enclaves.
               </p>
-              <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+              <div class="step-cta-group" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
                 
                   <button type="button" class="btn btn-primary" onclick="window.selectRoadmapStep(1, event)">
                     Advance to Milestone 02: Scoping →

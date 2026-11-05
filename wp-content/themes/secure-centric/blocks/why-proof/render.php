@@ -52,7 +52,7 @@ $reasons = array(
 
 <section class="section-white py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/why-proof-badges">
   <div class="site-container">
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
+    <div class="why-header-row" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
       <div style="max-width: 780px;">
         <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
         <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
@@ -63,9 +63,9 @@ $reasons = array(
       <a href="<?php echo esc_url( $link_url ); ?>" class="text-link" style="white-space: nowrap; font-weight: 700;"><?php echo esc_html( $link_text ); ?></a>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px; align-items: start;">
+    <div class="why-proof-grid">
       <!-- Left Stats Numbers -->
-      <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="why-stats-col">
         <?php foreach ( $stats as $s ) : ?>
           <div class="stats-number-block">
             <div class="number <?php echo esc_attr( $s['color'] ); ?>"><?php echo esc_html( $s['number'] ); ?></div>
@@ -76,7 +76,7 @@ $reasons = array(
       </div>
 
       <!-- Right 4 Reasons Grid -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+      <div class="why-cards-grid">
         <?php foreach ( $reasons as $r ) : ?>
           <div class="card-white" style="padding: 24px; display: flex; flex-direction: column; gap: 8px;">
             <div class="card-icon-box" style="width: 36px; height: 36px; font-size: 1.1rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;">🛡️</div>
@@ -88,7 +88,7 @@ $reasons = array(
     </div>
 
     <!-- Verified Credentials Bottom Strip -->
-    <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    <div class="why-badges-row">
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <span style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-slate); font-weight: 700;">Official Badges:</span>
         <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;">🛡️ Cyber AB RPO #3942</span>
