@@ -251,6 +251,16 @@
   color: var(--color-navy);
 }
 
+.logo-item-img {
+  height: 28px;
+  max-height: 28px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* ---------- 8-Step CMMC Roadmap Component ---------- */
 .roadmap-wrap {
   background-color: var(--color-ice);

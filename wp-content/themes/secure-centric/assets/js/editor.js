@@ -12,7 +12,7 @@
     const { createElement: el, Fragment } = wp.element;
     const blockEditor = wp.blockEditor || wp.editor;
     const { InspectorControls, useBlockProps } = blockEditor;
-    const { PanelBody, TextControl, TextareaControl, SelectControl } = wp.components;
+    const { PanelBody, TextControl, TextareaControl, SelectControl, Button } = wp.components;
     const ServerSideRender = wp.serverSideRender;
 
     /**
@@ -193,22 +193,251 @@
     });
 
     // =========================================================================
-    // 2. LOGO MARQUEE BLOCK
+    // 2. LOGO MARQUEE BLOCK (CUSTOM MEDIA UPLOADS & LOGOS LIST MANAGER)
     // =========================================================================
-    createBlockRegistration('secure-centric/logo-marquee', {
-      title: 'Defense Marquee (Infinite Logos)',
-      icon: 'format-image',
-      category: 'secure-centric-heroes',
-      panels: [
-        {
-          title: 'Marquee Settings',
-          initialOpen: true,
-          fields: [
-            { name: 'title', label: 'Header Text', default: 'TRUSTED BY DEFENSE CONTRACTORS & AEROSPACE SUPPLIERS NATIONWIDE' },
-            { name: 'logosList', label: 'Logos (comma separated)', type: 'textarea', rows: 4, default: 'General Dynamics, Northrop Grumman, Raytheon Technologies, Lockheed Martin, L3Harris, BAE Systems, Boeing Defense, Honeywell Aerospace, Leidos, CACI' }
-          ]
+    registerBlockType('secure-centric/logo-marquee', {
+      title: 'Client Logos Marquee',
+      icon: 'images-alt2',
+      category: 'secure-centric-proof',
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        // Parse structured logos
+        let currentLogos = [];
+        if (attributes.logosData) {
+          try {
+            const parsed = JSON.parse(attributes.logosData);
+            if (Array.isArray(parsed)) currentLogos = parsed;
+          } catch (e) {}
         }
-      ]
+        if (!currentLogos || !currentLogos.length) {
+          if (attributes.logos && Array.isArray(attributes.logos) && attributes.logos.length) {
+            currentLogos = attributes.logos;
+          } else if (attributes.logosList) {
+            currentLogos = attributes.logosList.split(',').map(function (s) {
+              return { name: s.trim(), imageUrl: '', imageId: 0 };
+            }).filter(function (x) { return x.name; });
+          } else {
+            currentLogos = [
+              { name: 'Tower Semiconductor', imageUrl: '', imageId: 0 },
+              { name: 'Safran Federal Systems', imageUrl: '', imageId: 0 },
+              { name: 'Goodwin & Associates', imageUrl: '', imageId: 0 },
+              { name: 'HRD Aero Systems', imageUrl: '', imageId: 0 },
+              { name: 'Precision Aerospace', imageUrl: '', imageId: 0 },
+              { name: 'Defense Dynamics', imageUrl: '', imageId: 0 }
+            ];
+          }
+        }
+
+        function updateLogos(newLogos) {
+          setAttributes({
+            logosData: JSON.stringify(newLogos),
+            logosList: newLogos.map(function (l) { return l.name; }).filter(Boolean).join(', ')
+          });
+        }
+
+        function addLogo() {
+          const next = currentLogos.concat([{
+            name: 'New Client Partner',
+            imageUrl: '',
+            imageId: 0
+          }]);
+          updateLogos(next);
+        }
+
+        function removeLogo(idx) {
+          const next = currentLogos.filter(function (_, i) { return i !== idx; });
+          updateLogos(next);
+        }
+
+        function updateLogoItem(idx, fields) {
+          const next = currentLogos.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateLogos(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const MediaUploadComponent = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Marquee Title & Headline', initialOpen: true },
+            el(TextControl, {
+              label: 'Section Header Title',
+              value: attributes.title !== undefined ? attributes.title : 'Organizations that have worked with Secure-Centric',
+              onChange: function (val) { setAttributes({ title: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Client Logos (' + currentLogos.length + ')', initialOpen: true },
+            el('p', { style: { fontSize: '12px', color: '#64748B', marginBottom: '14px', lineHeight: 1.5 } },
+              'Upload custom logo images from your WordPress media library and edit the company name displayed beside each logo. Add as many client logos as you need.'
+            ),
+            currentLogos.map(function (item, idx) {
+              return el('div', {
+                key: 'logo-item-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '12px'
+                }
+              },
+                el('div', {
+                  style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }
+                },
+                  el('strong', { style: { fontSize: '12px', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.03em' } },
+                    'Logo #' + (idx + 1) + (item.name ? ' · ' + item.name : '')
+                  ),
+                  el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeLogo(idx); }
+                  }, 'Remove')
+                ),
+                el('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' } },
+                  item.imageUrl ? el('div', {
+                    style: {
+                      width: '64px',
+                      height: '40px',
+                      background: '#fff',
+                      border: '1px solid #CBD5E1',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '2px',
+                      overflow: 'hidden'
+                    }
+                  },
+                    el('img', {
+                      src: item.imageUrl,
+                      style: { maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' },
+                      alt: item.name || 'Logo'
+                    })
+                  ) : el('div', {
+                    style: {
+                      width: '64px',
+                      height: '40px',
+                      background: '#EEF2FF',
+                      border: '1px dashed #2F5BFF',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '11px',
+                      color: '#2F5BFF',
+                      fontWeight: 600
+                    }
+                  }, 'No Logo'),
+                  MediaUploadComponent ? el(MediaUploadComponent, {
+                    onSelect: function (media) {
+                      updateLogoItem(idx, { imageUrl: media.url, imageId: media.id });
+                    },
+                    allowedTypes: ['image'],
+                    value: item.imageId,
+                    render: function (mediaObj) {
+                      return el(Button, {
+                        isSecondary: true,
+                        isSmall: true,
+                        onClick: mediaObj.open
+                      }, item.imageUrl ? 'Change Logo' : 'Upload Logo');
+                    }
+                  }) : null,
+                  item.imageUrl ? el(Button, {
+                    isTertiary: true,
+                    isSmall: true,
+                    onClick: function () {
+                      updateLogoItem(idx, { imageUrl: '', imageId: 0 });
+                    }
+                  }, 'Clear Image') : null
+                ),
+                el(TextControl, {
+                  label: 'Company Name (beside logo)',
+                  value: item.name || '',
+                  placeholder: 'e.g. Tower Semiconductor, Safran...',
+                  onChange: function (val) {
+                    updateLogoItem(idx, { name: val });
+                  }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '10px', padding: '10px', fontWeight: 600 },
+              onClick: addLogo
+            }, '+ Add New Logo')
+          )
+        );
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/logo-marquee',
+          attributes: attributes
+        }) : null;
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '12px 18px',
+            background: '#F0F4FF',
+            border: '1px dashed #2F5BFF',
+            borderRadius: '6px',
+            marginTop: '12px'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '⭐ Client Logos Marquee (' + currentLogos.length + ' logos) · Upload logos and set company names in the right sidebar.'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addLogo
+          }, '+ Add New Logo')
+        ) : null;
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================

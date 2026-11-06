@@ -2,18 +2,22 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "secure-centric/logo-marquee",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Client Logos Marquee",
   "category": "secure-centric-proof",
   "icon": "images-alt2",
-  "description": "Infinite smooth scrolling ticker of defense contractors and prime suppliers.",
-  "keywords": ["logos", "marquee", "clients", "defense"],
+  "description": "Infinite smooth scrolling ticker of defense contractors and prime suppliers with customizable uploaded logos and names.",
+  "keywords": ["logos", "marquee", "clients", "defense", "upload"],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "attributes": {
     "title": {
       "type": "string",
       "default": "Organizations that have worked with Secure-Centric"
+    },
+    "logosData": {
+      "type": "string",
+      "default": ""
     },
     "logosList": {
       "type": "string",
