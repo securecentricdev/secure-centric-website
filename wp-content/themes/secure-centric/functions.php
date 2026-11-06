@@ -25,6 +25,33 @@ function secure_centric_setup() {
 add_action( 'after_setup_theme', 'secure_centric_setup' );
 
 /**
+ * Safe JSON block attribute decoder with unicode unescaping
+ */
+function sc_decode_block_json( $val ) {
+    if ( empty( $val ) ) {
+        return array();
+    }
+    if ( is_array( $val ) ) {
+        return $val;
+    }
+    if ( is_string( $val ) ) {
+        // Resolve double-escaped Gutenberg unicode strings
+        $val = preg_replace_callback( '/u005c(u[0-9a-fA-F]{4})/', function( $m ) {
+            return json_decode( '"\\' . $m[1] . '"' );
+        }, $val );
+        $val = preg_replace_callback( '/(?<![a-zA-Z0-9])u([0-9a-fA-F]{4})/', function( $m ) {
+            return json_decode( '"\u' . $m[1] . '"' );
+        }, $val );
+        $val = str_replace( array( '\u0022', 'u0022', '&quot;' ), '"', $val );
+        $decoded = json_decode( $val, true );
+        if ( is_array( $decoded ) ) {
+            return $decoded;
+        }
+    }
+    return array();
+}
+
+/**
  * Register Custom Gutenberg Blocks via block.json
  */
 function secure_centric_register_custom_blocks() {
@@ -56,6 +83,8 @@ function secure_centric_register_custom_blocks() {
         'resource-cards',
         'form-embed',
         'team-grid',
+        'numbers-results',
+        'bullets-grid',
     );
 
     foreach ( $blocks as $block ) {

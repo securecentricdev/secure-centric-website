@@ -15,7 +15,7 @@ $description = ! empty( $attributes['description'] ) ? $attributes['description'
 
 $members = array();
 if ( ! empty( $attributes['membersData'] ) ) {
-    $decoded = json_decode( $attributes['membersData'], true );
+    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['membersData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['membersData'] ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         $members = $decoded;
     }
@@ -25,31 +25,24 @@ if ( empty( $members ) ) {
     $members = array(
         array(
             'name'     => 'Jake "EJ" Celler',
-            'role'     => 'Co-Founder & Lead Registered Practitioner',
+            'role'     => 'Founder & Lead Registered Practitioner (RP)',
             'initials' => 'JC',
             'badge'    => '✓ Cyber AB RP',
-            'bio'      => 'Former DoD cybersecurity engineer and lead assessor advisor. Guides precision manufacturers and aerospace suppliers through scoping, boundary isolation, and DIBCAC defense.'
+            'bio'      => '15+ years guiding defense industrial base contractors through NIST SP 800-171, DFARS 7012, and CMMC. Accredited Cyber AB Registered Practitioner with 100% C3PAO pass record.'
         ),
         array(
             'name'     => 'Son Phan',
-            'role'     => 'Co-Founder & Technical Architect',
+            'role'     => 'VP Operations & Compliance Director',
             'initials' => 'SP',
             'badge'    => '✓ Cyber AB RP',
-            'bio'      => 'Enterprise systems architect specializing in enclave segregation, AWS GovCloud, GCC High migrations, and technical 110-control NIST SP 800-171 enforcement.'
+            'bio'      => 'Specialist in CUI scoping boundaries, IT/OT enclave segmentation, and federal acquisition compliance architectures for aerospace and defense manufacturers.'
         ),
         array(
-            'name'     => 'Desmond Thompson',
-            'role'     => 'Registered Practitioner & Pre-Audit Lead',
-            'initials' => 'DT',
+            'name'     => 'Senior Registered Practitioners',
+            'role'     => 'Audit Defense & Technical Implementation Leads',
+            'initials' => 'RP',
             'badge'    => '✓ Cyber AB RP',
-            'bio'      => 'Leads simulated mock C3PAO audits, evidence portfolio reviews, and assessor interview preparation. 100% first-attempt pass rate across all client evaluations.'
-        ),
-        array(
-            'name'     => 'Elena Vasquez',
-            'role'     => 'Compliance Author & Policy Lead',
-            'initials' => 'EV',
-            'badge'    => '✓ Compliance Author',
-            'bio'      => 'Specialist in custom System Security Plan (SSP) authoring, POA&M remediation tracking, and defensible operational policy formulation tailored to machine shops.'
+            'bio'      => 'Former DoD assessment leads, CISSPs, and CMMC Certified Professionals conducting in-person facility walkthroughs, technical mock audits, and assessor interviews.'
         )
     );
 }

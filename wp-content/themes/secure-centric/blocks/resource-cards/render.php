@@ -14,7 +14,7 @@ $title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC guides, 
 $cards = array();
 
 if ( ! empty( $attributes['resourcesData'] ) ) {
-    $decoded = json_decode( $attributes['resourcesData'], true );
+    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['resourcesData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['resourcesData'] ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         $cards = $decoded;
     }
@@ -77,8 +77,9 @@ if ( empty( $cards ) ) {
     <h3 style="margin-bottom: 24px;"><?php echo esc_html( $title ); ?></h3>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
       <?php foreach ( $cards as $res ) : ?>
+        <?php $card_icon = ( ! empty( $res['icon'] ) && false === strpos( $res['icon'], 'u00' ) ) ? $res['icon'] : '📁'; ?>
         <div class="card-white" style="display: flex; flex-direction: column;">
-          <div class="card-icon-box" style="margin-bottom: 12px; font-size: 1.25rem;"><?php echo esc_html( $res['icon'] ); ?></div>
+          <div class="card-icon-box" style="margin-bottom: 12px; font-size: 1.25rem;"><?php echo esc_html( $card_icon ); ?></div>
           <h4 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--color-navy);"><?php echo esc_html( $res['title'] ); ?></h4>
           <p style="font-size: 0.875rem; color: var(--color-body-text); margin: 0 0 16px; flex-grow: 1; line-height: 1.55;">
             <?php echo esc_html( $res['desc'] ); ?>

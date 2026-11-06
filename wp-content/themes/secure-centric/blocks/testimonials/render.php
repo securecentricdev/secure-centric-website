@@ -63,17 +63,17 @@ $default_reviews = array(
 
 $reviews = array();
 if ( ! empty( $attributes['testimonialsData'] ) ) {
-    $decoded = json_decode( $attributes['testimonialsData'], true );
+    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['testimonialsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['testimonialsData'] ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         foreach ( $decoded as $idx => $item ) {
             $reviews[] = array(
-                'num'          => sprintf( '%02d', $idx + 1 ),
+                'num'          => ! empty( $item['num'] ) ? $item['num'] : sprintf( '%02d', $idx + 1 ),
                 'quote'        => ! empty( $item['quote'] ) ? $item['quote'] : '',
-                'author'       => ! empty( $item['author'] ) ? $item['author'] : '',
+                'author'       => ! empty( $item['author'] ) ? $item['author'] : ( ! empty( $item['name'] ) ? $item['name'] : '' ),
                 'role'         => ! empty( $item['role'] ) ? $item['role'] : '',
                 'avatar'       => ! empty( $item['avatar'] ) ? $item['avatar'] : ( ! empty( $item['author'] ) ? strtoupper( substr( $item['author'], 0, 2 ) ) : 'SC' ),
-                'linkedin_url' => ! empty( $item['linkedinUrl'] ) ? $item['linkedinUrl'] : '',
-                'linkedin_text'=> ! empty( $item['linkedinText'] ) ? $item['linkedinText'] : 'Shared publicly on LinkedIn',
+                'linkedin_url' => ! empty( $item['linkedinUrl'] ) ? $item['linkedinUrl'] : ( ! empty( $item['linkedin_url'] ) ? $item['linkedin_url'] : '' ),
+                'linkedin_text'=> ! empty( $item['linkedinText'] ) ? $item['linkedinText'] : ( ! empty( $item['linkedin_text'] ) ? $item['linkedin_text'] : 'Shared publicly on LinkedIn' ),
             );
         }
     }
@@ -121,25 +121,36 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
 }
 ?>
 
-<section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-carousel" id="testimonials-section">
-  <div class="site-container">
-    <div class="testimonials-header-row">
-      <div>
-        <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+<?php if ( 'grid' === $display_mode ) : ?>
+  <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-grid" id="testimonials-section">
+    <div class="site-container">
+      <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
+        <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
         <h2><?php echo esc_html( $title ); ?></h2>
+        <p style="color: var(--color-slate); max-width: 600px; margin: 8px auto 0; font-size: 1.05rem;">
+          <?php echo esc_html( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Real feedback from C-level executives and IT leadership across the defense industrial base.' ); ?>
+        </p>
       </div>
-    </div>
-  </div>
-
-  <?php if ( 'grid' === $display_mode ) : ?>
-    <div class="site-container" style="margin-top: 32px;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+      <div class="testimonials-static-grid">
         <?php foreach ( $reviews as $idx => $rev ) : ?>
           <?php echo sc_render_testimonial_card( $rev, $idx ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
         <?php endforeach; ?>
       </div>
     </div>
-  <?php else : ?>
+  </section>
+<?php else : ?>
+  <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-carousel" id="testimonials-section">
+    <div class="site-container">
+      <div class="testimonials-header-row">
+        <div>
+          <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+          <h2><?php echo esc_html( $title ); ?></h2>
+          <?php if ( ! empty( $attributes['subtitle'] ) ) : ?>
+            <p style="color: var(--color-body-text); font-size: 1.05rem; margin-top: 8px;"><?php echo esc_html( $attributes['subtitle'] ); ?></p>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
     <div class="testimonials-carousel-container" onmouseenter="this.querySelector('.testimonials-carousel-track')?.classList.add('is-paused')" onmouseleave="this.querySelector('.testimonials-carousel-track')?.classList.remove('is-paused')" onclick="this.querySelector('.testimonials-carousel-track')?.classList.toggle('is-paused')">
       <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
         <?php
@@ -154,5 +165,5 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
         ?>
       </div>
     </div>
-  <?php endif; ?>
-</section>
+  </section>
+<?php endif; ?>

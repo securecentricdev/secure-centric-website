@@ -2118,7 +2118,286 @@
       }
     });
 
-    console.log('Secure-Centric All 12 Gutenberg Blocks Registered with Granular InspectorControls!');
+    /* ==========================================================================
+       13. NUMBERS & RESULTS GRID BLOCK
+       ========================================================================== */
+    registerBlockType('secure-centric/numbers-results', {
+      edit: function (props) {
+        const attributes = props.attributes;
+        const setAttributes = props.setAttributes;
+        const isSelected = props.isSelected;
+        const clientId = props.clientId;
+
+        let results = [];
+        try {
+          results = attributes.resultsData ? JSON.parse(attributes.resultsData) : [];
+        } catch (e) {
+          results = [];
+        }
+        if (!results.length) {
+          results = [
+            { number: '120+', title: 'Defense Contractors Prepared', desc: 'Guided across 45 states protecting $2.4B in active DoD solicitations.' },
+            { number: '100%', title: 'C3PAO First-Time Pass Rate', desc: 'Zero clients failed an official external third-party audit after readiness sign-off.' },
+            { number: '3 Weeks', title: 'On-Site Walkthrough Guarantee', desc: 'In-person facility inspection of server rooms and shop-floor enclaves.' },
+            { number: 'Flat-Fee', title: 'Fixed Transparent Scope', desc: 'Zero hourly billing surprises, travel markups, or tool licensing kickbacks.' }
+          ];
+        }
+
+        function updateResults(newList) {
+          setAttributes({ resultsData: JSON.stringify(newList) });
+        }
+
+        function updateResultItem(index, key, val) {
+          const next = results.slice();
+          next[index] = Object.assign({}, next[index], { [key]: val });
+          updateResults(next);
+        }
+
+        function addResultItem() {
+          const next = results.concat([{ number: '99%', title: 'Metric Title', desc: 'Operational description.' }]);
+          updateResults(next);
+        }
+
+        function removeResultItem(index) {
+          const next = results.filter(function (_, i) { return i !== index; });
+          updateResults(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/numbers-results',
+          attributes: attributes
+        }) : el('div', { style: { padding: '20px', background: '#0a0f1d', color: '#fff', textAlign: 'center' } }, 'Results Grid: ' + (attributes.title || 'Our results'));
+
+        const inlineActionBar = el(
+          'div',
+          { className: 'sc-inline-block-actions' },
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addResultItem
+          }, '+ Add Result Card')
+        );
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Results Header', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow || '// VERIFIED TRACK RECORD',
+              onChange: function (v) { setAttributes({ eyebrow: v }); }
+            }),
+            el(TextControl, {
+              label: 'Section Title',
+              value: attributes.title || 'Our results',
+              onChange: function (v) { setAttributes({ title: v }); }
+            }),
+            el(TextControl, {
+              label: 'Subtitle / Description',
+              value: attributes.subtitle || '',
+              onChange: function (v) { setAttributes({ subtitle: v }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Result Metric Cards (' + results.length + ')', initialOpen: true },
+            results.map(function (r, idx) {
+              return el('div', {
+                key: 'num-card-' + idx,
+                style: { background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }
+              },
+                el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
+                  el('strong', { style: { color: '#0F172A' } }, '#' + (idx + 1) + ' ' + (r.number || 'Number')),
+                  el(Button, { isDestructive: true, isSmall: true, onClick: function () { removeResultItem(idx); } }, 'Remove')
+                ),
+                el(TextControl, {
+                  label: 'Number / Stat',
+                  value: r.number || '',
+                  onChange: function (v) { updateResultItem(idx, 'number', v); }
+                }),
+                el(TextControl, {
+                  label: 'Metric Title',
+                  value: r.title || '',
+                  onChange: function (v) { updateResultItem(idx, 'title', v); }
+                }),
+                el(TextareaControl, {
+                  label: 'Description',
+                  value: r.desc || '',
+                  rows: 2,
+                  onChange: function (v) { updateResultItem(idx, 'desc', v); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addResultItem
+            }, '+ Add Result Card')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el('div', blockProps, previewElement, inlineActionBar)
+        );
+      },
+      save: function () {
+        return null;
+      }
+    });
+
+    /* ==========================================================================
+       14. BULLETS & PRINCIPLES GRID BLOCK
+       ========================================================================== */
+    registerBlockType('secure-centric/bullets-grid', {
+      edit: function (props) {
+        const attributes = props.attributes;
+        const setAttributes = props.setAttributes;
+        const isSelected = props.isSelected;
+        const clientId = props.clientId;
+
+        let bullets = [];
+        try {
+          bullets = attributes.bulletsData ? JSON.parse(attributes.bulletsData) : [];
+        } catch (e) {
+          bullets = [];
+        }
+        if (!bullets.length) {
+          bullets = [
+            { title: 'Independent Advice', desc: 'We do not sell firewalls, MSP services, or software licenses. Our recommendations are 100% objective and tailored to your existing IT footprint.' },
+            { title: 'On Site by Default', desc: 'We conduct physical facility walkthroughs in person. You cannot verify CMMC compliance over a Zoom screen—we inspect server rooms, wiring closets, and shop floors.' },
+            { title: 'Plain English', desc: 'No impenetrable jargon. We translate 320 assessment objectives into clear operational steps your executives, engineers, and shop foremen understand.' },
+            { title: 'Strict Conflict Separation', desc: 'We never assess clients we advise. Under Cyber AB rules, we are strictly an RPO advisor so our loyalty is 100% with defending your organization.' }
+          ];
+        }
+
+        function updateBullets(newList) {
+          setAttributes({ bulletsData: JSON.stringify(newList) });
+        }
+
+        function updateBulletItem(index, key, val) {
+          const next = bullets.slice();
+          next[index] = Object.assign({}, next[index], { [key]: val });
+          updateBullets(next);
+        }
+
+        function addBulletItem() {
+          const next = bullets.concat([{ title: 'Core Principle', desc: 'Defensible execution specification.' }]);
+          updateBullets(next);
+        }
+
+        function removeBulletItem(index) {
+          const next = bullets.filter(function (_, i) { return i !== index; });
+          updateBullets(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/bullets-grid',
+          attributes: attributes
+        }) : el('div', { style: { padding: '20px', background: '#fff' } }, 'Bullets Grid: ' + (attributes.title || 'How we work'));
+
+        const inlineActionBar = el(
+          'div',
+          { className: 'sc-inline-block-actions' },
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addBulletItem
+          }, '+ Add Principle Card')
+        );
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Principles Header', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow || '// CORE PRINCIPLES & INDICATORS',
+              onChange: function (v) { setAttributes({ eyebrow: v }); }
+            }),
+            el(TextControl, {
+              label: 'Section Title',
+              value: attributes.title || 'How we work',
+              onChange: function (v) { setAttributes({ title: v }); }
+            }),
+            el(TextControl, {
+              label: 'Subtitle / Description',
+              value: attributes.subtitle || '',
+              onChange: function (v) { setAttributes({ subtitle: v }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Principle Cards (' + bullets.length + ')', initialOpen: true },
+            bullets.map(function (b, idx) {
+              return el('div', {
+                key: 'bullet-card-' + idx,
+                style: { background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }
+              },
+                el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
+                  el('strong', { style: { color: '#0F172A' } }, '#' + (idx + 1) + ' ' + (b.title || 'Principle')),
+                  el(Button, { isDestructive: true, isSmall: true, onClick: function () { removeBulletItem(idx); } }, 'Remove')
+                ),
+                el(TextControl, {
+                  label: 'Card Title',
+                  value: b.title || '',
+                  onChange: function (v) { updateBulletItem(idx, 'title', v); }
+                }),
+                el(TextareaControl, {
+                  label: 'Description',
+                  value: b.desc || '',
+                  rows: 2,
+                  onChange: function (v) { updateBulletItem(idx, 'desc', v); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addBulletItem
+            }, '+ Add Principle Card')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el('div', blockProps, previewElement, inlineActionBar)
+        );
+      },
+      save: function () {
+        return null;
+      }
+    });
+
+    console.log('Secure-Centric All 14 Gutenberg Blocks Registered with Granular InspectorControls!');
   }
 
   if (wp.domReady) {

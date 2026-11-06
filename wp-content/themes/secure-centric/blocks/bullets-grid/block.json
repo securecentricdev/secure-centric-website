@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/bullets-grid",
+  "version": "1.0.0",
+  "title": "Secure-Centric Bullets & Principles Grid",
+  "category": "secure-centric-proof",
+  "icon": "yes-alt",
+  "description": "Grid of principles, indicators, or requirements with checkmark icons.",
+  "keywords": ["bullets", "principles", "indicators", "checkmarks", "standards"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// CORE PRINCIPLES & INDICATORS" },
+    "title": { "type": "string", "default": "How we work" },
+    "subtitle": { "type": "string", "default": "Principles, not process: independent advice, on site by default, plain English, we never assess clients we advise." },
+    "bulletsData": {
+      "type": "string",
+      "default": "[{\"title\":\"Independent Advice\",\"desc\":\"We do not sell firewalls, MSP services, or software licenses. Our recommendations are 100% objective and tailored to your existing IT footprint.\"},{\"title\":\"On Site by Default\",\"desc\":\"We conduct physical facility walkthroughs in person. You cannot verify CMMC compliance over a Zoom screen—we inspect server rooms, wiring closets, and shop floors.\"},{\"title\":\"Plain English\",\"desc\":\"No impenetrable jargon. We translate 320 assessment objectives into clear operational steps your executives, engineers, and shop foremen understand.\"},{\"title\":\"Strict Conflict Separation\",\"desc\":\"We never assess clients we advise. Under Cyber AB rules, we are strictly an RPO advisor so our loyalty is 100% with defending your organization.\"}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

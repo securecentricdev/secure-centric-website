@@ -20,14 +20,20 @@ $p3      = ! empty( $attributes['p3'] ) ? $attributes['p3'] : 'Our Cyber AB Regi
   <div class="site-container" style="max-width: 900px;">
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
     <h2 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h2>
-    <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
-      <?php echo esc_html( $p1 ); ?>
-    </p>
-    <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
-      <?php echo esc_html( $p2 ); ?>
-    </p>
-    <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
-      <?php echo esc_html( $p3 ); ?>
-    </p>
+    <?php if ( ! empty( $p1 ) ) : ?>
+      <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
+        <?php echo esc_html( $p1 ); ?>
+      </p>
+    <?php endif; ?>
+    <?php if ( ! empty( $p2 ) ) : ?>
+      <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
+        <?php echo esc_html( $p2 ); ?>
+      </p>
+    <?php endif; ?>
+    <?php if ( ! empty( $p3 ) ) : ?>
+      <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
+        <?php echo esc_html( $p3 ); ?>
+      </p>
+    <?php endif; ?>
   </div>
 </section>

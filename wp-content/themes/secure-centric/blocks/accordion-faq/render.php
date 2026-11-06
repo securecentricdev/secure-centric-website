@@ -18,7 +18,7 @@ $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : '#cont
 $faqs = array();
 
 if ( ! empty( $attributes['faqsData'] ) ) {
-    $decoded = json_decode( $attributes['faqsData'], true );
+    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['faqsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['faqsData'] ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         $faqs = $decoded;
     }

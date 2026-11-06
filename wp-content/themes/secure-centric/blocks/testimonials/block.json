@@ -28,6 +28,10 @@
             "type": "string",
             "default": "What Defense Contractors Say About Working With Us"
         },
+        "subtitle": {
+            "type": "string",
+            "default": ""
+        },
         "holdDelay": {
             "type": "number",
             "default": 3500
