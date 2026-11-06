@@ -797,10 +797,20 @@
    * Render Block HTML: 8-Step CMMC Journey Roadmap
    */
   function renderJourney(block) {
-    const baseItems = (window.scRoadmapData && window.scRoadmapData.length) ? window.scRoadmapData : DEFAULT_JOURNEY_STEPS;
-    const rawItems = (block && block.items && block.items.length) ? block.items : baseItems;
-    const items = DEFAULT_JOURNEY_STEPS.map((defStep, i) => {
-      const raw = rawItems[i];
+    const rawItems = (window.scRoadmapData && window.scRoadmapData.length) 
+      ? window.scRoadmapData 
+      : ((block && block.items && block.items.length) ? block.items : DEFAULT_JOURNEY_STEPS);
+
+    const items = rawItems.map((raw, i) => {
+      const defStep = DEFAULT_JOURNEY_STEPS[i] || {
+        no: String(i + 1).padStart(2, '0'),
+        name: 'Milestone',
+        phase: 'Phase ' + (i + 1),
+        help: '',
+        who: 'Secure-Centric',
+        output: '',
+        link: '#contact'
+      };
       if (typeof raw === 'object' && raw !== null && raw.name) {
         return { ...defStep, ...raw };
       } else if (typeof raw === 'string') {
@@ -978,7 +988,7 @@
               <div class="milestone-stepper-pills">
                 <span class="milestone-flow-badge ${isStep7 ? 'violet' : ''}">
                   <span class="pulse-dot" style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px;"></span>
-                  MILESTONE ${activeStep.no} OF ${String(steps.length).padStart(2, '0')} &bull; ${phaseName}
+                  MILESTONE ${activeStep.no} OF ${String(totalSteps).padStart(2, '0')} &bull; ${phaseName}
                 </span>
               </div>
 
@@ -3244,33 +3254,45 @@
 
     // Helper: update whole section DOM smoothly
     function finishStepTransition() {
-      activeRoadmapStep = newIdx;
-      const temp = document.createElement('div');
-      temp.innerHTML = renderJourney(block);
-      const newSection = temp.firstElementChild;
-      roadmapSection.replaceWith(newSection);
+      try {
+        activeRoadmapStep = newIdx;
+        const temp = document.createElement('div');
+        temp.innerHTML = renderJourney(block);
+        const newSection = temp.firstElementChild;
+        if (newSection && roadmapSection) {
+          roadmapSection.replaceWith(newSection);
 
-      alignWalkerToActiveStep(true);
+          alignWalkerToActiveStep(true);
 
-      const newWalker = newSection.querySelector('#roadmap-walker');
-      if (newWalker) {
-        newWalker.classList.remove('is-walking');
-        newWalker.classList.add('is-idle');
+          const newWalker = newSection.querySelector('#roadmap-walker');
+          if (newWalker) {
+            newWalker.classList.remove('is-walking');
+            newWalker.classList.add('is-idle');
+          }
+
+          // Safe local scroll for mobile horizontal rail only; NEVER scroll the browser window/page
+          const timelineNav = newSection.querySelector('#roadmap-timeline-nav') || newSection.querySelector('.roadmap-timeline-nav');
+          const activeBtn = newSection.querySelector('.step-node.active');
+          if (timelineNav && activeBtn && timelineNav.scrollWidth > timelineNav.clientWidth) {
+            const targetScrollLeft = activeBtn.offsetLeft - (timelineNav.clientWidth / 2) + (activeBtn.offsetWidth / 2);
+            timelineNav.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
+          }
+
+          // Reconnect observer to the new section DOM node
+          observeRoadmapVisibility();
+        }
+      } catch (err) {
+        console.error('Error during roadmap step transition:', err);
+      } finally {
+        isRoadmapWalking = false;
+        const currentWalker = document.querySelector('#roadmap-walker');
+        if (currentWalker) {
+          currentWalker.classList.remove('is-walking');
+          currentWalker.classList.add('is-idle');
+        }
+        // Continue autoplay loop only if section is currently in full focus
+        scheduleNextAutoplayStep();
       }
-
-      // Safe local scroll for mobile horizontal rail only; NEVER scroll the browser window/page
-      const timelineNav = newSection.querySelector('#roadmap-timeline-nav') || newSection.querySelector('.roadmap-timeline-nav');
-      const activeBtn = newSection.querySelector('.step-node.active');
-      if (timelineNav && activeBtn && timelineNav.scrollWidth > timelineNav.clientWidth) {
-        const targetScrollLeft = activeBtn.offsetLeft - (timelineNav.clientWidth / 2) + (activeBtn.offsetWidth / 2);
-        timelineNav.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
-      }
-
-      // Reconnect observer to the new section DOM node
-      observeRoadmapVisibility();
-
-      // Continue autoplay loop only if section is currently in full focus
-      scheduleNextAutoplayStep();
     }
 
     // On selecting previous or looping back (step before current), instant update without forward walk
