@@ -146,22 +146,26 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             </a>
           </div>
         </div>
-        <div class="hero-home-quiz">
-          <div class="quiz-card">
-            <div class="quiz-card-badge">
-              <span><?php echo esc_html( $quiz_badge ); ?></span>
-              <span class="badge-chip"><?php echo esc_html( $quiz_chip ); ?></span>
-            </div>
-            <h3><?php echo esc_html( $quiz_title ); ?></h3>
-            <p><?php echo esc_html( $quiz_desc ); ?></p>
-            <div class="quiz-form">
-              <input type="email" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" class="quiz-input" />
-              <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                <?php echo esc_html( $quiz_btn_text ); ?>
-              </button>
-            </div>
-            <div class="quiz-note"><?php echo esc_html( $quiz_note ); ?></div>
+        <div class="hero-readiness-card">
+          <div class="eyebrow">
+            <span><?php echo esc_html( $quiz_badge ); ?></span>
+            <span class="badge-chip accent" style="font-size: 0.65rem;"><?php echo esc_html( $quiz_chip ); ?></span>
           </div>
+          <h3><?php echo esc_html( $quiz_title ); ?></h3>
+          <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px; line-height: 1.55;">
+            <?php echo esc_html( $quiz_desc ); ?>
+          </p>
+          <form class="readiness-inline-form" onsubmit="event.preventDefault(); if (typeof window.triggerToolModal === 'function') { window.triggerToolModal(); }">
+            <div style="margin-bottom: 12px;">
+              <input type="email" class="form-input" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" required />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px;">
+              <?php echo esc_html( $quiz_btn_text ); ?>
+            </button>
+          </form>
+          <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 12px; margin-bottom: 0; text-align: center;">
+            <?php echo esc_html( $quiz_note ); ?>
+          </p>
         </div>
       </div>
     </div>
