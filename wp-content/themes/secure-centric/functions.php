@@ -70,27 +70,11 @@ function secure_centric_register_custom_blocks() {
         false
     );
 
-    $blocks = array(
-        'hero',
-        'section-explainer',
-        'roadmap-stepper',
-        'testimonials',
-        'why-proof',
-        'comparison-grid',
-        'accordion-faq',
-        'cta-banner',
-        'logo-marquee',
-        'resource-cards',
-        'form-embed',
-        'team-grid',
-        'numbers-results',
-        'bullets-grid',
-    );
-
-    foreach ( $blocks as $block ) {
-        $block_dir = __DIR__ . '/blocks/' . $block;
-        if ( file_exists( $block_dir . '/block.json' ) ) {
-            register_block_type( $block_dir );
+    // Automatically register all custom blocks inside the blocks directory
+    $block_json_files = glob( __DIR__ . '/blocks/*/block.json' );
+    if ( ! empty( $block_json_files ) ) {
+        foreach ( $block_json_files as $json_file ) {
+            register_block_type( dirname( $json_file ) );
         }
     }
 }

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/textgroup-deepdive",
+  "version": "1.0.0",
+  "title": "Secure-Centric Long-Form Deep Dive Analysis",
+  "category": "secure-centric-proof",
+  "icon": "text",
+  "description": "Comprehensive regulatory and operational deep-dive section group.",
+  "keywords": ["textgroup", "analysis", "regulatory", "deepdive", "sections"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// COMPREHENSIVE COMPLIANCE ANALYSIS" },
+    "title": { "type": "string", "default": "Long-form sections" },
+    "subtitle": { "type": "string", "default": "Explanations of requirements, timelines, and assessor expectations." },
+    "sectionsData": {
+      "type": "string",
+      "default": "[{\"title\":\"What an engagement covers\",\"paragraphs\":[\"A comprehensive CMMC compliance engagement addresses all 110 requirements of NIST SP 800-171 across all 14 families—from Access Control and Incident Response to System Integrity.\",\"We examine physical security controls, facility access logs, network boundary configurations, firewall rules, and encryption ciphers on site with your engineers.\"]},{\"title\":\"Who does what: our team, your IT, the C3PAO\",\"paragraphs\":[\"Secure-Centric leads boundary scoping, evidence gathering, document authorship, and assessor defense. Your internal IT or MSP implements technical changes.\",\"An independent Authorized C3PAO assesses your organization. Cyber AB rules strictly prohibit advisory firms from auditing clients they consult for, ensuring zero conflict of interest.\"]},{\"title\":\"What we will ask you on the first call\",\"paragraphs\":[\"We review your current DoD contracts, statements of work, DFARS clauses (252.204-7012, 7019, 7020), existing SPRS scores, and operational network architecture.\",\"This 30-minute scoping call is conducted under bilateral NDA so you can share your compliance timeline and contract requirements with complete confidentiality.\"]},{\"title\":\"How you will hear from us\",\"paragraphs\":[\"You work directly with a designated Cyber AB Registered Practitioner—not junior account managers or sales representatives.\",\"We provide weekly milestone progress updates, updated SPRS scoring estimates, and clear action item matrices with designated technical owners.\"]}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

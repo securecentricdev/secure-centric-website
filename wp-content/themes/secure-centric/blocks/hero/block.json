@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "secure-centric/hero",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Secure-Centric Hero (Multi-Layout)",
   "category": "secure-centric-heroes",
   "icon": "cover-image",
@@ -12,6 +12,7 @@
   "editorScript": "secure-centric-editor-blocks",
   "attributes": {
     "layout": { "type": "string", "default": "home" },
+    "breadcrumbCurrent": { "type": "string", "default": "CMMC COMPLIANCE SERVICES" },
     "secondaryBtnText": { "type": "string", "default": "Explore Services →" },
     "secondaryBtnUrl": { "type": "string", "default": "#services" },
     "bgMediaType": { "type": "string", "default": "video" },
@@ -27,7 +28,7 @@
     "highlightText": { "type": "string", "default": "Cyber AB RPO" },
     "description": { "type": "string", "default": "We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation." },
     "primaryBtnText": { "type": "string", "default": "Book a Discovery Call →" },
-    "primaryBtnUrl": { "type": "string", "default": "#contact" },
+    "primaryBtnUrl": { "type": "string", "default": "/secure-centric/contact/" },
     "subText": { "type": "string", "default": "30 min · No sales pitch · Signed NDA" },
     "topic1Title": { "type": "string", "default": "CMMC" },
     "topic1Desc": { "type": "string", "default": "Maturity levels & framework" },
@@ -44,7 +45,10 @@
     "quizDesc": { "type": "string", "default": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit." },
     "quizPlaceholder": { "type": "string", "default": "Enter corporate work email" },
     "quizBtnText": { "type": "string", "default": "Start 3-Minute Readiness Check →" },
-    "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." }
+    "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." },
+    "phasesData": { "type": "string", "default": "[\"Scope and site visit\",\"Assess\",\"Guide the fixes\",\"Document\",\"Prepare for assessment\",\"Maintain and affirm\"]" },
+    "deliverablesData": { "type": "string", "default": "[\"Scope + data-flow diagram\",\"Ranked findings + SPRS estimate\",\"Remediation plan\",\"SSP, policies, POA&M\",\"Evidence index\",\"Annual affirmation pack\"]" },
+    "audiencesData": { "type": "string", "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]" }
   },
   "supports": {
     "html": false,

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/steps-horizontal",
+  "version": "1.0.0",
+  "title": "Secure-Centric Horizontal Steps Workflow",
+  "category": "secure-centric-process",
+  "icon": "ellipsis",
+  "description": "Clean horizontal cards showing engagement workflow steps.",
+  "keywords": ["steps", "workflow", "process", "horizontal", "timeline"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// ENGAGEMENT WORKFLOW" },
+    "title": { "type": "string", "default": "How an engagement starts" },
+    "subtitle": { "type": "string", "default": "A structured, predictable path to verifiable defense compliance with zero surprises." },
+    "stepsData": {
+      "type": "string",
+      "default": "[{\"no\":\"01\",\"title\":\"Discovery Call\",\"desc\":\"30-minute scoping discussion under bilateral NDA to review your contracts, timeline, and current SPRS status.\"},{\"no\":\"02\",\"title\":\"NDA Signed\",\"desc\":\"Bilateral non-disclosure executed within 2 hours. We review your statements of work and DFARS 7012 flowdowns.\"},{\"no\":\"03\",\"title\":\"In-Person Walkthrough\",\"desc\":\"Our Registered Practitioners visit your facility, inspect network infrastructure, and interview key personnel on site.\"},{\"no\":\"04\",\"title\":\"Scope & Action Plan\",\"desc\":\"You receive a formal CUI boundary map, estimated SPRS baseline score, and a prioritized remediation roadmap.\"}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

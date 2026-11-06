@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/lead-magnet",
+  "version": "1.0.0",
+  "title": "Secure-Centric Lead Magnet Resource Band",
+  "category": "secure-centric-cta",
+  "icon": "download",
+  "description": "High-converting downloadable checklist/workbook lead capture band.",
+  "keywords": ["lead", "download", "checklist", "workbook", "resource"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// FREE DOWNLOADABLE RESOURCE" },
+    "name": { "type": "string", "default": "First-Call Prep Checklist (what to have ready)" },
+    "docType": { "type": "string", "default": "PDF / EXCEL WORKBOOK" },
+    "placeholder": { "type": "string", "default": "Enter corporate email address" },
+    "btnText": { "type": "string", "default": "Instant Free Download →" },
+    "disclaimer": { "type": "string", "default": "Strictly confidential. No spam guarantee." },
+    "ticksData": {
+      "type": "string",
+      "default": "[\"Line-by-line audit objective breakdown with defense-industry scoring weights\",\"Assessor evidence artifact templates and dual-source verification matrix\",\"Automated SPRS deduction formulas and deficiency priority flags\",\"Executive ownership tracker with target closeout dates for internal teams\"]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

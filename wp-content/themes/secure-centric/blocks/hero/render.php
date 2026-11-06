@@ -1,6 +1,7 @@
 <?php
 /**
  * Render Template for Hero Block (Multi-Layout)
+ * Strictly matches demo/assets/js/app.js renderHeroHome, renderHeroService, renderHeroICP, renderHeroSplit, renderHeroCenter, renderContactHero
  *
  * @package SecureCentric
  */
@@ -10,13 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $layout             = ! empty( $attributes['layout'] ) ? $attributes['layout'] : 'home';
-$eyebrow            = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// NIST SP 800-171 / CMMC Compliance Consultants';
+$eyebrow            = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// NIST SP 800-171 / CMMC Compliance Consultants';
 $title              = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC compliance for defense subcontractors, guided by a Cyber AB RPO';
 $highlight_text     = ! empty( $attributes['highlightText'] ) ? $attributes['highlightText'] : 'Cyber AB RPO';
 $description        = ! empty( $attributes['description'] ) ? $attributes['description'] : 'We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation.';
 $primary_btn_text   = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
-$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : '#contact';
+$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : home_url( '/contact/' );
+$secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? $attributes['secondaryBtnText'] : 'Explore Every Phase ↓';
+$secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['secondaryBtnUrl'] : '#phases-detail';
 $sub_text           = ! empty( $attributes['subText'] ) ? $attributes['subText'] : '30 min · No sales pitch · Signed NDA';
+$breadcrumb_current = ! empty( $attributes['breadcrumbCurrent'] ) ? $attributes['breadcrumbCurrent'] : 'CMMC COMPLIANCE SERVICES';
 
 // Topic Pills
 $topic1_title = ! empty( $attributes['topic1Title'] ) ? $attributes['topic1Title'] : 'CMMC';
@@ -40,6 +44,50 @@ $quiz_placeholder = ! empty( $attributes['quizPlaceholder'] ) ? $attributes['qui
 $quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Start 3-Minute Readiness Check →';
 $quiz_note        = ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : '🔒 Work email required. Never submit classified or CUI information.';
 
+// Multi-entry arrays for specialized layouts
+$phases_list = array(
+    'Scope and site visit',
+    'Assess',
+    'Guide the fixes',
+    'Document',
+    'Prepare for assessment',
+    'Maintain and affirm',
+);
+if ( ! empty( $attributes['phasesData'] ) ) {
+    $dec_p = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['phasesData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['phasesData'] ), true );
+    if ( is_array( $dec_p ) && ! empty( $dec_p ) ) {
+        $phases_list = $dec_p;
+    }
+}
+
+$deliverables_list = array(
+    'Scope + data-flow diagram',
+    'Ranked findings + SPRS estimate',
+    'Remediation plan',
+    'SSP, policies, POA&M',
+    'Evidence index',
+    'Annual affirmation pack',
+);
+if ( ! empty( $attributes['deliverablesData'] ) ) {
+    $dec_d = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['deliverablesData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['deliverablesData'] ), true );
+    if ( is_array( $dec_d ) && ! empty( $dec_d ) ) {
+        $deliverables_list = $dec_d;
+    }
+}
+
+$audiences_list = array(
+    'Machine Shops & Precision CNC',
+    'Defense Aerospace & Avionics',
+    'Defense Software & IT Contractors',
+    'Electronics & Specialized Hardware',
+);
+if ( ! empty( $attributes['audiencesData'] ) ) {
+    $dec_a = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['audiencesData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['audiencesData'] ), true );
+    if ( is_array( $dec_a ) && ! empty( $dec_a ) ) {
+        $audiences_list = $dec_a;
+    }
+}
+
 // Background Media Paths & Overrides
 $bg_media_type   = ! empty( $attributes['bgMediaType'] ) ? $attributes['bgMediaType'] : 'video';
 $theme_uri       = get_template_directory_uri();
@@ -53,126 +101,159 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
 ?>
 
 <?php if ( 'center' === $layout ) : ?>
+  <!-- Center Layout (About, Checklists) -->
   <section class="section-midnight py-section text-center wp-block-inspect wp-pattern-inspect" 
            data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
            data-wp-pattern="secure-centric/hero-center"
            style="text-align: center; border-bottom: 1px solid var(--color-dark-line); position: relative; overflow: hidden;">
-    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
-      </div>
-    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
-          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
-        </video>
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
-      </div>
-    <?php endif; ?>
-
-    <div class="site-container" style="max-width: 860px; margin: 0 auto; position: relative; z-index: 2;">
+    <div class="site-container" style="position: relative; z-index: 2; max-width: 860px; margin: 0 auto;">
       <span class="section-eyebrow dark" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
-      <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
-      <p class="hero-lead" style="color: var(--color-text-on-dark); margin: 0 auto 28px; line-height: 1.6; font-size: 1.125rem;">
+      <h1 style="color: var(--color-white); margin-bottom: 18px; font-size: clamp(2rem, 3.8vw, 3rem); line-height: 1.2;">
+        <?php echo esc_html( $title ); ?>
+      </h1>
+      <p class="hero-lead" style="color: var(--color-text-on-dark); font-size: 1.125rem; line-height: 1.7; margin-bottom: 28px;">
         <?php echo esc_html( $description ); ?>
       </p>
-      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+      <div style="display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap;">
         <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
-        <?php if ( ! empty( $attributes['secondaryBtnText'] ) ) : ?>
-          <a href="<?php echo esc_url( ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['secondaryBtnUrl'] : '#services' ); ?>" class="btn btn-ghost-dark btn-lg">
-            <?php echo esc_html( $attributes['secondaryBtnText'] ); ?>
-          </a>
-        <?php endif; ?>
+        <a href="<?php echo esc_url( $secondary_btn_url ); ?>" class="btn btn-ghost-dark btn-lg"><?php echo esc_html( $secondary_btn_text ); ?></a>
       </div>
     </div>
   </section>
-<?php elseif ( 'contact' === $layout ) : ?>
-  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
-           data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" 
-           data-wp-pattern="secure-centric/contact-hero"
-           style="border-bottom: 1px solid var(--color-dark-line); position: relative; overflow: hidden;">
-    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
-      </div>
-    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
-          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
-        </video>
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
-      </div>
-    <?php endif; ?>
 
-    <div class="site-container" style="position: relative; z-index: 2;">
-      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
-        <span class="badge-chip dark" style="margin-bottom: 16px;">
-          <i class="dot"></i> <?php echo esc_html( $eyebrow ); ?>
-        </span>
-        <h1 style="color: var(--color-white); font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 20px; line-height: 1.2;">
-          <?php echo esc_html( $title ); ?>
-        </h1>
-        <p style="font-size: 1.125rem; color: var(--color-text-on-dark); line-height: 1.7; margin-bottom: 28px;">
-          <?php echo esc_html( $description ); ?>
-        </p>
-        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <span class="badge-chip dark">⏱ 30-Min Scoping Assessment</span>
-          <span class="badge-chip dark">🔒 Mutual NDA Signed First</span>
-          <span class="badge-chip dark">🏛 Cyber AB RPO #3942</span>
-          <span class="badge-chip dark">🚫 Zero Sales Pressure</span>
-        </div>
-      </div>
-    </div>
-  </section>
 <?php elseif ( 'service' === $layout ) : ?>
-  <section class="section-dark hero-home py-section wp-block-inspect" style="position: relative; overflow: hidden;">
-    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+  <!-- Service Layout with 6-Phase Strip & Deliverable Chips (Page 2) -->
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-service-phases" 
+           style="border-bottom: 1px solid var(--color-dark-line); position: relative;">
+    <div class="site-container">
+      <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-bottom: 16px;">
+        HOME / SERVICES / <span style="color: var(--color-cyber-cyan);"><?php echo esc_html( strtoupper( $breadcrumb_current ) ); ?></span>
       </div>
-    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
-      <div class="hero-video-bg-container" aria-hidden="true">
-        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
-          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
-        </video>
-        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
-      </div>
-    <?php endif; ?>
-
-    <div class="site-container" style="position: relative; z-index: 2;">
       <div class="hero-home-grid">
-        <div class="hero-content">
-          <span class="section-eyebrow text-cyan"><?php echo esc_html( $eyebrow ); ?></span>
-          <h1 class="hero-title"><?php echo esc_html( $title ); ?></h1>
-          <p class="hero-subtitle"><?php echo esc_html( $description ); ?></p>
-          <div class="hero-cta-group">
-            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary"><?php echo esc_html( $primary_btn_text ); ?></a>
-            <a href="#roadmap-section" class="btn btn-dark-outline">Explore Process &rarr;</a>
+        <div>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
+          <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
+          <div style="display: flex; gap: 16px; align-items: center; margin-top: 24px; flex-wrap: wrap;">
+            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+            <a href="<?php echo esc_url( $secondary_btn_url ); ?>" class="text-link on-dark"><?php echo esc_html( $secondary_btn_text ); ?></a>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap;">
+            <span class="badge-chip dark"><i class="dot"></i> Cyber AB RPO · CPN #3942</span>
+            <span class="badge-chip dark"><i class="dot"></i> Inc. 5000 Honoree</span>
+            <span class="badge-chip dark"><i class="dot"></i> 100% C3PAO Pass Record</span>
           </div>
         </div>
-        <div class="hero-media">
-          <div class="hero-lead-card">
-            <div class="lead-card-header">
-              <span class="badge-pill-cyan">AUDIT READY</span>
-              <h4 style="color: #fff; margin-top: 10px;">Core Deliverables Included</h4>
-            </div>
-            <ul style="color: var(--color-text-on-dark); font-size: 0.9375rem; line-height: 1.8; margin: 16px 0; padding-left: 20px;">
-              <li>Formal Boundary &amp; Data Flow Diagram</li>
-              <li>NIST SP 800-171 110-Control Evidence Matrix</li>
-              <li>Auditor-Tested System Security Plan (SSP)</li>
-              <li>Full DIBCAC / C3PAO Audit Defense On Site</li>
-            </ul>
-            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">
-              Schedule Scoping Assessment &rarr;
-            </a>
+
+        <div class="card-dark" style="background-color: #0B1437; border: 1.5px solid var(--color-dark-outline); padding: 28px;">
+          <span class="section-eyebrow dark" style="font-size: 0.6875rem;">ENGAGEMENT AT A GLANCE</span>
+          <h4 style="color: var(--color-white); margin-bottom: 14px;">The 6 Delivery Phases</h4>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+            <?php foreach ( $phases_list as $i => $p_item ) : ?>
+              <a href="#phases-detail" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(30, 42, 90, 0.6); text-decoration: none;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--color-electric-blue); color: #fff; font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; display: flex; align-items: center; justify-content: center;"><?php echo esc_html( $i + 1 ); ?></span>
+                  <span style="font-size: 0.875rem; color: var(--color-white); font-weight: 600;"><?php echo esc_html( $p_item ); ?></span>
+                </div>
+                <span style="color: var(--color-slate); font-size: 0.75rem;">&darr;</span>
+              </a>
+            <?php endforeach; ?>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; color: var(--color-slate); display: block; margin-bottom: 8px;">Key Deliverables You Keep:</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <?php foreach ( $deliverables_list as $d_item ) : ?>
+              <span class="badge-chip dark" style="font-size: 0.6875rem; border-color: rgba(0, 212, 255, 0.3);"><?php echo esc_html( $d_item ); ?></span>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+<?php elseif ( 'icp' === $layout ) : ?>
+  <!-- ICP Layout with Situation Selector Tiles (Page 3) -->
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-icp-tiles"
+           style="border-bottom: 1px solid var(--color-dark-line);">
+    <div class="site-container">
+      <div class="hero-home-grid">
+        <div>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
+          <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
+          <div style="margin-top: 24px;">
+            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+          </div>
+        </div>
+
+        <div>
+          <span class="section-eyebrow dark" style="font-size: 0.75rem;">SELECT YOUR SITUATION</span>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
+            <?php foreach ( $audiences_list as $aud ) : ?>
+              <div class="card-dark" style="cursor: pointer; padding: 20px;">
+                <h4 style="font-size: 0.9375rem; color: var(--color-white); margin-bottom: 8px;"><?php echo esc_html( $aud ); ?></h4>
+                <a href="#tiers" class="text-link on-dark" style="font-size: 0.75rem;">See Your Path &rarr;</a>
+              </div>
+            <?php endforeach; ?>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); text-align: center; margin-top: 12px;">
+            Not sure? Start with your contract tier below &darr;
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<?php elseif ( 'split' === $layout ) : ?>
+  <!-- Split Layout with Advisor Scoping Card (Pages 4, 5, 6, 7, 8, 11, 16) -->
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-split-stage"
+           style="border-bottom: 1px solid var(--color-dark-line);">
+    <div class="site-container">
+      <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-bottom: 16px;">
+        HOME / SERVICES / <span style="color: var(--color-cyber-cyan);"><?php echo esc_html( strtoupper( $breadcrumb_current ) ); ?></span>
+      </div>
+      <div class="hero-home-grid">
+        <div>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
+          <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
+          <div style="display: flex; gap: 16px; align-items: center; margin-top: 24px; flex-wrap: wrap;">
+            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+            <a href="<?php echo esc_url( $secondary_btn_url ); ?>" class="text-link on-dark"><?php echo esc_html( $secondary_btn_text ); ?> &darr;</a>
+          </div>
+        </div>
+
+        <div class="card-white" style="padding: 28px; border-radius: 14px;">
+          <span class="section-eyebrow">// DIRECT ADVISORY</span>
+          <h3 style="color: var(--color-navy); margin-bottom: 8px;">Talk to a CMMC Advisor</h3>
+          <p style="font-size: 0.875rem; color: var(--color-body-text); margin: 8px 0 16px;">
+            Here is exactly what you receive on your confidential 30-minute scoping review:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+              <span>Where you stand today against NIST 800-171</span>
+            </div>
+            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+              <span>Which level and scoping boundary fits your contracts</span>
+            </div>
+            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+              <span>A concrete, written first step before committing budget</span>
+            </div>
+          </div>
+          <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Discovery Call &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <?php else : ?>
   <!-- Home Layout -->
   <section class="hero-home-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" data-wp-pattern="secure-centric/hero-home">

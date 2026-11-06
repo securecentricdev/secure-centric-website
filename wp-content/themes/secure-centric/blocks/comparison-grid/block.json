@@ -1,101 +1,51 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "secure-centric/comparison-grid",
-    "version": "1.0.0",
-    "title": "Three Approaches Comparison Grid",
-    "category": "secure-centric-process",
-    "icon": "columns",
-    "description": "Side-by-side comparison of DIY, Generic MSP, and Secure-Centric Independent Advisory.",
-    "keywords": [
-        "comparison",
-        "options",
-        "msp",
-        "advisory",
-        "defense"
-    ],
-    "textdomain": "secure-centric",
-    "attributes": {
-        "eyebrow": {
-            "type": "string",
-            "default": "// APPROACH COMPARISON"
-        },
-        "title": {
-            "type": "string",
-            "default": "Three Ways Defense Subcontractors Approach CMMC"
-        },
-        "description": {
-            "type": "string",
-            "default": "Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility."
-        },
-        "opt1Badge": {
-            "type": "string",
-            "default": "Option 1"
-        },
-        "opt1Title": {
-            "type": "string",
-            "default": "DIY / In-House IT"
-        },
-        "opt1Desc": {
-            "type": "string",
-            "default": "Internal IT teams download templates and attempt to interpret all 110 NIST controls alone."
-        },
-        "opt1RiskTitle": {
-            "type": "string",
-            "default": "❌ High Audit Failure Risk"
-        },
-        "opt1RiskDesc": {
-            "type": "string",
-            "default": "Massive scope sprawl. Incomplete evidence packages fail official C3PAO audits on Day 1."
-        },
-        "opt2Badge": {
-            "type": "string",
-            "default": "Option 2"
-        },
-        "opt2Title": {
-            "type": "string",
-            "default": "Generic Managed MSP"
-        },
-        "opt2Desc": {
-            "type": "string",
-            "default": "IT vendors sell bundled cloud licenses and automated compliance portal subscriptions."
-        },
-        "opt2RiskTitle": {
-            "type": "string",
-            "default": "⚠️ Conflict of Interest"
-        },
-        "opt2RiskDesc": {
-            "type": "string",
-            "default": "MSPs grade their own homework. Portal checkmarks crumble during rigorous in-person DIBCAC interviews."
-        },
-        "opt3Badge": {
-            "type": "string",
-            "default": "Option 3: Secure-Centric"
-        },
-        "opt3Title": {
-            "type": "string",
-            "default": "Independent RPO Advisory"
-        },
-        "opt3Desc": {
-            "type": "string",
-            "default": "Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit."
-        },
-        "opt3RiskTitle": {
-            "type": "string",
-            "default": "✅ 100% First-Pass Defensibility"
-        },
-        "opt3RiskDesc": {
-            "type": "string",
-            "default": "Rigorous mock assessments, verified SSP documentation, and scope reduction saving $50k+."
-        }
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/comparison-grid",
+  "version": "1.1.0",
+  "title": "Secure-Centric Comparison Grid",
+  "category": "secure-centric-proof",
+  "icon": "columns",
+  "description": "Comparison cards for 3-way approach (DIY vs MSP vs RPO) or 2-way division of responsibilities (RPO vs MSP).",
+  "keywords": ["comparison", "grid", "rpo", "msp", "diy", "options"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "layout": { "type": "string", "default": "3-col" },
+    "eyebrow": { "type": "string", "default": "// APPROACH COMPARISON" },
+    "title": { "type": "string", "default": "Three Ways Defense Subcontractors Approach CMMC" },
+    "description": { "type": "string", "default": "Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility." },
+    "leftTitle": { "type": "string", "default": "What Secure-Centric Does" },
+    "leftDesc": { "type": "string", "default": "We lead compliance governance, boundary scoping, document authorship, and assessor defense." },
+    "leftPoints": {
+      "type": "string",
+      "default": "[\"Scopes the FCI & CUI boundary to minimize audit cost and timeline\",\"Performs formal gap analysis against all 110 NIST SP 800-171 controls\",\"Authors your System Security Plan (SSP) and Plan of Action & Milestones (POA&M)\",\"Conducts pre-assessment mock audits simulating C3PAO interview methods\",\"Provides 100% vendor-neutral advice (we never resell hardware or antivirus)\"]"
     },
-    "supports": {
-        "html": false,
-        "align": [
-            "wide",
-            "full"
-        ]
+    "rightTitle": { "type": "string", "default": "What Your MSP / Internal IT Does" },
+    "rightDesc": { "type": "string", "default": "Your IT team implements physical and digital configurations to satisfy our technical requirements." },
+    "rightPoints": {
+      "type": "string",
+      "default": "[\"Implements technical IT changes (MFA, firewalls, server patching, endpoint agents)\",\"Deploys hardware tokens, encrypted laptops, and network access switches\",\"Manages daily user ticketing, desktop support, and password resets\",\"Maintains daily backup retention and system uptime monitoring\",\"Executes configuration instructions derived from our RPO advisory plan\"]"
     },
-    "render": "file:./render.php",
-    "editorScript": "secure-centric-editor-blocks"
+    "opt1Badge": { "type": "string", "default": "Option 1" },
+    "opt1Title": { "type": "string", "default": "DIY / In-House IT" },
+    "opt1Desc": { "type": "string", "default": "Internal IT teams download templates and attempt to interpret all 110 NIST controls alone." },
+    "opt1RiskTitle": { "type": "string", "default": "❌ High Audit Failure Risk" },
+    "opt1RiskDesc": { "type": "string", "default": "Massive scope sprawl. Incomplete evidence packages fail official C3PAO audits on Day 1." },
+    "opt2Badge": { "type": "string", "default": "Option 2" },
+    "opt2Title": { "type": "string", "default": "Generic Managed MSP" },
+    "opt2Desc": { "type": "string", "default": "IT vendors sell bundled cloud licenses and automated compliance portal subscriptions." },
+    "opt2RiskTitle": { "type": "string", "default": "⚠️ Conflict of Interest" },
+    "opt2RiskDesc": { "type": "string", "default": "MSPs grade their own homework. Portal checkmarks crumble during rigorous in-person DIBCAC interviews." },
+    "opt3Badge": { "type": "string", "default": "Option 3: Secure-Centric" },
+    "opt3Title": { "type": "string", "default": "Independent RPO Advisory" },
+    "opt3Desc": { "type": "string", "default": "Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit." },
+    "opt3RiskTitle": { "type": "string", "default": "✅ 100% First-Pass Defensibility" },
+    "opt3RiskDesc": { "type": "string", "default": "Rigorous mock assessments, verified SSP documentation, and scope reduction saving $50k+." }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
 }

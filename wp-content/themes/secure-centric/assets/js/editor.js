@@ -2537,7 +2537,145 @@
       }
     });
 
-    console.log('Secure-Centric All 14 Gutenberg Blocks Registered with Granular InspectorControls!');
+    // =========================================================================
+    // 15. PROCESS PHASES BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/process-phases', {
+      title: 'Phase-by-Phase Advisory Process',
+      icon: 'clipboard',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// PHASE-BY-PHASE EXECUTION' },
+            { name: 'title', label: 'Heading', default: 'What we do, phase by phase' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision.' }
+          ]
+        },
+        {
+          title: 'Phases Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'phasesData', label: 'Phases Array JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 16. STEPS HORIZONTAL BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/steps-horizontal', {
+      title: 'Horizontal Steps Workflow',
+      icon: 'ellipsis',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// ENGAGEMENT WORKFLOW' },
+            { name: 'title', label: 'Heading', default: 'How an engagement starts' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'A structured, predictable path to verifiable defense compliance with zero surprises.' }
+          ]
+        },
+        {
+          title: 'Steps Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'stepsData', label: 'Steps Array JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 17. LEAD MAGNET BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/lead-magnet', {
+      title: 'Lead Magnet Download Band',
+      icon: 'download',
+      category: 'secure-centric-cta',
+      panels: [
+        {
+          title: 'Lead Magnet Copy & Options',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// FREE DOWNLOADABLE RESOURCE' },
+            { name: 'name', label: 'Resource Title', default: 'First-Call Prep Checklist (what to have ready)' },
+            { name: 'docType', label: 'Document Badge', default: 'PDF / EXCEL WORKBOOK' },
+            { name: 'placeholder', label: 'Input Placeholder', default: 'Enter corporate email address' },
+            { name: 'btnText', label: 'Button Text', default: 'Instant Free Download →' },
+            { name: 'disclaimer', label: 'Disclaimer Note', default: 'Strictly confidential. No spam guarantee.' }
+          ]
+        },
+        {
+          title: 'Bullet Points (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'ticksData', label: 'Checklist Bullets JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 18. TEXTGROUP DEEPDIVE BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/textgroup-deepdive', {
+      title: 'Long-Form Deep Dive Analysis',
+      icon: 'text',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// COMPREHENSIVE COMPLIANCE ANALYSIS' },
+            { name: 'title', label: 'Heading', default: 'Long-form sections' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Explanations of requirements, timelines, and assessor expectations.' }
+          ]
+        },
+        {
+          title: 'Sections Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'sectionsData', label: 'Deep Dive Sections JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 19. RELATED RESOURCES BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/related-resources', {
+      title: 'Related Compliance Resources',
+      icon: 'grid-view',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// KNOWLEDGE ECOSYSTEM' },
+            { name: 'title', label: 'Heading', default: 'Related Compliance Resources' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Explore related compliance frameworks, staging guides, and scoping resources.' }
+          ]
+        },
+        {
+          title: 'Pages Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'pagesData', label: 'Related Pages JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
   }
 
   if (wp.domReady) {
