@@ -12,6 +12,8 @@
   "editorScript": "secure-centric-editor-blocks",
   "attributes": {
     "layout": { "type": "string", "default": "home" },
+    "secondaryBtnText": { "type": "string", "default": "Explore Services →" },
+    "secondaryBtnUrl": { "type": "string", "default": "#services" },
     "bgMediaType": { "type": "string", "default": "video" },
     "bgVideoUrl": { "type": "string", "default": "" },
     "bgVideoId": { "type": "number", "default": 0 },

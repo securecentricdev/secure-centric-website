@@ -55,6 +55,7 @@ function secure_centric_register_custom_blocks() {
         'logo-marquee',
         'resource-cards',
         'form-embed',
+        'team-grid',
     );
 
     foreach ( $blocks as $block ) {

@@ -1866,7 +1866,259 @@
       ]
     });
 
-    console.log('Secure-Centric All 11 Gutenberg Blocks Registered with Granular InspectorControls!');
+    // =========================================================================
+    // 12. TEAM GRID BLOCK (LEADERSHIP & ADVISORS DYNAMIC)
+    // =========================================================================
+    registerBlockType('secure-centric/team-grid', {
+      title: 'Leadership & Specialists Team Grid',
+      icon: 'groups',
+      category: 'secure-centric-proof',
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        let currentMembers = [];
+        if (attributes.membersData) {
+          try {
+            const parsed = JSON.parse(attributes.membersData);
+            if (Array.isArray(parsed) && parsed.length > 0) currentMembers = parsed;
+          } catch (e) {}
+        }
+
+        if (!currentMembers || !currentMembers.length) {
+          currentMembers = [
+            {
+              name: 'Jake "EJ" Celler',
+              role: 'Co-Founder & Lead Registered Practitioner',
+              initials: 'JC',
+              badge: '✓ Cyber AB RP',
+              bio: 'Former DoD cybersecurity engineer and lead assessor advisor. Guides precision manufacturers and aerospace suppliers through scoping, boundary isolation, and DIBCAC defense.'
+            },
+            {
+              name: 'Son Phan',
+              role: 'Co-Founder & Technical Architect',
+              initials: 'SP',
+              badge: '✓ Cyber AB RP',
+              bio: 'Enterprise systems architect specializing in enclave segregation, AWS GovCloud, GCC High migrations, and technical 110-control NIST SP 800-171 enforcement.'
+            },
+            {
+              name: 'Desmond Thompson',
+              role: 'Registered Practitioner & Pre-Audit Lead',
+              initials: 'DT',
+              badge: '✓ Cyber AB RP',
+              bio: 'Leads simulated mock C3PAO audits, evidence portfolio reviews, and assessor interview preparation. 100% first-attempt pass rate across all client evaluations.'
+            },
+            {
+              name: 'Elena Vasquez',
+              role: 'Compliance Author & Policy Lead',
+              initials: 'EV',
+              badge: '✓ Compliance Author',
+              bio: 'Specialist in custom System Security Plan (SSP) authoring, POA&M remediation tracking, and defensible operational policy formulation tailored to machine shops.'
+            }
+          ];
+        }
+
+        function updateMembers(newMembers) {
+          setAttributes({ membersData: JSON.stringify(newMembers) });
+        }
+
+        function addMember() {
+          const next = currentMembers.concat([{
+            name: 'New Registered Practitioner',
+            role: 'Cybersecurity Advisor / Engineer',
+            initials: 'RP',
+            badge: '✓ Cyber AB RP',
+            bio: 'Experienced defense cybersecurity engineer providing hands-on CMMC and NIST SP 800-171 audit support.'
+          }]);
+          updateMembers(next);
+        }
+
+        function removeMember(idx) {
+          if (currentMembers.length <= 1) return;
+          const next = currentMembers.filter(function (_, i) { return i !== idx; });
+          updateMembers(next);
+        }
+
+        function updateMemberItem(idx, fields) {
+          const next = currentMembers.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateMembers(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/team-grid',
+          attributes: Object.assign({}, attributes, {
+            membersData: JSON.stringify(currentMembers)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Team Grid (' + currentMembers.length + ' Members)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '👥 Leadership & Specialists (' + currentMembers.length + ' Members)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addMember
+          }, '+ Add Team Member')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Header Copy', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// DEFENSE SPECIALISTS',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Title',
+              value: attributes.title !== undefined ? attributes.title : 'The Team Behind Your CMMC Readiness',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Description',
+              value: attributes.description !== undefined ? attributes.description : 'Accredited Cyber AB Registered Practitioners with decades of technical engineering and audit defense experience.',
+              rows: 3,
+              onChange: function (val) { setAttributes({ description: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Team Members (' + currentMembers.length + ')', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addMember
+              }, '+ Add Team Member')
+            ),
+            currentMembers.map(function (m, idx) {
+              return el('div', {
+                key: 'member-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    (m.initials || 'RP') + ' · ' + (m.name || 'Member')
+                  ),
+                  currentMembers.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeMember(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Full Name',
+                  value: m.name || '',
+                  onChange: function (v) { updateMemberItem(idx, { name: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Role / Title',
+                  value: m.role || '',
+                  onChange: function (v) { updateMemberItem(idx, { role: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Initials (2 letters)',
+                  value: m.initials || '',
+                  onChange: function (v) { updateMemberItem(idx, { initials: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Certification Badge',
+                  value: m.badge || '',
+                  onChange: function (v) { updateMemberItem(idx, { badge: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Bio / Background',
+                  value: m.bio || '',
+                  rows: 3,
+                  onChange: function (v) { updateMemberItem(idx, { bio: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addMember
+            }, '+ Add Team Member')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
+    });
+
+    console.log('Secure-Centric All 12 Gutenberg Blocks Registered with Granular InspectorControls!');
   }
 
   if (wp.domReady) {

@@ -16,6 +16,34 @@
     ],
     "textdomain": "secure-centric",
     "attributes": {
+        "layout": {
+            "type": "string",
+            "default": "card"
+        },
+        "infoEyebrow": {
+            "type": "string",
+            "default": "// DIRECT ENGAGEMENT"
+        },
+        "infoTitle": {
+            "type": "string",
+            "default": "Direct Access to Registered Practitioners"
+        },
+        "infoDesc": {
+            "type": "string",
+            "default": "Every discovery call is led directly by an accredited Cyber AB Registered Practitioner (RP), not a generalist salesperson. We review your contract's DFARS 252.204-7012 clauses and help determine your exact scoping boundaries."
+        },
+        "phone": {
+            "type": "string",
+            "default": "(323) 410-5941"
+        },
+        "email": {
+            "type": "string",
+            "default": "info@secure-centric.com"
+        },
+        "location": {
+            "type": "string",
+            "default": "Los Angeles, California · Nationwide On-Site Deployments"
+        },
         "formId": {
             "type": "string",
             "default": ""

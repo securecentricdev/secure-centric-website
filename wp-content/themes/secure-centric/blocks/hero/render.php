@@ -52,7 +52,81 @@ $image_url       = ! empty( $attributes['bgImageUrl'] ) ? $attributes['bgImageUr
 $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attributes['bgOverlayOpacity'] / 100 ) : 0.70;
 ?>
 
-<?php if ( 'service' === $layout ) : ?>
+<?php if ( 'center' === $layout ) : ?>
+  <section class="section-midnight py-section text-center wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-center"
+           style="text-align: center; border-bottom: 1px solid var(--color-dark-line); position: relative; overflow: hidden;">
+    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
+          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php endif; ?>
+
+    <div class="site-container" style="max-width: 860px; margin: 0 auto; position: relative; z-index: 2;">
+      <span class="section-eyebrow dark" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
+      <p class="hero-lead" style="color: var(--color-text-on-dark); margin: 0 auto 28px; line-height: 1.6; font-size: 1.125rem;">
+        <?php echo esc_html( $description ); ?>
+      </p>
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+        <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+        <?php if ( ! empty( $attributes['secondaryBtnText'] ) ) : ?>
+          <a href="<?php echo esc_url( ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['secondaryBtnUrl'] : '#services' ); ?>" class="btn btn-ghost-dark btn-lg">
+            <?php echo esc_html( $attributes['secondaryBtnText'] ); ?>
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
+<?php elseif ( 'contact' === $layout ) : ?>
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/contact-hero"
+           style="border-bottom: 1px solid var(--color-dark-line); position: relative; overflow: hidden;">
+    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
+          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php endif; ?>
+
+    <div class="site-container" style="position: relative; z-index: 2;">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <span class="badge-chip dark" style="margin-bottom: 16px;">
+          <i class="dot"></i> <?php echo esc_html( $eyebrow ); ?>
+        </span>
+        <h1 style="color: var(--color-white); font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 20px; line-height: 1.2;">
+          <?php echo esc_html( $title ); ?>
+        </h1>
+        <p style="font-size: 1.125rem; color: var(--color-text-on-dark); line-height: 1.7; margin-bottom: 28px;">
+          <?php echo esc_html( $description ); ?>
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <span class="badge-chip dark">⏱ 30-Min Scoping Assessment</span>
+          <span class="badge-chip dark">🔒 Mutual NDA Signed First</span>
+          <span class="badge-chip dark">🏛 Cyber AB RPO #3942</span>
+          <span class="badge-chip dark">🚫 Zero Sales Pressure</span>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php elseif ( 'service' === $layout ) : ?>
   <section class="section-dark hero-home py-section wp-block-inspect" style="position: relative; overflow: hidden;">
     <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
       <div class="hero-video-bg-container" aria-hidden="true">

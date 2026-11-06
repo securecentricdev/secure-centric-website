@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/team-grid",
+  "version": "1.0.0",
+  "title": "Leadership & Specialists Team Grid",
+  "category": "secure-centric-proof",
+  "icon": "groups",
+  "description": "Grid of Cyber AB Registered Practitioners, leadership, and audit defense specialists.",
+  "keywords": ["team", "leadership", "practitioners", "advisors", "about"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// DEFENSE SPECIALISTS" },
+    "title": { "type": "string", "default": "The Team Behind Your CMMC Readiness" },
+    "description": { "type": "string", "default": "Accredited Cyber AB Registered Practitioners with decades of technical engineering and audit defense experience." },
+    "membersData": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "render": "file:./render.php"
+}
