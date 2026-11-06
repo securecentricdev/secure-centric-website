@@ -494,6 +494,42 @@ body.mobile-preview-mode .site-header-sticky-wrapper {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+.card-white,
+.card-white h1,
+.card-white h2,
+.card-white h3,
+.card-white h4,
+.card-white h5,
+.card-white h6 {
+  color: var(--color-navy) !important;
+}
+
+.card-white p,
+.card-white label,
+.card-white span:not(.section-eyebrow):not(.badge-chip) {
+  color: var(--color-body-text);
+}
+
+/* ---------- Sticky On-This-Page TOC Bar ---------- */
+.on-this-page-toc {
+  position: sticky;
+  top: 104px;
+  z-index: 800;
+  box-shadow: 0 4px 14px rgba(3, 6, 18, 0.06);
+  backdrop-filter: blur(8px);
+  background-color: rgba(244, 246, 251, 0.96) !important;
+}
+
+body.admin-bar .on-this-page-toc {
+  top: 136px;
+}
+
+@media (max-width: 768px) {
+  .on-this-page-toc {
+    top: 92px;
+  }
+}
+
 .card-white:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);

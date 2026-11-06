@@ -64,9 +64,12 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $btn_text    = sc_clean_text( $btn_text );
     $faqs        = sc_clean_text( $faqs );
 }
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:details-group" data-wp-pattern="secure-centric/faq-accordion">
+<section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:details-group" data-wp-pattern="secure-centric/faq-accordion"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="faq-grid-layout">
       <div class="faq-intro-col">

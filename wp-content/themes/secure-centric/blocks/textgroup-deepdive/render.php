@@ -54,9 +54,12 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $subtitle = sc_clean_text( $subtitle );
     $sections = sc_clean_text( $sections );
 }
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/textgroup-deepdive">
+<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/textgroup-deepdive"<?php echo $anchor_attr; ?>>
   <div class="site-container" style="max-width: 960px;">
     <div class="section-header-left" style="margin-bottom: 40px;">
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>

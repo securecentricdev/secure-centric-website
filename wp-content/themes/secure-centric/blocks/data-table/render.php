@@ -36,13 +36,25 @@ if ( ! empty( $attributes['rowsData'] ) ) {
     }
 }
 
-if ( empty( $rows ) ) {
-    $rows = array(
-        array( 'AC.L2-3.1.1 (Access Control & Boundary Protection)', 'Non-Compliant', 'High (-5 SPRS)', 'Enforce centralized MFA & remove shared admin credentials', 'Lead SecOps Engineer' ),
-        array( 'IA.L2-3.5.3 (Multifactor Authentication)', 'Partially Met', 'High (-5 SPRS)', 'Deploy FIPS 140-2 validated hardware tokens across all privileged sessions', 'IT Director' ),
-        array( 'SC.L2-3.13.11 (FIPS-Validated Cryptography)', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules', 'Systems Administrator' ),
-        array( 'AU.L2-3.3.1 (Audit Logging & SIEM Review)', 'Compliant', 'Low (0 SPRS)', 'Weekly automated audit log analysis and tamper-proof log forwarding verified', 'Security Analyst' )
-    );
+if ( empty( $rows ) || ! is_array( $rows ) || ( isset( $rows[0] ) && ! is_array( $rows[0] ) ) ) {
+    $title_lower = strtolower( $title );
+    if ( false !== strpos( $title_lower, 'levels' ) || false !== strpos( $title_lower, 'comparison' ) ) {
+        $rows = array(
+            array( 'Target Information Safeguarded', 'Federal Contract Information (FCI)', 'Controlled Unclassified Information (CUI)', 'High-Value Assets & Critical CUI' ),
+            array( 'Security Controls Baseline', '15 FAR 52.204-21 Basic Safeguards', '110 NIST SP 800-171 Requirements', '110 NIST SP 800-171 + Select 800-172 Controls' ),
+            array( 'Assessment & Audit Mechanism', 'Annual Self-Assessment in SPRS', 'Triennial Independent C3PAO Audit', 'Triennial Government-Led (DIBCAC) Audit' ),
+            array( 'Executive Affirmation', 'Annual Affirmation by Corporate Official', 'Annual Executive Affirmation in SPRS', 'Annual Executive Affirmation in SPRS' ),
+            array( 'Defense Supply Chain Tier', 'Subcontractors handling FCI only', 'Prime & Subcontractors handling DoD CUI', 'Defense Prime Contractors on critical programs' ),
+            array( 'Typical Implementation Timeline', '1 – 2 months', '6 – 9 months', '9 – 14 months' )
+        );
+    } else {
+        $rows = array(
+            array( 'AC.L2-3.1.1 (Access Control & Boundary Protection)', 'Non-Compliant', 'High (-5 SPRS)', 'Enforce centralized MFA & remove shared admin credentials' ),
+            array( 'IA.L2-3.5.3 (Multifactor Authentication)', 'Partially Met', 'High (-5 SPRS)', 'Deploy FIPS 140-2 validated hardware tokens across all privileged sessions' ),
+            array( 'SC.L2-3.13.11 (FIPS-Validated Cryptography)', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules' ),
+            array( 'AU.L2-3.3.1 (Audit Logging & SIEM Review)', 'Compliant', 'Low (0 SPRS)', 'Weekly automated audit log analysis and tamper-proof log forwarding verified' )
+        );
+    }
 }
 
 // Align column headers with body cells
@@ -68,11 +80,14 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $cols  = sc_clean_text( $cols );
     $rows  = sc_clean_text( $rows );
 }
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
 <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 
          data-wp-block="wp:table" 
-         data-wp-pattern="secure-centric/data-table">
+         data-wp-pattern="secure-centric/data-table"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <h3 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h3>
     <div class="custom-table-wrap">

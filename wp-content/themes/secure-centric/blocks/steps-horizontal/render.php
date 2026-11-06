@@ -46,9 +46,18 @@ if ( empty( $steps ) ) {
         ),
     );
 }
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow  = sc_clean_text( $eyebrow );
+    $title    = sc_clean_text( $title );
+    $subtitle = sc_clean_text( $subtitle );
+    $steps    = sc_clean_text( $steps );
+}
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-horizontal">
+<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-horizontal"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-center" style="text-align: center; margin-bottom: 36px;">
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>

@@ -503,7 +503,7 @@
               ${isTool ? `
                 <div class="card-white" style="padding: 28px;">
                   <span class="section-eyebrow">// INTERACTIVE TOOL</span>
-                  <h3>${esc(sideContent)}</h3>
+                  <h3 style="color: var(--color-navy); margin-bottom: 12px;">${esc(sideContent)}</h3>
                   <div style="display: flex; flex-direction: column; gap: 12px; margin: 16px 0;">
                     <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
                       <span>Does your contract contain DFARS 7012?</span>
@@ -2738,7 +2738,7 @@
             { label: 'C3PAO Audit Day Readiness', anchor: '#audit' }
           ];
           contentHtml += `
-            <section class="section-ice py-section-sm wp-block-inspect" data-wp-block="wp:group {className:'on-this-page-toc'}" style="background-color: var(--color-ice); border-bottom: 1px solid var(--color-border); padding: 18px 0;">
+            <section class="section-ice py-section-sm on-this-page-toc wp-block-inspect" data-wp-block="wp:group {className:'on-this-page-toc'}" style="background-color: var(--color-ice); border-bottom: 1px solid var(--color-border); padding: 18px 0;">
               <div class="site-container">
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
                   <div style="display: flex; align-items: center; gap: 12px;">
@@ -3534,6 +3534,94 @@
       setTimeout(() => {
         initTestimonialsCarousel();
       }, 100);
+    }
+
+    initJumpToSection();
+  }
+
+  // Also initialize Jump to section on all environments
+  initJumpToSection();
+
+  /**
+   * Jump to section smooth scroll handler
+   */
+  function initJumpToSection() {
+    function scrollToTarget(targetEl) {
+      if (!targetEl) return;
+      const headerEl = document.getElementById('site-header-wrapper') || document.querySelector('.site-header');
+      const tocEl = document.querySelector('.on-this-page-toc');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 80;
+      const tocHeight = (tocEl && getComputedStyle(tocEl).position === 'sticky') ? tocEl.offsetHeight : 0;
+      const navOffset = headerHeight + tocHeight + 16;
+      const elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = Math.max(0, elementPosition - navOffset);
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+
+    function findTargetByHash(hash) {
+      const cleanId = hash.replace(/^#/, '').toLowerCase();
+      if (!cleanId) return null;
+
+      // 1. Direct ID match
+      const direct = document.getElementById(cleanId);
+      if (direct) return direct;
+
+      // 2. Query selector matching id attribute
+      const byAttr = document.querySelector(`[id="${cleanId}"]`);
+      if (byAttr) return byAttr;
+
+      // 3. Smart semantic topic matching across sections & cards
+      const topicMap = {
+        scoping: ['scoping', 'boundaries', 'scope', 'introduction to the cmmc guide'],
+        families: ['families', '14 control', 'requirements and frameworks', 'frameworks'],
+        sprs: ['sprs', 'levels compared', 'comparison', 'scoring', 'score'],
+        enclaves: ['enclaves', 'phases', 'remediation', 'timeline'],
+        ssp: ['ssp', 'policy', 'documentation', 'long-form', 'deep dive'],
+        audit: ['audit', 'c3pao', 'common questions', 'readiness', 'faq']
+      };
+
+      const searchTerms = topicMap[cleanId] || [cleanId];
+      const sections = Array.from(document.querySelectorAll('section, .textgroup-item, .accordion-item, .card-white'));
+
+      for (const term of searchTerms) {
+        const found = sections.find(sec => {
+          const text = (sec.innerText || '').toLowerCase();
+          return text.includes(term);
+        });
+        if (found) return found;
+      }
+      return null;
+    }
+
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('.on-this-page-toc a, a.hud-btn[href^="#"], .stage-link[href^="#"]');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#') || href === '#' || href === '#contact') return;
+
+      const target = findTargetByHash(href);
+      if (target) {
+        e.preventDefault();
+        scrollToTarget(target);
+        if (history.pushState) {
+          history.pushState(null, null, href);
+        }
+      }
+    });
+
+    // Also support smooth scroll if user arrives with hash on page load
+    if (window.location.hash && window.location.hash.length > 1 && !window.location.hash.startsWith('#page-')) {
+      setTimeout(() => {
+        const target = findTargetByHash(window.location.hash);
+        if (target) {
+          scrollToTarget(target);
+        }
+      }, 300);
     }
   }
 

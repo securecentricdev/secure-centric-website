@@ -46,9 +46,18 @@ if ( empty( $paras ) ) {
         'Our Cyber AB Registered Practitioners conduct on-site facility walkthroughs, map exact CUI boundaries, guide technical remediation, and co-author your assessor-ready System Security Plan (SSP).'
     );
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow = sc_clean_text( $eyebrow );
+    $title   = sc_clean_text( $title );
+    $paras   = sc_clean_text( $paras );
+}
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-white py-section wp-block-inspect" data-wp-block="wp:group">
+<section class="section-white py-section wp-block-inspect" data-wp-block="wp:group"<?php echo $anchor_attr; ?>>
   <div class="site-container" style="max-width: 900px;">
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
     <h2 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h2>

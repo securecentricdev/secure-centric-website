@@ -30,9 +30,14 @@ if ( empty( $links ) ) {
         array( 'label' => 'C3PAO Audit Day Readiness', 'anchor' => '#audit' ),
     );
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $title = sc_clean_text( $title );
+    $links = sc_clean_text( $links );
+}
 ?>
 
-<section class="section-ice py-section-sm wp-block-inspect" data-wp-block="wp:group {className:'on-this-page-toc'}" style="background-color: var(--color-ice); border-bottom: 1px solid var(--color-border); padding: 18px 0;">
+<section class="section-ice py-section-sm on-this-page-toc wp-block-inspect" data-wp-block="wp:group {className:'on-this-page-toc'}" style="background-color: var(--color-ice); border-bottom: 1px solid var(--color-border); padding: 18px 0;">
   <div class="site-container">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
       <div style="display: flex; align-items: center; gap: 12px;">

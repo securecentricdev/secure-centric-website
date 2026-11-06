@@ -102,6 +102,9 @@ if ( ! empty( $attributes['audiencesData'] ) ) {
 // Guide Attributes (Pillar Pages)
 $side_type  = ! empty( $attributes['sideType'] ) ? $attributes['sideType'] : '';
 $side_title = ! empty( $attributes['sideTitle'] ) ? $attributes['sideTitle'] : 'Which Level Do You Need?';
+if ( function_exists( 'sc_clean_text' ) ) {
+    $side_title = sc_clean_text( $side_title );
+}
 $is_tool    = ! empty( $attributes['isTool'] ) || ( false !== strpos( $side_type, 'tool' ) );
 $side_facts = array();
 if ( ! empty( $attributes['sideFactsData'] ) ) {
@@ -175,7 +178,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
           <?php if ( $is_tool ) : ?>
             <div class="card-white" style="padding: 28px;">
               <span class="section-eyebrow">// INTERACTIVE TOOL</span>
-              <h3><?php echo esc_html( $side_title ); ?></h3>
+              <h3 style="color: var(--color-navy); margin-bottom: 12px;"><?php echo esc_html( $side_title ); ?></h3>
               <div style="display: flex; flex-direction: column; gap: 12px; margin: 16px 0;">
                 <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
                   <span>Does your contract contain DFARS 7012?</span>
