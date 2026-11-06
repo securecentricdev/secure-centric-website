@@ -169,9 +169,10 @@
 }
 
 /* ---------- Top Bar & Header Navigation (Unified Sticky Group) ---------- */
+header.wp-block-template-part:has(.site-header-sticky-wrapper),
 .site-header-sticky-wrapper {
   position: sticky;
-  top: 48px; /* Sticks flush under the presentation HUD */
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
@@ -183,12 +184,19 @@
   padding: 0;
 }
 
-@media (max-width: 860px) {
-  .site-header-sticky-wrapper {
-    top: 42px; /* Sticks flush under the mobile presentation HUD */
+body.admin-bar header.wp-block-template-part:has(.site-header-sticky-wrapper),
+body.admin-bar .site-header-sticky-wrapper {
+  top: 32px !important;
+}
+
+@media screen and (max-width: 782px) {
+  body.admin-bar header.wp-block-template-part:has(.site-header-sticky-wrapper),
+  body.admin-bar .site-header-sticky-wrapper {
+    top: 46px !important;
   }
 }
 
+body.mobile-preview-mode header.wp-block-template-part:has(.site-header-sticky-wrapper),
 body.mobile-preview-mode .site-header-sticky-wrapper {
   position: sticky !important;
   top: 0 !important;
@@ -1545,13 +1553,24 @@ body.mobile-preview-mode .btn {
    Removes Gutenberg core blockGap / vertical margin injection between
    full-width page sections so no dark body gaps appear between blocks.
    ========================================================================== */
-html,
+html {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+body:not(.admin-bar) {
+  margin-top: 0 !important;
+}
+
 body,
 .wp-site-blocks,
 .entry-content,
 .wp-block-post-content {
   background-color: var(--color-white) !important;
-  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
   padding: 0 !important;
 }
 

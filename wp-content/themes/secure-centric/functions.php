@@ -102,38 +102,40 @@ function secure_centric_enqueue_assets() {
     );
 
     // CSS Theme Assets
+    $comp_ver = file_exists( get_template_directory() . '/assets/css/components.css' ) ? (string) filemtime( get_template_directory() . '/assets/css/components.css' ) : '3.9.5';
     wp_enqueue_style(
         'secure-centric-variables',
         get_template_directory_uri() . '/assets/css/variables.css',
         array(),
-        '3.9.4'
+        '3.9.5'
     );
     wp_enqueue_style(
         'secure-centric-components',
         get_template_directory_uri() . '/assets/css/components.css',
         array( 'secure-centric-variables' ),
-        '3.9.4'
+        $comp_ver
     );
     wp_enqueue_style(
         'secure-centric-pages',
         get_template_directory_uri() . '/assets/css/pages.css',
         array( 'secure-centric-components' ),
-        '3.9.4'
+        '3.9.5'
     );
 
     // Frontend Interactive Scripts (Roadmap Stepper, Testimonials Controller, Navigation)
+    $app_ver = file_exists( get_template_directory() . '/assets/js/app.js' ) ? (string) filemtime( get_template_directory() . '/assets/js/app.js' ) : '3.9.5';
     wp_enqueue_script(
         'secure-centric-data',
         get_template_directory_uri() . '/assets/js/data.js',
         array(),
-        '3.9.4',
+        '3.9.5',
         true
     );
     wp_enqueue_script(
         'secure-centric-app',
         get_template_directory_uri() . '/assets/js/app.js',
         array( 'secure-centric-data' ),
-        '3.9.4',
+        $app_ver,
         true
     );
 }
