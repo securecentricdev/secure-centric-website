@@ -3418,13 +3418,17 @@
   };
 
   window.openMobileDrawer = function () {
-    if (mobileDrawer) mobileDrawer.classList.add('open');
-    if (mobileBackdrop) mobileBackdrop.classList.add('open');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const backdrop = document.getElementById('mobile-nav-backdrop');
+    if (drawer) drawer.classList.add('open');
+    if (backdrop) backdrop.classList.add('open');
   };
 
   window.closeMobileDrawer = function () {
-    if (mobileDrawer) mobileDrawer.classList.remove('open');
-    if (mobileBackdrop) mobileBackdrop.classList.remove('open');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const backdrop = document.getElementById('mobile-nav-backdrop');
+    if (drawer) drawer.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
   };
 
   window.dismissPopup = function () {

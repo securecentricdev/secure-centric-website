@@ -4,7 +4,7 @@
       <!-- Column 1: Brand & Credentials -->
       <div class="footer-col">
         <a href="/secure-centric/" class="site-logo" style="margin-bottom: 14px;">
-          <img src="/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img">
+          <img src="/secure-centric/wp-content/themes/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img" />
           <span>Secure-Centric</span>
         </a>
         <p style="font-size: 0.875rem; color: var(--color-text-on-dark); margin-bottom: 16px; line-height: 1.5;">
@@ -25,11 +25,10 @@
       <div class="footer-col">
         <h5>Services</h5>
         <ul class="footer-links">
-          <li><a href="/secure-centric/services/cmmc-compliance/">CMMC Compliance Services</a></li>
           <li><a href="/secure-centric/services/cmmc-consulting/">CMMC Consulting</a></li>
           <li><a href="/secure-centric/services/nist-800-171-compliance/">NIST SP 800-171 Compliance</a></li>
           <li><a href="/secure-centric/services/cmmc-readiness-assessment/">Readiness Assessments</a></li>
-          <li><a href="/secure-centric/services/cmmc-enclave/">CMMC Enclave Advisory</a></li>
+          <li><a href="/secure-centric/services/cmmc-readiness-assessment/gap-assessment/">Gap &amp; Mock Assessments</a></li>
           <li><a href="/secure-centric/services/virtual-ciso/">Virtual CISO (vCISO)</a></li>
         </ul>
       </div>
@@ -54,8 +53,6 @@
           <li><a href="/secure-centric/resources/templates/checklist/level-2/">Level 2 (110 Controls) Checklist</a></li>
           <li><a href="/secure-centric/resources/templates/checklist/unmarked-cui/">Unmarked CUI Checklist</a></li>
           <li><a href="/secure-centric/resources/templates/checklist/level-1/">Level 1 Readiness Checklist</a></li>
-          <li><a href="/secure-centric/about/">About Secure-Centric</a></li>
-          <li><a href="/secure-centric/contact/">Book Discovery Call</a></li>
         </ul>
       </div>
 
@@ -66,9 +63,9 @@
           Get critical rulemaking updates on DFARS 252.204-7021 and CMMC enforcement timelines.
         </p>
         <form onsubmit="event.preventDefault(); alert('Subscribed to CMMC Defense Updates!');">
-          <input type="email" class="form-input" placeholder="Your work email" required style="margin-bottom: 8px; height: 38px;">
+          <input type="email" class="form-input" placeholder="Your work email" required style="margin-bottom: 8px; height: 38px;" />
           <button type="submit" class="btn btn-primary" style="width: 100%; padding: 8px 16px; font-size: 0.8125rem;">
-            Subscribe →
+            Subscribe &rarr;
           </button>
         </form>
       </div>
@@ -80,8 +77,38 @@
         Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We provide cybersecurity readiness preparation, documentation, and advisory services. We are not a Certified Third-Party Assessment Organization (C3PAO) and do not issue official CMMC certifications.
       </p>
       <div style="font-size: 0.75rem; color: var(--color-slate);">
-        © 2026 Secure-Centric LLC. All rights reserved.
+        &copy; 2026 Secure-Centric LLC. All rights reserved.
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Slide-out Mobile Navigation Drawer -->
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null"></div>
+<div class="mobile-nav-drawer" id="mobile-nav-drawer">
+  <div class="mobile-drawer-header">
+    <span class="site-logo">
+      <img src="/secure-centric/wp-content/themes/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img" />
+      <span>Secure-Centric</span>
+    </span>
+    <button type="button" class="mobile-drawer-close" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null" aria-label="Close navigation">✕</button>
+  </div>
+  <ul class="mobile-drawer-links">
+    <li>
+      <a href="/secure-centric/services/cmmc-consulting/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Services ▾</a>
+      <ul class="mobile-sublinks">
+        <li><a href="/secure-centric/services/cmmc-consulting/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">CMMC Consulting</a></li>
+        <li><a href="/secure-centric/services/nist-800-171-compliance/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">NIST SP 800-171 Compliance</a></li>
+      </ul>
+    </li>
+    <li><a href="/secure-centric/cmmc/cmmc-process/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">CMMC Process</a></li>
+    <li>
+      <a href="/secure-centric/resources/templates/checklist/level-2/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Resources ▾</a>
+      <ul class="mobile-sublinks">
+        <li><a href="/secure-centric/resources/templates/checklist/level-2/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Level 2 Compliance Checklist</a></li>
+      </ul>
+    </li>
+    <li><a href="/secure-centric/about/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">About Secure-Centric</a></li>
+    <li><a href="/secure-centric/contact/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Talk to an Expert</a></li>
+  </ul>
+</div>
