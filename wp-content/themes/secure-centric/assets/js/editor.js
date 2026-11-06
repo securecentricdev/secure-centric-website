@@ -732,109 +732,505 @@
     });
 
     // =========================================================================
-    // 3. ROADMAP STEPPER BLOCK
+    // 3. ROADMAP STEPPER BLOCK (DYNAMIC MILESTONE STEPS ADD / REMOVE)
     // =========================================================================
-    const roadmapPanels = [
-      {
-        title: 'Roadmap Header & Navigation',
-        initialOpen: true,
-        fields: [
-          { name: 'eyebrow', label: 'Eyebrow', default: '// THE CMMC PROCESS' },
-          { name: 'title', label: 'Main Title', default: 'Your CMMC journey, step by step' },
-          { name: 'detailedProcessLinkText', label: 'Link Text', default: 'View Detailed 8-Step Process →' },
-          { name: 'detailedProcessLinkUrl', label: 'Link URL', default: '#page-19' },
-          { name: 'flagText', label: 'Milestone 07 Flag Tooltip', default: 'Target C3PAO Certification Milestone' }
-        ]
-      }
-    ];
-
-    const defRoadmap = [
-      { no: '01', name: 'Site visit', phase: 'Phase 1: Facility Walkthrough & Scope Discovery', help: 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.', who: 'You + Secure-Centric', output: 'Asset discovery baseline & boundary notes', link: '#page-2' },
-      { no: '02', name: 'Scoping', phase: 'Phase 2: CUI Boundary & Enclave Architecture', help: 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.', who: 'Secure-Centric + IT Leads', output: 'Formal Scope Document & Data-Flow Architecture', link: '#page-16' },
-      { no: '03', name: 'Gap assessment', phase: 'Phase 3: 110-Control Baseline Scoring', help: 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.', who: 'Secure-Centric', output: 'Defensible SPRS Score estimate & findings register', link: '#page-5' },
-      { no: '04', name: 'Remediation', phase: 'Phase 4: Engineering & Policy Remediation', help: 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.', who: 'Your IT/MSP (guided by us)', output: 'Remediation Roadmap with owners and completion targets', link: '#page-7' },
-      { no: '05', name: 'Documentation', phase: 'Phase 5: System Security Plan (SSP) & POA&M', help: 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.', who: 'Secure-Centric + You', output: 'Assessor-ready SSP and comprehensive policy suite', link: '#page-8' },
-      { no: '06', name: 'Readiness review', phase: 'Phase 6: C3PAO Mock Audit & Interview Prep', help: 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.', who: 'Secure-Centric RPs', output: 'Readiness sign-off report & Evidence Binder index', link: '#page-4' },
-      { no: '07', name: 'Assessment', phase: 'Phase 7: Official C3PAO Level 2 Assessment', help: 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.', who: 'Independent C3PAO', output: 'Level 2 CMMC Certification recommendation', link: '#page-19' },
-      { no: '08', name: 'Maintain', phase: 'Phase 8: Continuous Monitoring & Affirmation', help: 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.', who: 'Virtual CISO / You', output: 'Annual Affirmation pack & ongoing compliance posture', link: '#page-11' }
-    ];
-
-    defRoadmap.forEach(function (st, idx) {
-      const n = idx + 1;
-      roadmapPanels.push({
-        title: 'Milestone ' + st.no + ': ' + st.name,
-        initialOpen: false,
-        fields: [
-          { name: 'step' + n + 'Name', label: 'Step Name', default: st.name },
-          { name: 'step' + n + 'Phase', label: 'Phase Title', default: st.phase },
-          { name: 'step' + n + 'Help', label: 'Detailed Description', type: 'textarea', default: st.help },
-          { name: 'step' + n + 'Who', label: 'Who Does This Work', default: st.who },
-          { name: 'step' + n + 'Output', label: 'Primary Deliverable', default: st.output },
-          { name: 'step' + n + 'Link', label: 'Scope Link URL', default: st.link }
-        ]
-      });
-    });
-
-    createBlockRegistration('secure-centric/roadmap-stepper', {
-      title: '8-Step CMMC Journey Roadmap',
+    registerBlockType('secure-centric/roadmap-stepper', {
+      title: 'Interactive Journey Roadmap (Dynamic Steps)',
       icon: 'randomize',
       category: 'secure-centric-process',
-      panels: roadmapPanels
-    });
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
 
-    // =========================================================================
-    // 4. TESTIMONIALS BLOCK
-    // =========================================================================
-    const testPanels = [
-      {
-        title: 'Testimonials Header & Layout',
-        initialOpen: true,
-        fields: [
-          {
-            name: 'displayMode',
-            label: 'Display Mode',
-            type: 'select',
-            options: [
-              { label: 'Infinite Carousel Marquee', value: 'carousel' },
-              { label: 'Static 3+2 Grid', value: 'grid' }
-            ],
-            default: 'carousel'
-          },
-          { name: 'eyebrow', label: 'Eyebrow', default: '// CLIENT TESTIMONIALS' },
-          { name: 'title', label: 'Headline', default: 'What Defense Contractors Say About Working With Us' }
-        ]
+        let currentSteps = [];
+        if (attributes.stepsData) {
+          try {
+            const parsed = JSON.parse(attributes.stepsData);
+            if (Array.isArray(parsed) && parsed.length > 0) currentSteps = parsed;
+          } catch (e) {}
+        }
+
+        if (!currentSteps || !currentSteps.length) {
+          currentSteps = [
+            { no: '01', name: 'Site visit', phase: 'Phase 1: Facility Walkthrough & Scope Discovery', help: 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.', who: 'You + Secure-Centric', output: 'Asset discovery baseline & boundary notes', link: '#page-2' },
+            { no: '02', name: 'Scoping', phase: 'Phase 2: CUI Boundary & Enclave Architecture', help: 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.', who: 'Secure-Centric + IT Leads', output: 'Formal Scope Document & Data-Flow Architecture', link: '#page-16' },
+            { no: '03', name: 'Gap assessment', phase: 'Phase 3: 110-Control Baseline Scoring', help: 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.', who: 'Secure-Centric', output: 'Defensible SPRS Score estimate & findings register', link: '#page-5' },
+            { no: '04', name: 'Remediation', phase: 'Phase 4: Engineering & Policy Remediation', help: 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.', who: 'Your IT/MSP (guided by us)', output: 'Remediation Roadmap with owners and completion targets', link: '#page-7' },
+            { no: '05', name: 'Documentation', phase: 'Phase 5: System Security Plan (SSP) & POA&M', help: 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.', who: 'Secure-Centric + You', output: 'Assessor-ready SSP and comprehensive policy suite', link: '#page-8' },
+            { no: '06', name: 'Readiness review', phase: 'Phase 6: C3PAO Mock Audit & Interview Prep', help: 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.', who: 'Secure-Centric RPs', output: 'Readiness sign-off report & Evidence Binder index', link: '#page-4' },
+            { no: '07', name: 'Assessment', phase: 'Phase 7: Official C3PAO Level 2 Assessment', help: 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.', who: 'Independent C3PAO', output: 'Level 2 CMMC Certification recommendation', link: '#page-19' },
+            { no: '08', name: 'Maintain', phase: 'Phase 8: Continuous Monitoring & Affirmation', help: 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.', who: 'Virtual CISO / You', output: 'Annual Affirmation pack & ongoing compliance posture', link: '#page-11' }
+          ];
+        }
+
+        function updateSteps(newSteps) {
+          const renumbered = newSteps.map(function (st, idx) {
+            return Object.assign({}, st, {
+              no: String(idx + 1).padStart(2, '0')
+            });
+          });
+          setAttributes({ stepsData: JSON.stringify(renumbered) });
+        }
+
+        function addStep() {
+          const nextNo = String(currentSteps.length + 1).padStart(2, '0');
+          const next = currentSteps.concat([{
+            no: nextNo,
+            name: 'New Milestone',
+            phase: 'Phase ' + (currentSteps.length + 1) + ': Description & Objectives',
+            help: 'Describe the key actions, technical checks, and milestones achieved during this stage.',
+            who: 'Secure-Centric + Client Leads',
+            output: 'Deliverable sign-off & audit package',
+            link: '#contact'
+          }]);
+          updateSteps(next);
+        }
+
+        function removeStep(idx) {
+          if (currentSteps.length <= 1) return;
+          const next = currentSteps.filter(function (_, i) { return i !== idx; });
+          updateSteps(next);
+        }
+
+        function updateStepItem(idx, fields) {
+          const next = currentSteps.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateSteps(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/roadmap-stepper',
+          attributes: Object.assign({}, attributes, {
+            stepsData: JSON.stringify(currentSteps)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Roadmap Stepper (' + currentSteps.length + ' Milestones)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '🧭 Roadmap Milestones (' + currentSteps.length + ' Steps)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addStep
+          }, '+ Add New Milestone Step')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Roadmap Header & Navigation', initialOpen: true },
+            el(TextControl, {
+              label: 'Section Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// THE CMMC PROCESS',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Main Title',
+              value: attributes.title !== undefined ? attributes.title : 'Your CMMC journey, step by step',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Detailed Process Link Text',
+              value: attributes.detailedProcessLinkText !== undefined ? attributes.detailedProcessLinkText : 'View Detailed 8-Step Process →',
+              onChange: function (val) { setAttributes({ detailedProcessLinkText: val }); }
+            }),
+            el(TextControl, {
+              label: 'Detailed Process Link URL',
+              value: attributes.detailedProcessLinkUrl !== undefined ? attributes.detailedProcessLinkUrl : '#page-19',
+              onChange: function (val) { setAttributes({ detailedProcessLinkUrl: val }); }
+            }),
+            el(RangeControl, {
+              label: 'Autoplay Step Delay (ms)',
+              value: attributes.autoplayDelay !== undefined ? attributes.autoplayDelay : 3800,
+              min: 2000,
+              max: 10000,
+              step: 200,
+              onChange: function (val) { setAttributes({ autoplayDelay: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Milestones Manager (' + currentSteps.length + ' Steps)', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addStep
+              }, '+ Add New Milestone Step')
+            ),
+            currentSteps.map(function (st, idx) {
+              return el('div', {
+                key: 'step-card-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    'Step ' + st.no + ': ' + (st.name || 'Untitled')
+                  ),
+                  currentSteps.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeStep(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Step Short Name',
+                  value: st.name || '',
+                  onChange: function (v) { updateStepItem(idx, { name: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Phase Subtitle',
+                  value: st.phase || '',
+                  onChange: function (v) { updateStepItem(idx, { phase: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Detailed Description',
+                  value: st.help || '',
+                  rows: 3,
+                  onChange: function (v) { updateStepItem(idx, { help: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Who Does This Work',
+                  value: st.who || '',
+                  onChange: function (v) { updateStepItem(idx, { who: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Primary Deliverable Output',
+                  value: st.output || '',
+                  onChange: function (v) { updateStepItem(idx, { output: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Scope Link URL',
+                  value: st.link || '',
+                  onChange: function (v) { updateStepItem(idx, { link: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addStep
+            }, '+ Add New Milestone Step')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
       }
-    ];
-
-    const defReviews = [
-      { num: '01', author: 'Alex Liu', role: 'IT Manager, Tower Semiconductor', avatar: 'AL', quote: 'Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-      { num: '02', author: 'Patrick Shaw', role: 'Cyber Security Analyst, Safran Federal Systems', avatar: 'PS', quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-      { num: '03', author: 'Elena Rostova', role: 'VP Operations, Precision Aero Machining', avatar: 'ER', quote: 'We cut our assessment scope by almost 40% based on their enclave advisory alone. That decision alone saved us at least $80,000 in unnecessary software upgrades and audit fees.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-      { num: '04', author: 'Marcus Vance', role: 'Chief Information Officer, Vanguard Defense Tech', avatar: 'MV', quote: "The mock C3PAO interview sessions were intense and realistic. When DIBCAC conducted our actual review, there wasn't a single question or evidence request that we hadn't already prepared for.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-      { num: '05', author: 'David Chen', role: 'Director of Compliance, Apex Dynamics', avatar: 'DC', quote: 'Finding an RPO that actually understands precision CNC shop floor networks is rare. Secure-Centric bridged the gap between our machinists, IT, and Department of War compliance seamlessly.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' }
-    ];
-
-    defReviews.forEach(function (rev, idx) {
-      const n = idx + 1;
-      testPanels.push({
-        title: 'Review ' + rev.num + ': ' + rev.author,
-        initialOpen: false,
-        fields: [
-          { name: 'rev' + n + 'Author', label: 'Author Name', default: rev.author },
-          { name: 'rev' + n + 'Role', label: 'Author Role / Company', default: rev.role },
-          { name: 'rev' + n + 'Avatar', label: 'Avatar Initials', default: rev.avatar },
-          { name: 'rev' + n + 'Quote', label: 'Quote Text', type: 'textarea', rows: 3, default: rev.quote },
-          { name: 'rev' + n + 'LinkedinText', label: 'Verification Badge Text', default: rev.linkedinText },
-          { name: 'rev' + n + 'LinkedinUrl', label: 'LinkedIn Post URL', default: rev.linkedinUrl }
-        ]
-      });
     });
 
-    createBlockRegistration('secure-centric/testimonials', {
-      title: 'Defense Client Testimonials',
+    // =========================================================================
+    // 4. TESTIMONIALS BLOCK (DYNAMIC TESTIMONIALS ADD / REMOVE)
+    // =========================================================================
+    registerBlockType('secure-centric/testimonials', {
+      title: 'Defense Client Testimonials (Dynamic)',
       icon: 'format-quote',
       category: 'secure-centric-proof',
-      panels: testPanels
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        let currentReviews = [];
+        if (attributes.testimonialsData) {
+          try {
+            const parsed = JSON.parse(attributes.testimonialsData);
+            if (Array.isArray(parsed) && parsed.length > 0) currentReviews = parsed;
+          } catch (e) {}
+        }
+
+        if (!currentReviews || !currentReviews.length) {
+          currentReviews = [
+            { num: '01', author: 'Alex Liu', role: 'IT Manager, Tower Semiconductor', avatar: 'AL', quote: 'Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+            { num: '02', author: 'Patrick Shaw', role: 'Cyber Security Analyst, Safran Federal Systems', avatar: 'PS', quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+            { num: '03', author: 'Elena Rostova', role: 'VP Operations, Precision Aero Machining', avatar: 'ER', quote: 'We cut our assessment scope by almost 40% based on their enclave advisory alone. That decision alone saved us at least $80,000 in unnecessary software upgrades and audit fees.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+            { num: '04', author: 'Marcus Vance', role: 'Chief Information Officer, Vanguard Defense Tech', avatar: 'MV', quote: "The mock C3PAO interview sessions were intense and realistic. When DIBCAC conducted our actual review, there wasn't a single question or evidence request that we hadn't already prepared for.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+            { num: '05', author: 'David Chen', role: 'Director of Compliance, Apex Dynamics', avatar: 'DC', quote: 'Finding an RPO that actually understands precision CNC shop floor networks is rare. Secure-Centric bridged the gap between our machinists, IT, and Department of War compliance seamlessly.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' }
+          ];
+        }
+
+        function updateReviews(newReviews) {
+          const renumbered = newReviews.map(function (rev, idx) {
+            return Object.assign({}, rev, {
+              num: String(idx + 1).padStart(2, '0')
+            });
+          });
+          setAttributes({ testimonialsData: JSON.stringify(renumbered) });
+        }
+
+        function addReview() {
+          const nextNum = String(currentReviews.length + 1).padStart(2, '0');
+          const next = currentReviews.concat([{
+            num: nextNum,
+            author: 'New Client Executive',
+            role: 'VP Technology, Defense Systems',
+            avatar: 'CE',
+            quote: 'Secure-Centric led our organization through CMMC Level 2 readiness with total precision, deep technical insight, and outstanding support.',
+            linkedinText: 'Shared publicly on LinkedIn',
+            linkedinUrl: 'https://www.linkedin.com/company/secure-centric/'
+          }]);
+          updateReviews(next);
+        }
+
+        function removeReview(idx) {
+          if (currentReviews.length <= 1) return;
+          const next = currentReviews.filter(function (_, i) { return i !== idx; });
+          updateReviews(next);
+        }
+
+        function updateReviewItem(idx, fields) {
+          const next = currentReviews.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateReviews(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/testimonials',
+          attributes: Object.assign({}, attributes, {
+            testimonialsData: JSON.stringify(currentReviews)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Testimonials (' + currentReviews.length + ' Reviews)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '💬 Client Testimonials (' + currentReviews.length + ' Reviews)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addReview
+          }, '+ Add New Testimonial')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Header & Layout Mode', initialOpen: true },
+            el(SelectControl, {
+              label: 'Display Mode',
+              value: attributes.displayMode || 'carousel',
+              options: [
+                { label: 'Infinite Carousel Marquee', value: 'carousel' },
+                { label: 'Static Grid Layout', value: 'grid' }
+              ],
+              onChange: function (val) { setAttributes({ displayMode: val }); }
+            }),
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// CLIENT TESTIMONIALS',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.title !== undefined ? attributes.title : 'What Defense Contractors Say About Working With Us',
+              onChange: function (val) { setAttributes({ title: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Testimonials Manager (' + currentReviews.length + ' Reviews)', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addReview
+              }, '+ Add New Testimonial')
+            ),
+            currentReviews.map(function (rev, idx) {
+              return el('div', {
+                key: 'rev-card-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    '#' + rev.num + ' · ' + (rev.author || 'Anonymous')
+                  ),
+                  currentReviews.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeReview(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Author Name',
+                  value: rev.author || '',
+                  onChange: function (v) { updateReviewItem(idx, { author: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Role & Organization',
+                  value: rev.role || '',
+                  onChange: function (v) { updateReviewItem(idx, { role: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Avatar Initials (e.g. AL)',
+                  value: rev.avatar || '',
+                  onChange: function (v) { updateReviewItem(idx, { avatar: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Quote Text',
+                  value: rev.quote || '',
+                  rows: 3,
+                  onChange: function (v) { updateReviewItem(idx, { quote: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Badge Text',
+                  value: rev.linkedinText || '',
+                  onChange: function (v) { updateReviewItem(idx, { linkedinText: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Badge / Verification URL',
+                  value: rev.linkedinUrl || '',
+                  onChange: function (v) { updateReviewItem(idx, { linkedinUrl: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addReview
+            }, '+ Add New Testimonial')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================
@@ -940,88 +1336,437 @@
     });
 
     // =========================================================================
-    // 7. RESOURCE CARDS BLOCK
+    // 7. RESOURCE CARDS BLOCK (DYNAMIC CARDS ADD / REMOVE)
     // =========================================================================
-    const resPanels = [
-      {
-        title: 'Section Header',
-        initialOpen: true,
-        fields: [
-          { name: 'title', label: 'Headline', default: 'CMMC guides, checklists and tools' }
-        ]
-      }
-    ];
-
-    const defCards = [
-      { num: 1, title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#contact', icon: '📁' },
-      { num: 2, title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#contact', icon: '📘' },
-      { num: 3, title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '#contact', icon: '🛡️' },
-      { num: 4, title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '#contact', icon: '🔒' },
-      { num: 5, title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '#contact', icon: '🏗️' },
-      { num: 6, title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '#contact', icon: '📊' }
-    ];
-
-    defCards.forEach(function (c) {
-      resPanels.push({
-        title: 'Resource ' + c.num + ': ' + c.title,
-        initialOpen: false,
-        fields: [
-          { name: 'card' + c.num + 'Icon', label: 'Icon Emoji', default: c.icon },
-          { name: 'card' + c.num + 'Title', label: 'Card Title', default: c.title },
-          { name: 'card' + c.num + 'Desc', label: 'Short Description', type: 'textarea', default: c.desc },
-          { name: 'card' + c.num + 'Link', label: 'Link URL', default: c.link }
-        ]
-      });
-    });
-
-    createBlockRegistration('secure-centric/resource-cards', {
-      title: 'Resource Guides & Checklists Grid',
+    registerBlockType('secure-centric/resource-cards', {
+      title: 'Resource Guides & Checklists Grid (Dynamic)',
       icon: 'portfolio',
       category: 'secure-centric-process',
-      panels: resPanels
-    });
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
 
-    // =========================================================================
-    // 8. ACCORDION FAQ BLOCK
-    // =========================================================================
-    const faqPanels = [
-      {
-        title: 'Header & CTA Button',
-        initialOpen: true,
-        fields: [
-          { name: 'eyebrow', label: 'Eyebrow', default: '// FREQUENTLY ASKED QUESTIONS' },
-          { name: 'title', label: 'Headline', default: 'Common questions' },
-          { name: 'description', label: 'Description', type: 'textarea', default: 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.' },
-          { name: 'btnText', label: 'Button Text', default: 'Book a Discovery Call →' },
-          { name: 'btnUrl', label: 'Button URL', default: '#contact' }
-        ]
+        let currentCards = [];
+        if (attributes.resourcesData) {
+          try {
+            const parsed = JSON.parse(attributes.resourcesData);
+            if (Array.isArray(parsed) && parsed.length > 0) currentCards = parsed;
+          } catch (e) {}
+        }
+
+        if (!currentCards || !currentCards.length) {
+          currentCards = [
+            { title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#contact', icon: '📁' },
+            { title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#contact', icon: '📘' },
+            { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '#contact', icon: '🛡️' },
+            { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '#contact', icon: '🔒' },
+            { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '#contact', icon: '🏗️' },
+            { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '#contact', icon: '📊' }
+          ];
+        }
+
+        function updateCards(newCards) {
+          setAttributes({ resourcesData: JSON.stringify(newCards) });
+        }
+
+        function addCard() {
+          const next = currentCards.concat([{
+            title: 'New Compliance Resource Guide',
+            desc: 'Practical, audit-tested guidance designed specifically for defense subcontractors.',
+            link: '#contact',
+            icon: '📄'
+          }]);
+          updateCards(next);
+        }
+
+        function removeCard(idx) {
+          if (currentCards.length <= 1) return;
+          const next = currentCards.filter(function (_, i) { return i !== idx; });
+          updateCards(next);
+        }
+
+        function updateCardItem(idx, fields) {
+          const next = currentCards.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateCards(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/resource-cards',
+          attributes: Object.assign({}, attributes, {
+            resourcesData: JSON.stringify(currentCards)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Resource Cards (' + currentCards.length + ' Cards)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '📚 Resource Guides (' + currentCards.length + ' Cards)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addCard
+          }, '+ Add New Resource Card')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Section Header', initialOpen: true },
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.title !== undefined ? attributes.title : 'CMMC guides, checklists and tools',
+              onChange: function (val) { setAttributes({ title: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Resource Cards Manager (' + currentCards.length + ' Cards)', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addCard
+              }, '+ Add New Resource Card')
+            ),
+            currentCards.map(function (c, idx) {
+              return el('div', {
+                key: 'card-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    (c.icon || '📄') + ' ' + (c.title || 'Untitled Card')
+                  ),
+                  currentCards.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeCard(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Card Icon / Emoji',
+                  value: c.icon || '',
+                  onChange: function (v) { updateCardItem(idx, { icon: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Card Title',
+                  value: c.title || '',
+                  onChange: function (v) { updateCardItem(idx, { title: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Short Description',
+                  value: c.desc || '',
+                  rows: 3,
+                  onChange: function (v) { updateCardItem(idx, { desc: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Link URL',
+                  value: c.link || '',
+                  onChange: function (v) { updateCardItem(idx, { link: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addCard
+            }, '+ Add New Resource Card')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
       }
-    ];
-
-    const defFaqs = [
-      { num: 1, q: 'What is CMMC compliance?', a: 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).' },
-      { num: 2, q: 'Do you come to our site?', a: 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.' },
-      { num: 3, q: 'Do you only work on CMMC and NIST SP 800-171?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' },
-      { num: 4, q: 'What happens after I book a discovery call?', a: 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.' },
-      { num: 5, q: 'Who will we work with day to day?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' }
-    ];
-
-    defFaqs.forEach(function (f) {
-      faqPanels.push({
-        title: 'FAQ ' + f.num + ': ' + f.q,
-        initialOpen: false,
-        fields: [
-          { name: 'faq' + f.num + 'Q', label: 'Question', default: f.q },
-          { name: 'faq' + f.num + 'A', label: 'Answer', type: 'textarea', rows: 3, default: f.a }
-        ]
-      });
     });
 
-    createBlockRegistration('secure-centric/accordion-faq', {
-      title: 'FAQ Accordion (Interactive)',
+    // =========================================================================
+    // 8. ACCORDION FAQ BLOCK (DYNAMIC QUESTIONS ADD / REMOVE)
+    // =========================================================================
+    registerBlockType('secure-centric/accordion-faq', {
+      title: 'FAQ Accordion (Dynamic Questions)',
       icon: 'editor-help',
       category: 'secure-centric-process',
-      panels: faqPanels
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        let currentFaqs = [];
+        if (attributes.faqsData) {
+          try {
+            const parsed = JSON.parse(attributes.faqsData);
+            if (Array.isArray(parsed) && parsed.length > 0) currentFaqs = parsed;
+          } catch (e) {}
+        }
+
+        if (!currentFaqs || !currentFaqs.length) {
+          currentFaqs = [
+            { q: 'What is CMMC compliance?', a: 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).' },
+            { q: 'Do you come to our site?', a: 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.' },
+            { q: 'Do you only work on CMMC and NIST SP 800-171?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' },
+            { q: 'What happens after I book a discovery call?', a: 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.' },
+            { q: 'Who will we work with day to day?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' }
+          ];
+        }
+
+        function updateFaqs(newFaqs) {
+          setAttributes({ faqsData: JSON.stringify(newFaqs) });
+        }
+
+        function addFaq() {
+          const next = currentFaqs.concat([{
+            q: 'New Frequently Asked Question?',
+            a: 'Provide a comprehensive, authoritative answer for defense contractors seeking CMMC compliance.'
+          }]);
+          updateFaqs(next);
+        }
+
+        function removeFaq(idx) {
+          if (currentFaqs.length <= 1) return;
+          const next = currentFaqs.filter(function (_, i) { return i !== idx; });
+          updateFaqs(next);
+        }
+
+        function updateFaqItem(idx, fields) {
+          const next = currentFaqs.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateFaqs(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/accordion-faq',
+          attributes: Object.assign({}, attributes, {
+            faqsData: JSON.stringify(currentFaqs)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'FAQ Accordion (' + currentFaqs.length + ' Questions)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '❓ FAQ Questions (' + currentFaqs.length + ' Questions)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addFaq
+          }, '+ Add New FAQ Question')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Header & CTA Button', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// FREQUENTLY ASKED QUESTIONS',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.title !== undefined ? attributes.title : 'Common questions',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Description',
+              value: attributes.description !== undefined ? attributes.description : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.',
+              rows: 3,
+              onChange: function (val) { setAttributes({ description: val }); }
+            }),
+            el(TextControl, {
+              label: 'Button Text',
+              value: attributes.btnText !== undefined ? attributes.btnText : 'Book a Discovery Call →',
+              onChange: function (val) { setAttributes({ btnText: val }); }
+            }),
+            el(TextControl, {
+              label: 'Button URL',
+              value: attributes.btnUrl !== undefined ? attributes.btnUrl : '#contact',
+              onChange: function (val) { setAttributes({ btnUrl: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'FAQ Questions Manager (' + currentFaqs.length + ' Questions)', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addFaq
+              }, '+ Add New FAQ Question')
+            ),
+            currentFaqs.map(function (f, idx) {
+              return el('div', {
+                key: 'faq-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    'Q' + (idx + 1) + ': ' + (f.q ? (f.q.length > 35 ? f.q.substring(0, 35) + '...' : f.q) : 'Untitled')
+                  ),
+                  currentFaqs.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeFaq(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Question',
+                  value: f.q || '',
+                  onChange: function (v) { updateFaqItem(idx, { q: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Answer',
+                  value: f.a || '',
+                  rows: 3,
+                  onChange: function (v) { updateFaqItem(idx, { a: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addFaq
+            }, '+ Add New FAQ Question')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================

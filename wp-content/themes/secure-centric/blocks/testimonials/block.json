@@ -2,11 +2,11 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "secure-centric/testimonials",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "title": "Defense Client Testimonials (Carousel & Grid)",
     "category": "secure-centric-proof",
     "icon": "format-quote",
-    "description": "Infinite smooth testimonials carousel or static 3+2 grid with verified LinkedIn verification badges.",
+    "description": "Infinite smooth testimonials carousel or static grid with verified LinkedIn badges. Add, remove, or customize any number of reviews.",
     "keywords": [
         "testimonials",
         "reviews",
@@ -32,125 +32,9 @@
             "type": "number",
             "default": 3500
         },
-        "rev1Quote": {
+        "testimonialsData": {
             "type": "string",
-            "default": "Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items."
-        },
-        "rev1Author": {
-            "type": "string",
-            "default": "Alex Liu"
-        },
-        "rev1Role": {
-            "type": "string",
-            "default": "IT Manager, Tower Semiconductor"
-        },
-        "rev1Avatar": {
-            "type": "string",
-            "default": "AL"
-        },
-        "rev1LinkedinUrl": {
-            "type": "string",
-            "default": "https://www.linkedin.com/company/secure-centric/"
-        },
-        "rev1LinkedinText": {
-            "type": "string",
-            "default": "Shared publicly on LinkedIn"
-        },
-        "rev2Quote": {
-            "type": "string",
-            "default": "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP."
-        },
-        "rev2Author": {
-            "type": "string",
-            "default": "Patrick Shaw"
-        },
-        "rev2Role": {
-            "type": "string",
-            "default": "Cyber Security Analyst, Safran Federal Systems"
-        },
-        "rev2Avatar": {
-            "type": "string",
-            "default": "PS"
-        },
-        "rev2LinkedinUrl": {
-            "type": "string",
-            "default": "https://www.linkedin.com/company/secure-centric/"
-        },
-        "rev2LinkedinText": {
-            "type": "string",
-            "default": "Shared publicly on LinkedIn"
-        },
-        "rev3Quote": {
-            "type": "string",
-            "default": "We cut our assessment scope by almost 40% based on their enclave advisory alone. That decision alone saved us at least $80,000 in unnecessary software upgrades and audit fees."
-        },
-        "rev3Author": {
-            "type": "string",
-            "default": "Elena Rostova"
-        },
-        "rev3Role": {
-            "type": "string",
-            "default": "VP Operations, Precision Aero Machining"
-        },
-        "rev3Avatar": {
-            "type": "string",
-            "default": "ER"
-        },
-        "rev3LinkedinUrl": {
-            "type": "string",
-            "default": "https://www.linkedin.com/company/secure-centric/"
-        },
-        "rev3LinkedinText": {
-            "type": "string",
-            "default": "Shared publicly on LinkedIn"
-        },
-        "rev4Quote": {
-            "type": "string",
-            "default": "The mock C3PAO interview sessions were intense and realistic. When DIBCAC conducted our actual review, there wasn't a single question or evidence request that we hadn't already prepared for."
-        },
-        "rev4Author": {
-            "type": "string",
-            "default": "Marcus Vance"
-        },
-        "rev4Role": {
-            "type": "string",
-            "default": "Chief Information Officer, Vanguard Defense Tech"
-        },
-        "rev4Avatar": {
-            "type": "string",
-            "default": "MV"
-        },
-        "rev4LinkedinUrl": {
-            "type": "string",
-            "default": "https://www.linkedin.com/company/secure-centric/"
-        },
-        "rev4LinkedinText": {
-            "type": "string",
-            "default": "Shared publicly on LinkedIn"
-        },
-        "rev5Quote": {
-            "type": "string",
-            "default": "Finding an RPO that actually understands precision CNC shop floor networks is rare. Secure-Centric bridged the gap between our machinists, IT, and Department of War compliance seamlessly."
-        },
-        "rev5Author": {
-            "type": "string",
-            "default": "David Chen"
-        },
-        "rev5Role": {
-            "type": "string",
-            "default": "Director of Compliance, Apex Dynamics"
-        },
-        "rev5Avatar": {
-            "type": "string",
-            "default": "DC"
-        },
-        "rev5LinkedinUrl": {
-            "type": "string",
-            "default": "https://www.linkedin.com/company/secure-centric/"
-        },
-        "rev5LinkedinText": {
-            "type": "string",
-            "default": "Shared publicly on LinkedIn"
+            "default": ""
         }
     },
     "supports": {

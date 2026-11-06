@@ -16,6 +16,10 @@
     ],
     "textdomain": "secure-centric",
     "attributes": {
+        "resourcesData": {
+            "type": "string",
+            "default": ""
+        },
         "title": {
             "type": "string",
             "default": "CMMC guides, checklists and tools"

@@ -978,7 +978,7 @@
               <div class="milestone-stepper-pills">
                 <span class="milestone-flow-badge ${isStep7 ? 'violet' : ''}">
                   <span class="pulse-dot" style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px;"></span>
-                  MILESTONE ${activeStep.no} OF 08 &bull; ${phaseName}
+                  MILESTONE ${activeStep.no} OF ${String(steps.length).padStart(2, '0')} &bull; ${phaseName}
                 </span>
               </div>
 

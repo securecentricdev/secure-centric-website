@@ -16,7 +16,7 @@ $link_url    = ! empty( $attributes['detailedProcessLinkUrl'] ) ? $attributes['d
 $flag_text   = ! empty( $attributes['flagText'] ) ? $attributes['flagText'] : 'Target C3PAO Certification Milestone';
 
 $default_steps = array(
-    1 => array(
+    array(
         'no'     => '01',
         'name'   => 'Site visit',
         'phase'  => 'Phase 1: Facility Walkthrough & Scope Discovery',
@@ -25,7 +25,7 @@ $default_steps = array(
         'output' => 'Asset discovery baseline & boundary notes',
         'link'   => '#page-2',
     ),
-    2 => array(
+    array(
         'no'     => '02',
         'name'   => 'Scoping',
         'phase'  => 'Phase 2: CUI Boundary & Enclave Architecture',
@@ -34,7 +34,7 @@ $default_steps = array(
         'output' => 'Formal Scope Document & Data-Flow Architecture',
         'link'   => '#page-16',
     ),
-    3 => array(
+    array(
         'no'     => '03',
         'name'   => 'Gap assessment',
         'phase'  => 'Phase 3: 110-Control Baseline Scoring',
@@ -43,7 +43,7 @@ $default_steps = array(
         'output' => 'Defensible SPRS Score estimate & findings register',
         'link'   => '#page-5',
     ),
-    4 => array(
+    array(
         'no'     => '04',
         'name'   => 'Remediation',
         'phase'  => 'Phase 4: Engineering & Policy Remediation',
@@ -52,7 +52,7 @@ $default_steps = array(
         'output' => 'Remediation Roadmap with owners and completion targets',
         'link'   => '#page-7',
     ),
-    5 => array(
+    array(
         'no'     => '05',
         'name'   => 'Documentation',
         'phase'  => 'Phase 5: System Security Plan (SSP) & POA&M',
@@ -61,7 +61,7 @@ $default_steps = array(
         'output' => 'Assessor-ready SSP and comprehensive policy suite',
         'link'   => '#page-8',
     ),
-    6 => array(
+    array(
         'no'     => '06',
         'name'   => 'Readiness review',
         'phase'  => 'Phase 6: C3PAO Mock Audit & Interview Prep',
@@ -70,7 +70,7 @@ $default_steps = array(
         'output' => 'Readiness sign-off report & Evidence Binder index',
         'link'   => '#page-4',
     ),
-    7 => array(
+    array(
         'no'     => '07',
         'name'   => 'Assessment',
         'phase'  => 'Phase 7: Official C3PAO Level 2 Assessment',
@@ -79,7 +79,7 @@ $default_steps = array(
         'output' => 'Level 2 CMMC Certification recommendation',
         'link'   => '#page-19',
     ),
-    8 => array(
+    array(
         'no'     => '08',
         'name'   => 'Maintain',
         'phase'  => 'Phase 8: Continuous Monitoring & Affirmation',
@@ -90,21 +90,36 @@ $default_steps = array(
     ),
 );
 
+$steps_raw = array();
+if ( ! empty( $attributes['stepsData'] ) ) {
+    $decoded = json_decode( $attributes['stepsData'], true );
+    if ( is_array( $decoded ) && ! empty( $decoded ) ) {
+        $steps_raw = $decoded;
+    }
+}
+
+if ( empty( $steps_raw ) ) {
+    $steps_raw = $default_steps;
+}
+
 $steps = array();
-for ( $i = 1; $i <= 8; $i++ ) {
-    $def = $default_steps[ $i ];
-    $steps[ $i ] = array(
-        'no'     => $def['no'],
-        'name'   => ! empty( $attributes[ 'step' . $i . 'Name' ] ) ? $attributes[ 'step' . $i . 'Name' ] : $def['name'],
-        'phase'  => ! empty( $attributes[ 'step' . $i . 'Phase' ] ) ? $attributes[ 'step' . $i . 'Phase' ] : $def['phase'],
-        'help'   => ! empty( $attributes[ 'step' . $i . 'Help' ] ) ? $attributes[ 'step' . $i . 'Help' ] : $def['help'],
-        'who'    => ! empty( $attributes[ 'step' . $i . 'Who' ] ) ? $attributes[ 'step' . $i . 'Who' ] : $def['who'],
-        'output' => ! empty( $attributes[ 'step' . $i . 'Output' ] ) ? $attributes[ 'step' . $i . 'Output' ] : $def['output'],
-        'link'   => ! empty( $attributes[ 'step' . $i . 'Link' ] ) ? $attributes[ 'step' . $i . 'Link' ] : $def['link'],
+$total_steps = count( $steps_raw );
+foreach ( $steps_raw as $i => $st ) {
+    $num_str = sprintf( '%02d', $i + 1 );
+    $steps[ $i + 1 ] = array(
+        'no'     => $num_str,
+        'name'   => ! empty( $st['name'] ) ? $st['name'] : 'Milestone ' . $num_str,
+        'phase'  => ! empty( $st['phase'] ) ? $st['phase'] : 'Phase ' . ( $i + 1 ),
+        'help'   => ! empty( $st['help'] ) ? $st['help'] : '',
+        'who'    => ! empty( $st['who'] ) ? $st['who'] : 'Secure-Centric + You',
+        'output' => ! empty( $st['output'] ) ? $st['output'] : '',
+        'link'   => ! empty( $st['link'] ) ? $st['link'] : '#page-2',
     );
 }
 
-$active_step = $steps[1];
+$active_step = isset( $steps[1] ) ? $steps[1] : reset( $steps );
+// Determine target flag step (milestone 7 or second-to-last)
+$flag_step_idx = ( $total_steps >= 7 ) ? 7 : $total_steps;
 ?>
 
 <section class="py-section roadmap-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {backgroundColor:'ice'}" data-wp-pattern="secure-centric/cmmc-8-step-journey" id="roadmap-section">
@@ -169,8 +184,8 @@ $active_step = $steps[1];
       </div>
 
       <?php foreach ( $steps as $idx => $st ) : ?>
-        <button type="button" class="step-node <?php echo ( 7 === $idx ) ? 'step-7' : ''; ?> <?php echo ( 1 === $idx ) ? 'active' : ''; ?>" onclick="window.selectRoadmapStep(<?php echo ( $idx - 1 ); ?>, event)" role="tab" aria-selected="<?php echo ( 1 === $idx ) ? 'true' : 'false'; ?>" title="Milestone <?php echo esc_attr( $st['no'] . ': ' . $st['name'] ); ?>">
-          <?php if ( 7 === $idx ) : ?>
+        <button type="button" class="step-node <?php echo ( $flag_step_idx === $idx ) ? 'step-7' : ''; ?> <?php echo ( 1 === $idx ) ? 'active' : ''; ?>" onclick="window.selectRoadmapStep(<?php echo ( $idx - 1 ); ?>, event)" role="tab" aria-selected="<?php echo ( 1 === $idx ) ? 'true' : 'false'; ?>" title="Milestone <?php echo esc_attr( $st['no'] . ': ' . $st['name'] ); ?>">
+          <?php if ( $flag_step_idx === $idx ) : ?>
             <div class="milestone-flag-wrap" id="step-7-flag" aria-label="<?php echo esc_attr( $flag_text ); ?>">
               <svg class="milestone-flag-svg" viewBox="0 0 28 36" fill="none">
                 <line x1="5" y1="2" x2="5" y2="34" stroke="#0B1437" stroke-width="2" stroke-linecap="round"></line>
@@ -192,7 +207,7 @@ $active_step = $steps[1];
         <div class="milestone-stepper-pills">
           <span class="milestone-flow-badge">
             <span class="pulse-dot" style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px;"></span>
-            MILESTONE <?php echo esc_html( $active_step['no'] ); ?> OF 08 • <?php echo esc_html( $active_step['phase'] ); ?>
+            MILESTONE <?php echo esc_html( $active_step['no'] ); ?> OF <?php echo sprintf( '%02d', $total_steps ); ?> • <?php echo esc_html( $active_step['phase'] ); ?>
           </span>
         </div>
 
@@ -213,9 +228,11 @@ $active_step = $steps[1];
           <?php echo esc_html( $active_step['help'] ); ?>
         </p>
         <div class="step-cta-group" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-          <button type="button" class="btn btn-primary" onclick="window.selectRoadmapStep(1, event)">
-            Advance to Milestone 02: <?php echo esc_html( $steps[2]['name'] ); ?> →
-          </button>
+          <?php if ( isset( $steps[2] ) ) : ?>
+            <button type="button" class="btn btn-primary" onclick="window.selectRoadmapStep(1, event)">
+              Advance to Milestone 02: <?php echo esc_html( $steps[2]['name'] ); ?> →
+            </button>
+          <?php endif; ?>
           <a href="<?php echo esc_url( $active_step['link'] ); ?>" class="btn btn-secondary-outline">Explore Milestone Scope</a>
         </div>
       </div>

@@ -28,7 +28,9 @@ add_action( 'after_setup_theme', 'secure_centric_setup' );
  * Register Custom Gutenberg Blocks via block.json
  */
 function secure_centric_register_custom_blocks() {
-    wp_enqueue_media();
+    if ( function_exists( 'wp_enqueue_media' ) && is_admin() ) {
+        wp_enqueue_media();
+    }
 
     $editor_js_file = get_template_directory() . '/assets/js/editor.js';
     $editor_js_ver  = file_exists( $editor_js_file ) ? (string) filemtime( $editor_js_file ) : '4.0.0';
