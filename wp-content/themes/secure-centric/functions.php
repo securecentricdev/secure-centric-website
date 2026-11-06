@@ -33,8 +33,22 @@ function sc_clean_text( $val ) {
     }
     if ( is_string( $val ) ) {
         return str_replace(
-            array( '\u0022', 'u0022', '\u0026', 'u0026', 'IT\u005c/MSP', 'IT\/MSP', '\/', 'u005c/' ),
-            array( '"', '"', '&', '&', 'IT/MSP', 'IT/MSP', '/', '/' ),
+            array(
+                '\u0022', 'u0022',
+                'u0026amp;', '\u0026amp;',
+                'u0026#038;', '\u0026#038;',
+                '\u0026', 'u0026', 'U0026',
+                '&amp;',
+                'IT\u005c/MSP', 'IT\/MSP', '\/', 'u005c/'
+            ),
+            array(
+                '"', '"',
+                '&', '&',
+                '&', '&',
+                '&', '&', '&',
+                '&',
+                'IT/MSP', 'IT/MSP', '/', '/'
+            ),
             $val
         );
     }

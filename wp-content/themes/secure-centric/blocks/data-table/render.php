@@ -62,6 +62,12 @@ if ( $row_col_count > 0 ) {
 if ( empty( $cols ) ) {
     $cols = array( 'Category / Control', 'Status', 'Impact', 'Required Remediation', 'Owner' );
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $title = sc_clean_text( $title );
+    $cols  = sc_clean_text( $cols );
+    $rows  = sc_clean_text( $rows );
+}
 ?>
 
 <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 
@@ -79,9 +85,14 @@ if ( empty( $cols ) ) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ( $rows as $row ) : ?>
+          <?php foreach ( $rows as $row ) : 
+            $row_cells = array_values( (array) $row );
+            if ( ! empty( $cols ) && count( $row_cells ) > count( $cols ) ) {
+                $row_cells = array_slice( $row_cells, 0, count( $cols ) );
+            }
+          ?>
             <tr>
-              <?php foreach ( (array) $row as $cell ) : ?>
+              <?php foreach ( $row_cells as $cell ) : ?>
                 <td><?php echo esc_html( $cell ); ?></td>
               <?php endforeach; ?>
             </tr>

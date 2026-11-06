@@ -22,6 +22,17 @@ $secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['s
 $sub_text           = ! empty( $attributes['subText'] ) ? $attributes['subText'] : '30 min · No sales pitch · Signed NDA';
 $breadcrumb_current = ! empty( $attributes['breadcrumbCurrent'] ) ? $attributes['breadcrumbCurrent'] : 'CMMC COMPLIANCE SERVICES';
 
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow            = sc_clean_text( $eyebrow );
+    $title              = sc_clean_text( $title );
+    $highlight_text     = sc_clean_text( $highlight_text );
+    $description        = sc_clean_text( $description );
+    $breadcrumb_current = sc_clean_text( $breadcrumb_current );
+    $primary_btn_text   = sc_clean_text( $primary_btn_text );
+    $secondary_btn_text = sc_clean_text( $secondary_btn_text );
+    $sub_text           = sc_clean_text( $sub_text );
+}
+
 // Topic Pills
 $topic1_title = ! empty( $attributes['topic1Title'] ) ? $attributes['topic1Title'] : 'CMMC';
 $topic1_desc  = ! empty( $attributes['topic1Desc'] ) ? $attributes['topic1Desc'] : 'Maturity levels & framework';

@@ -44,6 +44,13 @@ if ( empty( $steps ) ) {
         )
     );
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow  = sc_clean_text( $eyebrow );
+    $title    = sc_clean_text( $title );
+    $subtitle = sc_clean_text( $subtitle );
+    $steps    = sc_clean_text( $steps );
+}
 ?>
 
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-vertical">

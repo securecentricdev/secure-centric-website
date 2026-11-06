@@ -15,6 +15,12 @@ $service_link = ! empty( $attributes['serviceLink'] ) ? $attributes['serviceLink
 $title        = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Where you fit';
 $line         = ! empty( $attributes['line'] ) ? $attributes['line'] : 'You know CMMC applies but need clarity on scoping, timeline, and audit boundaries.';
 $process_link = ! empty( $attributes['processLink'] ) ? $attributes['processLink'] : home_url( '/cmmc/cmmc-process/' );
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $stage = sc_clean_text( $stage );
+    $title = sc_clean_text( $title );
+    $line  = sc_clean_text( $line );
+}
 ?>
 
 <section class="stage-line-bar wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/stage-line">

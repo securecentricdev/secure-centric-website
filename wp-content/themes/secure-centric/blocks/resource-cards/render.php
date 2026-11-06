@@ -70,6 +70,11 @@ if ( empty( $cards ) ) {
         );
     }
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $title = sc_clean_text( $title );
+    $cards = sc_clean_text( $cards );
+}
 ?>
 
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:columns">

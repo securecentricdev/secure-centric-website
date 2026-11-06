@@ -56,6 +56,14 @@ if ( empty( $faqs ) ) {
         );
     }
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow     = sc_clean_text( $eyebrow );
+    $title       = sc_clean_text( $title );
+    $description = sc_clean_text( $description );
+    $btn_text    = sc_clean_text( $btn_text );
+    $faqs        = sc_clean_text( $faqs );
+}
 ?>
 
 <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:details-group" data-wp-pattern="secure-centric/faq-accordion">

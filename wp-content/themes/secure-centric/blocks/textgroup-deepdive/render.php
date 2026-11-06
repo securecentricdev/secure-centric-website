@@ -47,6 +47,13 @@ if ( empty( $sections ) ) {
         ),
     );
 }
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow  = sc_clean_text( $eyebrow );
+    $title    = sc_clean_text( $title );
+    $subtitle = sc_clean_text( $subtitle );
+    $sections = sc_clean_text( $sections );
+}
 ?>
 
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/textgroup-deepdive">
