@@ -40,15 +40,35 @@ $quiz_placeholder = ! empty( $attributes['quizPlaceholder'] ) ? $attributes['qui
 $quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Start 3-Minute Readiness Check →';
 $quiz_note        = ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : '🔒 Work email required. Never submit classified or CUI information.';
 
-// Video paths
-$theme_uri  = get_template_directory_uri();
-$video_mp4  = $theme_uri . '/assets/video/cmmc-concept.mp4';
-$poster_jpg = $theme_uri . '/assets/video/cmmc-concept-poster.jpg';
+// Background Media Paths & Overrides
+$bg_media_type   = ! empty( $attributes['bgMediaType'] ) ? $attributes['bgMediaType'] : 'video';
+$theme_uri       = get_template_directory_uri();
+$default_video   = $theme_uri . '/assets/video/cmmc-concept.mp4';
+$default_poster  = $theme_uri . '/assets/video/cmmc-concept-poster.jpg';
+
+$video_url       = ! empty( $attributes['bgVideoUrl'] ) ? $attributes['bgVideoUrl'] : $default_video;
+$poster_url      = ! empty( $attributes['bgPosterUrl'] ) ? $attributes['bgPosterUrl'] : $default_poster;
+$image_url       = ! empty( $attributes['bgImageUrl'] ) ? $attributes['bgImageUrl'] : '';
+$overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attributes['bgOverlayOpacity'] / 100 ) : 0.70;
 ?>
 
 <?php if ( 'service' === $layout ) : ?>
-  <section class="section-dark hero-home py-section wp-block-inspect">
-    <div class="site-container">
+  <section class="section-dark hero-home py-section wp-block-inspect" style="position: relative; overflow: hidden;">
+    <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php elseif ( ! empty( $attributes['bgVideoUrl'] ) ) : ?>
+      <div class="hero-video-bg-container" aria-hidden="true">
+        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
+          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
+      </div>
+    <?php endif; ?>
+
+    <div class="site-container" style="position: relative; z-index: 2;">
       <div class="hero-home-grid">
         <div class="hero-content">
           <span class="section-eyebrow text-cyan"><?php echo esc_html( $eyebrow ); ?></span>
@@ -83,10 +103,14 @@ $poster_jpg = $theme_uri . '/assets/video/cmmc-concept-poster.jpg';
   <!-- Home Layout -->
   <section class="hero-home-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" data-wp-pattern="secure-centric/hero-home">
     <div class="hero-video-bg-container" aria-hidden="true">
-      <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_jpg ); ?>" src="<?php echo esc_url( $video_mp4 ); ?>">
-        <source src="<?php echo esc_url( $video_mp4 ); ?>" type="video/mp4">
-      </video>
-      <div class="hero-video-overlay"></div>
+      <?php if ( 'image' === $bg_media_type && ! empty( $image_url ) ) : ?>
+        <img class="hero-video-bg hero-image-bg" src="<?php echo esc_url( $image_url ); ?>" alt="" style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
+      <?php else : ?>
+        <video class="hero-video-bg" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="<?php echo esc_url( $poster_url ); ?>" src="<?php echo esc_url( $video_url ); ?>">
+          <source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
+        </video>
+      <?php endif; ?>
+      <div class="hero-video-overlay" style="background: rgba(6, 11, 36, <?php echo esc_attr( $overlay_opacity ); ?>);"></div>
     </div>
     <div class="site-container" style="position: relative; z-index: 2;">
       <div class="hero-home-grid">
@@ -122,29 +146,22 @@ $poster_jpg = $theme_uri . '/assets/video/cmmc-concept-poster.jpg';
             </a>
           </div>
         </div>
-
-        <div class="hero-readiness-card">
-          <div class="eyebrow">
-            <span><?php echo esc_html( $quiz_badge ); ?></span>
-            <?php if ( ! empty( $quiz_chip ) ) : ?>
-              <span class="badge-chip accent" style="font-size: 0.65rem;"><?php echo esc_html( $quiz_chip ); ?></span>
-            <?php endif; ?>
-          </div>
-          <h3><?php echo esc_html( $quiz_title ); ?></h3>
-          <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px;">
-            <?php echo esc_html( $quiz_desc ); ?>
-          </p>
-          <form class="readiness-inline-form" onsubmit="event.preventDefault(); if (typeof window.triggerToolModal === 'function') { window.triggerToolModal(); } else { window.location.href='#contact'; }">
-            <div style="margin-bottom: 12px;">
-              <input type="email" class="form-input" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" required>
+        <div class="hero-home-quiz">
+          <div class="quiz-card">
+            <div class="quiz-card-badge">
+              <span><?php echo esc_html( $quiz_badge ); ?></span>
+              <span class="badge-chip"><?php echo esc_html( $quiz_chip ); ?></span>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">
-              <?php echo esc_html( $quiz_btn_text ); ?>
-            </button>
-          </form>
-          <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 10px; text-align: center;">
-            <?php echo esc_html( $quiz_note ); ?>
-          </p>
+            <h3><?php echo esc_html( $quiz_title ); ?></h3>
+            <p><?php echo esc_html( $quiz_desc ); ?></p>
+            <div class="quiz-form">
+              <input type="email" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" class="quiz-input" />
+              <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <?php echo esc_html( $quiz_btn_text ); ?>
+              </button>
+            </div>
+            <div class="quiz-note"><?php echo esc_html( $quiz_note ); ?></div>
+          </div>
         </div>
       </div>
     </div>

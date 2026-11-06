@@ -12,7 +12,7 @@
     const { createElement: el, Fragment } = wp.element;
     const blockEditor = wp.blockEditor || wp.editor;
     const { InspectorControls, useBlockProps } = blockEditor;
-    const { PanelBody, TextControl, TextareaControl, SelectControl, Button } = wp.components;
+    const { PanelBody, TextControl, TextareaControl, SelectControl, Button, RangeControl } = wp.components;
     const ServerSideRender = wp.serverSideRender;
 
     /**
@@ -123,73 +123,364 @@
     }
 
     // =========================================================================
-    // 1. HERO BLOCK
+    // 1. HERO BLOCK (CUSTOM BACKGROUND MEDIA & FULL GRANULAR CONTROLS)
     // =========================================================================
-    createBlockRegistration('secure-centric/hero', {
+    registerBlockType('secure-centric/hero', {
       title: 'Hero Section (CMMC Interactive)',
       icon: 'shield',
       category: 'secure-centric-heroes',
-      panels: [
-        {
-          title: 'Header & Main Headline',
-          initialOpen: true,
-          fields: [
-            { name: 'eyebrow', label: 'Eyebrow Tag', default: '// ACCREDITED CYBER AB RPO · LEVEL 2 READINESS' },
-            { name: 'title', label: 'Main Headline', default: 'DEFENSE-GRADE CMMC & NIST SP 800-171 COMPLIANCE' },
-            { name: 'highlightText', label: 'Highlighted Suffix', default: 'BUILT TO WITHSTAND DIBCAC AUDITS.' },
-            { name: 'description', label: 'Hero Subtext Description', type: 'textarea', rows: 3, default: 'We guide defense subcontractors through scoping, on-site walkthroughs, SSP authoring, and C3PAO assessment.' }
-          ]
-        },
-        {
-          title: 'Primary CTA Button',
-          initialOpen: false,
-          fields: [
-            { name: 'primaryBtnText', label: 'Button Text', default: 'Get Scoped for CMMC Level 2 →' },
-            { name: 'primaryBtnUrl', label: 'Button Link URL', default: '#contact' },
-            { name: 'subText', label: 'Button Microcopy', default: 'Accredited Cyber AB RPO · 100% First-Pass Record · NDA Standard' }
-          ]
-        },
-        {
-          title: 'Interactive Topic 1',
-          initialOpen: false,
-          fields: [
-            { name: 'topic1Title', label: 'Title', default: '110 NIST Controls' },
-            { name: 'topic1Desc', label: 'Description', type: 'textarea', default: 'Comprehensive mapping across all 14 security domains.' },
-            { name: 'topic1Url', label: 'Link URL', default: '#page-5' }
-          ]
-        },
-        {
-          title: 'Interactive Topic 2',
-          initialOpen: false,
-          fields: [
-            { name: 'topic2Title', label: 'Title', default: 'On-Site Walkthroughs' },
-            { name: 'topic2Desc', label: 'Description', type: 'textarea', default: 'Physical inspection of shop floors and server enclaves.' },
-            { name: 'topic2Url', label: 'Link URL', default: '#page-2' }
-          ]
-        },
-        {
-          title: 'Interactive Topic 3',
-          initialOpen: false,
-          fields: [
-            { name: 'topic3Title', label: 'Title', default: 'Assessor-Ready SSP' },
-            { name: 'topic3Desc', label: 'Description', type: 'textarea', default: 'Defensible documentation tailored to your exact prime contract.' },
-            { name: 'topic3Url', label: 'Link URL', default: '#page-8' }
-          ]
-        },
-        {
-          title: 'Quick Quiz Widget',
-          initialOpen: false,
-          fields: [
-            { name: 'quizBadge', label: 'Badge', default: 'INTERACTIVE CHECK' },
-            { name: 'quizChip', label: 'Pill Tag', default: '2-Minute Self-Check' },
-            { name: 'quizTitle', label: 'Card Title', default: 'Are you subject to DFARS 252.204-7012?' },
-            { name: 'quizDesc', label: 'Card Description', type: 'textarea', default: 'Enter your prime contract clause or contractor CAGE code for instant scoping guidance.' },
-            { name: 'quizPlaceholder', label: 'Input Placeholder', default: 'e.g. 252.204-7012 or CAGE code' },
-            { name: 'quizBtnText', label: 'Button Text', default: 'Check Scope →' },
-            { name: 'quizNote', label: 'Privacy Note', default: 'Strictly confidential under Bilateral NDA' }
-          ]
-        }
-      ]
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const MediaUploadComponent = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
+        const bgType = attributes.bgMediaType || 'video';
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          // Panel 1: Hero Background Media
+          el(
+            PanelBody,
+            { title: 'Hero Background Media & Video', initialOpen: true },
+            el(SelectControl, {
+              label: 'Background Media Format',
+              value: bgType,
+              options: [
+                { label: 'Video Background (MP4 / WebM)', value: 'video' },
+                { label: 'Static Image Background', value: 'image' }
+              ],
+              onChange: function (val) { setAttributes({ bgMediaType: val }); }
+            }),
+            bgType === 'video' ? el(Fragment, {},
+              el('p', { style: { fontSize: '12px', color: '#64748B', margin: '8px 0 12px', lineHeight: 1.5 } },
+                'By default, the defense concept MP4 video loops smoothly in the background. You can upload your own custom video file or poster image below.'
+              ),
+              el('div', {
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '14px'
+                }
+              },
+                el('strong', { style: { display: 'block', fontSize: '12px', color: '#0F172A', marginBottom: '8px' } },
+                  'Video File (MP4 / WebM)'
+                ),
+                attributes.bgVideoUrl ? el('div', { style: { fontSize: '11px', color: '#059669', marginBottom: '8px', wordBreak: 'break-all' } },
+                  '✓ Custom Video: ' + attributes.bgVideoUrl
+                ) : el('div', { style: { fontSize: '11px', color: '#64748B', marginBottom: '8px' } },
+                  '• Using Default: /assets/video/cmmc-concept.mp4'
+                ),
+                el('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
+                  MediaUploadComponent ? el(MediaUploadComponent, {
+                    onSelect: function (media) {
+                      setAttributes({ bgVideoUrl: media.url, bgVideoId: media.id });
+                    },
+                    allowedTypes: ['video'],
+                    value: attributes.bgVideoId,
+                    render: function (obj) {
+                      return el(Button, {
+                        isSecondary: true,
+                        isSmall: true,
+                        onClick: obj.open
+                      }, attributes.bgVideoUrl ? 'Change Custom Video' : 'Upload Custom Video');
+                    }
+                  }) : null,
+                  attributes.bgVideoUrl ? el(Button, {
+                    isTertiary: true,
+                    isSmall: true,
+                    onClick: function () {
+                      setAttributes({ bgVideoUrl: '', bgVideoId: 0 });
+                    }
+                  }, 'Reset to Default') : null
+                )
+              ),
+              el('div', {
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '14px'
+                }
+              },
+                el('strong', { style: { display: 'block', fontSize: '12px', color: '#0F172A', marginBottom: '8px' } },
+                  'Video Poster Image (First Frame)'
+                ),
+                attributes.bgPosterUrl ? el('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' } },
+                  el('img', {
+                    src: attributes.bgPosterUrl,
+                    style: { width: '64px', height: '36px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #CBD5E1' },
+                    alt: 'Poster'
+                  }),
+                  el('span', { style: { fontSize: '11px', color: '#059669' } }, '✓ Custom poster set')
+                ) : el('div', { style: { fontSize: '11px', color: '#64748B', marginBottom: '8px' } },
+                  '• Using Default: /assets/video/cmmc-concept-poster.jpg'
+                ),
+                el('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
+                  MediaUploadComponent ? el(MediaUploadComponent, {
+                    onSelect: function (media) {
+                      setAttributes({ bgPosterUrl: media.url, bgPosterId: media.id });
+                    },
+                    allowedTypes: ['image'],
+                    value: attributes.bgPosterId,
+                    render: function (obj) {
+                      return el(Button, {
+                        isSecondary: true,
+                        isSmall: true,
+                        onClick: obj.open
+                      }, attributes.bgPosterUrl ? 'Change Poster' : 'Upload Poster');
+                    }
+                  }) : null,
+                  attributes.bgPosterUrl ? el(Button, {
+                    isTertiary: true,
+                    isSmall: true,
+                    onClick: function () {
+                      setAttributes({ bgPosterUrl: '', bgPosterId: 0 });
+                    }
+                  }, 'Reset to Default') : null
+                )
+              )
+            ) : el(Fragment, {},
+              el('p', { style: { fontSize: '12px', color: '#64748B', margin: '8px 0 12px', lineHeight: 1.5 } },
+                'Upload a high-resolution defense photo, facility walkthrough image, or pattern texture to replace the video.'
+              ),
+              el('div', {
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '14px'
+                }
+              },
+                attributes.bgImageUrl ? el('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' } },
+                  el('img', {
+                    src: attributes.bgImageUrl,
+                    style: { width: '80px', height: '48px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #CBD5E1' },
+                    alt: 'Background'
+                  }),
+                  el('span', { style: { fontSize: '11px', color: '#059669' } }, '✓ Custom background photo active')
+                ) : el('div', { style: { fontSize: '11px', color: '#64748B', marginBottom: '8px' } },
+                  'No background photo uploaded yet. Click below to select one from your media library.'
+                ),
+                el('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
+                  MediaUploadComponent ? el(MediaUploadComponent, {
+                    onSelect: function (media) {
+                      setAttributes({ bgImageUrl: media.url, bgImageId: media.id });
+                    },
+                    allowedTypes: ['image'],
+                    value: attributes.bgImageId,
+                    render: function (obj) {
+                      return el(Button, {
+                        isSecondary: true,
+                        isSmall: true,
+                        onClick: obj.open
+                      }, attributes.bgImageUrl ? 'Change Background Image' : 'Upload Background Image');
+                    }
+                  }) : null,
+                  attributes.bgImageUrl ? el(Button, {
+                    isTertiary: true,
+                    isSmall: true,
+                    onClick: function () {
+                      setAttributes({ bgImageUrl: '', bgImageId: 0 });
+                    }
+                  }, 'Clear Image') : null
+                )
+              )
+            ),
+            el(RangeControl, {
+              label: 'Dark Overlay Darkness (%)',
+              value: attributes.bgOverlayOpacity !== undefined ? attributes.bgOverlayOpacity : 70,
+              min: 0,
+              max: 95,
+              step: 5,
+              help: 'Controls darkness of dark tint over the background media to guarantee maximum text legibility.',
+              onChange: function (val) { setAttributes({ bgOverlayOpacity: val }); }
+            })
+          ),
+          // Panel 2: Header & Main Headline
+          el(
+            PanelBody,
+            { title: 'Header & Main Headline', initialOpen: false },
+            el(TextControl, {
+              label: 'Eyebrow Tag',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// NIST SP 800-171 / CMMC Compliance Consultants',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Main Headline',
+              value: attributes.title !== undefined ? attributes.title : 'CMMC compliance for defense subcontractors, guided by a Cyber AB RPO',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Highlighted Suffix (Cyan text)',
+              value: attributes.highlightText !== undefined ? attributes.highlightText : 'Cyber AB RPO',
+              onChange: function (val) { setAttributes({ highlightText: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Hero Subtext Description',
+              rows: 3,
+              value: attributes.description !== undefined ? attributes.description : 'We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation.',
+              onChange: function (val) { setAttributes({ description: val }); }
+            })
+          ),
+          // Panel 3: Primary CTA Button
+          el(
+            PanelBody,
+            { title: 'Primary CTA Button', initialOpen: false },
+            el(TextControl, {
+              label: 'Button Text',
+              value: attributes.primaryBtnText !== undefined ? attributes.primaryBtnText : 'Book a Discovery Call →',
+              onChange: function (val) { setAttributes({ primaryBtnText: val }); }
+            }),
+            el(TextControl, {
+              label: 'Button Link URL',
+              value: attributes.primaryBtnUrl !== undefined ? attributes.primaryBtnUrl : '#contact',
+              onChange: function (val) { setAttributes({ primaryBtnUrl: val }); }
+            }),
+            el(TextControl, {
+              label: 'Button Microcopy (under button)',
+              value: attributes.subText !== undefined ? attributes.subText : '30 min · No sales pitch · Signed NDA',
+              onChange: function (val) { setAttributes({ subText: val }); }
+            })
+          ),
+          // Panel 4: Interactive Topics
+          el(
+            PanelBody,
+            { title: 'Interactive Topic Pills (3 Cards)', initialOpen: false },
+            el('strong', { style: { display: 'block', marginBottom: '6px', fontSize: '12px' } }, 'Topic Card 1'),
+            el(TextControl, {
+              label: 'Topic 1 Title',
+              value: attributes.topic1Title !== undefined ? attributes.topic1Title : 'CMMC',
+              onChange: function (val) { setAttributes({ topic1Title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 1 Description',
+              value: attributes.topic1Desc !== undefined ? attributes.topic1Desc : 'Maturity levels & framework',
+              onChange: function (val) { setAttributes({ topic1Desc: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 1 Link URL',
+              value: attributes.topic1Url !== undefined ? attributes.topic1Url : '/secure-centric/cmmc/',
+              onChange: function (val) { setAttributes({ topic1Url: val }); }
+            }),
+            el('hr', { style: { margin: '14px 0' } }),
+            el('strong', { style: { display: 'block', marginBottom: '6px', fontSize: '12px' } }, 'Topic Card 2'),
+            el(TextControl, {
+              label: 'Topic 2 Title',
+              value: attributes.topic2Title !== undefined ? attributes.topic2Title : 'NIST SP 800-171',
+              onChange: function (val) { setAttributes({ topic2Title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 2 Description',
+              value: attributes.topic2Desc !== undefined ? attributes.topic2Desc : '110 controls & DFARS 7012',
+              onChange: function (val) { setAttributes({ topic2Desc: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 2 Link URL',
+              value: attributes.topic2Url !== undefined ? attributes.topic2Url : '/secure-centric/services/nist-800-171-compliance/',
+              onChange: function (val) { setAttributes({ topic2Url: val }); }
+            }),
+            el('hr', { style: { margin: '14px 0' } }),
+            el('strong', { style: { display: 'block', marginBottom: '6px', fontSize: '12px' } }, 'Topic Card 3'),
+            el(TextControl, {
+              label: 'Topic 3 Title',
+              value: attributes.topic3Title !== undefined ? attributes.topic3Title : 'CUI',
+              onChange: function (val) { setAttributes({ topic3Title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 3 Description',
+              value: attributes.topic3Desc !== undefined ? attributes.topic3Desc : 'Controlled Unclassified Info',
+              onChange: function (val) { setAttributes({ topic3Desc: val }); }
+            }),
+            el(TextControl, {
+              label: 'Topic 3 Link URL',
+              value: attributes.topic3Url !== undefined ? attributes.topic3Url : '/secure-centric/cui/',
+              onChange: function (val) { setAttributes({ topic3Url: val }); }
+            })
+          ),
+          // Panel 5: Quick Quiz Widget
+          el(
+            PanelBody,
+            { title: 'Quick Quiz Widget Card', initialOpen: false },
+            el(TextControl, {
+              label: 'Quiz Badge',
+              value: attributes.quizBadge !== undefined ? attributes.quizBadge : 'CMMC READINESS CHECK · 3 MINUTES',
+              onChange: function (val) { setAttributes({ quizBadge: val }); }
+            }),
+            el(TextControl, {
+              label: 'Pill Tag',
+              value: attributes.quizChip !== undefined ? attributes.quizChip : 'Free Tool',
+              onChange: function (val) { setAttributes({ quizChip: val }); }
+            }),
+            el(TextControl, {
+              label: 'Card Title',
+              value: attributes.quizTitle !== undefined ? attributes.quizTitle : 'Find out where you stand',
+              onChange: function (val) { setAttributes({ quizTitle: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Card Description',
+              rows: 3,
+              value: attributes.quizDesc !== undefined ? attributes.quizDesc : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.',
+              onChange: function (val) { setAttributes({ quizDesc: val }); }
+            }),
+            el(TextControl, {
+              label: 'Input Placeholder',
+              value: attributes.quizPlaceholder !== undefined ? attributes.quizPlaceholder : 'Enter corporate work email',
+              onChange: function (val) { setAttributes({ quizPlaceholder: val }); }
+            }),
+            el(TextControl, {
+              label: 'Button Text',
+              value: attributes.quizBtnText !== undefined ? attributes.quizBtnText : 'Start 3-Minute Readiness Check →',
+              onChange: function (val) { setAttributes({ quizBtnText: val }); }
+            }),
+            el(TextControl, {
+              label: 'Privacy Note',
+              value: attributes.quizNote !== undefined ? attributes.quizNote : '🔒 Work email required. Never submit classified or CUI information.',
+              onChange: function (val) { setAttributes({ quizNote: val }); }
+            })
+          )
+        );
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/hero',
+          attributes: attributes
+        }) : null;
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================
