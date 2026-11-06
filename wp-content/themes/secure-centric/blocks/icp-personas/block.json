@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/icp-personas",
+  "version": "1.0.0",
+  "title": "Secure-Centric Executive Personas",
+  "category": "secure-centric-proof",
+  "icon": "admin-users",
+  "description": "Grid of buyer personas (CEO, IT Director, Quality Manager, Facility Lead).",
+  "keywords": ["personas", "roles", "executives", "buyers", "icp"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// EXECUTIVE PERSONAS" },
+    "title": { "type": "string", "default": "By Role: What Each Executive Needs From Us" },
+    "personasData": {
+      "type": "string",
+      "default": "[[\"CEO / Managing Director\",\"Contract retention certainty, fixed flat-fee pricing, zero business disruption, and protection against False Claims Act liabilities.\"],[\"IT Director / VP Engineering\",\"Technical architecture guidance, avoiding scope creep, vendor-neutral hardware/software specs, and defensible mock audit preparation.\"],[\"Quality / Compliance Lead\",\"Formal System Security Plan (SSP) authoring, policy matrices, dual-source evidence mapping, and seamless audit defense.\"],[\"Shop Floor / Facilities Manager\",\"Physical security controls, badge access verification, visitor logs, and separating OT manufacturing machines from corporate networks.\"]]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

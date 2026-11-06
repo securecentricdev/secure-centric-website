@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/consultant-scorer",
+  "version": "1.0.0",
+  "title": "Secure-Centric Consultant Selection Scorer (7 Checks)",
+  "category": "secure-centric-proof",
+  "icon": "yes",
+  "description": "Interactive 7-point decision matrix scorecard for choosing a CMMC advisory firm.",
+  "keywords": ["tool", "scorer", "decision", "checks", "advisor"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// DECISION FRAMEWORK" },
+    "title": { "type": "string", "default": "How to choose a CMMC consultant: 7 checks" },
+    "subtitle": { "type": "string", "default": "Check every qualification before engaging any CMMC advisory firm." },
+    "checksData": {
+      "type": "string",
+      "default": "[{\"label\":\"Cyber AB Accredited Registered Provider Organization (RPO)\"},{\"label\":\"Employs certified Registered Practitioners (RP) on staff\"},{\"label\":\"Conducts in-person physical site walkthroughs of facility\"},{\"label\":\"100% independent advice (zero hardware/resale conflicts)\"},{\"label\":\"Transparent fixed flat-fee pricing with deliverable milestones\"},{\"label\":\"Proven C3PAO first-pass defense and mock assessment prep\"},{\"label\":\"Comprehensive System Security Plan (SSP) and POA&M authoring\"}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

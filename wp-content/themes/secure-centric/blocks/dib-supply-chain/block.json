@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/dib-supply-chain",
+  "version": "1.0.0",
+  "title": "Secure-Centric Defense Supply Chain Tiers (DIB)",
+  "category": "secure-centric-proof",
+  "icon": "networking",
+  "description": "Grid of Defense Industrial Base positions (Primes, Tier 1/2 Subs, Machine Shops, IT/Cloud).",
+  "keywords": ["dib", "supply-chain", "defense", "primes", "subcontractors"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// DEFENSE INDUSTRIAL BASE (DIB)" },
+    "title": { "type": "string", "default": "By Position in the Defense Supply Chain" },
+    "subtitle": { "type": "string", "default": "Where defense contractors sit in the DoD supply chain and what triggers compliance." },
+    "dibData": {
+      "type": "string",
+      "default": "[{\"role\":\"Prime Contractors (Tier 1)\",\"trigger\":\"Direct contract award from NAVAIR, NAVSEA, USAF, Army with DFARS 252.204-7021.\",\"level\":\"Level 2 / Level 3 Certification\",\"firstStep\":\"Enterprise CUI boundary segmentation & formal mock DIBCAC defense.\"},{\"role\":\"Subcontractors & Component Makers (Tier 2-3)\",\"trigger\":\"Flowdown clauses in purchase orders from Boeing, Lockheed Martin, Northrop Grumman, General Dynamics.\",\"level\":\"Level 2 (3-Year C3PAO Audit)\",\"firstStep\":\"On-site facility inspection, SPRS score calculation, and enclave scoping.\"},{\"role\":\"Build-to-Print Precision Machine Shops\",\"trigger\":\"DoD technical engineering drawings, CAD models, and specs marked as CUI.\",\"level\":\"Level 2 (Scoping Boundary Crucial)\",\"firstStep\":\"Isolate shop floor CNC controllers and build a secure enclave for CAD files.\"},{\"role\":\"Defense Software, MSPs & Cloud SaaS\",\"trigger\":\"Hosting, processing, or transmitting DoD data under DFARS 252.204-7012.\",\"level\":\"Level 2 + FedRAMP Moderate Equivalency\",\"firstStep\":\"Verify FedRAMP High/Moderate baseline and configure cloud identity boundary.\"}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

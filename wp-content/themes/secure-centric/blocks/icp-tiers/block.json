@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/icp-tiers",
+  "version": "1.0.0",
+  "title": "Secure-Centric Compliance Tiers",
+  "category": "secure-centric-proof",
+  "icon": "shield",
+  "description": "Grid of CMMC contract levels and requirements.",
+  "keywords": ["tiers", "levels", "contracts", "cmmc", "requirements"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// COMPLIANCE TIERS" },
+    "title": { "type": "string", "default": "By CMMC Level: Where Your Contract Puts You" },
+    "tiersData": {
+      "type": "string",
+      "default": "[[\"Level 1 (FCI)\",\"15 basic safeguarding controls from FAR 52.204-21. Annual self-assessment required in SPRS with executive affirmation.\"],[\"Level 2 (CUI Prioritized)\",\"110 controls from NIST SP 800-171 Rev 2. Mandatory triennial C3PAO third-party audit before contract award.\"],[\"Level 2 (CUI Non-Prioritized)\",\"110 controls from NIST SP 800-171 Rev 2. Annual self-assessment with affirmation submitted directly to SPRS.\"],[\"Level 3 (High-Value CUI)\",\"Level 2 requirements plus subsets of NIST SP 800-172. Official DIBCAC assessment led directly by the Department of War.\"]]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

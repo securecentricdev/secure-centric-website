@@ -25,6 +25,23 @@ function secure_centric_setup() {
 add_action( 'after_setup_theme', 'secure_centric_setup' );
 
 /**
+ * Clean unescaped Gutenberg unicode entities from strings and arrays
+ */
+function sc_clean_text( $val ) {
+    if ( is_array( $val ) ) {
+        return array_map( 'sc_clean_text', $val );
+    }
+    if ( is_string( $val ) ) {
+        return str_replace(
+            array( '\u0022', 'u0022', '\u0026', 'u0026', 'IT\u005c/MSP', 'IT\/MSP', '\/', 'u005c/' ),
+            array( '"', '"', '&', '&', 'IT/MSP', 'IT/MSP', '/', '/' ),
+            $val
+        );
+    }
+    return $val;
+}
+
+/**
  * Safe JSON block attribute decoder with unicode unescaping
  */
 function sc_decode_block_json( $val ) {
@@ -32,7 +49,7 @@ function sc_decode_block_json( $val ) {
         return array();
     }
     if ( is_array( $val ) ) {
-        return $val;
+        return sc_clean_text( $val );
     }
     if ( is_string( $val ) ) {
         // Resolve double-escaped Gutenberg unicode strings
@@ -43,9 +60,10 @@ function sc_decode_block_json( $val ) {
             return json_decode( '"\u' . $m[1] . '"' );
         }, $val );
         $val = str_replace( array( '\u0022', 'u0022', '&quot;' ), '"', $val );
+        $val = str_replace( array( '\u0026', 'u0026' ), '&', $val );
         $decoded = json_decode( $val, true );
         if ( is_array( $decoded ) ) {
-            return $decoded;
+            return sc_clean_text( $decoded );
         }
     }
     return array();

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/audience-paths",
+  "version": "1.0.0",
+  "title": "Secure-Centric Defense Supply Chain Pathways",
+  "category": "secure-centric-process",
+  "icon": "randomize",
+  "description": "Sequential milestone pathways tailored to defense contractor roles.",
+  "keywords": ["paths", "pathways", "milestones", "supply-chain", "steps"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// DEFENSE SUPPLY CHAIN PATHS" },
+    "title": { "type": "string", "default": "Your Path, Step by Step" },
+    "subtitle": { "type": "string", "default": "Sequential milestones tailored to your exact role in the Defense Industrial Base." },
+    "pathsData": {
+      "type": "string",
+      "default": "[{\"name\":\"Machine Shops & CNC Fabricators\",\"desc\":\"Focus on shop floor network isolation and protecting CAD/CAM drawing repositories.\",\"steps\":[\"Enclave Boundary\",\"Drawing Protection\",\"Air-gap CNCs\",\"Mock Audit\",\"C3PAO Pass\"]},{\"name\":\"Aerospace Engineering & Design Primes\",\"desc\":\"Enterprise-wide identity isolation with cross-tier subcontractor data flow control.\",\"steps\":[\"Flowdown Review\",\"GovCloud Setup\",\"FIPS Encryption\",\"SSP Authorization\",\"Annual Affirmation\"]},{\"name\":\"Defense Software & IT Subcontractors\",\"desc\":\"CI/CD pipeline boundary protection and FedRAMP cloud storage compliance.\",\"steps\":[\"Code Repository Isolation\",\"MFA Enforcement\",\"SIEM Log Retention\",\"Audit Defense Binder\",\"Certification Award\"]}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

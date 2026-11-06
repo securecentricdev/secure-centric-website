@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/two-col",
+  "version": "1.0.0",
+  "title": "Secure-Centric Two Column Comparison Cards",
+  "category": "secure-centric-proof",
+  "icon": "columns",
+  "description": "Side-by-side objective comparison cards with checkmark and bullet icons.",
+  "keywords": ["two-col", "comparison", "cards", "checklist", "difference"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// OBJECTIVE COMPARISON" },
+    "title": { "type": "string", "default": "Who needs an RPO, and who may not" },
+    "subtitle": { "type": "string", "default": "Understanding the fundamental regulatory distinctions to make informed compliance decisions." },
+    "col1Title": { "type": "string", "default": "When You Need an Accredited RPO" },
+    "col1Desc": { "type": "string", "default": "Contractors facing immediate DFARS requirements or C3PAO audits." },
+    "col1Items": {
+      "type": "string",
+      "default": "[\"Your contract contains DFARS 252.204-7021 requiring Level 2 certification\",\"Your prime contractor demands a defensible, audited SPRS score above +70\",\"You handle Controlled Unclassified Information (CUI) on internal servers\",\"You need an assessor-defensible System Security Plan (SSP) without fluff\",\"Your internal team or MSP lacks certified Cyber AB Registered Practitioners\"]"
+    },
+    "col2Title": { "type": "string", "default": "When an RPO May Not Be Required" },
+    "col2Desc": { "type": "string", "default": "Organizations without CUI or with pure commercial off-the-shelf contracts." },
+    "col2Items": {
+      "type": "string",
+      "default": "[\"Your contracts are strictly Commercial-Off-The-Shelf (COTS) items\",\"You only handle Federal Contract Information (FCI) subject to Level 1\",\"You already have a full-time, certified in-house CMMC compliance staff\",\"Your current SPRS score is +110 with verified, auditor-tested evidence binders\"]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  }
+}

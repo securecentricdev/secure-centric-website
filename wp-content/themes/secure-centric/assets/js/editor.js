@@ -2675,6 +2675,177 @@
       ]
     });
 
+    // =========================================================================
+    // 20. ICP TIERS BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/icp-tiers', {
+      title: 'Compliance Contract Tiers',
+      icon: 'shield',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// COMPLIANCE TIERS' },
+            { name: 'title', label: 'Heading', default: 'By CMMC Level: Where Your Contract Puts You' }
+          ]
+        },
+        {
+          title: 'Tiers Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'tiersData', label: 'Tiers Array JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 21. ICP PERSONAS BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/icp-personas', {
+      title: 'Executive Buyer Personas',
+      icon: 'admin-users',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// EXECUTIVE PERSONAS' },
+            { name: 'title', label: 'Heading', default: 'By Role: What Each Executive Needs From Us' }
+          ]
+        },
+        {
+          title: 'Personas Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'personasData', label: 'Personas Array JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 22. DIB SUPPLY CHAIN BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/dib-supply-chain', {
+      title: 'Defense Industrial Base (DIB) Supply Chain',
+      icon: 'networking',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// DEFENSE INDUSTRIAL BASE (DIB)' },
+            { name: 'title', label: 'Heading', default: 'By Position in the Defense Supply Chain' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Where defense contractors sit in the DoD supply chain and what triggers compliance.' }
+          ]
+        },
+        {
+          title: 'DIB Tiers Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'dibData', label: 'DIB Grid JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 23. AUDIENCE PATHS BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/audience-paths', {
+      title: 'Supply Chain Sequential Pathways',
+      icon: 'randomize',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// DEFENSE SUPPLY CHAIN PATHS' },
+            { name: 'title', label: 'Heading', default: 'Your Path, Step by Step' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Sequential milestones tailored to your exact role in the Defense Industrial Base.' }
+          ]
+        },
+        {
+          title: 'Pathways Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'pathsData', label: 'Pathways JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 24. TWO COLUMN COMPARISON BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/two-col', {
+      title: 'Two Column Comparison Cards',
+      icon: 'columns',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// OBJECTIVE COMPARISON' },
+            { name: 'title', label: 'Heading', default: 'Who needs an RPO, and who may not' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Understanding the fundamental regulatory distinctions to make informed compliance decisions.' }
+          ]
+        },
+        {
+          title: 'Column 1 (Left Card)',
+          initialOpen: false,
+          fields: [
+            { name: 'col1Title', label: 'Col 1 Title', default: 'When You Need an Accredited RPO' },
+            { name: 'col1Desc', label: 'Col 1 Subtitle', type: 'textarea', default: 'Contractors facing immediate DFARS requirements or C3PAO audits.' },
+            { name: 'col1Items', label: 'Col 1 Checklist (JSON)', type: 'textarea' }
+          ]
+        },
+        {
+          title: 'Column 2 (Right Card)',
+          initialOpen: false,
+          fields: [
+            { name: 'col2Title', label: 'Col 2 Title', default: 'When an RPO May Not Be Required' },
+            { name: 'col2Desc', label: 'Col 2 Subtitle', type: 'textarea', default: 'Organizations without CUI or with pure commercial off-the-shelf contracts.' },
+            { name: 'col2Items', label: 'Col 2 Checklist (JSON)', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 25. CONSULTANT SCORER BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/consultant-scorer', {
+      title: 'Consultant Selection Scorer (7 Checks)',
+      icon: 'yes',
+      category: 'secure-centric-proof',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// DECISION FRAMEWORK' },
+            { name: 'title', label: 'Heading', default: 'How to choose a CMMC consultant: 7 checks' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Check every qualification before engaging any CMMC advisory firm.' }
+          ]
+        },
+        {
+          title: 'Scorer Checks Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'checksData', label: '7 Checks Array JSON', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
     console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
   }
 

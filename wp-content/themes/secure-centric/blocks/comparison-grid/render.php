@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $layout      = ! empty( $attributes['layout'] ) ? $attributes['layout'] : '3-col';
 $eyebrow     = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// APPROACH COMPARISON';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Three Ways Defense Subcontractors Approach CMMC';
-$description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.';
+$description = ! empty( $attributes['description'] ) ? sc_clean_text( $attributes['description'] ) : 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.';
 
 if ( '2-col' === $layout ) :
     $left_title  = ! empty( $attributes['leftTitle'] ) ? $attributes['leftTitle'] : 'What Secure-Centric Does';
