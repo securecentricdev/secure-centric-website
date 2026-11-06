@@ -84,6 +84,51 @@ function sc_decode_block_json( $val ) {
 }
 
 /**
+ * Resolves demo hash page links (#page-X) to proper WordPress URLs
+ */
+function sc_resolve_page_url( $url ) {
+    if ( empty( $url ) ) {
+        return home_url( '/' );
+    }
+
+    static $page_map = array(
+        '#page-1'       => '/',
+        '#page-n1'      => '/about/',
+        '#page-2'       => '/services/cmmc-compliance/',
+        '#page-3'       => '/services/cmmc-consulting/',
+        '#page-4'       => '/services/cmmc-readiness-assessment/',
+        '#page-5'       => '/services/cmmc-readiness-assessment/gap-assessment/',
+        '#page-6'       => '/services/nist-800-171-compliance/',
+        '#page-7'       => '/services/cmmc-implementation-remediation/',
+        '#page-8'       => '/services/cmmc-implementation-remediation/ssp-poam-development/',
+        '#page-11'      => '/services/virtual-ciso/',
+        '#page-12'      => '/cmmc/',
+        '#page-13'      => '/cmmc/level-2/',
+        '#page-14'      => '/nist-800-171/',
+        '#page-15'      => '/cui/',
+        '#page-16'      => '/services/cmmc-enclave/',
+        '#page-19'      => '/cmmc/cmmc-process/',
+        '#page-20'      => '/cmmc/rpo/',
+        '#page-21'      => '/resources/templates/checklist/level-2/',
+        '#page-22'      => '/resources/templates/checklist/unmarked-cui/',
+        '#page-23'      => '/resources/templates/checklist/level-1/',
+        '#page-contact' => '/contact/',
+        '#contact'      => '/contact/',
+    );
+
+    $trimmed = trim( $url );
+    if ( isset( $page_map[ $trimmed ] ) ) {
+        return home_url( $page_map[ $trimmed ] );
+    }
+
+    if ( strpos( $trimmed, '/' ) === 0 && strpos( $trimmed, home_url() ) === false ) {
+        return home_url( $trimmed );
+    }
+
+    return $url;
+}
+
+/**
  * Register Custom Gutenberg Blocks via block.json
  */
 function secure_centric_register_custom_blocks() {

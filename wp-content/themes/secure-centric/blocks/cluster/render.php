@@ -33,7 +33,17 @@ if ( empty( $links ) ) {
 }
 ?>
 
-<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/topic-cluster">
+if ( function_exists( 'sc_clean_text' ) ) {
+    $title    = sc_clean_text( $title );
+    $subtitle = sc_clean_text( $subtitle );
+    $links    = sc_clean_text( $links );
+}
+
+$anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+$anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
+?>
+
+<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/topic-cluster"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 36px; text-align: center;">
       <span class="section-eyebrow" style="justify-content: center;">// TOPIC CLUSTER</span>
@@ -42,8 +52,18 @@ if ( empty( $links ) ) {
     </div>
     <div class="topic-cluster-grid">
       <?php foreach ( $links as $l ) : ?>
-        <a href="<?php echo esc_url( $l['url'] ); ?>" class="cluster-link-pill">
-          <span><?php echo esc_html( $l['label'] ); ?></span>
+        <?php
+        $label = is_array( $l ) && ! empty( $l['label'] ) ? $l['label'] : (string) $l;
+        $url   = is_array( $l ) && ! empty( $l['url'] ) ? $l['url'] : '#';
+        if ( function_exists( 'sc_clean_text' ) ) {
+            $label = sc_clean_text( $label );
+        }
+        if ( function_exists( 'sc_resolve_page_url' ) ) {
+            $url = sc_resolve_page_url( $url );
+        }
+        ?>
+        <a href="<?php echo esc_url( $url ); ?>" class="cluster-link-pill">
+          <span><?php echo esc_html( $label ); ?></span>
           <span class="cluster-arrow">&rarr;</span>
         </a>
       <?php endforeach; ?>
