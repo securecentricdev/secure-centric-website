@@ -1,7 +1,7 @@
 <?php
 /**
- * Render Template for Form Embed Block (Card or Split Layout)
- * Strictly matches demo/assets/js/app.js renderContactSection
+ * Render Template for Form Embed Block (Contact Split, Checklist Download, or Card Layout)
+ * Strictly matches demo/assets/js/app.js renderContactSection & renderForm
  *
  * @package SecureCentric
  */
@@ -10,53 +10,193 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$layout = ! empty( $attributes['layout'] ) ? $attributes['layout'] : 'split';
+$layout     = ! empty( $attributes['layout'] ) ? $attributes['layout'] : '';
+$title      = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
+$form_title = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : '';
 
-if ( 'split' === $layout ) :
-    $info_eyebrow   = ! empty( $attributes['infoEyebrow'] ) ? $attributes['infoEyebrow'] : '// DIRECT ENGAGEMENT';
-    $info_title     = ! empty( $attributes['infoTitle'] ) ? $attributes['infoTitle'] : 'Direct Access to Registered Practitioners';
-    $info_desc      = ! empty( $attributes['infoDesc'] ) ? $attributes['infoDesc'] : "Every discovery call is led directly by an accredited Cyber AB Registered Practitioner (RP), not a generalist salesperson. We review your contract's DFARS 252.204-7012 clauses and help determine your exact scoping boundaries.";
-    $phone          = ! empty( $attributes['phone'] ) ? $attributes['phone'] : '(323) 410-5941';
-    $phone_hours    = ! empty( $attributes['phoneHours'] ) ? $attributes['phoneHours'] : 'Mon – Fri: 8:00 AM – 6:00 PM PT';
-    $email          = ! empty( $attributes['email'] ) ? $attributes['email'] : 'info@secure-centric.com';
-    $email_note     = ! empty( $attributes['emailNote'] ) ? $attributes['emailNote'] : 'PGP encryption available upon request';
-    $location       = ! empty( $attributes['location'] ) ? $attributes['location'] : 'Los Angeles, California';
-    $location_note  = ! empty( $attributes['locationNote'] ) ? $attributes['locationNote'] : 'On-site facility assessments delivered nationwide';
-    $steps_title    = ! empty( $attributes['stepsTitle'] ) ? $attributes['stepsTitle'] : 'What Happens After You Request a Call:';
-    
-    $steps = array();
-    if ( ! empty( $attributes['stepsData'] ) ) {
-        $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['stepsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['stepsData'] ), true );
-        if ( is_array( $decoded ) && ! empty( $decoded ) ) {
-            $steps = $decoded;
+// Auto-detect checklist download layout
+$is_download_layout = (
+    'download' === $layout ||
+    'gated' === $layout ||
+    false !== stripos( $title, 'download' ) ||
+    false !== stripos( $title, 'checklist' ) ||
+    false !== stripos( $form_title, 'download' )
+);
+
+if ( $is_download_layout ) :
+    $eyebrow       = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// INSTANT DOWNLOAD ACCESS';
+    $heading       = ! empty( $title ) ? $title : ( ! empty( $form_title ) ? $form_title : 'Download the Compliance Checklist' );
+    $description   = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Enter your details below to receive the editable spreadsheet workbook and instructions directly in your inbox.';
+    $doc_badge     = ! empty( $attributes['docBadge'] ) ? $attributes['docBadge'] : 'OFFICIAL DEFENSE CONTRACTOR WORKBOOK';
+    $doc_subnote   = ! empty( $attributes['docSubnote'] ) ? $attributes['docSubnote'] : 'Includes: Excel Scoring Engine + PDF Field Manual';
+    $btn_text      = ( ! empty( $attributes['submitBtnText'] ) && 'Submit Discovery Call Request →' !== $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Download Now (Free PDF & Excel) →';
+    $privacy_note  = ! empty( $attributes['privacyNote'] ) ? $attributes['privacyNote'] : '🔒 We protect your data. No spam, ever.';
+
+    // Contextual Workbook Title
+    $doc_title = ! empty( $attributes['docTitle'] ) ? $attributes['docTitle'] : '';
+    if ( empty( $doc_title ) ) {
+        if ( false !== stripos( $heading, 'level 2' ) ) {
+            $doc_title = 'CMMC Level 2 Assessment Workbook';
+        } elseif ( false !== stripos( $heading, 'unmarked' ) || false !== stripos( $heading, 'cui' ) ) {
+            $doc_title = 'Unmarked CUI Identification Workbook';
+        } elseif ( false !== stripos( $heading, 'level 1' ) ) {
+            $doc_title = 'CMMC Level 1 Readiness Workbook';
+        } else {
+            $doc_title = 'CMMC Assessment Workbook';
         }
     }
-    if ( empty( $steps ) ) {
-        $steps = array(
-            array(
-                'title' => 'Mutual NDA Execution:',
-                'desc'  => 'We sign a standard bilateral NDA within 2 business hours before discussing any contract details.'
-            ),
-            array(
-                'title' => '30-Min Scoping Assessment:',
-                'desc'  => 'We review CUI boundary requirements, your target level (Level 1 vs 2), and existing SPRS scores.'
-            ),
-            array(
-                'title' => 'Clear Fixed-Scope Roadmap:',
-                'desc'  => 'You receive a written action plan detailing exact deliverables, milestones, and timeline.'
-            )
-        );
+
+    if ( function_exists( 'sc_clean_text' ) ) {
+        $eyebrow      = sc_clean_text( $eyebrow );
+        $heading      = sc_clean_text( $heading );
+        $description  = sc_clean_text( $description );
+        $doc_badge    = sc_clean_text( $doc_badge );
+        $doc_title    = sc_clean_text( $doc_title );
+        $doc_subnote  = sc_clean_text( $doc_subnote );
+        $btn_text     = sc_clean_text( $btn_text );
+        $privacy_note = sc_clean_text( $privacy_note );
     }
 
-    $form_title     = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : ( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Request a Discovery Call' );
-    $form_subtitle  = ! empty( $attributes['formSubtitle'] ) ? $attributes['formSubtitle'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Fields marked with * are required. We strictly respect your privacy.' );
-    $submit_btn     = ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Submit Discovery Call Request →';
-    $privacy_note   = ! empty( $attributes['privacyNote'] ) ? $attributes['privacyNote'] : '🔒 All communications are held under strict confidentiality. We do not sell or share contractor data.';
-    $form_id        = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
-?>
+    $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : 'download-form' );
+    $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : ' id="download-form"';
+    ?>
+    <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 
+             data-wp-block="wp:columns" 
+             data-wp-pattern="secure-centric/gated-download-form"<?php echo $anchor_attr; ?>>
+      <div class="site-container">
+        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center;">
+          <div>
+            <div class="doc-preview-mock" style="padding: 32px;">
+              <div class="doc-badge"><?php echo esc_html( $doc_badge ); ?></div>
+              <h3 style="font-size: 1.35rem; color: var(--color-navy); margin-bottom: 14px;"><?php echo esc_html( $doc_title ); ?></h3>
+              <div class="doc-skeleton-line"></div>
+              <div class="doc-skeleton-line short"></div>
+              <div class="doc-skeleton-line medium"></div>
+              <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-border); font-size: 0.8125rem; color: var(--color-slate);">
+                <?php echo esc_html( $doc_subnote ); ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-white" style="padding: 32px; border: 2px solid var(--color-soft-blue-line);">
+            <span class="section-eyebrow" style="font-size: 0.6875rem;"><?php echo esc_html( $eyebrow ); ?></span>
+            <h3 style="margin-bottom: 10px; color: var(--color-navy);"><?php echo esc_html( $heading ); ?></h3>
+            <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 20px;">
+              <?php echo esc_html( $description ); ?>
+            </p>
+            <form onsubmit="event.preventDefault(); alert('Checklist has been sent to your work email!');">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <input type="text" class="form-input" placeholder="First Name" required />
+                <input type="text" class="form-input" placeholder="Last Name" required />
+              </div>
+              <div style="margin-bottom: 12px;">
+                <input type="text" class="form-input" placeholder="Company / Organization" required />
+              </div>
+              <div style="margin-bottom: 16px;">
+                <input type="email" class="form-input" placeholder="Corporate Work Email" required />
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <?php echo esc_html( $btn_text ); ?>
+              </button>
+              <span style="font-size: 0.6875rem; color: var(--color-slate); display: block; margin-top: 8px; text-align: center;">
+                <?php echo esc_html( $privacy_note ); ?>
+              </span>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<?php elseif ( 'card' === $layout ) : ?>
+  <!-- Card embed for inline / simple forms -->
+  <div style="max-width: 680px; margin: 0 auto;">
+    <div class="contact-form-card">
+      <h3 style="margin-bottom: 8px; font-size: 1.4rem; color: var(--color-navy);"><?php echo esc_html( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Get in Touch' ); ?></h3>
+      <p style="font-size: 0.875rem; color: var(--color-slate); margin-bottom: 20px;">
+        <?php echo esc_html( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Submit your details below and a Registered Practitioner will follow up.' ); ?>
+      </p>
+      <?php if ( ! empty( $form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
+        <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $form_id ) . '"]' ); ?>
+      <?php else : ?>
+        <form onsubmit="event.preventDefault(); alert('Thank you! Submitted.');">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label">Full Name*</label>
+            <input type="text" class="form-input" required />
+          </div>
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label">Work Email*</label>
+            <input type="email" class="form-input" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <?php echo esc_html( ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Submit' ); ?>
+          </button>
+        </form>
+      <?php endif; ?>
+    </div>
+  </div>
+
+<?php else : ?>
+  <!-- Split Discovery Form Layout (Contact Page) -->
+  <?php
+  $info_eyebrow   = ! empty( $attributes['infoEyebrow'] ) ? $attributes['infoEyebrow'] : '// DIRECT ENGAGEMENT';
+  $info_title     = ! empty( $attributes['infoTitle'] ) ? $attributes['infoTitle'] : 'Direct Access to Registered Practitioners';
+  $info_desc      = ! empty( $attributes['infoDesc'] ) ? $attributes['infoDesc'] : "Every discovery call is led directly by an accredited Cyber AB Registered Practitioner (RP), not a generalist salesperson. We review your contract's DFARS 252.204-7012 clauses and help determine your exact scoping boundaries.";
+  $phone          = ! empty( $attributes['phone'] ) ? $attributes['phone'] : '(323) 410-5941';
+  $phone_hours    = ! empty( $attributes['phoneHours'] ) ? $attributes['phoneHours'] : 'Mon – Fri: 8:00 AM – 6:00 PM PT';
+  $email          = ! empty( $attributes['email'] ) ? $attributes['email'] : 'info@secure-centric.com';
+  $email_note     = ! empty( $attributes['emailNote'] ) ? $attributes['emailNote'] : 'PGP encryption available upon request';
+  $location       = ! empty( $attributes['location'] ) ? $attributes['location'] : 'Los Angeles, California';
+  $location_note  = ! empty( $attributes['locationNote'] ) ? $attributes['locationNote'] : 'On-site facility assessments delivered nationwide';
+  $steps_title    = ! empty( $attributes['stepsTitle'] ) ? $attributes['stepsTitle'] : 'What Happens After You Request a Call:';
+  
+  $steps = array();
+  if ( ! empty( $attributes['stepsData'] ) ) {
+      $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['stepsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['stepsData'] ), true );
+      if ( is_array( $decoded ) && ! empty( $decoded ) ) {
+          $steps = $decoded;
+      }
+  }
+  if ( empty( $steps ) ) {
+      $steps = array(
+          array(
+              'title' => 'Mutual NDA Execution:',
+              'desc'  => 'We sign a standard bilateral NDA within 2 business hours before discussing any contract details.'
+          ),
+          array(
+              'title' => '30-Min Scoping Assessment:',
+              'desc'  => 'We review CUI boundary requirements, your target level (Level 1 vs 2), and existing SPRS scores.'
+          ),
+          array(
+              'title' => 'Clear Fixed-Scope Roadmap:',
+              'desc'  => 'You receive a written action plan detailing exact deliverables, milestones, and timeline.'
+          )
+      );
+  }
+
+  $contact_form_title    = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : ( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Request a Discovery Call' );
+  $contact_form_subtitle = ! empty( $attributes['formSubtitle'] ) ? $attributes['formSubtitle'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Fields marked with * are required. We strictly respect your privacy.' );
+  $submit_btn            = ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Submit Discovery Call Request →';
+  $privacy_note          = ! empty( $attributes['privacyNote'] ) ? $attributes['privacyNote'] : '🔒 All communications are held under strict confidentiality. We do not sell or share contractor data.';
+  $form_id               = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
+
+  if ( function_exists( 'sc_clean_text' ) ) {
+      $info_eyebrow          = sc_clean_text( $info_eyebrow );
+      $info_title            = sc_clean_text( $info_title );
+      $info_desc             = sc_clean_text( $info_desc );
+      $steps_title           = sc_clean_text( $steps_title );
+      $steps                 = sc_clean_text( $steps );
+      $contact_form_title    = sc_clean_text( $contact_form_title );
+      $contact_form_subtitle = sc_clean_text( $contact_form_subtitle );
+      $submit_btn            = sc_clean_text( $submit_btn );
+      $privacy_note          = sc_clean_text( $privacy_note );
+  }
+
+  $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+  $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
+  ?>
   <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" 
            data-wp-block="wp:columns" 
-           data-wp-pattern="secure-centric/contact-form-split">
+           data-wp-pattern="secure-centric/contact-form-split"<?php echo $anchor_attr; ?>>
     <div class="site-container">
       <div class="contact-grid-split">
         <!-- Left Info Column (Text Beside Form) -->
@@ -99,33 +239,42 @@ if ( 'split' === $layout ) :
 
           <!-- Numbered Steps -->
           <div style="margin-top: 28px;">
-            <h4 style="font-size: 1rem; margin-bottom: 14px; color: var(--color-navy);"><?php echo esc_html( $steps_title ); ?></h4>
-            <?php foreach ( $steps as $idx => $st ) : ?>
-              <div class="contact-step-item">
-                <div class="contact-step-num"><?php echo esc_html( $idx + 1 ); ?></div>
-                <div>
-                  <b><?php echo esc_html( $st['title'] ); ?></b> <?php echo esc_html( $st['desc'] ); ?>
+            <h4 style="font-size: 0.9375rem; margin-bottom: 16px; color: var(--color-navy);"><?php echo esc_html( $steps_title ); ?></h4>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <?php foreach ( $steps as $idx => $st ) : ?>
+                <div style="display: flex; gap: 14px; align-items: flex-start;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--color-electric-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8125rem; flex-shrink: 0;">
+                    <?php echo (int) $idx + 1; ?>
+                  </span>
+                  <div>
+                    <b style="color: var(--color-navy); font-size: 0.875rem; display: block; margin-bottom: 2px;">
+                      <?php echo esc_html( ! empty( $st['title'] ) ? $st['title'] : '' ); ?>
+                    </b>
+                    <p style="font-size: 0.8125rem; color: var(--color-slate); margin: 0; line-height: 1.45;">
+                      <?php echo esc_html( ! empty( $st['desc'] ) ? $st['desc'] : '' ); ?>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            <?php endforeach; ?>
+              <?php endforeach; ?>
+            </div>
           </div>
         </div>
 
-        <!-- Right Interactive Form Column -->
+        <!-- Right Form Column -->
         <div class="contact-form-panel">
-          <div class="contact-form-card" id="contact-form-container">
-            <h3 style="margin-bottom: 8px; font-size: 1.4rem;"><?php echo esc_html( $form_title ); ?></h3>
+          <div class="contact-form-card">
+            <h3 style="margin-bottom: 8px; font-size: 1.4rem; color: var(--color-navy);"><?php echo esc_html( $contact_form_title ); ?></h3>
             <p style="font-size: 0.875rem; color: var(--color-slate); margin-bottom: 20px;">
-              <?php echo esc_html( $form_subtitle ); ?>
+              <?php echo esc_html( $contact_form_subtitle ); ?>
             </p>
 
             <?php if ( ! empty( $form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
               <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $form_id ) . '"]' ); ?>
             <?php else : ?>
-              <form id="expert-contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your discovery call request has been received under bilateral NDA. Our certified Registered Practitioner will respond within 4 business hours.');">
+              <form id="contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our Registered Practitioners will review your contract scope within 2 business hours.');">
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label" for="contact-name">First & Last Name*</label>
+                    <label class="form-label" for="contact-name">First &amp; Last Name*</label>
                     <input type="text" id="contact-name" class="form-input" placeholder="e.g. John Miller" required />
                   </div>
                   <div class="form-group">
@@ -194,31 +343,4 @@ if ( 'split' === $layout ) :
       </div>
     </div>
   </section>
-<?php else : ?>
-  <!-- Card embed for inline / simple forms -->
-  <div style="max-width: 680px; margin: 0 auto;">
-    <div class="contact-form-card">
-      <h3 style="margin-bottom: 8px; font-size: 1.4rem;"><?php echo esc_html( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Get in Touch' ); ?></h3>
-      <p style="font-size: 0.875rem; color: var(--color-slate); margin-bottom: 20px;">
-        <?php echo esc_html( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Submit your details below and a Registered Practitioner will follow up.' ); ?>
-      </p>
-      <?php if ( ! empty( $form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
-        <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $form_id ) . '"]' ); ?>
-      <?php else : ?>
-        <form onsubmit="event.preventDefault(); alert('Thank you! Submitted.');">
-          <div class="form-group" style="margin-bottom: 14px;">
-            <label class="form-label">Full Name*</label>
-            <input type="text" class="form-input" required />
-          </div>
-          <div class="form-group" style="margin-bottom: 14px;">
-            <label class="form-label">Work Email*</label>
-            <input type="email" class="form-input" required />
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-            <?php echo esc_html( ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Submit' ); ?>
-          </button>
-        </form>
-      <?php endif; ?>
-    </div>
-  </div>
 <?php endif; ?>
