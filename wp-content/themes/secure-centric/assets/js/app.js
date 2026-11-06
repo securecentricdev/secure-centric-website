@@ -3354,7 +3354,37 @@
       isRoadmapWalking = false;
       finishStepTransition();
     }, durationMs + 60);
+
+    // Watchdog fallback: guarantee walker never remains stuck in is-walking state
+    setTimeout(() => {
+      if (isRoadmapWalking) {
+        isRoadmapWalking = false;
+        const currentWalker = document.querySelector('#roadmap-walker');
+        if (currentWalker) {
+          currentWalker.classList.remove('is-walking');
+          currentWalker.classList.add('is-idle');
+        }
+        alignWalkerToActiveStep(true);
+        scheduleNextAutoplayStep();
+      }
+    }, durationMs + 800);
   };
+
+  // Browser visibility change: pause autoplay and set walker to idle when tab is in background
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearRoadmapAutoplay();
+      isRoadmapWalking = false;
+      const walker = document.querySelector('#roadmap-walker');
+      if (walker) {
+        walker.classList.remove('is-walking');
+        walker.classList.add('is-idle');
+      }
+    } else {
+      alignWalkerToActiveStep(true);
+      handleRoadmapFocusChange();
+    }
+  });
 
   window.toggleAccordion = function (headerEl) {
     const item = headerEl.closest('.accordion-item');
