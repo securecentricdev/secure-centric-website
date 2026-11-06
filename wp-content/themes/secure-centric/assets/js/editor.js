@@ -16,6 +16,36 @@
     const ServerSideRender = wp.serverSideRender;
 
     /**
+     * Helper to safely decode JSON array attributes across Gutenberg comment serialization
+     */
+    function safeParseJsonArray(raw, fallback) {
+      if (!raw) return (fallback || []).slice();
+      if (Array.isArray(raw)) return raw;
+      if (typeof raw === 'object' && raw !== null) return [raw];
+      if (typeof raw === 'string') {
+        try {
+          var clean = raw
+            .replace(/u005c(u[0-9a-fA-F]{4})/g, function (_, m) {
+              return String.fromCharCode(parseInt(m.substring(1), 16));
+            })
+            .replace(/(?<![a-zA-Z0-9])u([0-9a-fA-F]{4})/g, function (_, m) {
+              return String.fromCharCode(parseInt(m, 16));
+            })
+            .replace(/\\?u0022/g, '"')
+            .replace(/&quot;/g, '"');
+          var parsed = JSON.parse(clean);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e1) {
+          try {
+            var parsed2 = JSON.parse(raw);
+            if (Array.isArray(parsed2) && parsed2.length > 0) return parsed2;
+          } catch (e2) {}
+        }
+      }
+      return (fallback || []).slice();
+    }
+
+    /**
      * Helper to create standard block preview with ServerSideRender & Sidebar Controls
      */
     function createBlockRegistration(blockName, config) {
@@ -493,32 +523,16 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        // Parse structured logos
-        let currentLogos = [];
-        if (attributes.logosData) {
-          try {
-            const parsed = JSON.parse(attributes.logosData);
-            if (Array.isArray(parsed)) currentLogos = parsed;
-          } catch (e) {}
-        }
-        if (!currentLogos || !currentLogos.length) {
-          if (attributes.logos && Array.isArray(attributes.logos) && attributes.logos.length) {
-            currentLogos = attributes.logos;
-          } else if (attributes.logosList) {
-            currentLogos = attributes.logosList.split(',').map(function (s) {
-              return { name: s.trim(), imageUrl: '', imageId: 0 };
-            }).filter(function (x) { return x.name; });
-          } else {
-            currentLogos = [
-              { name: 'Tower Semiconductor', imageUrl: '', imageId: 0 },
-              { name: 'Safran Federal Systems', imageUrl: '', imageId: 0 },
-              { name: 'Goodwin & Associates', imageUrl: '', imageId: 0 },
-              { name: 'HRD Aero Systems', imageUrl: '', imageId: 0 },
-              { name: 'Precision Aerospace', imageUrl: '', imageId: 0 },
-              { name: 'Defense Dynamics', imageUrl: '', imageId: 0 }
-            ];
-          }
-        }
+        // Parse structured logos safely
+        let defaultLogos = [
+          { name: 'Tower Semiconductor', imageUrl: '', imageId: 0 },
+          { name: 'Safran Federal Systems', imageUrl: '', imageId: 0 },
+          { name: 'Goodwin & Associates', imageUrl: '', imageId: 0 },
+          { name: 'HRD Aero Systems', imageUrl: '', imageId: 0 },
+          { name: 'Precision Aerospace', imageUrl: '', imageId: 0 },
+          { name: 'Defense Dynamics', imageUrl: '', imageId: 0 }
+        ];
+        let currentLogos = safeParseJsonArray(attributes.logosData, defaultLogos);
 
         function updateLogos(newLogos) {
           setAttributes({
@@ -741,26 +755,18 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        let currentSteps = [];
-        if (attributes.stepsData) {
-          try {
-            const parsed = JSON.parse(attributes.stepsData);
-            if (Array.isArray(parsed) && parsed.length > 0) currentSteps = parsed;
-          } catch (e) {}
-        }
+        const defaultSteps = [
+          { no: '01', name: 'Site visit', phase: 'Phase 1: Facility Walkthrough & Scope Discovery', help: 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.', who: 'You + Secure-Centric', output: 'Asset discovery baseline & boundary notes', link: '#page-2' },
+          { no: '02', name: 'Scoping', phase: 'Phase 2: CUI Boundary & Enclave Architecture', help: 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.', who: 'Secure-Centric + IT Leads', output: 'Formal Scope Document & Data-Flow Architecture', link: '#page-16' },
+          { no: '03', name: 'Gap assessment', phase: 'Phase 3: 110-Control Baseline Scoring', help: 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.', who: 'Secure-Centric', output: 'Defensible SPRS Score estimate & findings register', link: '#page-5' },
+          { no: '04', name: 'Remediation', phase: 'Phase 4: Engineering & Policy Remediation', help: 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.', who: 'Your IT/MSP (guided by us)', output: 'Remediation Roadmap with owners and completion targets', link: '#page-7' },
+          { no: '05', name: 'Documentation', phase: 'Phase 5: System Security Plan (SSP) & POA&M', help: 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.', who: 'Secure-Centric + You', output: 'Assessor-ready SSP and comprehensive policy suite', link: '#page-8' },
+          { no: '06', name: 'Readiness review', phase: 'Phase 6: C3PAO Mock Audit & Interview Prep', help: 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.', who: 'Secure-Centric RPs', output: 'Readiness sign-off report & Evidence Binder index', link: '#page-4' },
+          { no: '07', name: 'Assessment', phase: 'Phase 7: Official C3PAO Level 2 Assessment', help: 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.', who: 'Independent C3PAO', output: 'Level 2 CMMC Certification recommendation', link: '#page-19' },
+          { no: '08', name: 'Maintain', phase: 'Phase 8: Continuous Monitoring & Affirmation', help: 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.', who: 'Virtual CISO / You', output: 'Annual Affirmation pack & ongoing compliance posture', link: '#page-11' }
+        ];
 
-        if (!currentSteps || !currentSteps.length) {
-          currentSteps = [
-            { no: '01', name: 'Site visit', phase: 'Phase 1: Facility Walkthrough & Scope Discovery', help: 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.', who: 'You + Secure-Centric', output: 'Asset discovery baseline & boundary notes', link: '#page-2' },
-            { no: '02', name: 'Scoping', phase: 'Phase 2: CUI Boundary & Enclave Architecture', help: 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.', who: 'Secure-Centric + IT Leads', output: 'Formal Scope Document & Data-Flow Architecture', link: '#page-16' },
-            { no: '03', name: 'Gap assessment', phase: 'Phase 3: 110-Control Baseline Scoring', help: 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.', who: 'Secure-Centric', output: 'Defensible SPRS Score estimate & findings register', link: '#page-5' },
-            { no: '04', name: 'Remediation', phase: 'Phase 4: Engineering & Policy Remediation', help: 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.', who: 'Your IT/MSP (guided by us)', output: 'Remediation Roadmap with owners and completion targets', link: '#page-7' },
-            { no: '05', name: 'Documentation', phase: 'Phase 5: System Security Plan (SSP) & POA&M', help: 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.', who: 'Secure-Centric + You', output: 'Assessor-ready SSP and comprehensive policy suite', link: '#page-8' },
-            { no: '06', name: 'Readiness review', phase: 'Phase 6: C3PAO Mock Audit & Interview Prep', help: 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.', who: 'Secure-Centric RPs', output: 'Readiness sign-off report & Evidence Binder index', link: '#page-4' },
-            { no: '07', name: 'Assessment', phase: 'Phase 7: Official C3PAO Level 2 Assessment', help: 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.', who: 'Independent C3PAO', output: 'Level 2 CMMC Certification recommendation', link: '#page-19' },
-            { no: '08', name: 'Maintain', phase: 'Phase 8: Continuous Monitoring & Affirmation', help: 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.', who: 'Virtual CISO / You', output: 'Annual Affirmation pack & ongoing compliance posture', link: '#page-11' }
-          ];
-        }
+        let currentSteps = safeParseJsonArray(attributes.stepsData, defaultSteps);
 
         function updateSteps(newSteps) {
           const renumbered = newSteps.map(function (st, idx) {
@@ -998,23 +1004,15 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        let currentReviews = [];
-        if (attributes.testimonialsData) {
-          try {
-            const parsed = JSON.parse(attributes.testimonialsData);
-            if (Array.isArray(parsed) && parsed.length > 0) currentReviews = parsed;
-          } catch (e) {}
-        }
+        const defaultReviews = [
+          { num: '01', author: 'Alex Liu', role: 'IT Manager, Tower Semiconductor', avatar: 'AL', quote: 'Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+          { num: '02', author: 'Patrick Shaw', role: 'Cyber Security Analyst, Safran Federal Systems', avatar: 'PS', quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+          { num: '03', author: 'Elena Rostova', role: 'VP Operations, Precision Aero Machining', avatar: 'ER', quote: 'We cut our assessment scope by almost 40% based on their enclave advisory alone. That decision alone saved us at least $80,000 in unnecessary software upgrades and audit fees.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+          { num: '04', author: 'Marcus Vance', role: 'Chief Information Officer, Vanguard Defense Tech', avatar: 'MV', quote: "The mock C3PAO interview sessions were intense and realistic. When DIBCAC conducted our actual review, there wasn't a single question or evidence request that we hadn't already prepared for.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
+          { num: '05', author: 'David Chen', role: 'Director of Compliance, Apex Dynamics', avatar: 'DC', quote: 'Finding an RPO that actually understands precision CNC shop floor networks is rare. Secure-Centric bridged the gap between our machinists, IT, and Department of War compliance seamlessly.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' }
+        ];
 
-        if (!currentReviews || !currentReviews.length) {
-          currentReviews = [
-            { num: '01', author: 'Alex Liu', role: 'IT Manager, Tower Semiconductor', avatar: 'AL', quote: 'Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-            { num: '02', author: 'Patrick Shaw', role: 'Cyber Security Analyst, Safran Federal Systems', avatar: 'PS', quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-            { num: '03', author: 'Elena Rostova', role: 'VP Operations, Precision Aero Machining', avatar: 'ER', quote: 'We cut our assessment scope by almost 40% based on their enclave advisory alone. That decision alone saved us at least $80,000 in unnecessary software upgrades and audit fees.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-            { num: '04', author: 'Marcus Vance', role: 'Chief Information Officer, Vanguard Defense Tech', avatar: 'MV', quote: "The mock C3PAO interview sessions were intense and realistic. When DIBCAC conducted our actual review, there wasn't a single question or evidence request that we hadn't already prepared for.", linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' },
-            { num: '05', author: 'David Chen', role: 'Director of Compliance, Apex Dynamics', avatar: 'DC', quote: 'Finding an RPO that actually understands precision CNC shop floor networks is rare. Secure-Centric bridged the gap between our machinists, IT, and Department of War compliance seamlessly.', linkedinUrl: 'https://www.linkedin.com/company/secure-centric/', linkedinText: 'Shared publicly on LinkedIn' }
-          ];
-        }
+        let currentReviews = safeParseJsonArray(attributes.testimonialsData, defaultReviews);
 
         function updateReviews(newReviews) {
           const renumbered = newReviews.map(function (rev, idx) {
@@ -1345,24 +1343,16 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        let currentCards = [];
-        if (attributes.resourcesData) {
-          try {
-            const parsed = JSON.parse(attributes.resourcesData);
-            if (Array.isArray(parsed) && parsed.length > 0) currentCards = parsed;
-          } catch (e) {}
-        }
+        const defaultCards = [
+          { title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#contact', icon: '📁' },
+          { title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#contact', icon: '📘' },
+          { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '#contact', icon: '🛡️' },
+          { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '#contact', icon: '🔒' },
+          { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '#contact', icon: '🏗️' },
+          { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '#contact', icon: '📊' }
+        ];
 
-        if (!currentCards || !currentCards.length) {
-          currentCards = [
-            { title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#contact', icon: '📁' },
-            { title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#contact', icon: '📘' },
-            { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '#contact', icon: '🛡️' },
-            { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '#contact', icon: '🔒' },
-            { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '#contact', icon: '🏗️' },
-            { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '#contact', icon: '📊' }
-          ];
-        }
+        let currentCards = safeParseJsonArray(attributes.resourcesData, defaultCards);
 
         function updateCards(newCards) {
           setAttributes({ resourcesData: JSON.stringify(newCards) });
@@ -1558,23 +1548,13 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        let currentFaqs = [];
-        if (attributes.faqsData) {
-          try {
-            const parsed = JSON.parse(attributes.faqsData);
-            if (Array.isArray(parsed) && parsed.length > 0) currentFaqs = parsed;
-          } catch (e) {}
-        }
+        const defaultFaqs = [
+          { q: 'Where is Secure-Centric based?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' },
+          { q: 'Do you sell tools or managed IT?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' },
+          { q: 'How long have you worked on CMMC?', a: 'Most defense contractors complete their readiness, remediation, and documentation within 4 to 8 months, depending on boundary size and facility count.' }
+        ];
 
-        if (!currentFaqs || !currentFaqs.length) {
-          currentFaqs = [
-            { q: 'What is CMMC compliance?', a: 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).' },
-            { q: 'Do you come to our site?', a: 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.' },
-            { q: 'Do you only work on CMMC and NIST SP 800-171?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' },
-            { q: 'What happens after I book a discovery call?', a: 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.' },
-            { q: 'Who will we work with day to day?', a: 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.' }
-          ];
-        }
+        let currentFaqs = safeParseJsonArray(attributes.faqsData, defaultFaqs);
 
         function updateFaqs(newFaqs) {
           setAttributes({ faqsData: JSON.stringify(newFaqs) });
@@ -1876,46 +1856,31 @@
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
-        let currentMembers = [];
-        if (attributes.membersData) {
-          try {
-            const parsed = JSON.parse(attributes.membersData);
-            if (Array.isArray(parsed) && parsed.length > 0) currentMembers = parsed;
-          } catch (e) {}
-        }
+        const defaultMembers = [
+          {
+            name: 'Jake "EJ" Celler',
+            role: 'Founder & Lead Registered Practitioner (RP)',
+            initials: 'JC',
+            badge: '✓ Cyber AB RP',
+            bio: '15+ years guiding defense industrial base contractors through NIST SP 800-171, DFARS 7012, and CMMC. Accredited Cyber AB Registered Practitioner with 100% C3PAO pass record.'
+          },
+          {
+            name: 'Son Phan',
+            role: 'VP Operations & Compliance Director',
+            initials: 'SP',
+            badge: '✓ Cyber AB RP',
+            bio: 'Specialist in CUI scoping boundaries, IT/OT enclave segmentation, and federal acquisition compliance architectures for aerospace and defense manufacturers.'
+          },
+          {
+            name: 'Senior Registered Practitioners',
+            role: 'Audit Defense & Technical Implementation Leads',
+            initials: 'RP',
+            badge: '✓ Cyber AB RP',
+            bio: 'Former DoD assessment leads, CISSPs, and CMMC Certified Professionals conducting in-person facility walkthroughs, technical mock audits, and assessor interviews.'
+          }
+        ];
 
-        if (!currentMembers || !currentMembers.length) {
-          currentMembers = [
-            {
-              name: 'Jake "EJ" Celler',
-              role: 'Co-Founder & Lead Registered Practitioner',
-              initials: 'JC',
-              badge: '✓ Cyber AB RP',
-              bio: 'Former DoD cybersecurity engineer and lead assessor advisor. Guides precision manufacturers and aerospace suppliers through scoping, boundary isolation, and DIBCAC defense.'
-            },
-            {
-              name: 'Son Phan',
-              role: 'Co-Founder & Technical Architect',
-              initials: 'SP',
-              badge: '✓ Cyber AB RP',
-              bio: 'Enterprise systems architect specializing in enclave segregation, AWS GovCloud, GCC High migrations, and technical 110-control NIST SP 800-171 enforcement.'
-            },
-            {
-              name: 'Desmond Thompson',
-              role: 'Registered Practitioner & Pre-Audit Lead',
-              initials: 'DT',
-              badge: '✓ Cyber AB RP',
-              bio: 'Leads simulated mock C3PAO audits, evidence portfolio reviews, and assessor interview preparation. 100% first-attempt pass rate across all client evaluations.'
-            },
-            {
-              name: 'Elena Vasquez',
-              role: 'Compliance Author & Policy Lead',
-              initials: 'EV',
-              badge: '✓ Compliance Author',
-              bio: 'Specialist in custom System Security Plan (SSP) authoring, POA&M remediation tracking, and defensible operational policy formulation tailored to machine shops.'
-            }
-          ];
-        }
+        let currentMembers = safeParseJsonArray(attributes.membersData, defaultMembers);
 
         function updateMembers(newMembers) {
           setAttributes({ membersData: JSON.stringify(newMembers) });
@@ -2128,20 +2093,14 @@
         const isSelected = props.isSelected;
         const clientId = props.clientId;
 
-        let results = [];
-        try {
-          results = attributes.resultsData ? JSON.parse(attributes.resultsData) : [];
-        } catch (e) {
-          results = [];
-        }
-        if (!results.length) {
-          results = [
-            { number: '120+', title: 'Defense Contractors Prepared', desc: 'Guided across 45 states protecting $2.4B in active DoD solicitations.' },
-            { number: '100%', title: 'C3PAO First-Time Pass Rate', desc: 'Zero clients failed an official external third-party audit after readiness sign-off.' },
-            { number: '3 Weeks', title: 'On-Site Walkthrough Guarantee', desc: 'In-person facility inspection of server rooms and shop-floor enclaves.' },
-            { number: 'Flat-Fee', title: 'Fixed Transparent Scope', desc: 'Zero hourly billing surprises, travel markups, or tool licensing kickbacks.' }
-          ];
-        }
+        const defaultResults = [
+          { number: '120+', title: 'Defense Contractors Prepared', desc: 'Guided across 45 states protecting $2.4B in active DoD solicitations.' },
+          { number: '100%', title: 'C3PAO First-Time Pass Rate', desc: 'Zero clients failed an official external third-party audit after readiness sign-off.' },
+          { number: '3 Weeks', title: 'On-Site Walkthrough Guarantee', desc: 'In-person facility inspection of server rooms and shop-floor enclaves.' },
+          { number: 'Flat-Fee', title: 'Fixed Transparent Scope', desc: 'Zero hourly billing surprises, travel markups, or tool licensing kickbacks.' }
+        ];
+
+        let results = safeParseJsonArray(attributes.resultsData, defaultResults);
 
         function updateResults(newList) {
           setAttributes({ resultsData: JSON.stringify(newList) });
@@ -2270,20 +2229,14 @@
         const isSelected = props.isSelected;
         const clientId = props.clientId;
 
-        let bullets = [];
-        try {
-          bullets = attributes.bulletsData ? JSON.parse(attributes.bulletsData) : [];
-        } catch (e) {
-          bullets = [];
-        }
-        if (!bullets.length) {
-          bullets = [
-            { title: 'Independent Advice', desc: 'We do not sell firewalls, MSP services, or software licenses. Our recommendations are 100% objective and tailored to your existing IT footprint.' },
-            { title: 'On Site by Default', desc: 'We conduct physical facility walkthroughs in person. You cannot verify CMMC compliance over a Zoom screen—we inspect server rooms, wiring closets, and shop floors.' },
-            { title: 'Plain English', desc: 'No impenetrable jargon. We translate 320 assessment objectives into clear operational steps your executives, engineers, and shop foremen understand.' },
-            { title: 'Strict Conflict Separation', desc: 'We never assess clients we advise. Under Cyber AB rules, we are strictly an RPO advisor so our loyalty is 100% with defending your organization.' }
-          ];
-        }
+        const defaultBullets = [
+          { title: 'Independent Advice', desc: 'We do not sell firewalls, MSP services, or software licenses. Our recommendations are 100% objective and tailored to your existing IT footprint.' },
+          { title: 'On Site by Default', desc: 'We conduct physical facility walkthroughs in person. You cannot verify CMMC compliance over a Zoom screen—we inspect server rooms, wiring closets, and shop floors.' },
+          { title: 'Plain English', desc: 'No impenetrable jargon. We translate 320 assessment objectives into clear operational steps your executives, engineers, and shop foremen understand.' },
+          { title: 'Strict Conflict Separation', desc: 'We never assess clients we advise. Under Cyber AB rules, we are strictly an RPO advisor so our loyalty is 100% with defending your organization.' }
+        ];
+
+        let bullets = safeParseJsonArray(attributes.bulletsData, defaultBullets);
 
         function updateBullets(newList) {
           setAttributes({ bulletsData: JSON.stringify(newList) });
