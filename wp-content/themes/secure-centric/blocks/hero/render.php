@@ -254,6 +254,33 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     </div>
   </section>
 
+<?php elseif ( 'contact' === $layout ) : ?>
+  <!-- Contact Hero Layout -->
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/contact-hero"
+           style="border-bottom: 1px solid var(--color-dark-line); position: relative; text-align: center;">
+    <div class="site-container">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <span class="badge-chip dark" style="margin-bottom: 16px;">
+          <i class="dot"></i> <?php echo esc_html( $eyebrow ); ?>
+        </span>
+        <h1 style="color: var(--color-white); font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 20px; line-height: 1.2;">
+          <?php echo esc_html( $title ); ?>
+        </h1>
+        <p style="font-size: 1.125rem; color: var(--color-text-on-dark); line-height: 1.7; margin-bottom: 28px;">
+          <?php echo esc_html( $description ); ?>
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <span class="badge-chip dark">⏱ 30-Min Scoping Assessment</span>
+          <span class="badge-chip dark">🔒 Mutual NDA Signed First</span>
+          <span class="badge-chip dark">🏛 Cyber AB RPO #3942</span>
+          <span class="badge-chip dark">🚫 Zero Sales Pressure</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <?php else : ?>
   <!-- Home Layout -->
   <section class="hero-home-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" data-wp-pattern="secure-centric/hero-home">

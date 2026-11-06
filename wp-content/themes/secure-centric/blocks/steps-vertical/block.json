@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/steps-vertical",
+  "version": "1.0.0",
+  "title": "Steps Vertical (Review Stages)",
+  "category": "secure-centric-process",
+  "icon": "editor-ul",
+  "description": "Structured table of review stages with activities, participants, and tangible deliverables.",
+  "keywords": ["steps", "vertical", "stages", "deliverables", "review"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// DETAILED REVIEW STAGES" },
+    "title": { "type": "string", "default": "Detailed review stages" },
+    "subtitle": { "type": "string", "default": "Every activity, team participant, and tangible deliverable produced during this review." },
+    "stepsData": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "align": ["full", "wide"],
+    "html": false
+  },
+  "render": "file:./render.php"
+}

@@ -108,15 +108,24 @@ if ( '2-col' === $layout ) :
             <ul class="compare-list">
               <?php foreach ( $msp_points as $pt ) : ?>
                 <li>
-                  <i class="bullet">•</i>
+                  <i class="check msp-check">✓</i>
                   <span><?php echo esc_html( $pt ); ?></span>
                 </li>
               <?php endforeach; ?>
             </ul>
             <div style="margin-top: 28px;">
-              <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn-secondary-outline" style="width: 100%; justify-content: center;">Coordinate With Your MSP &rarr;</a>
+              <div class="card-soft-blue" style="padding: 12px; font-size: 0.8125rem; text-align: center; color: var(--color-navy); font-weight: 600;">
+                🤝 We collaborate directly with your MSP engineers
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- Bottom Notice -->
+        <div class="card-soft-blue" style="margin-top: 32px; padding: 18px 24px; border-left: 4px solid var(--color-electric-blue);">
+          <p style="font-size: 0.875rem; color: var(--color-navy); line-height: 1.5; margin: 0;">
+            <b>⚖️ Crucial Cyber AB Role Separation:</b> By Department of War regulation, an RPO advises, your MSP configures, and an independent C3PAO assesses. We never assess companies we advise, guaranteeing 100% conflict-free compliance and audit objectivity.
+          </p>
         </div>
       </div>
     </section>

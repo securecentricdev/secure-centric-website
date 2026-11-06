@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/diagram",
+  "version": "1.0.0",
+  "title": "Boundary Segregation Diagram",
+  "category": "secure-centric-process",
+  "icon": "networking",
+  "description": "Visual diagram showing CUI data-flow and enclave boundary nodes.",
+  "keywords": ["diagram", "boundary", "enclave", "flow", "nodes"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "// BOUNDARY SEGREGATION" },
+    "title": { "type": "string", "default": "CUI Data Flow & Boundary Isolation Architecture" },
+    "subtitle": { "type": "string", "default": "Data flow path defining CUI entry, processing, storage, and physical facility boundaries." },
+    "stepsData": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "align": ["full", "wide"],
+    "html": false
+  },
+  "render": "file:./render.php"
+}

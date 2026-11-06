@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/data-table",
+  "version": "1.0.0",
+  "title": "Data Table (Compliance & Gap Matrix)",
+  "category": "secure-centric-process",
+  "icon": "table-col-after",
+  "description": "Styled compliance data table with custom headers, columns, and rows.",
+  "keywords": ["table", "matrix", "gap", "data", "compliance"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": { "type": "string", "default": "Findings Matrix & Gap Breakdown" },
+    "colsData": { "type": "string", "default": "" },
+    "rowsData": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "align": ["full", "wide"],
+    "html": false
+  },
+  "render": "file:./render.php"
+}

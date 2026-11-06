@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/stageline",
+  "version": "1.0.0",
+  "title": "Stage Line Bar",
+  "category": "secure-centric-process",
+  "icon": "flag",
+  "description": "Displays where this engagement stage fits within the overall 8-step CMMC journey.",
+  "keywords": ["stage", "process", "workflow", "banner"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "stage": { "type": "string", "default": "Compliance Phase" },
+    "serviceLink": { "type": "string", "default": "/secure-centric/services/cmmc-compliance/" },
+    "title": { "type": "string", "default": "Where you fit" },
+    "line": { "type": "string", "default": "You know CMMC applies but need clarity on scoping, timeline, and audit boundaries." },
+    "processLink": { "type": "string", "default": "/secure-centric/cmmc/cmmc-process/" }
+  },
+  "supports": {
+    "align": ["full", "wide"],
+    "html": false
+  },
+  "render": "file:./render.php"
+}

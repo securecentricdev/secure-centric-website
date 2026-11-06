@@ -14,8 +14,9 @@ $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'The Tea
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Accredited Cyber AB Registered Practitioners with decades of technical engineering and audit defense experience.';
 
 $members = array();
-if ( ! empty( $attributes['membersData'] ) ) {
-    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['membersData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['membersData'] ), true );
+$raw_data = ! empty( $attributes['membersData'] ) ? $attributes['membersData'] : ( ! empty( $attributes['teamData'] ) ? $attributes['teamData'] : '' );
+if ( ! empty( $raw_data ) ) {
+    $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $raw_data ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $raw_data ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         $members = $decoded;
     }

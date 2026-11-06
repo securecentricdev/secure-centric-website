@@ -2846,6 +2846,135 @@
       ]
     });
 
+    // =========================================================================
+    // 26. STAGE LINE BAR BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/stageline', {
+      title: 'Stage Line Bar',
+      icon: 'flag',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Stage Settings',
+          initialOpen: true,
+          fields: [
+            { name: 'stage', label: 'Stage Name', default: 'Compliance Phase' },
+            { name: 'title', label: 'Right Eyebrow', default: 'Where you fit' },
+            { name: 'line', label: 'Stage Explanation', type: 'textarea', default: 'You know CMMC applies but need clarity on scoping, timeline, and audit boundaries.' },
+            { name: 'serviceLink', label: 'Service Link URL', default: '/secure-centric/services/cmmc-compliance/' },
+            { name: 'processLink', label: 'Full Process Link URL', default: '/secure-centric/cmmc/cmmc-process/' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 27. STEPS VERTICAL BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/steps-vertical', {
+      title: 'Steps Vertical (Review Stages)',
+      icon: 'editor-ul',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Header & Eyebrow',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// DETAILED REVIEW STAGES' },
+            { name: 'title', label: 'Heading', default: 'Detailed review stages' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Every activity, team participant, and tangible deliverable produced during this review.' }
+          ]
+        },
+        {
+          title: 'Vertical Steps Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'stepsData', label: 'Steps JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 28. ICONBOX HIGHLIGHT BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/iconbox', {
+      title: 'IconBox Highlight Card',
+      icon: 'building',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Card Content',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// IN-PERSON VERIFICATION' },
+            { name: 'title', label: 'Heading', default: 'On-Site Physical & Technical Walkthrough' },
+            { name: 'lead', label: 'Lead Sentence', type: 'textarea', default: 'We inspect real hardware, server rooms, and shop floors.' }
+          ]
+        },
+        {
+          title: 'Points List (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'pointsData', label: 'Points JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 29. DATA TABLE BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/data-table', {
+      title: 'Data Table (Gap & Compliance Matrix)',
+      icon: 'table-col-after',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Table Header',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'Table Heading', default: 'Findings Matrix & Gap Breakdown' }
+          ]
+        },
+        {
+          title: 'Table Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'colsData', label: 'Columns Header JSON Array', type: 'textarea' },
+            { name: 'rowsData', label: 'Rows Data JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 30. BOUNDARY DIAGRAM BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/diagram', {
+      title: 'Boundary Segregation Diagram',
+      icon: 'networking',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Diagram Header',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// BOUNDARY SEGREGATION' },
+            { name: 'title', label: 'Heading', default: 'CUI Data Flow & Boundary Isolation Architecture' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Data flow path defining CUI entry, processing, storage, and physical facility boundaries.' }
+          ]
+        },
+        {
+          title: 'Flow Nodes (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'stepsData', label: 'Nodes JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
     console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
   }
 
