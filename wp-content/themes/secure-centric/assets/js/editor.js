@@ -2975,6 +2975,262 @@
       ]
     });
 
+    // =========================================================================
+    // 31. ACCREDITATION BADGE STRIP BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/badge', {
+      title: 'Accreditation Badge Strip',
+      icon: 'shield',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Badge Content',
+          initialOpen: true,
+          fields: [
+            { name: 'shieldText', label: 'Shield Text', default: '🛡️ Cyber AB Registered Provider Organization · CPN #3942' },
+            { name: 'metaText', label: 'Metadata Text', default: 'Formally Reviewed: November 2026 · 32 CFR 170 Compliant' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 32. ON-THIS-PAGE TOC BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/toc', {
+      title: 'On-This-Page Table of Contents',
+      icon: 'list-view',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Header & Title',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'TOC Heading', default: 'On This Page' }
+          ]
+        },
+        {
+          title: 'TOC Links (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'linksData', label: 'Links JSON Array [{label, anchor}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 33. NIST 14 CONTROL FAMILIES (ACCORDION TILES)
+    // =========================================================================
+    createBlockRegistration('secure-centric/accordion-tiles', {
+      title: 'NIST 14 Control Families (Accordion / Interactive Tiles)',
+      icon: 'grid-view',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Section Header',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// 110 NIST CONTROLS' },
+            { name: 'title', label: 'Heading', default: 'The 110 Requirements Across 14 Families' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Click on any control family below to see requirement counts and scope objectives tested by C3PAO assessors.' }
+          ]
+        },
+        {
+          title: 'Families Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'familiesData', label: 'Families JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 34. NIST 14 CONTROL FAMILIES (GRID TILES)
+    // =========================================================================
+    createBlockRegistration('secure-centric/tiles', {
+      title: 'NIST 14 Control Families (Grid Cards)',
+      icon: 'screenoptions',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Section Header',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// 110 CONTROLS IN 14 FAMILIES' },
+            { name: 'title', label: 'Heading', default: 'The 14 Control Families of NIST SP 800-171' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'The complete NIST SP 800-171 Rev 2 security control architecture required for CMMC Level 2.' }
+          ]
+        },
+        {
+          title: 'Tiles Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'tilesData', label: 'Tiles JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 35. TOPIC CLUSTER LINKS BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/cluster', {
+      title: 'Topic Cluster Links Grid',
+      icon: 'networking',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Section Header',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'Heading', default: 'Explore Related Compliance Topics' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Cross-linked compliance pillars, assessment staging, and implementation guides.' }
+          ]
+        },
+        {
+          title: 'Cluster Links (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'linksData', label: 'Links JSON Array [{label, url}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 36. REGULATORY CITATIONS FRESHNESS BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/fresh', {
+      title: 'Regulatory Citations Freshness Card',
+      icon: 'calendar-alt',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Card Header',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'Heading', default: 'Official Rulemaking & Regulatory References' },
+            { name: 'updated', label: 'Updated Date', default: 'November 2026' }
+          ]
+        },
+        {
+          title: 'Sources Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'sourcesData', label: 'Sources JSON Array [{name, url}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 37. HOW-TO VERIFICATION PROCEDURE BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/howto', {
+      title: 'Verification Procedure How-To Steps',
+      icon: 'clipboard',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Section Header',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// VERIFICATION PROCEDURE' },
+            { name: 'title', label: 'Heading', default: 'How to Verify Any CMMC RPO or Registered Practitioner' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Protect your company from unqualified consultants by verifying accreditation directly on the official Cyber AB registry.' }
+          ]
+        },
+        {
+          title: 'Procedure Steps (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'stepsData', label: 'Steps JSON Array [{no, title, desc}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 38. NUMBERS 4 GRID (VERIFIED METRICS)
+    // =========================================================================
+    createBlockRegistration('secure-centric/numbers4', {
+      title: 'Verified Defense Metrics (Numbers 4 Band)',
+      icon: 'chart-bar',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Section Header',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Eyebrow', default: '// VERIFIED DEFENSE METRICS' },
+            { name: 'title', label: 'Heading', default: 'CMMC By the Numbers' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'CMMC compliance numbers grounded in Department of War regulatory criteria.' }
+          ]
+        },
+        {
+          title: 'Metrics Data (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'statsData', label: 'Stats JSON Array [{num, label, desc}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 39. COMPLIANCE ARTIFACT DEFINITION BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/definition', {
+      title: 'Compliance Artifact Definition Card',
+      icon: 'media-document',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Card Header',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'Heading', default: 'What is this compliance artifact?' },
+            { name: 'desc', label: 'Description', type: 'textarea', default: 'A structured, assessor-tested Excel and PDF template designed to evaluate internal technical controls.' }
+          ]
+        },
+        {
+          title: 'Points List (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'pointsData', label: 'Points JSON Array', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 40. CHECKLIST SPREADSHEET PREVIEW TABLE BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/preview', {
+      title: 'Checklist Spreadsheet Table Preview',
+      icon: 'analytics',
+      category: 'secure-centric-process',
+      panels: [
+        {
+          title: 'Table Header',
+          initialOpen: true,
+          fields: [
+            { name: 'title', label: 'Table Heading', default: 'Sample Spreadsheet Matrix Preview' },
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'A preview of the columns, assessment objectives, and evidence fields included in the downloadable resource.' }
+          ]
+        },
+        {
+          title: 'Table Rows (JSON)',
+          initialOpen: false,
+          fields: [
+            { name: 'rowsData', label: 'Rows JSON Array [{req, family, objective, status, owner, evidence}]', type: 'textarea' }
+          ]
+        }
+      ]
+    });
+
     console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
   }
 

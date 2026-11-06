@@ -1,7 +1,7 @@
 <?php
 /**
  * Render Template for Hero Block (Multi-Layout)
- * Strictly matches demo/assets/js/app.js renderHeroHome, renderHeroService, renderHeroICP, renderHeroSplit, renderHeroCenter, renderContactHero
+ * Strictly matches demo/assets/js/app.js renderHeroHome, renderHeroService, renderHeroICP, renderHeroSplit, renderHeroCenter, renderContactHero, renderHeroGuide
  *
  * @package SecureCentric
  */
@@ -88,6 +88,37 @@ if ( ! empty( $attributes['audiencesData'] ) ) {
     }
 }
 
+// Guide Attributes (Pillar Pages)
+$side_type  = ! empty( $attributes['sideType'] ) ? $attributes['sideType'] : '';
+$side_title = ! empty( $attributes['sideTitle'] ) ? $attributes['sideTitle'] : 'Which Level Do You Need?';
+$is_tool    = ! empty( $attributes['isTool'] ) || ( false !== strpos( $side_type, 'tool' ) );
+$side_facts = array();
+if ( ! empty( $attributes['sideFactsData'] ) ) {
+    $decoded_facts = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['sideFactsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['sideFactsData'] ), true );
+    if ( is_array( $decoded_facts ) && ! empty( $decoded_facts ) ) {
+        $side_facts = $decoded_facts;
+    }
+}
+if ( empty( $side_facts ) && ! empty( $attributes['sideContent'] ) ) {
+    $side_facts = array_map( 'trim', explode( '·', $attributes['sideContent'] ) );
+}
+if ( empty( $side_facts ) ) {
+    $side_facts = array( '110 Requirements', '14 Control Families', 'Rev 2 Baseline' );
+}
+
+// Resource Bullets (Downloadable Checklists)
+$resource_bullets = array(
+    array( 'title' => 'Assessor-Defensible Format:', 'desc' => 'Fully aligned with NIST SP 800-171 Rev 2 & 32 CFR Part 170 CMMC Level 2 objectives.' ),
+    array( 'title' => 'Pre-Built Evidence Mapping:', 'desc' => 'Detailed assessment methods, evidence artifact references, and responsible owner assignments.' ),
+    array( 'title' => 'Cyber AB RPO Reviewed:', 'desc' => 'Maintained by certified Registered Practitioners who guide defense subcontractors through live C3PAO audits.' ),
+);
+if ( ! empty( $attributes['bulletsData'] ) ) {
+    $dec_b = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['bulletsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['bulletsData'] ), true );
+    if ( is_array( $dec_b ) && ! empty( $dec_b ) ) {
+        $resource_bullets = $dec_b;
+    }
+}
+
 // Background Media Paths & Overrides
 $bg_media_type   = ! empty( $attributes['bgMediaType'] ) ? $attributes['bgMediaType'] : 'video';
 $theme_uri       = get_template_directory_uri();
@@ -100,8 +131,193 @@ $image_url       = ! empty( $attributes['bgImageUrl'] ) ? $attributes['bgImageUr
 $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attributes['bgOverlayOpacity'] / 100 ) : 0.70;
 ?>
 
-<?php if ( 'center' === $layout ) : ?>
-  <!-- Center Layout (About, Checklists) -->
+<?php if ( 'guide' === $layout ) : ?>
+  <!-- Guide Layout (Knowledge Pillars: Pages 12, 13, 14, 15, 19, 20) -->
+  <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-pillar-guide"
+           style="border-bottom: 1px solid var(--color-dark-line);">
+    <div class="site-container">
+      <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-bottom: 16px;">
+        HOME / LEARN / <span style="color: var(--color-cyber-cyan);"><?php echo esc_html( strtoupper( $breadcrumb_current ) ); ?></span>
+      </div>
+      <div class="hero-home-grid">
+        <div>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
+          
+          <div class="card-dark" style="background-color: rgba(11, 20, 55, 0.85); border-left: 3px solid var(--color-cyber-cyan); margin-bottom: 20px; padding: 18px 22px;">
+            <span style="font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; color: var(--color-cyber-cyan); display: block; margin-bottom: 6px;">DIRECT ANSWER (EXECUTIVE SUMMARY)</span>
+            <p style="color: var(--color-white); font-size: 1rem; margin: 0; line-height: 1.5;"><?php echo esc_html( $description ); ?></p>
+          </div>
+
+          <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <span>Reviewed by: <b>Son Phan, Principal Architect</b></span>
+            <span>•</span>
+            <span>Last Updated: <b>Q4 2026</b></span>
+            <span>•</span>
+            <span class="badge-chip dark" style="font-size: 0.65rem;">Cyber AB RPO Verified</span>
+          </div>
+        </div>
+
+        <div>
+          <?php if ( $is_tool ) : ?>
+            <div class="card-white" style="padding: 28px;">
+              <span class="section-eyebrow">// INTERACTIVE TOOL</span>
+              <h3><?php echo esc_html( $side_title ); ?></h3>
+              <div style="display: flex; flex-direction: column; gap: 12px; margin: 16px 0;">
+                <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
+                  <span>Does your contract contain DFARS 7012?</span>
+                  <input type="checkbox" checked style="accent-color: var(--color-electric-blue); width: 18px; height: 18px;" />
+                </label>
+                <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
+                  <span>Do you store or process technical drawings / CAD?</span>
+                  <input type="checkbox" checked style="accent-color: var(--color-electric-blue); width: 18px; height: 18px;" />
+                </label>
+                <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem;">
+                  <span>Are you a designated critical weapon system supplier?</span>
+                  <input type="checkbox" style="accent-color: var(--color-electric-blue); width: 18px; height: 18px;" />
+                </label>
+              </div>
+              <div class="card-soft-blue" style="padding: 14px; margin-bottom: 16px;">
+                <b style="color: var(--color-navy); font-size: 0.875rem; display: block;">Calculated Level Requirement:</b>
+                <span style="color: var(--color-electric-blue); font-weight: 800; font-size: 1.15rem;">CMMC Level 2 (110 Controls)</span>
+              </div>
+              <a href="<?php echo esc_url( home_url( '/cmmc/level-2/' ) ); ?>" class="btn btn-primary" style="width: 100%;">View Level 2 Action Plan &rarr;</a>
+            </div>
+          <?php else : ?>
+            <div class="card-dark" style="padding: 28px;">
+              <span class="section-eyebrow dark">// KEY SPECIFICATIONS</span>
+              <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 14px;">
+                <?php foreach ( $side_facts as $fact ) : ?>
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="width: 28px; height: 28px; border-radius: 6px; background: rgba(0, 212, 255, 0.15); color: var(--color-cyber-cyan); display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">✓</span>
+                    <b style="color: var(--color-white); font-size: 0.9375rem;"><?php echo esc_html( trim( $fact ) ); ?></b>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<?php elseif ( 'resource' === $layout ) : ?>
+  <!-- Resource Split Hero Layout (Pages 21, 22, 23 Checklists) -->
+  <section class="resource-hero-wrap wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/resource-split-hero">
+    <div class="site-container">
+      <div class="resource-hero-grid">
+        <div class="resource-hero-left">
+          <span class="section-eyebrow dark" style="margin-bottom: 14px;">// COMPLIANCE RESOURCE &bull; INSTANT ACCESS</span>
+          <h1><?php echo esc_html( $title ); ?></h1>
+          <p class="hero-lead"><?php echo esc_html( $description ); ?></p>
+
+          <div class="resource-hero-bullets">
+            <?php foreach ( $resource_bullets as $rb ) : ?>
+              <?php
+              $rb_title = is_array( $rb ) && ! empty( $rb['title'] ) ? $rb['title'] : '';
+              $rb_desc  = is_array( $rb ) && ! empty( $rb['desc'] ) ? $rb['desc'] : ( is_string( $rb ) ? $rb : '' );
+              ?>
+              <div class="resource-bullet-item">
+                <span class="bullet-check">✓</span>
+                <div><?php if ( $rb_title ) : ?><b><?php echo esc_html( $rb_title ); ?></b> <?php endif; ?><?php echo esc_html( $rb_desc ); ?></div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.8125rem; color: var(--color-cyber-cyan); font-family: var(--font-mono);">
+            <span>🔒 100% Confidential</span>
+            <span>&bull;</span>
+            <span>Never Shared</span>
+            <span>&bull;</span>
+            <span>Direct Download</span>
+          </div>
+        </div>
+
+        <div class="resource-hero-right">
+          <div class="resource-hero-card-form" id="contact-form-container">
+            <h3 style="margin-bottom: 6px; font-size: 1.35rem; color: var(--color-navy);">Request Your Compliance Pack</h3>
+            <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 18px;">
+              Complete the form below to receive the official compliance checklist and speak with a Cyber AB Registered Practitioner.
+            </p>
+
+            <form id="resource-contact-form" onsubmit="event.preventDefault(); alert('Checklist requested! A download link has been dispatched to your work email.');">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="contact-name">First &amp; Last Name*</label>
+                  <input type="text" id="contact-name" class="form-input" placeholder="e.g. John Miller" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-email">Work Email (Corporate Domain)*</label>
+                  <input type="email" id="contact-email" class="form-input" placeholder="john@defensecontractor.com" required />
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="contact-phone">Phone Number*</label>
+                  <input type="tel" id="contact-phone" class="form-input" placeholder="(555) 000-0000" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-company">Company / Organization*</label>
+                  <input type="text" id="contact-company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="contact-role">Supply Chain Role*</label>
+                  <select id="contact-role" class="form-select" required>
+                    <option value="">Select your role...</option>
+                    <option value="Prime Contractor">Prime Contractor</option>
+                    <option value="Subcontractor Tier 1">Subcontractor (Tier 1)</option>
+                    <option value="Subcontractor Tier 2+">Subcontractor (Tier 2 or Lower)</option>
+                    <option value="Commercial Item Supplier">Commercial Item Supplier</option>
+                    <option value="Managed Service Provider">MSP / IT Provider</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-level">Target CMMC Level*</label>
+                  <select id="contact-level" class="form-select" required>
+                    <option value="Level 2">CMMC Level 2 (110 Controls &bull; CUI)</option>
+                    <option value="Level 1">CMMC Level 1 (15 Controls &bull; FCI)</option>
+                    <option value="Not Sure">Not Sure — Need Boundary Scoping</option>
+                    <option value="NIST 800-171">NIST SP 800-171 / DFARS 7012 Only</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-sprs">Current SPRS Score (Optional)</label>
+                <input type="text" id="contact-sprs" class="form-input" placeholder="e.g. -35, +60, or 'Never Calculated'" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-message">How can our Registered Practitioners help you?*</label>
+                <textarea id="contact-message" class="form-textarea" rows="2" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
+              </div>
+
+              <div style="margin-top: 16px;">
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+                  Download Checklist &amp; Book Call &rarr;
+                </button>
+              </div>
+
+              <div style="margin-top: 10px; font-size: 0.72rem; color: var(--color-slate); text-align: center; line-height: 1.4;">
+                🔒 Communications held under strict confidentiality. We do not sell or share contractor data.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<?php elseif ( 'center' === $layout ) : ?>
+  <!-- Center Layout (About Us) -->
   <section class="section-midnight py-section text-center wp-block-inspect wp-pattern-inspect" 
            data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
            data-wp-pattern="secure-centric/hero-center"

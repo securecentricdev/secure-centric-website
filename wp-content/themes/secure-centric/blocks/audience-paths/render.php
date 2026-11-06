@@ -25,19 +25,24 @@ if ( ! empty( $attributes['pathsData'] ) ) {
 if ( empty( $items ) ) {
     $items = array(
         array(
-            'name'  => 'Machine Shops & CNC Fabricators',
-            'desc'  => 'Focus on shop floor network isolation and protecting CAD/CAM drawing repositories.',
-            'steps' => array( 'Enclave Boundary', 'Drawing Protection', 'Air-gap CNCs', 'Mock Audit', 'C3PAO Pass' ),
+            'name'  => 'Prime Contractors',
+            'desc'  => 'Must achieve Level 2 certification and enforce supplier flowdowns.',
+            'steps' => array( 'Readiness Check', 'Enclave Scoping', 'SSP & POA&M', 'C3PAO Audit' ),
         ),
         array(
-            'name'  => 'Aerospace Engineering & Design Primes',
-            'desc'  => 'Enterprise-wide identity isolation with cross-tier subcontractor data flow control.',
-            'steps' => array( 'Flowdown Review', 'GovCloud Setup', 'FIPS Encryption', 'SSP Authorization', 'Annual Affirmation' ),
+            'name'  => 'Tier 1 & Tier 2 Subcontractors',
+            'desc'  => 'Facing urgent prime contractor questionnaires and DFARS 7012 clauses.',
+            'steps' => array( 'Gap Assessment', 'Remediation Advisory', 'Documentation', 'Audit Defense' ),
         ),
         array(
-            'name'  => 'Defense Software & IT Subcontractors',
-            'desc'  => 'CI/CD pipeline boundary protection and FedRAMP cloud storage compliance.',
-            'steps' => array( 'Code Repository Isolation', 'MFA Enforcement', 'SIEM Log Retention', 'Audit Defense Binder', 'Certification Award' ),
+            'name'  => 'Small Machine Shops & Suppliers',
+            'desc'  => 'Receiving CUI engineering drawings with limited internal IT staff.',
+            'steps' => array( 'CUI Enclave Setup', 'Policy Suite', 'Readiness Review', 'SPRS Defense' ),
+        ),
+        array(
+            'name'  => 'Software & Cloud Service Providers',
+            'desc'  => 'Providing software touching DoD systems requiring FedRAMP Moderate equivalence.',
+            'steps' => array( 'Cloud Scoping', 'FedRAMP Verification', 'SSP Authoring', 'Certification' ),
         ),
     );
 }

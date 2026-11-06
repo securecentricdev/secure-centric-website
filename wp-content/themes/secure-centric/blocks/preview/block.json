@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/preview",
+  "version": "1.0.0",
+  "title": "Checklist Spreadsheet Table Preview",
+  "category": "secure-centric-process",
+  "icon": "analytics",
+  "description": "Live spreadsheet table preview showing columns, objectives, status chips, and evidence links.",
+  "keywords": ["preview", "checklist", "spreadsheet", "table", "status"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Sample Spreadsheet Matrix Preview"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "A preview of the columns, assessment objectives, and evidence fields included in the downloadable resource."
+    },
+    "rowsData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

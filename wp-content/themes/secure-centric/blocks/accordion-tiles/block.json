@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/accordion-tiles",
+  "version": "1.0.0",
+  "title": "NIST 14 Control Families (Accordion / Interactive Tiles)",
+  "category": "secure-centric-process",
+  "icon": "grid-view",
+  "description": "Interactive cards detailing the 14 NIST SP 800-171 Rev 2 control families and requirements count.",
+  "keywords": ["nist", "control families", "110 controls", "accordion", "tiles"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// 110 NIST CONTROLS"
+    },
+    "title": {
+      "type": "string",
+      "default": "The 110 Requirements Across 14 Families"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Click on any control family below to see requirement counts and scope objectives tested by C3PAO assessors."
+    },
+    "familiesData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

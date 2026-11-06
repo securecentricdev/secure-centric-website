@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/cluster",
+  "version": "1.0.0",
+  "title": "Topic Cluster Links Grid",
+  "category": "secure-centric-process",
+  "icon": "networking",
+  "description": "Cross-linked compliance pillars, staging guides, and checklists.",
+  "keywords": ["cluster", "links", "topic", "pills", "navigation"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Explore Related Compliance Topics"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Cross-linked compliance pillars, assessment staging, and implementation guides."
+    },
+    "linksData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

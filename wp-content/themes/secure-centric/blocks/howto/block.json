@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/howto",
+  "version": "1.0.0",
+  "title": "Verification Procedure How-To Steps",
+  "category": "secure-centric-process",
+  "icon": "clipboard",
+  "description": "Numbered procedural cards for verifying official Cyber AB accreditation credentials.",
+  "keywords": ["howto", "procedure", "verification", "cyber ab", "steps"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// VERIFICATION PROCEDURE"
+    },
+    "title": {
+      "type": "string",
+      "default": "How to Verify Any CMMC RPO or Registered Practitioner"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Protect your company from unqualified consultants by verifying accreditation directly on the official Cyber AB registry."
+    },
+    "stepsData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

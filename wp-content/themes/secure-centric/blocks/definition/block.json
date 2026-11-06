@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/definition",
+  "version": "1.0.0",
+  "title": "Compliance Artifact Definition Card",
+  "category": "secure-centric-process",
+  "icon": "media-document",
+  "description": "Definition callout card with checklist purpose, scope description, and verification bullet points.",
+  "keywords": ["definition", "callout", "artifact", "checklist", "points"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "What is this compliance artifact?"
+    },
+    "desc": {
+      "type": "string",
+      "default": "A structured, assessor-tested Excel and PDF template designed to evaluate internal technical controls."
+    },
+    "pointsData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

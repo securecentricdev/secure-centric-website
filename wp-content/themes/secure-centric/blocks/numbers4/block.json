@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/numbers4",
+  "version": "1.0.0",
+  "title": "Verified Defense Metrics (Numbers 4 Band)",
+  "category": "secure-centric-process",
+  "icon": "chart-bar",
+  "description": "Band of 4 verified defense metrics and statistics with large numerals and labels.",
+  "keywords": ["numbers", "metrics", "stats", "defense metrics", "numbers4"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// VERIFIED DEFENSE METRICS"
+    },
+    "title": {
+      "type": "string",
+      "default": "CMMC By the Numbers"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "CMMC compliance numbers grounded in Department of War regulatory criteria."
+    },
+    "statsData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

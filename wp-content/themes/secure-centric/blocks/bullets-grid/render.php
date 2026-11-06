@@ -1,6 +1,6 @@
 <?php
 /**
- * Render Template for Bullets & Principles Grid
+ * Render Template for Bullets Grid Block
  * Strictly matches demo/assets/js/app.js renderBullets
  *
  * @package SecureCentric
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// CORE PRINCIPLES & INDICATORS';
-$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How we work';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Principles, not process: independent advice, on site by default, plain English, we never assess clients we advise.';
+$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// CORE PRINCIPLES & INDICATORS';
+$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Key Indicators & Symptoms';
+$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Observable symptoms and indicators that require immediate remediation.';
 
 $bullets = array();
 if ( ! empty( $attributes['bulletsData'] ) ) {
@@ -25,20 +25,20 @@ if ( ! empty( $attributes['bulletsData'] ) ) {
 if ( empty( $bullets ) ) {
     $bullets = array(
         array(
-            'title' => 'Independent Advice',
-            'desc'  => 'We do not sell firewalls, MSP services, or software licenses. Our recommendations are 100% objective and tailored to your existing IT footprint.',
+            'title' => 'Unknown or Negative SPRS Score',
+            'desc'  => 'Your DoD score is blank, stale, or below 0 in the Supplier Performance Risk System, disqualifying your company from upcoming awards.',
         ),
         array(
-            'title' => 'On Site by Default',
-            'desc'  => 'We conduct physical facility walkthroughs in person. You cannot verify CMMC compliance over a Zoom screen—we inspect server rooms, wiring closets, and shop floors.',
+            'title' => 'Generic Template SSP in Place',
+            'desc'  => 'System Security Plan was downloaded from the internet without site-specific scoping, network topology maps, or evidence links.',
         ),
         array(
-            'title' => 'Plain English',
-            'desc'  => 'No impenetrable jargon. We translate 320 assessment objectives into clear operational steps your executives, engineers, and shop foremen understand.',
+            'title' => 'Unassigned POA&M Open Items',
+            'desc'  => 'Corrective actions lack dedicated internal owners, realistic resource budgets, or committed 180-day milestone close dates.',
         ),
         array(
-            'title' => 'Strict Conflict Separation',
-            'desc'  => 'We never assess clients we advise. Under Cyber AB rules, we are strictly an RPO advisor so our loyalty is 100% with defending your organization.',
+            'title' => 'Urgent Prime Contractor Inquiries',
+            'desc'  => 'Defense prime contractors (Lockheed, Boeing, Northrop, etc.) are issuing 30-day compliance verification questionnaires.',
         ),
     );
 }
@@ -53,13 +53,25 @@ if ( empty( $bullets ) ) {
     </div>
     <div class="bullets-grid">
       <?php foreach ( $bullets as $b ) : ?>
+        <?php
+        $b_title = '';
+        $b_desc  = '';
+        if ( is_array( $b ) ) {
+            $b_title = ! empty( $b['title'] ) ? $b['title'] : ( ! empty( $b['name'] ) ? $b['name'] : '' );
+            $b_desc  = ! empty( $b['desc'] ) ? $b['desc'] : '';
+        } elseif ( is_string( $b ) ) {
+            $b_title = $b;
+        }
+        ?>
         <div class="bullet-card">
           <div class="bullet-icon-wrap">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
           <div>
-            <h4 style="margin-bottom: 8px; color: var(--color-navy); font-size: 1.1rem;"><?php echo esc_html( $b['title'] ); ?></h4>
-            <p style="color: var(--color-body-text); font-size: 0.9375rem; line-height: 1.6; margin: 0;"><?php echo esc_html( $b['desc'] ); ?></p>
+            <h4 style="margin-bottom: 8px; color: var(--color-navy); font-size: 1.1rem;"><?php echo esc_html( $b_title ); ?></h4>
+            <?php if ( ! empty( $b_desc ) ) : ?>
+              <p style="color: var(--color-body-text); font-size: 0.9375rem; line-height: 1.6; margin: 0;"><?php echo esc_html( $b_desc ); ?></p>
+            <?php endif; ?>
           </div>
         </div>
       <?php endforeach; ?>

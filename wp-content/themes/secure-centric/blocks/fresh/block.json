@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/fresh",
+  "version": "1.0.0",
+  "title": "Regulatory Citations Freshness Card",
+  "category": "secure-centric-process",
+  "icon": "calendar-alt",
+  "description": "Regulatory rulemaking verification status and official DoD/NIST source citations.",
+  "keywords": ["citations", "regulatory", "freshness", "sources", "32 cfr 170"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Official Rulemaking & Regulatory References"
+    },
+    "updated": {
+      "type": "string",
+      "default": "November 2026"
+    },
+    "sourcesData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

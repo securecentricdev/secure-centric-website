@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/tiles",
+  "version": "1.0.0",
+  "title": "NIST 14 Control Families (Grid Cards)",
+  "category": "secure-centric-process",
+  "icon": "screenoptions",
+  "description": "Grid cards showcasing the 14 NIST SP 800-171 Rev 2 control families and control counts.",
+  "keywords": ["nist", "control families", "tiles", "cards", "110 controls"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// 110 CONTROLS IN 14 FAMILIES"
+    },
+    "title": {
+      "type": "string",
+      "default": "The 14 Control Families of NIST SP 800-171"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "The complete NIST SP 800-171 Rev 2 security control architecture required for CMMC Level 2."
+    },
+    "tilesData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}

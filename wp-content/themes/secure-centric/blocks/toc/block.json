@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/toc",
+  "version": "1.0.0",
+  "title": "On-This-Page Table of Contents",
+  "category": "secure-centric-process",
+  "icon": "list-view",
+  "description": "On-page jump navigation bar for pillar guide sections.",
+  "keywords": ["toc", "navigation", "jump", "table of contents", "pillar"],
+  "textdomain": "secure-centric",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "On This Page"
+    },
+    "linksData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"]
+  },
+  "render": "file:./render.php"
+}
