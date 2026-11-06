@@ -102,13 +102,20 @@ function secure_centric_enqueue_assets() {
         null
     );
 
-    // CSS Theme Assets
-    $comp_ver = file_exists( get_template_directory() . '/assets/css/components.css' ) ? (string) filemtime( get_template_directory() . '/assets/css/components.css' ) : '3.9.5';
+    // CSS Theme Assets with dynamic cache busting
+    $var_file  = get_template_directory() . '/assets/css/variables.css';
+    $comp_file = get_template_directory() . '/assets/css/components.css';
+    $page_file = get_template_directory() . '/assets/css/pages.css';
+
+    $var_ver  = file_exists( $var_file ) ? (string) filemtime( $var_file ) : time();
+    $comp_ver = file_exists( $comp_file ) ? (string) filemtime( $comp_file ) : time();
+    $page_ver = file_exists( $page_file ) ? (string) filemtime( $page_file ) : time();
+
     wp_enqueue_style(
         'secure-centric-variables',
         get_template_directory_uri() . '/assets/css/variables.css',
         array(),
-        '3.9.5'
+        $var_ver
     );
     wp_enqueue_style(
         'secure-centric-components',
@@ -120,16 +127,21 @@ function secure_centric_enqueue_assets() {
         'secure-centric-pages',
         get_template_directory_uri() . '/assets/css/pages.css',
         array( 'secure-centric-components' ),
-        '3.9.5'
+        $page_ver
     );
 
-    // Frontend Interactive Scripts (Roadmap Stepper, Testimonials Controller, Navigation)
-    $app_ver = file_exists( get_template_directory() . '/assets/js/app.js' ) ? (string) filemtime( get_template_directory() . '/assets/js/app.js' ) : '3.9.5';
+    // Frontend Interactive Scripts with dynamic cache busting
+    $data_file = get_template_directory() . '/assets/js/data.js';
+    $app_file  = get_template_directory() . '/assets/js/app.js';
+
+    $data_ver = file_exists( $data_file ) ? (string) filemtime( $data_file ) : time();
+    $app_ver  = file_exists( $app_file ) ? (string) filemtime( $app_file ) : time();
+
     wp_enqueue_script(
         'secure-centric-data',
         get_template_directory_uri() . '/assets/js/data.js',
         array(),
-        '3.9.5',
+        $data_ver,
         true
     );
     wp_enqueue_script(
