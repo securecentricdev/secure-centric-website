@@ -2,23 +2,24 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "secure-centric/form-embed",
-    "version": "1.0.0",
-    "title": "Forminator Lead Capture Embed",
+    "version": "1.1.0",
+    "title": "Interactive Defense Lead & Scoping Form",
     "category": "secure-centric-cta",
     "icon": "feedback",
-    "description": "Embeds Forminator dual-email lead capture form with instant failover fallback.",
+    "description": "Interactive defense contractor discovery and scoping consultation form with split info panel.",
     "keywords": [
         "form",
-        "forminator",
-        "lead",
         "contact",
+        "split",
+        "lead",
+        "scoping",
         "defense"
     ],
     "textdomain": "secure-centric",
     "attributes": {
         "layout": {
             "type": "string",
-            "default": "card"
+            "default": "split"
         },
         "infoEyebrow": {
             "type": "string",
@@ -36,13 +37,49 @@
             "type": "string",
             "default": "(323) 410-5941"
         },
+        "phoneHours": {
+            "type": "string",
+            "default": "Mon – Fri: 8:00 AM – 6:00 PM PT"
+        },
         "email": {
             "type": "string",
             "default": "info@secure-centric.com"
         },
+        "emailNote": {
+            "type": "string",
+            "default": "PGP encryption available upon request"
+        },
         "location": {
             "type": "string",
-            "default": "Los Angeles, California · Nationwide On-Site Deployments"
+            "default": "Los Angeles, California"
+        },
+        "locationNote": {
+            "type": "string",
+            "default": "On-site facility assessments delivered nationwide"
+        },
+        "stepsTitle": {
+            "type": "string",
+            "default": "What Happens After You Request a Call:"
+        },
+        "stepsData": {
+            "type": "string",
+            "default": "[{\"title\":\"Mutual NDA Execution:\",\"desc\":\"We sign a standard bilateral NDA within 2 business hours before discussing any contract details.\"},{\"title\":\"30-Min Scoping Assessment:\",\"desc\":\"We review CUI boundary requirements, your target level (Level 1 vs 2), and existing SPRS scores.\"},{\"title\":\"Clear Fixed-Scope Roadmap:\",\"desc\":\"You receive a written action plan detailing exact deliverables, milestones, and timeline.\"}]"
+        },
+        "formTitle": {
+            "type": "string",
+            "default": "Request a Discovery Call"
+        },
+        "formSubtitle": {
+            "type": "string",
+            "default": "Fields marked with * are required. We strictly respect your privacy."
+        },
+        "submitBtnText": {
+            "type": "string",
+            "default": "Submit Discovery Call Request →"
+        },
+        "privacyNote": {
+            "type": "string",
+            "default": "🔒 All communications are held under strict confidentiality. We do not sell or share contractor data."
         },
         "formId": {
             "type": "string",

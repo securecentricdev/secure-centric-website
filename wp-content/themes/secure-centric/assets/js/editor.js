@@ -1826,24 +1826,211 @@
     });
 
     // =========================================================================
-    // 11. FORM EMBED BLOCK
+    // 11. FORM EMBED BLOCK (SPLIT & CARD LAYOUT WITH FULL SIDEBAR CONTROLS)
     // =========================================================================
-    createBlockRegistration('secure-centric/form-embed', {
-      title: 'Forminator Lead Capture Embed',
+    registerBlockType('secure-centric/form-embed', {
+      title: 'Interactive Defense Lead & Scoping Form',
       icon: 'feedback',
       category: 'secure-centric-cta',
-      panels: [
-        {
-          title: 'Form Settings & Copy',
-          initialOpen: true,
-          fields: [
-            { name: 'badgeText', label: 'Security Badge', default: 'BILATERAL NDA GUARANTEE' },
-            { name: 'title', label: 'Form Title', default: 'Book a 30-Minute Scoping Call' },
-            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Strictly confidential under Bilateral NDA. We review your CUI boundary and timeline.' },
-            { name: 'formId', label: 'Forminator Form ID (leave blank for native defense form)', default: '' }
-          ]
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const defaultSteps = [
+          { title: 'Mutual NDA Execution:', desc: 'We sign a standard bilateral NDA within 2 business hours before discussing any contract details.' },
+          { title: '30-Min Scoping Assessment:', desc: 'We review CUI boundary requirements, your target level (Level 1 vs 2), and existing SPRS scores.' },
+          { title: 'Clear Fixed-Scope Roadmap:', desc: 'You receive a written action plan detailing exact deliverables, milestones, and timeline.' }
+        ];
+
+        let currentSteps = safeParseJsonArray(attributes.stepsData, defaultSteps);
+
+        function updateSteps(newSteps) {
+          setAttributes({ stepsData: JSON.stringify(newSteps) });
         }
-      ]
+
+        function addStep() {
+          const next = currentSteps.concat([{
+            title: 'Next Step:',
+            desc: 'Milestone action description for defense contractor engagement.'
+          }]);
+          updateSteps(next);
+        }
+
+        function removeStep(idx) {
+          if (currentSteps.length <= 1) return;
+          const next = currentSteps.filter(function (_, i) { return i !== idx; });
+          updateSteps(next);
+        }
+
+        function updateStepItem(idx, fields) {
+          const next = currentSteps.map(function (st, i) {
+            if (i === idx) return Object.assign({}, st, fields);
+            return st;
+          });
+          updateSteps(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/form-embed',
+          attributes: attributes
+        }) : el('div', { style: { padding: '24px', background: '#F8FAFC' } }, 'Form Embed (' + (attributes.layout || 'split') + ')');
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Layout Style', initialOpen: true },
+            el(SelectControl, {
+              label: 'Form Layout',
+              value: attributes.layout || 'split',
+              options: [
+                { label: 'Split 2-Column (Left Info Panel + Form)', value: 'split' },
+                { label: 'Single Centered Card', value: 'card' }
+              ],
+              onChange: function (val) { setAttributes({ layout: val }); }
+            })
+          ),
+          (attributes.layout !== 'card') && el(
+            PanelBody,
+            { title: 'Text Beside Form (Left Info Column)', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.infoEyebrow !== undefined ? attributes.infoEyebrow : '// DIRECT ENGAGEMENT',
+              onChange: function (val) { setAttributes({ infoEyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.infoTitle !== undefined ? attributes.infoTitle : 'Direct Access to Registered Practitioners',
+              onChange: function (val) { setAttributes({ infoTitle: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Description',
+              value: attributes.infoDesc !== undefined ? attributes.infoDesc : "Every discovery call is led directly by an accredited Cyber AB Registered Practitioner (RP), not a generalist salesperson. We review your contract's DFARS 252.204-7012 clauses and help determine your exact scoping boundaries.",
+              rows: 3,
+              onChange: function (val) { setAttributes({ infoDesc: val }); }
+            }),
+            el('h4', { style: { marginTop: '16px', marginBottom: '8px', fontSize: '13px', fontWeight: 700 } }, 'Contact Inquiries Box'),
+            el(TextControl, {
+              label: 'Phone Number',
+              value: attributes.phone !== undefined ? attributes.phone : '(323) 410-5941',
+              onChange: function (val) { setAttributes({ phone: val }); }
+            }),
+            el(TextControl, {
+              label: 'Working Hours Note',
+              value: attributes.phoneHours !== undefined ? attributes.phoneHours : 'Mon – Fri: 8:00 AM – 6:00 PM PT',
+              onChange: function (val) { setAttributes({ phoneHours: val }); }
+            }),
+            el(TextControl, {
+              label: 'Email Address',
+              value: attributes.email !== undefined ? attributes.email : 'info@secure-centric.com',
+              onChange: function (val) { setAttributes({ email: val }); }
+            }),
+            el(TextControl, {
+              label: 'Email Note',
+              value: attributes.emailNote !== undefined ? attributes.emailNote : 'PGP encryption available upon request',
+              onChange: function (val) { setAttributes({ emailNote: val }); }
+            }),
+            el(TextControl, {
+              label: 'Location / Office',
+              value: attributes.location !== undefined ? attributes.location : 'Los Angeles, California',
+              onChange: function (val) { setAttributes({ location: val }); }
+            }),
+            el(TextControl, {
+              label: 'Location Note',
+              value: attributes.locationNote !== undefined ? attributes.locationNote : 'On-site facility assessments delivered nationwide',
+              onChange: function (val) { setAttributes({ locationNote: val }); }
+            })
+          ),
+          (attributes.layout !== 'card') && el(
+            PanelBody,
+            { title: 'Process Steps (' + currentSteps.length + ')', initialOpen: false },
+            el(TextControl, {
+              label: 'Steps Section Title',
+              value: attributes.stepsTitle !== undefined ? attributes.stepsTitle : 'What Happens After You Request a Call:',
+              onChange: function (val) { setAttributes({ stepsTitle: val }); }
+            }),
+            currentSteps.map(function (st, idx) {
+              return el('div', {
+                key: 'form-step-' + idx,
+                style: { background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }
+              },
+                el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
+                  el('strong', { style: { color: '#0F172A' } }, 'Step ' + (idx + 1)),
+                  currentSteps.length > 1 && el(Button, { isDestructive: true, isSmall: true, onClick: function () { removeStep(idx); } }, 'Remove')
+                ),
+                el(TextControl, {
+                  label: 'Step Title',
+                  value: st.title || '',
+                  onChange: function (val) { updateStepItem(idx, { title: val }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Step Description',
+                  value: st.desc || '',
+                  rows: 2,
+                  onChange: function (val) { updateStepItem(idx, { desc: val }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addStep
+            }, '+ Add Process Step')
+          ),
+          el(
+            PanelBody,
+            { title: 'Form Card & Actions (Right Column)', initialOpen: true },
+            el(TextControl, {
+              label: 'Form Headline',
+              value: attributes.formTitle !== undefined ? attributes.formTitle : (attributes.title || 'Request a Discovery Call'),
+              onChange: function (val) { setAttributes({ formTitle: val, title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Form Subtitle',
+              value: attributes.formSubtitle !== undefined ? attributes.formSubtitle : (attributes.subtitle || 'Fields marked with * are required. We strictly respect your privacy.'),
+              rows: 2,
+              onChange: function (val) { setAttributes({ formSubtitle: val, subtitle: val }); }
+            }),
+            el(TextControl, {
+              label: 'Submit Button Text',
+              value: attributes.submitBtnText !== undefined ? attributes.submitBtnText : 'Submit Discovery Call Request →',
+              onChange: function (val) { setAttributes({ submitBtnText: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Privacy & Confidentiality Note',
+              value: attributes.privacyNote !== undefined ? attributes.privacyNote : '🔒 All communications are held under strict confidentiality. We do not sell or share contractor data.',
+              rows: 2,
+              onChange: function (val) { setAttributes({ privacyNote: val }); }
+            }),
+            el(TextControl, {
+              label: 'Forminator Shortcode ID (Optional)',
+              value: attributes.formId || '',
+              help: 'Leave blank to use the native interactive defense scoping form.',
+              onChange: function (val) { setAttributes({ formId: val }); }
+            })
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el('div', blockProps, previewElement)
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================
