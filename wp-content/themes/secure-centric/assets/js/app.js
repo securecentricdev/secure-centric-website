@@ -1714,9 +1714,6 @@
    * Render Block HTML: Custom Tables
    */
   function renderTable(block) {
-    const rawCols = Array.isArray(block.cols) ? block.cols : (Array.isArray(block.headers) ? block.headers : ['Category / Feature', 'Details', 'Compliance Impact']);
-    const cols = rawCols.filter(c => typeof c === 'string');
-
     let rows = [];
     if (Array.isArray(block.rows)) {
       rows = block.rows.map(r => Array.isArray(r) ? r : (typeof r === 'object' && r !== null ? Object.values(r) : [String(r)]));
@@ -1748,6 +1745,23 @@
         ]);
       }
     }
+
+    let rawCols = [];
+    const rowColCount = (rows[0] && Array.isArray(rows[0])) ? rows[0].length : 0;
+    if (Array.isArray(block.headers) && rowColCount > 0 && block.headers.length === rowColCount) {
+      rawCols = block.headers;
+    } else if (Array.isArray(block.cols) && rowColCount > 0 && block.cols.length === rowColCount) {
+      rawCols = block.cols;
+    } else if (Array.isArray(block.cols) && rowColCount > 0 && block.cols.length === rowColCount + 1 && !block.cols[0]) {
+      rawCols = block.cols.slice(1);
+    } else if (Array.isArray(block.headers) && block.headers.length > 0) {
+      rawCols = block.headers;
+    } else if (Array.isArray(block.cols) && block.cols.length > 0) {
+      rawCols = block.cols;
+    } else {
+      rawCols = ['Category / Feature', 'Details', 'Compliance Impact'];
+    }
+    const cols = rawCols.filter(c => typeof c === 'string');
 
     return `
       <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 

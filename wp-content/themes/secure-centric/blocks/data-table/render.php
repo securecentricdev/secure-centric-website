@@ -19,8 +19,13 @@ if ( ! empty( $attributes['colsData'] ) ) {
         $cols = $decoded_c;
     }
 }
-if ( empty( $cols ) ) {
-    $cols = array( 'Category / Control', 'Status', 'Impact', 'Required Remediation', 'Owner' );
+
+$headers = array();
+if ( ! empty( $attributes['headersData'] ) ) {
+    $decoded_h = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['headersData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['headersData'] ), true );
+    if ( is_array( $decoded_h ) && ! empty( $decoded_h ) ) {
+        $headers = $decoded_h;
+    }
 }
 
 $rows = array();
@@ -38,6 +43,24 @@ if ( empty( $rows ) ) {
         array( 'SC.L2-3.13.11 (FIPS-Validated Cryptography)', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules', 'Systems Administrator' ),
         array( 'AU.L2-3.3.1 (Audit Logging & SIEM Review)', 'Compliant', 'Low (0 SPRS)', 'Weekly automated audit log analysis and tamper-proof log forwarding verified', 'Security Analyst' )
     );
+}
+
+// Align column headers with body cells
+$row_col_count = ( ! empty( $rows[0] ) && is_array( $rows[0] ) ) ? count( $rows[0] ) : 0;
+if ( $row_col_count > 0 ) {
+    if ( ! empty( $headers ) && count( $headers ) === $row_col_count ) {
+        $cols = $headers;
+    } elseif ( ! empty( $cols ) && count( $cols ) !== $row_col_count ) {
+        if ( ! empty( $headers ) && count( $headers ) === $row_col_count ) {
+            $cols = $headers;
+        } elseif ( count( $cols ) === $row_col_count + 1 && empty( $cols[0] ) ) {
+            $cols = array_slice( $cols, 1 );
+        }
+    }
+}
+
+if ( empty( $cols ) ) {
+    $cols = array( 'Category / Control', 'Status', 'Impact', 'Required Remediation', 'Owner' );
 }
 ?>
 
