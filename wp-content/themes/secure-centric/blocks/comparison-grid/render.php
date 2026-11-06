@@ -10,20 +10,62 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$layout      = ! empty( $attributes['layout'] ) ? $attributes['layout'] : '3-col';
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// APPROACH COMPARISON';
-$title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Three Ways Defense Subcontractors Approach CMMC';
-$description = ! empty( $attributes['description'] ) ? sc_clean_text( $attributes['description'] ) : 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.';
+$title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Three Ways Defense Subcontractors Approach CMMC';
+if ( function_exists( 'sc_clean_text' ) ) {
+    $title = sc_clean_text( $title );
+}
+
+$layout = ! empty( $attributes['layout'] ) ? $attributes['layout'] : '3-col';
+
+// Auto-detect 2-column layout if RPO vs MSP or explicitly requested
+if (
+    '2-col' === $layout ||
+    ! empty( $attributes['col1Title'] ) ||
+    ! empty( $attributes['col1Items'] ) ||
+    ! empty( $attributes['leftPoints'] ) ||
+    false !== stripos( $title, 'cannot do' ) ||
+    false !== stripos( $title, 'versus your msp' ) ||
+    false !== stripos( $title, 'versus msp' )
+) {
+    $layout = '2-col';
+}
+
+$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : ( '2-col' === $layout ? '// CLEAR DIVISION OF RESPONSIBILITIES' : '// APPROACH COMPARISON' );
+$description = ! empty( $attributes['description'] ) ? $attributes['description'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '' );
+
+if ( empty( $description ) ) {
+    $description = ( '2-col' === $layout )
+        ? 'Defense contractors frequently ask: "Can our MSP do this alone?" Here is how an accredited Cyber AB RPO works alongside your existing technical team without overlap.'
+        : 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.';
+}
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow     = sc_clean_text( $eyebrow );
+    $description = sc_clean_text( $description );
+}
 
 if ( '2-col' === $layout ) :
-    $left_title  = ! empty( $attributes['leftTitle'] ) ? $attributes['leftTitle'] : 'What Secure-Centric Does';
-    $left_desc   = ! empty( $attributes['leftDesc'] ) ? $attributes['leftDesc'] : 'We lead compliance governance, boundary scoping, document authorship, and assessor defense.';
-    $right_title = ! empty( $attributes['rightTitle'] ) ? $attributes['rightTitle'] : 'What Your MSP / Internal IT Does';
-    $right_desc  = ! empty( $attributes['rightDesc'] ) ? $attributes['rightDesc'] : 'Your IT team implements physical and digital configurations to satisfy our technical requirements.';
+    $is_cannot_do = ( false !== stripos( $title, 'cannot do' ) );
+
+    $default_left_title  = $is_cannot_do ? 'An RPO can' : 'What Secure-Centric Does';
+    $default_right_title = $is_cannot_do ? 'An RPO cannot' : 'What Your MSP / Internal IT Does';
+
+    $left_title  = ! empty( $attributes['leftTitle'] ) ? $attributes['leftTitle'] : ( ! empty( $attributes['col1Title'] ) ? ( $is_cannot_do ? 'An RPO can' : $attributes['col1Title'] ) : $default_left_title );
+    $left_desc   = ! empty( $attributes['leftDesc'] ) ? $attributes['leftDesc'] : ( ! empty( $attributes['col1Desc'] ) ? $attributes['col1Desc'] : 'We lead compliance governance, boundary scoping, document authorship, and assessor defense.' );
+    $right_title = ! empty( $attributes['rightTitle'] ) ? $attributes['rightTitle'] : ( ! empty( $attributes['col2Title'] ) ? ( $is_cannot_do ? 'An RPO cannot' : $attributes['col2Title'] ) : $default_right_title );
+    $right_desc  = ! empty( $attributes['rightDesc'] ) ? $attributes['rightDesc'] : ( ! empty( $attributes['col2Desc'] ) ? $attributes['col2Desc'] : 'Your IT team implements physical and digital configurations to satisfy our technical requirements.' );
+
+    if ( function_exists( 'sc_clean_text' ) ) {
+        $left_title  = sc_clean_text( $left_title );
+        $left_desc   = sc_clean_text( $left_desc );
+        $right_title = sc_clean_text( $right_title );
+        $right_desc  = sc_clean_text( $right_desc );
+    }
 
     $rpo_points = array();
-    if ( ! empty( $attributes['leftPoints'] ) ) {
-        $dec_l = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['leftPoints'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['leftPoints'] ), true );
+    $raw_left = ! empty( $attributes['leftPoints'] ) ? $attributes['leftPoints'] : ( ! empty( $attributes['col1Items'] ) ? $attributes['col1Items'] : '' );
+    if ( ! empty( $raw_left ) ) {
+        $dec_l = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $raw_left ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $raw_left ), true );
         if ( is_array( $dec_l ) && ! empty( $dec_l ) ) {
             $rpo_points = $dec_l;
         }
@@ -39,8 +81,9 @@ if ( '2-col' === $layout ) :
     }
 
     $msp_points = array();
-    if ( ! empty( $attributes['rightPoints'] ) ) {
-        $dec_r = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['rightPoints'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['rightPoints'] ), true );
+    $raw_right = ! empty( $attributes['rightPoints'] ) ? $attributes['rightPoints'] : ( ! empty( $attributes['col2Items'] ) ? $attributes['col2Items'] : '' );
+    if ( ! empty( $raw_right ) ) {
+        $dec_r = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $raw_right ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $raw_right ), true );
         if ( is_array( $dec_r ) && ! empty( $dec_r ) ) {
             $msp_points = $dec_r;
         }
@@ -54,10 +97,18 @@ if ( '2-col' === $layout ) :
             'Executes configuration instructions derived from our RPO advisory plan',
         );
     }
+
+    if ( function_exists( 'sc_clean_text' ) ) {
+        $rpo_points = sc_clean_text( $rpo_points );
+        $msp_points = sc_clean_text( $msp_points );
+    }
+
+    $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+    $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
     ?>
     <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 
              data-wp-block="wp:columns {columns:2}" 
-             data-wp-pattern="secure-centric/rpo-vs-msp-cards">
+             data-wp-pattern="secure-centric/rpo-vs-msp-cards"<?php echo $anchor_attr; ?>>
       <div class="site-container">
         <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
@@ -89,7 +140,7 @@ if ( '2-col' === $layout ) :
               <?php endforeach; ?>
             </ul>
             <div style="margin-top: 28px;">
-              <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Engage Secure-Centric &rarr;</a>
+              <a href="<?php echo esc_url( home_url( '/services/cmmc-consulting/' ) ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Engage Secure-Centric &rarr;</a>
             </div>
           </div>
 
@@ -115,7 +166,7 @@ if ( '2-col' === $layout ) :
             </ul>
             <div style="margin-top: 28px;">
               <div class="card-soft-blue" style="padding: 12px; font-size: 0.8125rem; text-align: center; color: var(--color-navy); font-weight: 600;">
-                🤝 We collaborate directly with your MSP engineers
+                🤝 We collaborate directly with your MSP or internal IT
               </div>
             </div>
           </div>
@@ -150,8 +201,29 @@ if ( '2-col' === $layout ) :
     $opt3_desc       = ! empty( $attributes['opt3Desc'] ) ? $attributes['opt3Desc'] : 'Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit.';
     $opt3_risk_title = ! empty( $attributes['opt3RiskTitle'] ) ? $attributes['opt3RiskTitle'] : '✅ 100% First-Pass Defensibility';
     $opt3_risk_desc  = ! empty( $attributes['opt3RiskDesc'] ) ? $attributes['opt3RiskDesc'] : 'Rigorous mock assessments, verified SSP documentation, and scope reduction saving $50k+.';
+
+    if ( function_exists( 'sc_clean_text' ) ) {
+        $opt1_badge      = sc_clean_text( $opt1_badge );
+        $opt1_title      = sc_clean_text( $opt1_title );
+        $opt1_desc       = sc_clean_text( $opt1_desc );
+        $opt1_risk_title = sc_clean_text( $opt1_risk_title );
+        $opt1_risk_desc  = sc_clean_text( $opt1_risk_desc );
+        $opt2_badge      = sc_clean_text( $opt2_badge );
+        $opt2_title      = sc_clean_text( $opt2_title );
+        $opt2_desc       = sc_clean_text( $opt2_desc );
+        $opt2_risk_title = sc_clean_text( $opt2_risk_title );
+        $opt2_risk_desc  = sc_clean_text( $opt2_risk_desc );
+        $opt3_badge      = sc_clean_text( $opt3_badge );
+        $opt3_title      = sc_clean_text( $opt3_title );
+        $opt3_desc       = sc_clean_text( $opt3_desc );
+        $opt3_risk_title = sc_clean_text( $opt3_risk_title );
+        $opt3_risk_desc  = sc_clean_text( $opt3_risk_desc );
+    }
+
+    $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
+    $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
     ?>
-    <section class="section-ice py-section wp-block-inspect" data-wp-pattern="secure-centric/comparison-table">
+    <section class="section-ice py-section wp-block-inspect" data-wp-pattern="secure-centric/comparison-table"<?php echo $anchor_attr; ?>>
       <div class="site-container">
         <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
