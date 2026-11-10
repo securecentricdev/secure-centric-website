@@ -31,7 +31,6 @@ if ( empty( $links ) ) {
         array( 'label' => 'What is a Cyber AB RPO?', 'url' => home_url( '/cmmc/rpo/' ) ),
     );
 }
-?>
 
 if ( function_exists( 'sc_clean_text' ) ) {
     $title    = sc_clean_text( $title );
