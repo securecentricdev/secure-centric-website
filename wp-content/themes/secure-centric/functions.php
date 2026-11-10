@@ -287,3 +287,27 @@ function secure_centric_editor_assets() {
     );
 }
 add_action( 'enqueue_block_editor_assets', 'secure_centric_editor_assets' );
+
+/**
+ * Dynamic URL & Asset Path Normalizer
+ *
+ * Ensures navigation links, logo image, and template assets resolve cleanly
+ * regardless of whether WordPress is hosted in a subdirectory (e.g. localhost/secure-centric)
+ * or at the root domain in staging/production (e.g. 82.180.163.13.nip.io or secure-centric.com).
+ */
+function secure_centric_normalize_buffer_output( $html ) {
+    $home_path = trim( wp_parse_url( home_url(), PHP_URL_PATH ) ?: '', '/' );
+    if ( empty( $home_path ) ) {
+        // Site is at the root domain: strip '/secure-centric/' prefix from internal paths
+        $html = preg_replace( '/(href|src|action)=(["\'])\/secure-centric\/(.*?)\2/i', '$1=$2/$3$2', $html );
+        $html = preg_replace( '/(href|src|action)=(["\'])\/secure-centric\/?\2/i', '$1=$2/$2', $html );
+    }
+    return $html;
+}
+
+function secure_centric_start_buffer() {
+    if ( ! is_admin() ) {
+        ob_start( 'secure_centric_normalize_buffer_output' );
+    }
+}
+add_action( 'template_redirect', 'secure_centric_start_buffer', 1 );

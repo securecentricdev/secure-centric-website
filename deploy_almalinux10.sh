@@ -260,6 +260,10 @@ server {
     gzip_comp_level 6;
     gzip_types text/plain text/css text/xml application/json application/javascript application/rss+xml font/woff2 image/svg+xml;
 
+    # Seamless backward compatibility for legacy /secure-centric/ paths
+    rewrite ^/secure-centric/(.*)$ /\$1 permanent;
+    rewrite ^/secure-centric/?$ / permanent;
+
     location / {
         try_files \$uri \$uri/ /index.php?\$args;
     }
