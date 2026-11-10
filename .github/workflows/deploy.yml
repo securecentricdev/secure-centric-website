@@ -1,32 +1,53 @@
-name: Secure-Centric Production Deployment
+name: Secure-Centric Production CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: "production-deploy"
+  cancel-in-progress: false
 
 jobs:
+  # ----------------------------------------------------------------------------
+  # Job 1: Linting, Syntax Validation & Security Verification
+  # ----------------------------------------------------------------------------
   validate:
-    name: Code Quality & Theme Validation
+    name: Lint & Pre-Deployment Verification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup PHP
+      - name: Setup PHP Environment
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+          extensions: mbstring, xml, json
 
-      - name: Lint Theme PHP Files
+      - name: Syntax Check All Theme PHP Files
         run: |
-          find wp-content/themes/secure-centric -name "*.php" -exec php -l {} \;
+          echo "Scanning PHP files for syntax errors..."
+          find wp-content/themes/secure-centric -type f -name "*.php" -exec php -l {} \;
 
       - name: Validate theme.json Syntax
         run: |
-          php -r 'json_decode(file_get_contents("wp-content/themes/secure-centric/theme.json")) !== null or exit(1);'
+          echo "Validating theme.json..."
+          php -r '
+            $data = json_decode(file_get_contents("wp-content/themes/secure-centric/theme.json"), true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+              echo "Error: theme.json is invalid JSON: " . json_last_error_msg() . "\n";
+              exit(1);
+            }
+            echo "theme.json syntax valid.\n";
+          '
 
+  # ----------------------------------------------------------------------------
+  # Job 2: Automated Deployment to AlmaLinux 10 VPS via SSH
+  # ----------------------------------------------------------------------------
   deploy:
-    name: Deploy to AlmaLinux 10 VPS
+    name: Deploy to AlmaLinux 10 Production VPS
     needs: validate
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -34,11 +55,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy to Server via SSH
+      - name: Execute Server Deployment via SSH
         uses: appleboy/ssh-action@v1.0.3
-        if: env.SSH_HOST != ''
-        env:
-          SSH_HOST: ${{ secrets.SERVER_HOST }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER || 'root' }}
@@ -46,17 +64,67 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT || 22 }}
+          timeout: 180s
           script: |
-            set -e
-            echo "Pulling latest changes on server..."
-            cd /var/www/secure-centric.com || cd /var/www/html || cd /var/www/*
-            git pull origin main
-            
-            # Flush WordPress cache if WP-CLI is installed
+            set -eo pipefail
+
+            echo "========================================================"
+            echo " [CI/CD] Starting Automated Deployment on Server"
+            echo " Date: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            echo "========================================================"
+
+            # Locate the webroot directory
+            WEB_DIR=""
+            if [ -d "/var/www/secure-centric.com" ]; then
+              WEB_DIR="/var/www/secure-centric.com"
+            elif [ -d "/var/www/secure-centric" ]; then
+              WEB_DIR="/var/www/secure-centric"
+            elif [ -d "/var/www/html" ]; then
+              WEB_DIR="/var/www/html"
+            else
+              echo "ERROR: Webroot directory not found under /var/www/"
+              exit 1
+            fi
+
+            echo "[1/4] Navigating to ${WEB_DIR}..."
+            cd "${WEB_DIR}"
+
+            # Pull latest changes from main branch
+            echo "[2/4] Fetching and resetting to origin/main..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            # Configure proper ownership & file permissions
+            echo "[3/4] Enforcing ownership and SELinux permissions..."
+            WEB_USER="nginx"
+            if id -u apache >/dev/null 2>&1 && ! id -u nginx >/dev/null 2>&1; then
+              WEB_USER="apache"
+            fi
+
+            chown -R ${WEB_USER}:${WEB_USER} "${WEB_DIR}"
+            find "${WEB_DIR}" -type d -exec chmod 755 {} \;
+            find "${WEB_DIR}" -type f -exec chmod 644 {} \;
+            [ -f "${WEB_DIR}/wp-config-local.php" ] && chmod 600 "${WEB_DIR}/wp-config-local.php"
+            chmod +x "${WEB_DIR}/deploy_almalinux10.sh" 2>/dev/null || true
+
+            # Restore SELinux contexts if enforcing
+            if sestatus 2>/dev/null | grep -q "enabled"; then
+              restorecon -R "${WEB_DIR}" || true
+            fi
+
+            # Flush WordPress Cache & Reset OPcache
+            echo "[4/4] Flushing WordPress caches and reloading PHP-FPM..."
             if command -v wp >/dev/null 2>&1; then
               wp cache flush --allow-root || true
             fi
-            
-            # Reload PHP-FPM to reset OPcache
             systemctl reload php-fpm || true
-            echo "Deployment completed successfully!"
+            systemctl reload nginx || true
+
+            # Verify local HTTP response
+            echo "Performing post-deployment health check..."
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -H "Host: secure-centric.com" http://127.0.0.1/ || echo "000")
+            echo "Local HTTP response code: ${HTTP_CODE}"
+
+            echo "========================================================"
+            echo " [CI/CD] Deployment to AlmaLinux 10 Completed!"
+            echo "========================================================"

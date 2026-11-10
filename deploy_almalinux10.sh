@@ -10,17 +10,39 @@ set -eo pipefail
 # ------------------------------------------------------------------------------
 # Configuration Variables (override via CLI flags or environment variables)
 # ------------------------------------------------------------------------------
-DOMAIN="${1:-secure-centric.com}"
+TARGET_INPUT="${1:-secure-centric.com}"
 ADMIN_EMAIL="${2:-admin@secure-centric.com}"
+
+# Check if target is an IP address or domain
+if [[ "${TARGET_INPUT}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    IS_IP=true
+    SERVER_IP="${TARGET_INPUT}"
+    DOMAIN="${SERVER_IP}.nip.io"
+    NGINX_SERVER_NAMES="${SERVER_IP} ${DOMAIN} localhost"
+    HTTP_PROTO="http"
+else
+    IS_IP=false
+    DOMAIN="${TARGET_INPUT}"
+    NGINX_SERVER_NAMES="${DOMAIN} www.${DOMAIN}"
+    HTTP_PROTO="https"
+fi
+
 DB_NAME="${DB_NAME:-secure_centric_db}"
 DB_USER="${DB_USER:-secure_centric_user}"
 DB_PASS="${DB_PASS:-$(openssl rand -base64 18 | tr -dc 'a-zA-Z0-9' | head -c 18)}"
-WEB_ROOT="/var/www/${DOMAIN}"
+WEB_ROOT="/var/www/secure-centric"
 REPO_URL="https://github.com/securecentricdev/secure-centric-website.git"
 
 echo "========================================================================"
 echo " Starting Secure-Centric Automated Deployment for AlmaLinux 10 / 9"
-echo " Target Domain:  https://${DOMAIN}"
+if [ "${IS_IP}" = true ]; then
+    echo " Mode:           STAGING (IP / Wildcard DNS)"
+    echo " Target IP:      ${SERVER_IP}"
+    echo " Staging URL:    http://${SERVER_IP} or http://${DOMAIN}"
+else
+    echo " Mode:           PRODUCTION DOMAIN"
+    echo " Target Domain:  https://${DOMAIN}"
+fi
 echo " Admin Email:    ${ADMIN_EMAIL}"
 echo " Web Directory:  ${WEB_ROOT}"
 echo " Database Name:  ${DB_NAME}"
@@ -148,7 +170,7 @@ SALT_NONCE="$(openssl rand -base64 32)"
 cat << EOF_CONFIG > "${WEB_ROOT}/wp-config-local.php"
 <?php
 /**
- * Production Database and Environment Overrides for Secure-Centric
+ * Production / Staging Database and Environment Overrides for Secure-Centric
  * Auto-generated on $(date -u +"%Y-%m-%d %H:%M:%S UTC")
  */
 define( 'DB_NAME',     '${DB_NAME}' );
@@ -156,8 +178,8 @@ define( 'DB_USER',     '${DB_USER}' );
 define( 'DB_PASSWORD', '${DB_PASS}' );
 define( 'DB_HOST',     'localhost' );
 
-define( 'WP_HOME',     'https://${DOMAIN}' );
-define( 'WP_SITEURL',  'https://${DOMAIN}' );
+define( 'WP_HOME',     '${HTTP_PROTO}://${DOMAIN}' );
+define( 'WP_SITEURL',  '${HTTP_PROTO}://${DOMAIN}' );
 
 define( 'AUTH_KEY',         '${SALT_AUTH}' );
 define( 'SECURE_AUTH_KEY',  '${SALT_SEC}' );
@@ -177,7 +199,7 @@ EOF_CONFIG
 chmod 600 "${WEB_ROOT}/wp-config-local.php"
 
 # ------------------------------------------------------------------------------
-# 7. Install WP-CLI & Search-Replace Local URLs with Production Domain
+# 7. Install WP-CLI & Search-Replace Local URLs with Target Domain/IP
 # ------------------------------------------------------------------------------
 echo "[7/9] Installing WP-CLI and running search-replace..."
 if ! command -v wp >/dev/null 2>&1; then
@@ -187,8 +209,8 @@ fi
 
 # Run WP search-replace safely preserving PHP serialization
 cd "${WEB_ROOT}"
-wp search-replace "http://localhost/secure-centric" "https://${DOMAIN}" --all-tables --allow-root || true
-wp search-replace "https://localhost/secure-centric" "https://${DOMAIN}" --all-tables --allow-root || true
+wp search-replace "http://localhost/secure-centric" "${HTTP_PROTO}://${DOMAIN}" --all-tables --allow-root || true
+wp search-replace "https://localhost/secure-centric" "${HTTP_PROTO}://${DOMAIN}" --all-tables --allow-root || true
 wp cache flush --allow-root || true
 
 # ------------------------------------------------------------------------------
@@ -199,20 +221,26 @@ echo "[8/9] Configuring Nginx virtual host, permissions, and SELinux..."
 # Determine PHP-FPM socket path (AlmaLinux standard: /run/php-fpm/www.sock)
 PHP_SOCKET="/run/php-fpm/www.sock"
 if [ ! -S "${PHP_SOCKET}" ]; then
-    # In case php-fpm runs on 127.0.0.1:9000
     PHP_UPSTREAM="127.0.0.1:9000"
 else
     PHP_UPSTREAM="unix:${PHP_SOCKET}"
 fi
 
+LISTEN_DIRECTIVE="listen 80;"
+LISTEN_V6_DIRECTIVE="listen [::]:80;"
+if [ "${IS_IP}" = true ]; then
+    LISTEN_DIRECTIVE="listen 80 default_server;"
+    LISTEN_V6_DIRECTIVE="listen [::]:80 default_server;"
+fi
+
 cat << EOF_NGINX > "/etc/nginx/conf.d/${DOMAIN}.conf"
-# Secure-Centric Production Nginx Configuration
+# Secure-Centric Nginx Configuration
 # Optimized for AlmaLinux 10 / PHP-FPM 8.2+
 
 server {
-    listen 80;
-    listen [::]:80;
-    server_name ${DOMAIN} www.${DOMAIN};
+    ${LISTEN_DIRECTIVE}
+    ${LISTEN_V6_DIRECTIVE}
+    server_name ${NGINX_SERVER_NAMES};
 
     root ${WEB_ROOT};
     index index.php index.html index.htm;
