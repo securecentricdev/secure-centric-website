@@ -21,7 +21,7 @@
     },
     "logosList": {
       "type": "string",
-      "default": "Tower Semiconductor, Safran Federal Systems, Goodwin & Associates, HRD Aero Systems, Precision Aerospace, Defense Dynamics"
+      "default": "Caltrol, Firefighters First Credit Union, Acadian Contractors, Goodwin & Associates, CMI Promex, HRD Aero Systems, Yes Energy, Lonestar Electric Supply, Los Angeles Regional Food Bank, Rose Acre Farms, Safran Federal Systems, Tower Semiconductor, Weber Metals"
     }
   },
   "supports": {

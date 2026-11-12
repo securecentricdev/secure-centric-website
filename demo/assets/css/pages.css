@@ -205,10 +205,10 @@
 .logos-carousel-track {
   display: flex;
   align-items: center;
-  gap: 52px;
+  gap: 56px;
   width: max-content;
   white-space: nowrap;
-  animation: logoScroll 24s linear infinite;
+  animation: logoScroll 36s linear infinite;
 }
 
 .logos-carousel-track:hover {
@@ -225,13 +225,12 @@
 }
 
 .logo-item {
-  height: 38px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   filter: grayscale(100%);
-  opacity: 0.75;
+  opacity: 0.82;
   transition: all 0.25s ease;
   flex-shrink: 0;
   user-select: none;
@@ -243,12 +242,31 @@
   transform: translateY(-2px);
 }
 
-.logo-item svg,
-.logo-item span {
+.logo-item svg {
+  color: var(--color-electric-blue);
+  flex-shrink: 0;
+}
+
+.logo-item span,
+.logo-item-name {
+  margin-left: 10px;
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
   color: var(--color-navy);
+}
+
+.logo-item-img {
+  height: 36px;
+  max-height: 38px;
+  width: auto;
+  max-width: 165px;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-item--image-only {
+  gap: 0;
 }
 
 /* ---------- 8-Step CMMC Roadmap Component ---------- */

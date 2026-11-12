@@ -722,26 +722,55 @@
     `;
   }
 
+  const DEFAULT_CLIENT_LOGOS = [
+    { name: '', alt: 'Caltrol', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/caltrol.webp' },
+    { name: '', alt: 'Firefighters First Credit Union', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/firefighters-first.webp' },
+    { name: '', alt: 'Acadian Contractors', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/acadian-contractors.webp' },
+    { name: '', alt: 'Goodwin & Associates', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/goodwin-associates.webp' },
+    { name: '', alt: 'CMI Promex', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/cmi-promex.webp' },
+    { name: '', alt: 'HRD Aero Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/hrd-aero-systems.webp' },
+    { name: '', alt: 'Yes Energy / PowerCore', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/yes-energy.webp' },
+    { name: '', alt: 'Lonestar Electric Supply', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/lonestar-electric.webp' },
+    { name: '', alt: 'Los Angeles Regional Food Bank', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/la-food-bank.webp' },
+    { name: '', alt: 'Rose Acre Farms', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/rose-acre-farms.webp' },
+    { name: '', alt: 'Safran Federal Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/safran.webp' },
+    { name: '', alt: 'Tower Semiconductor', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/tower-semiconductor.webp' },
+    { name: '', alt: 'Weber Metals', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/weber-metals.webp' }
+  ];
+
   /**
    * Render Block HTML: Scrolling Client Logos (One-Line Infinite Carousel)
    */
   function renderLogos(block) {
-    const logos = block.logos || [];
-    const itemsHtml = logos.map(logo => `
-      <div class="logo-item">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-electric-blue);">
-          <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/>
-        </svg>
-        <span>${esc(logo)}</span>
-      </div>
-    `).join('');
+    const rawLogos = (block && block.logos && block.logos.length) ? block.logos : DEFAULT_CLIENT_LOGOS;
+    const logos = (rawLogos[0] && typeof rawLogos[0] === 'string' && !rawLogos[0].includes('/')) 
+      ? DEFAULT_CLIENT_LOGOS 
+      : rawLogos;
+
+    const itemsHtml = logos.map(logo => {
+      const isObj = typeof logo === 'object' && logo !== null;
+      const name = isObj ? (logo.name || '') : logo;
+      const imageUrl = isObj ? (logo.imageUrl || '') : '';
+      const alt = isObj ? (logo.alt || name || 'Client Logo') : name;
+
+      return `
+        <div class="logo-item${!name ? ' logo-item--image-only' : ''}">
+          ${imageUrl ? `<img src="${esc(imageUrl)}" alt="${esc(alt)}" class="logo-item-img" loading="lazy" />` : `
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-electric-blue);">
+              <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/>
+            </svg>
+          `}
+          ${name ? `<span class="logo-item-name">${esc(name)}</span>` : ''}
+        </div>
+      `;
+    }).join('');
 
     return `
       <section class="logos-band-wrap wp-block-inspect wp-pattern-inspect" 
                data-wp-block="wp:group {align:'full', backgroundColor:'white'}" 
                data-wp-pattern="secure-centric/client-logos-marquee">
         <div class="site-container">
-          <div class="logos-band-title">${esc(block.t)}</div>
+          <div class="logos-band-title">${esc(block.t || 'Organizations that have worked with Secure-Centric')}</div>
         </div>
         <div class="logos-carousel-container">
           <div class="logos-carousel-track">

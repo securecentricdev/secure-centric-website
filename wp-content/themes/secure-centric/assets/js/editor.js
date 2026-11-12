@@ -525,12 +525,19 @@
 
         // Parse structured logos safely
         let defaultLogos = [
-          { name: 'Tower Semiconductor', imageUrl: '', imageId: 0 },
-          { name: 'Safran Federal Systems', imageUrl: '', imageId: 0 },
-          { name: 'Goodwin & Associates', imageUrl: '', imageId: 0 },
-          { name: 'HRD Aero Systems', imageUrl: '', imageId: 0 },
-          { name: 'Precision Aerospace', imageUrl: '', imageId: 0 },
-          { name: 'Defense Dynamics', imageUrl: '', imageId: 0 }
+          { name: '', alt: 'Caltrol', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/caltrol.webp', imageId: 0 },
+          { name: '', alt: 'Firefighters First Credit Union', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/firefighters-first.webp', imageId: 0 },
+          { name: '', alt: 'Acadian Contractors', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/acadian-contractors.webp', imageId: 0 },
+          { name: '', alt: 'Goodwin & Associates', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/goodwin-associates.webp', imageId: 0 },
+          { name: '', alt: 'CMI Promex', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/cmi-promex.webp', imageId: 0 },
+          { name: '', alt: 'HRD Aero Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/hrd-aero-systems.webp', imageId: 0 },
+          { name: '', alt: 'Yes Energy / PowerCore', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/yes-energy.webp', imageId: 0 },
+          { name: '', alt: 'Lonestar Electric Supply', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/lonestar-electric.webp', imageId: 0 },
+          { name: '', alt: 'Los Angeles Regional Food Bank', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/la-food-bank.webp', imageId: 0 },
+          { name: '', alt: 'Rose Acre Farms', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/rose-acre-farms.webp', imageId: 0 },
+          { name: '', alt: 'Safran Federal Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/safran.webp', imageId: 0 },
+          { name: '', alt: 'Tower Semiconductor', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/tower-semiconductor.webp', imageId: 0 },
+          { name: '', alt: 'Weber Metals', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/weber-metals.webp', imageId: 0 }
         ];
         let currentLogos = safeParseJsonArray(attributes.logosData, defaultLogos);
 
@@ -684,9 +691,9 @@
                   }, 'Clear Image') : null
                 ),
                 el(TextControl, {
-                  label: 'Company Name (beside logo)',
+                  label: 'Company Name (optional · leave empty for logo only)',
                   value: item.name || '',
-                  placeholder: 'e.g. Tower Semiconductor, Safran...',
+                  placeholder: 'Optional text beside logo',
                   onChange: function (val) {
                     updateLogoItem(idx, { name: val });
                   }

@@ -65,12 +65,19 @@ window.SITE_PAGES_DATA = [
         "wpBlock": "core/logos",
         "wpPattern": "secure-centric/logos",
         "logos": [
-          "Tower Semiconductor",
-          "Safran Federal Systems",
-          "Goodwin & Associates",
-          "HRD Aero Systems",
-          "Precision Aerospace",
-          "Defense Dynamics"
+          { "name": "", "alt": "Caltrol", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/caltrol.webp" },
+          { "name": "", "alt": "Firefighters First Credit Union", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/firefighters-first.webp" },
+          { "name": "", "alt": "Acadian Contractors", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/acadian-contractors.webp" },
+          { "name": "", "alt": "Goodwin & Associates", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/goodwin-associates.webp" },
+          { "name": "", "alt": "CMI Promex", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/cmi-promex.webp" },
+          { "name": "", "alt": "HRD Aero Systems", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/hrd-aero-systems.webp" },
+          { "name": "", "alt": "Yes Energy / PowerCore", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/yes-energy.webp" },
+          { "name": "", "alt": "Lonestar Electric Supply", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/lonestar-electric.webp" },
+          { "name": "", "alt": "Los Angeles Regional Food Bank", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/la-food-bank.webp" },
+          { "name": "", "alt": "Rose Acre Farms", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/rose-acre-farms.webp" },
+          { "name": "", "alt": "Safran Federal Systems", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/safran.webp" },
+          { "name": "", "alt": "Tower Semiconductor", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/tower-semiconductor.webp" },
+          { "name": "", "alt": "Weber Metals", "imageUrl": "/wp-content/themes/secure-centric/assets/img/client-logos/weber-metals.webp" }
         ]
       },
       {
