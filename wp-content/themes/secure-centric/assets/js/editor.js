@@ -1546,6 +1546,250 @@
     });
 
     // =========================================================================
+    // 7B. CREDENTIALS & BADGES BLOCK (CUSTOM IMAGE UPLOADER & GRID)
+    // =========================================================================
+    registerBlockType('secure-centric/credentials-badges', {
+      title: 'Credentials & Badges',
+      icon: 'awards',
+      category: 'secure-centric-proof',
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const defaultBadges = [
+          {
+            title: 'The Cyber AB Registered Provider Organization',
+            alt: 'The Cyber AB Registered Practitioner Organization (RPO)',
+            imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp',
+            link: '',
+            imageId: 0
+          },
+          {
+            title: 'Inc. 5000 America\'s Fastest-Growing Private Companies',
+            alt: 'Inc. 5000 No. 452 (2025) America\'s Fastest-Growing Private Companies',
+            imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-banner.webp',
+            link: '',
+            imageId: 0
+          },
+          {
+            title: 'Inc. 5000 2026 Honor Roll',
+            alt: 'Inc. 5000 2026 America\'s Fastest-Growing Private Companies',
+            imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp',
+            link: '',
+            imageId: 0
+          },
+          {
+            title: 'CRN MSP 500 2024',
+            alt: 'The Channel Co. CRN MSP 500 2024',
+            imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/crn-msp-500.webp',
+            link: '',
+            imageId: 0
+          }
+        ];
+
+        let currentBadges = safeParseJsonArray(attributes.badgesData, defaultBadges);
+
+        function updateBadges(newBadges) {
+          setAttributes({ badgesData: JSON.stringify(newBadges) });
+        }
+
+        function addBadge() {
+          const next = currentBadges.concat([{
+            title: 'New Accreditation Badge',
+            alt: 'Accreditation Badge',
+            imageUrl: '',
+            link: '',
+            imageId: 0
+          }]);
+          updateBadges(next);
+        }
+
+        function removeBadge(idx) {
+          if (currentBadges.length <= 1) return;
+          const next = currentBadges.filter(function (_, i) { return i !== idx; });
+          updateBadges(next);
+        }
+
+        function updateBadgeItem(idx, fields) {
+          const next = currentBadges.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateBadges(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const MediaUploadComponent = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Section Header', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// ACCREDITATIONS & HONORS',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Title',
+              value: attributes.title !== undefined ? attributes.title : 'Credentials and badges',
+              onChange: function (val) { setAttributes({ title: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Badges & Certificates (' + currentBadges.length + ')', initialOpen: true },
+            el('p', { style: { fontSize: '12px', color: '#64748B', marginBottom: '14px', lineHeight: 1.5 } },
+              'Upload custom certificate or badge images from your WordPress media library.'
+            ),
+            currentBadges.map(function (badge, idx) {
+              return el('div', {
+                key: 'badge-item-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '12px'
+                }
+              },
+                el('div', {
+                  style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }
+                },
+                  el('strong', { style: { fontSize: '12px', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.03em' } },
+                    'Badge #' + (idx + 1) + (badge.title ? ' · ' + badge.title : '')
+                  ),
+                  el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeBadge(idx); }
+                  }, 'Remove')
+                ),
+                el('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' } },
+                  badge.imageUrl ? el('div', {
+                    style: {
+                      width: '64px',
+                      height: '50px',
+                      background: '#fff',
+                      border: '1px solid #CBD5E1',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '2px',
+                      overflow: 'hidden'
+                    }
+                  },
+                    el('img', {
+                      src: badge.imageUrl,
+                      style: { maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' },
+                      alt: badge.title || 'Badge'
+                    })
+                  ) : el('div', {
+                    style: {
+                      width: '64px',
+                      height: '50px',
+                      background: '#EEF2FF',
+                      border: '1px dashed #2F5BFF',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '11px',
+                      color: '#2F5BFF',
+                      fontWeight: 600
+                    }
+                  }, 'No Image'),
+                  MediaUploadComponent ? el(MediaUploadComponent, {
+                    onSelect: function (media) {
+                      updateBadgeItem(idx, { imageUrl: media.url, imageId: media.id });
+                    },
+                    allowedTypes: ['image'],
+                    value: badge.imageId,
+                    render: function (mediaObj) {
+                      return el(Button, {
+                        isSecondary: true,
+                        isSmall: true,
+                        onClick: mediaObj.open
+                      }, badge.imageUrl ? 'Change Image' : 'Upload Badge');
+                    }
+                  }) : null,
+                  badge.imageUrl ? el(Button, {
+                    isTertiary: true,
+                    isSmall: true,
+                    onClick: function () {
+                      updateBadgeItem(idx, { imageUrl: '', imageId: 0 });
+                    }
+                  }, 'Clear') : null
+                ),
+                el(TextControl, {
+                  label: 'Badge Title',
+                  value: badge.title || '',
+                  placeholder: 'e.g. Cyber AB RPO #3942',
+                  onChange: function (val) {
+                    updateBadgeItem(idx, { title: val, alt: val });
+                  }
+                }),
+                el(TextControl, {
+                  label: 'Link URL (optional)',
+                  value: badge.link || '',
+                  placeholder: 'https://...',
+                  onChange: function (val) {
+                    updateBadgeItem(idx, { link: val });
+                  }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '10px', padding: '10px', fontWeight: 600 },
+              onClick: addBadge
+            }, '+ Add New Badge')
+          )
+        );
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/credentials-badges',
+          attributes: attributes
+        }) : null;
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
+    });
+
+    // =========================================================================
     // 8. ACCORDION FAQ BLOCK (DYNAMIC QUESTIONS ADD / REMOVE)
     // =========================================================================
     registerBlockType('secure-centric/accordion-faq', {

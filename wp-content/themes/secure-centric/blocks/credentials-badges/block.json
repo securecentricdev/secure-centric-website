@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/credentials-badges",
+  "version": "1.0.0",
+  "title": "Credentials & Badges",
+  "category": "secure-centric-proof",
+  "icon": "awards",
+  "description": "Showcase accredited certifications, Cyber AB RPO shield, Inc. 5000, and CRN partner badges with customizable images.",
+  "keywords": ["badges", "credentials", "cyber ab", "inc 5000", "certifications", "awards"],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// ACCREDITATIONS & HONORS"
+    },
+    "title": {
+      "type": "string",
+      "default": "Credentials and badges"
+    },
+    "badgesData": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "render": "file:./render.php"
+}

@@ -11,6 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC guides, checklists and tools';
 
+// Route "Credentials and badges" sections directly to the badges block template
+if ( stripos( $title, 'credentials' ) !== false && stripos( $title, 'badges' ) !== false ) {
+    include __DIR__ . '/../credentials-badges/render.php';
+    return;
+}
+
 $cards = array();
 
 if ( ! empty( $attributes['resourcesData'] ) ) {

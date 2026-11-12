@@ -2741,7 +2741,58 @@
             </section>
           `;
           break;
+        case 'badges':
+          const badgeItems = block.badges || [
+            { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp' },
+            { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-banner.webp' },
+            { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp' },
+            { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/crn-msp-500.webp' }
+          ];
+          contentHtml += `
+            <section class="section-white py-section credentials-badges-section wp-block-inspect" data-wp-block="wp:group {backgroundColor:'white'}">
+              <div class="site-container">
+                <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
+                  <span class="section-eyebrow" style="display: block; margin-bottom: 8px;">// ACCREDITATIONS & HONORS</span>
+                  <h3 style="font-size: 1.75rem; color: var(--color-navy); margin: 0;">${esc(block.t || 'Credentials and badges')}</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; align-items: center; justify-items: center;">
+                  ${badgeItems.map(badge => `
+                    <div class="badge-card" style="width: 100%; max-width: 240px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 10px; padding: 22px 18px; display: flex; align-items: center; justify-content: center; min-height: 170px; box-shadow: 0 4px 14px rgba(11,20,55,0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                      <img src="${esc(badge.imageUrl)}" alt="${esc(badge.alt || badge.title || 'Badge')}" style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </section>
+          `;
+          break;
         case 'cards':
+          if (block.t && block.t.toLowerCase().includes('credentials') && block.t.toLowerCase().includes('badges')) {
+            const autoBadges = [
+              { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp' },
+              { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-banner.webp' },
+              { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp' },
+              { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/crn-msp-500.webp' }
+            ];
+            contentHtml += `
+              <section class="section-white py-section credentials-badges-section wp-block-inspect" data-wp-block="wp:group {backgroundColor:'white'}">
+                <div class="site-container">
+                  <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
+                    <span class="section-eyebrow" style="display: block; margin-bottom: 8px;">// ACCREDITATIONS & HONORS</span>
+                    <h3 style="font-size: 1.75rem; color: var(--color-navy); margin: 0;">${esc(block.t)}</h3>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; align-items: center; justify-items: center;">
+                    ${autoBadges.map(badge => `
+                      <div class="badge-card" style="width: 100%; max-width: 240px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 10px; padding: 22px 18px; display: flex; align-items: center; justify-content: center; min-height: 170px; box-shadow: 0 4px 14px rgba(11,20,55,0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                        <img src="${esc(badge.imageUrl)}" alt="${esc(badge.alt || badge.title || 'Badge')}" style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </section>
+            `;
+            break;
+          }
           const cardItems = block.items || [
             { title: 'CMMC Complete Guide', text: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#page-12' },
             { title: 'CMMC Level 2 Guide', text: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#page-13' },

@@ -366,20 +366,19 @@ window.SITE_PAGES_DATA = [
         "wpPattern": "secure-centric/stories"
       },
       {
-        "k": "cards",
+        "k": "badges",
         "s": 3,
         "t": "Credentials and badges",
         "len": "short",
-        "n": "Badge row: Cyber AB RPO (CPN [number]) · Inc. 5000 #452 (2025) · [next badge].",
-        "cols": 3,
-        "count": 3,
-        "items": [
-          "Cyber AB RPO",
-          "Inc. 5000 #452 (2025)",
-          "[Next badge]"
+        "n": "Official accreditation shields and honors: Cyber AB RPO · Inc. 5000 No. 452 (2025) · Inc. 5000 2026 Honor Roll · CRN MSP 500 2024.",
+        "badges": [
+          { "title": "Cyber AB RPO #3942", "alt": "The Cyber AB Registered Provider Organization (RPO)", "imageUrl": "assets/img/badges/cyber-ab-rpo.webp" },
+          { "title": "Inc. 5000 No. 452 (2025)", "alt": "Inc. 5000 No. 452 (2025) America's Fastest-Growing Private Companies", "imageUrl": "assets/img/badges/inc-5000-banner.webp" },
+          { "title": "Inc. 5000 2026", "alt": "Inc. 5000 2026 America's Fastest-Growing Private Companies", "imageUrl": "assets/img/badges/inc-5000-badge.webp" },
+          { "title": "CRN MSP 500 2024", "alt": "The Channel Co. CRN MSP 500 2024", "imageUrl": "assets/img/badges/crn-msp-500.webp" }
         ],
-        "wpBlock": "core/cards",
-        "wpPattern": "secure-centric/cards"
+        "wpBlock": "secure-centric/credentials-badges",
+        "wpPattern": "secure-centric/credentials-badges"
       },
       {
         "k": "people",

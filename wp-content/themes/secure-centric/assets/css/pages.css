@@ -231,16 +231,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  filter: grayscale(100%);
-  opacity: 0.82;
+  filter: none;
+  opacity: 1;
   transition: all 0.25s ease;
   flex-shrink: 0;
   user-select: none;
 }
 
 .logo-item:hover {
-  filter: grayscale(0%);
-  opacity: 1;
   transform: translateY(-2px);
 }
 
@@ -2287,4 +2285,96 @@ body.mobile-preview-mode .roadmap-timeline-nav {
     grid-template-columns: 1fr;
     gap: 32px;
   }
+}
+
+/* ---------- Credentials & Badges Section ---------- */
+.credentials-badges-section {
+  background-color: var(--color-white);
+  padding: 64px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.credentials-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 24px;
+  max-width: 1040px;
+  margin: 0 auto;
+  align-items: center;
+  justify-items: center;
+}
+
+.badge-card {
+  width: 100%;
+  max-width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 22px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  box-shadow: 0 4px 14px rgba(11, 20, 55, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.badge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(11, 20, 55, 0.09);
+}
+
+.badge-card-img {
+  max-height: 120px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- Credentials & Badges Section ---------- */
+.credentials-badges-section {
+  background-color: var(--color-white);
+  padding: 64px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.credentials-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 24px;
+  max-width: 1040px;
+  margin: 0 auto;
+  align-items: center;
+  justify-items: center;
+}
+
+.badge-card {
+  width: 100%;
+  max-width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 22px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  box-shadow: 0 4px 14px rgba(11, 20, 55, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.badge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(11, 20, 55, 0.09);
+}
+
+.badge-card-img {
+  max-height: 120px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
