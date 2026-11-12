@@ -241,6 +241,13 @@ function secure_centric_enqueue_assets() {
         $app_ver,
         true
     );
+    wp_localize_script(
+        'secure-centric-app',
+        'scConfig',
+        array(
+            'bookingUrl' => sc_get_booking_url(),
+        )
+    );
 }
 add_action( 'wp_enqueue_scripts', 'secure_centric_enqueue_assets' );
 
@@ -289,6 +296,76 @@ function secure_centric_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'secure_centric_editor_assets' );
 
 /**
+ * Global Booking / Discovery Call URL Helper
+ *
+ * Configurable via WordPress Admin (Settings -> General) or via 'sc_booking_url' filter.
+ * Defaults to the LeadConnector widget URL.
+ */
+function sc_get_booking_url() {
+    $default = 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+    $url     = get_option( 'sc_booking_url', $default );
+    if ( empty( $url ) ) {
+        $url = $default;
+    }
+    return apply_filters( 'sc_booking_url', $url );
+}
+
+/**
+ * Register Booking URL field in Settings -> General for client flexibility
+ */
+function sc_register_booking_url_setting() {
+    register_setting( 'general', 'sc_booking_url', array(
+        'type'              => 'string',
+        'sanitize_callback' => 'esc_url_raw',
+        'default'           => 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
+    ) );
+
+    add_settings_field(
+        'sc_booking_url_field',
+        __( 'Discovery Call / Booking Widget URL', 'secure-centric' ),
+        'sc_render_booking_url_field',
+        'general',
+        'default',
+        array( 'label_for' => 'sc_booking_url' )
+    );
+}
+add_action( 'admin_init', 'sc_register_booking_url_setting' );
+
+function sc_render_booking_url_field() {
+    $val = sc_get_booking_url();
+    echo '<input type="url" id="sc_booking_url" name="sc_booking_url" value="' . esc_attr( $val ) . '" class="regular-text code" style="width: 100%; max-width: 600px;" />';
+    echo '<p class="description">' . esc_html__( 'Used for all "Book a Discovery Call" and "Book a Call" buttons across the website. Easily editable anytime.', 'secure-centric' ) . '</p>';
+}
+
+/**
+ * Automatically routes all "Book a Discovery Call" / "Book a Call" links to the booking widget
+ */
+function sc_redirect_booking_links( $html ) {
+    $booking_url = sc_get_booking_url();
+    return preg_replace_callback(
+        '/<a\b([^>]*)>(.*?)<\/a>/is',
+        function( $m ) use ( $booking_url ) {
+            $attrs = $m[1];
+            $inner = $m[2];
+            $clean_inner = wp_strip_all_tags( $inner );
+            // Check if button text matches "Book a Discovery Call", "Book a Call", "Book Discovery Call", or "Book a Scoping Call"
+            if ( preg_match( '/book\s+(?:a\s+)?(?:discovery\s+|scoping\s+)?call/i', $clean_inner ) ) {
+                // If it points to contact or hash #contact or root contact
+                if ( preg_match( '/\bhref=(["\'])(?:#contact|#page-contact|\/contact\/?|\/secure-centric\/contact\/?|#|\b)\1/i', $attrs ) ) {
+                    $attrs = preg_replace( '/\bhref=(["\']).*?\1/i', 'href="' . esc_url( $booking_url ) . '"', $attrs );
+                    if ( strpos( $attrs, 'target=' ) === false ) {
+                        $attrs .= ' target="_blank" rel="noopener noreferrer"';
+                    }
+                    return '<a' . $attrs . '>' . $inner . '</a>';
+                }
+            }
+            return $m[0];
+        },
+        $html
+    );
+}
+
+/**
  * Dynamic URL & Asset Path Normalizer
  *
  * Ensures navigation links, logo image, and template assets resolve cleanly
@@ -302,6 +379,10 @@ function secure_centric_normalize_buffer_output( $html ) {
         $html = preg_replace( '/(href|src|action)=(["\'])\/secure-centric\/(.*?)\2/i', '$1=$2/$3$2', $html );
         $html = preg_replace( '/(href|src|action)=(["\'])\/secure-centric\/?\2/i', '$1=$2/$2', $html );
     }
+
+    // Automatically route all "Book a Discovery Call" / "Book a Call" links to the global booking URL
+    $html = sc_redirect_booking_links( $html );
+
     return $html;
 }
 

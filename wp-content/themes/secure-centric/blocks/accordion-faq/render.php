@@ -13,7 +13,11 @@ $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// 
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Common questions';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
-$btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : '#contact';
+$default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+$btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : $default_booking;
+if ( stripos( $btn_text, 'book' ) !== false && ( empty( $btn_url ) || '#contact' === $btn_url || strpos( $btn_url, '/contact/' ) !== false ) ) {
+    $btn_url = $default_booking;
+}
 
 $faqs = array();
 

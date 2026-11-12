@@ -12,7 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 $title            = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Planning to get started on CMMC?';
 $description      = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.';
 $primary_btn_text = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
-$primary_btn_url  = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : '#contact';
+$default_booking  = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+$primary_btn_url  = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : $default_booking;
+if ( stripos( $primary_btn_text, 'book' ) !== false && ( empty( $primary_btn_url ) || '#contact' === $primary_btn_url || strpos( $primary_btn_url, '/contact/' ) !== false ) ) {
+    $primary_btn_url = $default_booking;
+}
 $phone_text       = ! empty( $attributes['phoneText'] ) ? $attributes['phoneText'] : 'Call (323) 410-5941';
 $phone_url        = ! empty( $attributes['phoneUrl'] ) ? $attributes['phoneUrl'] : 'tel:323-410-5941';
 ?>

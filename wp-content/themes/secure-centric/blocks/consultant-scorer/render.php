@@ -62,7 +62,7 @@ if ( empty( $checks ) ) {
         <p style="color: var(--color-body-text); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 18px;">
           Secure-Centric satisfies all 7 rigorous criteria: Cyber AB RPO accreditation, active Registered Practitioners, on-site audits, 100% independent conflict-free advice, flat-fee pricing, and guaranteed readiness.
         </p>
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;">Book a Discovery Call &rarr;</a>
+        <a href="<?php echo esc_url( function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' ); ?>" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;" target="_blank" rel="noopener noreferrer">Book a Discovery Call &rarr;</a>
       </div>
     </div>
   </div>

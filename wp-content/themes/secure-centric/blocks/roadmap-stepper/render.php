@@ -12,7 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// THE CMMC PROCESS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Your CMMC journey, step by step';
 $link_text   = ! empty( $attributes['detailedProcessLinkText'] ) ? $attributes['detailedProcessLinkText'] : 'View Detailed 8-Step Process →';
-$link_url    = ! empty( $attributes['detailedProcessLinkUrl'] ) ? $attributes['detailedProcessLinkUrl'] : '#page-19';
+$raw_link_url = ! empty( $attributes['detailedProcessLinkUrl'] ) ? $attributes['detailedProcessLinkUrl'] : '';
+$link_url     = ( empty( $raw_link_url ) || '#page-19' === $raw_link_url || '#page' === substr( $raw_link_url, 0, 5 ) )
+    ? home_url( '/cmmc/cmmc-process/' )
+    : ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $raw_link_url ) : $raw_link_url );
 $flag_text   = ! empty( $attributes['flagText'] ) ? $attributes['flagText'] : 'Target C3PAO Certification Milestone';
 
 $default_steps = array(
@@ -23,7 +26,7 @@ $default_steps = array(
         'help'   => 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.',
         'who'    => 'You + Secure-Centric',
         'output' => 'Asset discovery baseline & boundary notes',
-        'link'   => '#page-2',
+        'link'   => home_url( '/services/cmmc-compliance/' ),
     ),
     array(
         'no'     => '02',
@@ -32,7 +35,7 @@ $default_steps = array(
         'help'   => 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.',
         'who'    => 'Secure-Centric + IT Leads',
         'output' => 'Formal Scope Document & Data-Flow Architecture',
-        'link'   => '#page-16',
+        'link'   => home_url( '/services/cmmc-enclave/' ),
     ),
     array(
         'no'     => '03',
@@ -41,7 +44,7 @@ $default_steps = array(
         'help'   => 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.',
         'who'    => 'Secure-Centric',
         'output' => 'Defensible SPRS Score estimate & findings register',
-        'link'   => '#page-5',
+        'link'   => home_url( '/services/cmmc-readiness-assessment/gap-assessment/' ),
     ),
     array(
         'no'     => '04',
@@ -50,7 +53,7 @@ $default_steps = array(
         'help'   => 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.',
         'who'    => 'Your IT/MSP (guided by us)',
         'output' => 'Remediation Roadmap with owners and completion targets',
-        'link'   => '#page-7',
+        'link'   => home_url( '/services/cmmc-implementation-remediation/' ),
     ),
     array(
         'no'     => '05',
@@ -59,7 +62,7 @@ $default_steps = array(
         'help'   => 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.',
         'who'    => 'Secure-Centric + You',
         'output' => 'Assessor-ready SSP and comprehensive policy suite',
-        'link'   => '#page-8',
+        'link'   => home_url( '/services/cmmc-implementation-remediation/ssp-poam-development/' ),
     ),
     array(
         'no'     => '06',
@@ -68,7 +71,7 @@ $default_steps = array(
         'help'   => 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.',
         'who'    => 'Secure-Centric RPs',
         'output' => 'Readiness sign-off report & Evidence Binder index',
-        'link'   => '#page-4',
+        'link'   => home_url( '/services/cmmc-readiness-assessment/' ),
     ),
     array(
         'no'     => '07',
@@ -77,7 +80,7 @@ $default_steps = array(
         'help'   => 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.',
         'who'    => 'Independent C3PAO',
         'output' => 'Level 2 CMMC Certification recommendation',
-        'link'   => '#page-19',
+        'link'   => home_url( '/cmmc/cmmc-process/' ),
     ),
     array(
         'no'     => '08',
@@ -86,7 +89,7 @@ $default_steps = array(
         'help'   => 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.',
         'who'    => 'Virtual CISO / You',
         'output' => 'Annual Affirmation pack & ongoing compliance posture',
-        'link'   => '#page-11',
+        'link'   => home_url( '/services/virtual-ciso/' ),
     ),
 );
 
