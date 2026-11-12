@@ -20,8 +20,8 @@ $default_reviews = array(
         'author'       => 'Alex Liu',
         'role'         => 'IT Manager, Tower Semiconductor',
         'avatar'       => 'AL',
-        'linkedin_url' => 'https://www.linkedin.com/company/secure-centric/',
-        'linkedin_text'=> 'Shared publicly on LinkedIn',
+        'linkedin_url' => '',
+        'linkedin_text'=> '',
     ),
     array(
         'num'          => '02',
@@ -29,8 +29,8 @@ $default_reviews = array(
         'author'       => 'Patrick Shaw',
         'role'         => 'Cyber Security Analyst, Safran Federal Systems',
         'avatar'       => 'PS',
-        'linkedin_url' => 'https://www.linkedin.com/company/secure-centric/',
-        'linkedin_text'=> 'Shared publicly on LinkedIn',
+        'linkedin_url' => '',
+        'linkedin_text'=> '',
     ),
     array(
         'num'          => '03',
@@ -38,8 +38,8 @@ $default_reviews = array(
         'author'       => 'Elena Rostova',
         'role'         => 'VP Operations, Precision Aero Machining',
         'avatar'       => 'ER',
-        'linkedin_url' => 'https://www.linkedin.com/company/secure-centric/',
-        'linkedin_text'=> 'Shared publicly on LinkedIn',
+        'linkedin_url' => '',
+        'linkedin_text'=> '',
     ),
     array(
         'num'          => '04',
@@ -66,13 +66,17 @@ if ( ! empty( $attributes['testimonialsData'] ) ) {
     $decoded = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['testimonialsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['testimonialsData'] ), true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
         foreach ( $decoded as $idx => $item ) {
+            $url = ! empty( $item['linkedinUrl'] ) ? trim( $item['linkedinUrl'] ) : ( ! empty( $item['linkedin_url'] ) ? trim( $item['linkedin_url'] ) : '' );
+            if ( '#' === $url ) {
+                $url = '';
+            }
             $reviews[] = array(
                 'num'          => ! empty( $item['num'] ) ? $item['num'] : sprintf( '%02d', $idx + 1 ),
                 'quote'        => ! empty( $item['quote'] ) ? $item['quote'] : '',
                 'author'       => ! empty( $item['author'] ) ? $item['author'] : ( ! empty( $item['name'] ) ? $item['name'] : '' ),
                 'role'         => ! empty( $item['role'] ) ? $item['role'] : '',
                 'avatar'       => ! empty( $item['avatar'] ) ? $item['avatar'] : ( ! empty( $item['author'] ) ? strtoupper( substr( $item['author'], 0, 2 ) ) : 'SC' ),
-                'linkedin_url' => ! empty( $item['linkedinUrl'] ) ? $item['linkedinUrl'] : ( ! empty( $item['linkedin_url'] ) ? $item['linkedin_url'] : '' ),
+                'linkedin_url' => $url,
                 'linkedin_text'=> ! empty( $item['linkedinText'] ) ? $item['linkedinText'] : ( ! empty( $item['linkedin_text'] ) ? $item['linkedin_text'] : 'Shared publicly on LinkedIn' ),
             );
         }
@@ -151,7 +155,8 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
         </div>
       </div>
     </div>
-    <div class="testimonials-carousel-container" onmouseenter="this.querySelector('.testimonials-carousel-track')?.classList.add('is-paused')" onmouseleave="this.querySelector('.testimonials-carousel-track')?.classList.remove('is-paused')" onclick="this.querySelector('.testimonials-carousel-track')?.classList.toggle('is-paused')">
+    <?php $hold_delay = ! empty( $attributes['holdDelay'] ) ? intval( $attributes['holdDelay'] ) : 8000; ?>
+    <div class="testimonials-carousel-container" data-hold-delay="<?php echo esc_attr( $hold_delay ); ?>" onmouseenter="this.querySelector('.testimonials-carousel-track')?.classList.add('is-paused')" onmouseleave="this.querySelector('.testimonials-carousel-track')?.classList.remove('is-paused')" onclick="this.querySelector('.testimonials-carousel-track')?.classList.toggle('is-paused')">
       <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
         <?php
         $count = count( $reviews );

@@ -1047,7 +1047,7 @@
       role: "IT Manager",
       company: "Tower Semiconductor",
       quote: "Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.",
-      linkedin: true
+      linkedin: false
     },
     {
       no: "02",
@@ -1055,7 +1055,7 @@
       role: "Cyber Security Analyst",
       company: "Safran Federal Systems",
       quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.",
-      linkedin: true
+      linkedin: false
     },
     {
       no: "03",
@@ -1063,7 +1063,7 @@
       role: "IT Director",
       company: "Goodwin & Associates",
       quote: "Most consultants sell managed IT products. Secure-Centric provided strictly independent advisory. They worked directly with our internal team and existing MSP without conflicts.",
-      linkedin: true
+      linkedin: false
     },
     {
       no: "04",
@@ -3132,7 +3132,7 @@
   let isTestimonialsStarted = false;
   let isTestimonialsInView = false;
   let testimonialsObserver = null;
-  const TESTIMONIALS_HOLD_DELAY = 3500; // 3.5s hold time before carousel starts
+  const TESTIMONIALS_HOLD_DELAY = 8000; // 8.0s hold time before carousel starts
 
   function isTestimonialsSectionFullyReached() {
     const section = document.getElementById('testimonials-section');
