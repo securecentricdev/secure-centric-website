@@ -658,57 +658,29 @@
                   <form id="resource-contact-form" onsubmit="window.handleContactSubmit(event)">
                     <div class="form-row-2">
                       <div class="form-group">
-                        <label class="form-label" for="contact-name">First &amp; Last Name*</label>
-                        <input type="text" id="contact-name" class="form-input" placeholder="e.g. John Miller" required />
+                        <label class="form-label" for="contact-name">NAME*</label>
+                        <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. John Miller" required />
                       </div>
                       <div class="form-group">
-                        <label class="form-label" for="contact-email">Work Email (Corporate Domain)*</label>
-                        <input type="email" id="contact-email" class="form-input" placeholder="john@defensecontractor.com" required />
+                        <label class="form-label" for="contact-company">Company Name*</label>
+                        <input type="text" id="contact-company" name="company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
                       </div>
                     </div>
 
                     <div class="form-row-2">
+                      <div class="form-group">
+                        <label class="form-label" for="contact-email">Company Email*</label>
+                        <input type="email" id="contact-email" name="email" class="form-input" placeholder="john@defensecontractor.com" required />
+                      </div>
                       <div class="form-group">
                         <label class="form-label" for="contact-phone">Phone Number*</label>
-                        <input type="tel" id="contact-phone" class="form-input" placeholder="(555) 000-0000" required />
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label" for="contact-company">Company / Organization*</label>
-                        <input type="text" id="contact-company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
-                      </div>
-                    </div>
-
-                    <div class="form-row-2">
-                      <div class="form-group">
-                        <label class="form-label" for="contact-role">Supply Chain Role*</label>
-                        <select id="contact-role" class="form-select" required>
-                          <option value="">Select your role...</option>
-                          <option value="Prime Contractor">Prime Contractor</option>
-                          <option value="Subcontractor Tier 1">Subcontractor (Tier 1)</option>
-                          <option value="Subcontractor Tier 2+">Subcontractor (Tier 2 or Lower)</option>
-                          <option value="Commercial Item Supplier">Commercial Item Supplier</option>
-                          <option value="Managed Service Provider">MSP / IT Provider</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label" for="contact-level">Target CMMC Level*</label>
-                        <select id="contact-level" class="form-select" required>
-                          <option value="Level 2">CMMC Level 2 (110 Controls &bull; CUI)</option>
-                          <option value="Level 1">CMMC Level 1 (15 Controls &bull; FCI)</option>
-                          <option value="Not Sure">Not Sure — Need Boundary Scoping</option>
-                          <option value="NIST 800-171">NIST SP 800-171 / DFARS 7012 Only</option>
-                        </select>
+                        <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="(555) 000-0000" required />
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="form-label" for="contact-sprs">Current SPRS Score (Optional)</label>
-                      <input type="text" id="contact-sprs" class="form-input" placeholder="e.g. -35, +60, or 'Never Calculated'" />
-                    </div>
-
-                    <div class="form-group">
-                      <label class="form-label" for="contact-message">How can our Registered Practitioners help you?*</label>
-                      <textarea id="contact-message" class="form-textarea" rows="2" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
+                      <label class="form-label" for="contact-message">how can we help you*</label>
+                      <textarea id="contact-message" name="message" class="form-textarea" rows="3" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
                     </div>
 
                     <div style="margin-top: 16px;">
@@ -1608,57 +1580,29 @@
                 <form id="expert-contact-form" onsubmit="window.handleContactSubmit(event)">
                   <div class="form-row-2">
                     <div class="form-group">
-                      <label class="form-label" for="contact-name">First & Last Name*</label>
-                      <input type="text" id="contact-name" class="form-input" placeholder="e.g. John Miller" required />
+                      <label class="form-label" for="contact-name">NAME*</label>
+                      <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. John Miller" required />
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="contact-email">Work Email (Corporate Domain)*</label>
-                      <input type="email" id="contact-email" class="form-input" placeholder="john@defensecontractor.com" required />
+                      <label class="form-label" for="contact-company">Company Name*</label>
+                      <input type="text" id="contact-company" name="company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
                     </div>
                   </div>
 
                   <div class="form-row-2">
+                    <div class="form-group">
+                      <label class="form-label" for="contact-email">Company Email*</label>
+                      <input type="email" id="contact-email" name="email" class="form-input" placeholder="john@defensecontractor.com" required />
+                    </div>
                     <div class="form-group">
                       <label class="form-label" for="contact-phone">Phone Number*</label>
-                      <input type="tel" id="contact-phone" class="form-input" placeholder="(555) 000-0000" required />
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="contact-company">Company / Organization*</label>
-                      <input type="text" id="contact-company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
-                    </div>
-                  </div>
-
-                  <div class="form-row-2">
-                    <div class="form-group">
-                      <label class="form-label" for="contact-role">Supply Chain Role*</label>
-                      <select id="contact-role" class="form-select" required>
-                        <option value="">Select your role...</option>
-                        <option value="Prime Contractor">Prime Contractor</option>
-                        <option value="Subcontractor Tier 1">Subcontractor (Tier 1)</option>
-                        <option value="Subcontractor Tier 2+">Subcontractor (Tier 2 or Lower)</option>
-                        <option value="Commercial Item Supplier">Commercial Item Supplier</option>
-                        <option value="Managed Service Provider">MSP / IT Provider</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="contact-level">Target CMMC Level*</label>
-                      <select id="contact-level" class="form-select" required>
-                        <option value="Level 2">CMMC Level 2 (110 Controls · CUI)</option>
-                        <option value="Level 1">CMMC Level 1 (15 Controls · FCI)</option>
-                        <option value="Not Sure">Not Sure — Need Boundary Scoping</option>
-                        <option value="NIST 800-171">NIST SP 800-171 / DFARS 7012 Only</option>
-                      </select>
+                      <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="(555) 000-0000" required />
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label" for="contact-sprs">Current SPRS Score (Optional)</label>
-                    <input type="text" id="contact-sprs" class="form-input" placeholder="e.g. -35, +60, or 'Never Calculated'" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="contact-message">How can our Registered Practitioners help you?*</label>
-                    <textarea id="contact-message" class="form-textarea" rows="3" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
+                    <label class="form-label" for="contact-message">how can we help you*</label>
+                    <textarea id="contact-message" name="message" class="form-textarea" rows="4" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
                   </div>
 
                   <div style="margin-top: 20px;">
