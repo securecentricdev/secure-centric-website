@@ -1206,20 +1206,14 @@
 
     const reasons = (block.reasons && block.reasons.length) ? block.reasons : [
       {
+        icon: "🛡️",
         title: "Cyber AB Authorized RPO",
         text: "Formally credentialed by the Cyber AB (RPO #3942) with certified Registered Practitioners (RPs) leading every client engagement on site."
       },
       {
-        title: "Exclusive CMMC & NIST Focus",
-        text: "We do not sell generic IT services or managed antivirus. Our sole specialization is defense cybersecurity compliance and C3PAO audit readiness."
-      },
-      {
+        icon: "🏭",
         title: "On-Site Physical & Technical Walkthrough",
         text: "We walk your facilities, shop floors, and secure server rooms to physically map CUI flows and isolate enclave boundaries."
-      },
-      {
-        title: "Independent & Scope-Shrinking Advisory",
-        text: "We provide vendor-neutral advisory to shrink your assessment scope, saving tens of thousands in hardware, software, and audit fees."
       }
     ];
 
@@ -1242,22 +1236,28 @@
           <div class="why-proof-grid">
             <!-- Left Stats Numbers -->
             <div class="why-stats-col">
-              ${stats.map(s => `
-                <div class="stats-number-block">
-                  <div class="number ${s.color === 'violet' ? 'violet' : ''}">${s.number}</div>
-                  <div class="label">${esc(s.label)}</div>
-                  <div class="date">${esc(s.date)}</div>
-                </div>
-              `).join('')}
+              ${stats.map(s => {
+                const match = String(s.number).match(/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/);
+                const prefix = match ? match[1] : '';
+                const num = match ? match[2] : s.number;
+                const suffix = match ? match[3] : '';
+                return `
+                  <div class="stats-number-block">
+                    <div class="number ${s.color === 'violet' ? 'violet' : ''} sc-counter" data-target="${num}" data-prefix="${esc(prefix)}" data-suffix="${esc(suffix)}">${esc(s.number)}</div>
+                    <div class="label">${esc(s.label)}</div>
+                    <div class="date">${esc(s.date)}</div>
+                  </div>
+                `;
+              }).join('')}
             </div>
 
-            <!-- Right 4 Reasons Grid -->
+            <!-- Right 2 Reasons (Cyber AB & On-Site, matching left card size) -->
             <div class="why-cards-grid">
               ${reasons.map(r => `
-                <div class="card-white" style="padding: 24px; display: flex; flex-direction: column; gap: 8px;">
-                  <div class="card-icon-box" style="width: 36px; height: 36px; font-size: 1.1rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;">🛡️</div>
-                  <h4 style="font-size: 1.0625rem; margin-top: 4px; color: var(--color-navy);">${esc(r.title)}</h4>
-                  <p style="font-size: 0.875rem; color: var(--color-body-text); line-height: 1.55; margin: 0;">${esc(r.text)}</p>
+                <div class="card-white" style="display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+                  <div class="card-icon-box" style="width: 38px; height: 38px; font-size: 1.15rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;">${r.icon || '🛡️'}</div>
+                  <h4 style="font-size: 1.125rem; font-weight: 700; margin: 4px 0 0; color: var(--color-navy);">${esc(r.title)}</h4>
+                  <p style="font-size: 0.9375rem; color: var(--color-body-text); line-height: 1.55; margin: 0;">${esc(r.text)}</p>
                 </div>
               `).join('')}
             </div>
@@ -2929,6 +2929,9 @@
       setTimeout(() => initTestimonialsCarousel(), 150);
     }
 
+    // Initialize stats counters animation
+    setTimeout(() => initStatsCounters(), 150);
+
     // Close mobile drawer if open
     window.closeMobileDrawer();
 
@@ -3561,10 +3564,15 @@
     }
 
     initJumpToSection();
+    initStatsCounters();
   }
 
-  // Also initialize Jump to section on all environments
+  // Also initialize Jump to section & Stats Counters on all environments
   initJumpToSection();
+  initStatsCounters();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStatsCounters);
+  }
 
   /**
    * Jump to section smooth scroll handler
@@ -3647,6 +3655,86 @@
         }
       }, 300);
     }
+  }
+
+  /**
+   * Increasing number animation when section comes into view/focus
+   * Smoothly animates numbers over 1.2 - 1.5 seconds and stabilizes with tabular digits
+   */
+  function initStatsCounters() {
+    const counterEls = document.querySelectorAll('.sc-counter, .stats-number-block .number');
+    if (!counterEls || counterEls.length === 0) return;
+
+    function runCounter(el) {
+      if (el.dataset.scAnimated === 'true') return;
+      el.dataset.scAnimated = 'true';
+
+      const rawText = el.textContent.trim();
+      let target = parseFloat(el.getAttribute('data-target'));
+      let prefix = el.getAttribute('data-prefix');
+      let suffix = el.getAttribute('data-suffix');
+
+      if (isNaN(target)) {
+        const match = rawText.match(/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/);
+        if (match) {
+          prefix = (prefix !== null && prefix !== undefined) ? prefix : (match[1] || '');
+          target = parseFloat(match[2]);
+          suffix = (suffix !== null && suffix !== undefined) ? suffix : (match[3] || '');
+        } else {
+          return;
+        }
+      } else {
+        prefix = (prefix !== null && prefix !== undefined) ? prefix : '';
+        suffix = (suffix !== null && suffix !== undefined) ? suffix : '';
+      }
+
+      const duration = 1400; // ~1.4s - perfectly stabilizes within 1-2 seconds
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const currentVal = Math.round(target * easeOutCubic(progress));
+
+        el.textContent = `${prefix}${currentVal}${suffix}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          el.textContent = `${prefix}${target}${suffix}`;
+        }
+      }
+
+      el.textContent = `${prefix}0${suffix}`;
+      requestAnimationFrame(update);
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      counterEls.forEach(runCounter);
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          obs.unobserve(entry.target);
+          runCounter(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    counterEls.forEach(el => {
+      if (el.dataset.scAnimated !== 'true') {
+        observer.observe(el);
+      }
+    });
   }
 
 })();

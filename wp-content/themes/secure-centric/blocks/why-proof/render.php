@@ -13,7 +13,10 @@ $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// 
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Why Secure-Centric';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.';
 $link_text   = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Full Company Credentials →';
-$link_url    = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : '#contact';
+$link_url    = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/about/' );
+if ( '#contact' === $link_url || empty( $link_url ) ) {
+    $link_url = home_url( '/about/' );
+}
 
 $stat1_number = ! empty( $attributes['stat1Number'] ) ? $attributes['stat1Number'] : '120+';
 $stat1_label  = ! empty( $attributes['stat1Label'] ) ? $attributes['stat1Label'] : 'Defense contractors prepared for CMMC & NIST SP 800-171 audits';
@@ -23,6 +26,18 @@ $stat2_number = ! empty( $attributes['stat2Number'] ) ? $attributes['stat2Number
 $stat2_label  = ! empty( $attributes['stat2Label'] ) ? $attributes['stat2Label'] : 'First-time pass record with Authorized C3PAO and DIBCAC assessors';
 $stat2_date   = ! empty( $attributes['stat2Date'] ) ? $attributes['stat2Date'] : 'Level 2 CMMC audits';
 
+// Parse numeric values and affixes for counter animation
+preg_match( '/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/', trim( $stat1_number ), $m1 );
+$stat1_val    = ! empty( $m1[2] ) ? $m1[2] : '120';
+$stat1_prefix = ! empty( $m1[1] ) ? $m1[1] : '';
+$stat1_suffix = ! empty( $m1[3] ) ? $m1[3] : '+';
+
+preg_match( '/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/', trim( $stat2_number ), $m2 );
+$stat2_val    = ! empty( $m2[2] ) ? $m2[2] : '100';
+$stat2_prefix = ! empty( $m2[1] ) ? $m2[1] : '';
+$stat2_suffix = ! empty( $m2[3] ) ? $m2[3] : '%';
+
+// Keep only Cyber AB Authorized RPO and On-Site Walkthrough cards (2 cards matching 2 black cards in height and width)
 $cards = array(
     1 => array(
         'title' => ! empty( $attributes['card1Title'] ) ? $attributes['card1Title'] : 'Cyber AB Authorized RPO',
@@ -30,19 +45,9 @@ $cards = array(
         'icon'  => ! empty( $attributes['card1Icon'] ) ? $attributes['card1Icon'] : '🛡️',
     ),
     2 => array(
-        'title' => ! empty( $attributes['card2Title'] ) ? $attributes['card2Title'] : 'Exclusive CMMC & NIST Focus',
-        'text'  => ! empty( $attributes['card2Text'] ) ? $attributes['card2Text'] : 'We do not sell generic IT services or managed antivirus. Our sole specialization is defense cybersecurity compliance and C3PAO audit readiness.',
-        'icon'  => ! empty( $attributes['card2Icon'] ) ? $attributes['card2Icon'] : '🎯',
-    ),
-    3 => array(
-        'title' => ! empty( $attributes['card3Title'] ) ? $attributes['card3Title'] : 'On-Site Physical & Technical Walkthrough',
-        'text'  => ! empty( $attributes['card3Text'] ) ? $attributes['card3Text'] : 'We walk your facilities, shop floors, and secure server rooms to physically map CUI flows and isolate enclave boundaries.',
+        'title' => ! empty( $attributes['card3Title'] ) ? $attributes['card3Title'] : ( ! empty( $attributes['card2Title'] ) && false !== stripos( $attributes['card2Title'], 'site' ) ? $attributes['card2Title'] : 'On-Site Physical & Technical Walkthrough' ),
+        'text'  => ! empty( $attributes['card3Text'] ) ? $attributes['card3Text'] : ( ! empty( $attributes['card2Text'] ) && false !== stripos( $attributes['card2Text'], 'facilities' ) ? $attributes['card2Text'] : 'We walk your facilities, shop floors, and secure server rooms to physically map CUI flows and isolate enclave boundaries.' ),
         'icon'  => ! empty( $attributes['card3Icon'] ) ? $attributes['card3Icon'] : '🏭',
-    ),
-    4 => array(
-        'title' => ! empty( $attributes['card4Title'] ) ? $attributes['card4Title'] : 'Independent & Scope-Shrinking Advisory',
-        'text'  => ! empty( $attributes['card4Text'] ) ? $attributes['card4Text'] : 'We provide vendor-neutral advisory to shrink your assessment scope, saving tens of thousands in hardware, software, and audit fees.',
-        'icon'  => ! empty( $attributes['card4Icon'] ) ? $attributes['card4Icon'] : '📐',
     ),
 );
 
@@ -69,24 +74,24 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
       <!-- Left Stats Numbers -->
       <div class="why-stats-col">
         <div class="stats-number-block">
-          <div class="number"><?php echo esc_html( $stat1_number ); ?></div>
+          <div class="number sc-counter" data-target="<?php echo esc_attr( $stat1_val ); ?>" data-prefix="<?php echo esc_attr( $stat1_prefix ); ?>" data-suffix="<?php echo esc_attr( $stat1_suffix ); ?>"><?php echo esc_html( $stat1_number ); ?></div>
           <div class="label"><?php echo esc_html( $stat1_label ); ?></div>
           <div class="date"><?php echo esc_html( $stat1_date ); ?></div>
         </div>
         <div class="stats-number-block">
-          <div class="number violet"><?php echo esc_html( $stat2_number ); ?></div>
+          <div class="number violet sc-counter" data-target="<?php echo esc_attr( $stat2_val ); ?>" data-prefix="<?php echo esc_attr( $stat2_prefix ); ?>" data-suffix="<?php echo esc_attr( $stat2_suffix ); ?>"><?php echo esc_html( $stat2_number ); ?></div>
           <div class="label"><?php echo esc_html( $stat2_label ); ?></div>
           <div class="date"><?php echo esc_html( $stat2_date ); ?></div>
         </div>
       </div>
 
-      <!-- Right 4 Reasons Grid -->
+      <!-- Right 2 Cards: Cyber AB & On-Site (Exact same dimensions as left black cards) -->
       <div class="why-cards-grid">
         <?php foreach ( $cards as $c ) : ?>
-          <div class="card-white" style="padding: 24px; display: flex; flex-direction: column; gap: 8px;">
-            <div class="card-icon-box" style="width: 36px; height: 36px; font-size: 1.1rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;"><?php echo esc_html( $c['icon'] ); ?></div>
-            <h4 style="font-size: 1.0625rem; margin-top: 4px; color: var(--color-navy);"><?php echo esc_html( $c['title'] ); ?></h4>
-            <p style="font-size: 0.875rem; color: var(--color-body-text); line-height: 1.55; margin: 0;"><?php echo esc_html( $c['text'] ); ?></p>
+          <div class="card-white" style="display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+            <div class="card-icon-box" style="width: 38px; height: 38px; font-size: 1.15rem; border-radius: 8px; background: var(--color-soft-blue); color: var(--color-electric-blue); display: flex; align-items: center; justify-content: center;"><?php echo esc_html( $c['icon'] ); ?></div>
+            <h4 style="font-size: 1.125rem; font-weight: 700; margin: 4px 0 0; color: var(--color-navy);"><?php echo esc_html( $c['title'] ); ?></h4>
+            <p style="font-size: 0.9375rem; color: var(--color-body-text); line-height: 1.55; margin: 0;"><?php echo esc_html( $c['text'] ); ?></p>
           </div>
         <?php endforeach; ?>
       </div>
