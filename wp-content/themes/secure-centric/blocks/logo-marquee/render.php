@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Organizations that have worked with Secure-Centric';
+$title = ! empty( $attributes['title'] ) ? str_replace('u0026', '&', $attributes['title']) : 'Organizations that have worked with Secure-Centric';
 
 $theme_uri = get_template_directory_uri();
 $default_logos = array(
