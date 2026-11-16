@@ -218,7 +218,7 @@ if ( $is_download_layout ) :
         <!-- Left Info Column (Text Beside Form) -->
         <div class="contact-info-panel">
           <span class="section-eyebrow"><?php echo esc_html( $info_eyebrow ); ?></span>
-          <h2 style="margin-bottom: 16px; font-size: 1.85rem; color: var(--color-navy);"><?php echo esc_html( $info_title ); ?></h2>
+          <h1 style="margin-bottom: 16px; font-size: clamp(1.85rem, 3vw, 2.35rem); color: var(--color-navy); line-height: 1.25;"><?php echo esc_html( $info_title ); ?></h1>
           <p style="color: var(--color-body-text); margin-bottom: 24px; line-height: 1.6;">
             <?php echo esc_html( $info_desc ); ?>
           </p>
