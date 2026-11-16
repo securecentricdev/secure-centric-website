@@ -66,11 +66,17 @@ function sc_decode_block_json( $val ) {
         return sc_clean_text( $val );
     }
     if ( is_string( $val ) ) {
+        // Try clean JSON decode first
+        $decoded = json_decode( $val, true );
+        if ( is_array( $decoded ) ) {
+            return sc_clean_text( $decoded );
+        }
+
         // Resolve double-escaped Gutenberg unicode strings
         $val = preg_replace_callback( '/u005c(u[0-9a-fA-F]{4})/', function( $m ) {
             return json_decode( '"\\' . $m[1] . '"' );
         }, $val );
-        $val = preg_replace_callback( '/(?<![a-zA-Z0-9])u([0-9a-fA-F]{4})/', function( $m ) {
+        $val = preg_replace_callback( '/(?<![a-zA-Z0-9\\\\])u([0-9a-fA-F]{4})/', function( $m ) {
             return json_decode( '"\u' . $m[1] . '"' );
         }, $val );
         $val = str_replace( array( '\u0022', 'u0022', '&quot;' ), '"', $val );
