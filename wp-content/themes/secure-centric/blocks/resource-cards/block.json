@@ -16,6 +16,18 @@
     ],
     "textdomain": "secure-centric",
     "attributes": {
+        "theme": {
+            "type": "string",
+            "default": "white"
+        },
+        "eyebrow": {
+            "type": "string",
+            "default": ""
+        },
+        "subtitle": {
+            "type": "string",
+            "default": ""
+        },
         "resourcesData": {
             "type": "string",
             "default": ""

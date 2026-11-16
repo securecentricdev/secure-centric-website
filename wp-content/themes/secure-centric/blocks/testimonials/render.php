@@ -125,7 +125,21 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
 }
 ?>
 
-<?php if ( 'grid' === $display_mode ) : ?>
+<?php if ( 'quote-banner' === $display_mode || 'banner' === $display_mode ) : ?>
+  <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonial-quote-banner" id="testimonial-quote-banner" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="site-container">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center; padding: 16px 0;">
+        <div style="font-size: 3.5rem; color: var(--color-electric-blue); line-height: 1; font-family: Georgia, serif; margin-bottom: 8px;">“</div>
+        <blockquote style="font-size: clamp(1.2rem, 2.2vw, 1.55rem); font-weight: 600; color: var(--color-navy); line-height: 1.55; margin: 0 0 24px; font-style: normal;">
+          <?php echo esc_html( ! empty( $reviews[0]['quote'] ) ? $reviews[0]['quote'] : 'Secure-Centric gave us complete clarity on our CUI boundaries in one conversation. We avoided months of unnecessary expense and knew exactly what needed protection.' ); ?>
+        </blockquote>
+        <div style="font-family: var(--font-primary); font-size: 1rem; color: var(--color-body-text);">
+          <strong style="color: var(--color-navy);"><?php echo esc_html( ! empty( $reviews[0]['author'] ) ? $reviews[0]['author'] : 'Marcus Vance' ); ?></strong><?php if ( ! empty( $reviews[0]['role'] ) ) : ?><span style="color: var(--color-slate);">, <?php echo esc_html( $reviews[0]['role'] ); ?></span><?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php elseif ( 'grid' === $display_mode ) : ?>
   <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-grid" id="testimonials-section">
     <div class="site-container">
       <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">

@@ -487,6 +487,78 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     </div>
   </section>
 
+<?php elseif ( 'cui-session' === $layout || 'landing' === $layout ) : ?>
+  <!-- Free CUI Identification Session Hero Layout -->
+  <section class="resource-hero-wrap wp-block-inspect wp-pattern-inspect" 
+           data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
+           data-wp-pattern="secure-centric/hero-cui-session"
+           id="book-session">
+    <div class="site-container">
+      <div class="resource-hero-grid">
+        <div class="resource-hero-left">
+          <span class="section-eyebrow dark" style="margin-bottom: 14px;">// <?php echo esc_html( $eyebrow ); ?></span>
+          <h1><?php echo esc_html( $title ); ?></h1>
+          <p class="hero-lead"><?php echo esc_html( $description ); ?></p>
+
+          <div class="resource-hero-bullets">
+            <?php foreach ( $resource_bullets as $rb ) : ?>
+              <?php
+              $rb_title = is_array( $rb ) && ! empty( $rb['title'] ) ? $rb['title'] : '';
+              $rb_desc  = is_array( $rb ) && ! empty( $rb['desc'] ) ? $rb['desc'] : ( is_string( $rb ) ? $rb : '' );
+              ?>
+              <div class="resource-bullet-item">
+                <span class="bullet-check">✓</span>
+                <div><?php if ( $rb_title ) : ?><b><?php echo esc_html( $rb_title ); ?></b> <?php endif; ?><?php echo esc_html( $rb_desc ); ?></div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.8125rem; color: var(--color-cyber-cyan); font-family: var(--font-mono); flex-wrap: wrap;">
+            <span>🛡️ Cyber AB Registered Provider Organization</span>
+            <span>•</span>
+            <span>200+ companies from the DIB have worked with us</span>
+            <span>•</span>
+            <span>100% audit pass rate</span>
+          </div>
+        </div>
+
+        <div class="resource-hero-right">
+          <div class="resource-hero-card-form" id="contact-form-container">
+            <span class="badge-chip accent" style="font-size: 0.6875rem; font-weight: 700; margin-bottom: 10px; display: inline-block;">STEP 1 OF 2</span>
+            <h3 style="margin-bottom: 16px; font-size: 1.35rem; color: var(--color-navy);"><?php echo esc_html( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Book your free CUI identification session' ); ?></h3>
+
+            <form id="cui-session-booking-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="GET" target="_blank">
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label" for="cui-name">Full name*</label>
+                <input type="text" id="cui-name" name="name" class="form-input" placeholder="e.g. John Miller" required />
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label" for="cui-email">Work email*</label>
+                <input type="email" id="cui-email" name="email" class="form-input" placeholder="john@company.com" required />
+              </div>
+
+              <div class="form-group" style="margin-bottom: 18px;">
+                <label class="form-label" for="cui-company">Company*</label>
+                <input type="text" id="cui-company" name="company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
+              </div>
+
+              <div style="margin-top: 16px;">
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+                  <?php echo esc_html( $primary_btn_text ); ?>
+                </button>
+              </div>
+
+              <div style="margin-top: 12px; font-size: 0.72rem; color: var(--color-slate); text-align: center; line-height: 1.4;">
+                🔒 No cost and no obligation. We never share your details.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <?php else : ?>
   <!-- Home Layout -->
   <section class="hero-home-wrap wp-block-inspect wp-pattern-inspect" data-wp-block="wp:cover {align:'full', backgroundColor:'midnight'}" data-wp-pattern="secure-centric/hero-home">
