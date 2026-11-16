@@ -57,6 +57,10 @@ if ( '2-col' === $layout ) :
     $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Engage Secure-Centric →';
     $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : home_url( '/services/cmmc-consulting/' );
 
+    $left_badge  = ! empty( $attributes['leftBadge'] ) ? $attributes['leftBadge'] : ( false !== stripos( $left_title, 'fit' ) ? 'IDEAL CANDIDATE' : 'ACCREDITED RPO ADVISOR' );
+    $right_badge = ! empty( $attributes['rightBadge'] ) ? $attributes['rightBadge'] : ( false !== stripos( $right_title, 'not' ) ? 'NOT RECOMMENDED' : 'OPERATIONAL EXECUTION' );
+    $is_fit_card = ( false !== stripos( $right_title, 'not' ) || false !== stripos( $right_badge, 'not' ) );
+
     if ( function_exists( 'sc_clean_text' ) ) {
         $left_title  = sc_clean_text( $left_title );
         $left_desc   = sc_clean_text( $left_desc );
@@ -125,7 +129,7 @@ if ( '2-col' === $layout ) :
           <div class="compare-card-rpo">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
               <div>
-                <span class="badge-chip accent" style="font-size: 0.6875rem;">ACCREDITED RPO ADVISOR</span>
+                <span class="badge-chip accent" style="font-size: 0.6875rem;"><?php echo esc_html( $left_badge ); ?></span>
                 <h3 style="font-size: 1.35rem; color: var(--color-navy); margin-top: 6px;"><?php echo esc_html( $left_title ); ?></h3>
               </div>
               <span class="logo-icon" style="width: 32px; height: 32px; font-size: 0.9rem;">SC</span>
@@ -146,14 +150,14 @@ if ( '2-col' === $layout ) :
             </div>
           </div>
 
-          <!-- Right Card: Your MSP -->
+          <!-- Right Card: Your MSP / Not Fit -->
           <div class="compare-card-msp">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
               <div>
-                <span class="badge-chip" style="font-size: 0.6875rem;">OPERATIONAL EXECUTION</span>
+                <span class="badge-chip" style="font-size: 0.6875rem; <?php echo $is_fit_card ? 'background: #F1F4F9; color: var(--color-slate);' : ''; ?>"><?php echo esc_html( $right_badge ); ?></span>
                 <h3 style="font-size: 1.35rem; color: var(--color-navy); margin-top: 6px;"><?php echo esc_html( $right_title ); ?></h3>
               </div>
-              <div class="card-icon-box" style="margin: 0; width: 36px; height: 36px; font-size: 1rem;">⚙️</div>
+              <div class="card-icon-box" style="margin: 0; width: 36px; height: 36px; font-size: 1rem;"><?php echo $is_fit_card ? 'ℹ️' : '⚙️'; ?></div>
             </div>
             <p style="font-size: 0.875rem; color: var(--color-body-text); line-height: 1.5;">
               <?php echo esc_html( $right_desc ); ?>
@@ -161,16 +165,23 @@ if ( '2-col' === $layout ) :
             <ul class="compare-list">
               <?php foreach ( $msp_points as $pt ) : ?>
                 <li>
-                  <i class="check msp-check">✓</i>
+                  <i class="check msp-check" style="<?php echo $is_fit_card ? 'background-color: #ECEEF2; color: #7A808A;' : ''; ?>"><?php echo $is_fit_card ? '✕' : '✓'; ?></i>
                   <span><?php echo esc_html( $pt ); ?></span>
                 </li>
               <?php endforeach; ?>
             </ul>
             <div style="margin-top: 28px;">
-              <div class="card-soft-blue" style="padding: 12px; font-size: 0.8125rem; text-align: center; color: var(--color-navy); font-weight: 600;">
-                🤝 We collaborate directly with your MSP or internal IT
-              </div>
+              <?php if ( $is_fit_card ) : ?>
+                <div class="card-soft-blue" style="padding: 12px; font-size: 0.8125rem; text-align: center; color: var(--color-navy); font-weight: 600; background: #F8FAFC; border: 1px dashed var(--color-border);">
+                  Have questions about your situation? We are happy to clarify.
+                </div>
+              <?php else : ?>
+                <div class="card-soft-blue" style="padding: 12px; font-size: 0.8125rem; text-align: center; color: var(--color-navy); font-weight: 600;">
+                  🤝 We collaborate directly with your MSP or internal IT
+                </div>
+              <?php endif; ?>
             </div>
+          </div>
           </div>
         </div>
 
