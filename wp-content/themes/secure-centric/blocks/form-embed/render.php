@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $layout     = ! empty( $attributes['layout'] ) ? $attributes['layout'] : '';
 $title      = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
 $form_title = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : '';
+$form_id    = ! empty( $attributes['formId'] ) ? (string) $attributes['formId'] : '';
 
 // Auto-detect checklist download layout
 $is_download_layout = (
@@ -84,6 +85,12 @@ if ( $is_download_layout ) :
             <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 20px;">
               <?php echo esc_html( $description ); ?>
             </p>
+            <?php
+            $download_form_id = ! empty( $form_id ) ? $form_id : '102';
+            if ( ! empty( $download_form_id ) && shortcode_exists( 'forminator_form' ) ) :
+                echo do_shortcode( '[forminator_form id="' . esc_attr( $download_form_id ) . '"]' );
+            else :
+            ?>
             <form onsubmit="event.preventDefault(); alert('Checklist has been sent to your work email!');">
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                 <input type="text" class="form-input" placeholder="First Name" required />
@@ -102,6 +109,7 @@ if ( $is_download_layout ) :
                 <?php echo esc_html( $privacy_note ); ?>
               </span>
             </form>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -284,8 +292,11 @@ if ( $is_download_layout ) :
               <?php echo esc_html( $contact_form_subtitle ); ?>
             </p>
 
-            <?php if ( ! empty( $form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
-              <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $form_id ) . '"]' ); ?>
+            <?php
+            $split_form_id = ! empty( $form_id ) ? $form_id : '101';
+            if ( ! empty( $split_form_id ) && shortcode_exists( 'forminator_form' ) ) :
+            ?>
+              <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $split_form_id ) . '"]' ); ?>
             <?php else : ?>
               <form id="contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our Registered Practitioners will review your scope within 2 business hours.');">
                 <div class="form-row-2">

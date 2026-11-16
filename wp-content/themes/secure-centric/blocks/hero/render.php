@@ -262,6 +262,12 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
               Complete the form below to receive the official compliance checklist and speak with a Cyber AB Registered Practitioner.
             </p>
 
+            <?php
+            $hero_pillar_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
+            if ( ! empty( $hero_pillar_form ) && shortcode_exists( 'forminator_form' ) ) :
+                echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_pillar_form ) . '"]' );
+            else :
+            ?>
             <form id="resource-contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our Registered Practitioners will review your scope within 2 business hours.');">
               <div class="form-row-2">
                 <div class="form-group">
@@ -300,6 +306,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
                 🔒 Communications held under strict confidentiality. We do not sell or share contractor data.
               </div>
             </form>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -527,6 +534,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             <span class="badge-chip accent" style="font-size: 0.6875rem; font-weight: 700; margin-bottom: 10px; display: inline-block;">STEP 1 OF 2</span>
             <h3 style="margin-bottom: 16px; font-size: 1.35rem; color: var(--color-navy);"><?php echo esc_html( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Book your free CUI identification session' ); ?></h3>
 
+            <?php if ( ! empty( $attributes['formId'] ) && shortcode_exists( 'forminator_form' ) ) : ?>
+              <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $attributes['formId'] ) . '"]' ); ?>
+            <?php else : ?>
             <form id="cui-session-booking-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="GET" target="_blank">
               <div class="form-group" style="margin-bottom: 14px;">
                 <label class="form-label" for="cui-name">Full name*</label>
@@ -553,6 +563,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
                 🔒 No cost and no obligation. We never share your details.
               </div>
             </form>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -615,6 +626,12 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
           <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px; line-height: 1.55;">
             <?php echo esc_html( $quiz_desc ); ?>
           </p>
+          <?php
+          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '103';
+          if ( ! empty( $hero_quiz_form ) && shortcode_exists( 'forminator_form' ) ) :
+              echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_quiz_form ) . '"]' );
+          else :
+          ?>
           <form class="readiness-inline-form" onsubmit="event.preventDefault(); if (typeof window.triggerToolModal === 'function') { window.triggerToolModal(); }">
             <div style="margin-bottom: 12px;">
               <input type="email" class="form-input" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" required />
@@ -623,6 +640,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
               <?php echo esc_html( $quiz_btn_text ); ?>
             </button>
           </form>
+          <?php endif; ?>
           <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 12px; margin-bottom: 0; text-align: center;">
             <?php echo esc_html( $quiz_note ); ?>
           </p>

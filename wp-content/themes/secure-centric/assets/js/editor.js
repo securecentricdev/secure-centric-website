@@ -46,6 +46,25 @@
     }
 
     /**
+     * Helper to retrieve available Forminator Forms dynamically
+     */
+    const defaultForminatorOptions = [
+      { label: '-- Default / Theme Form --', value: '' },
+      { label: 'Contact & Discovery Call Form (ID: 101)', value: '101' },
+      { label: 'Checklist & Resource Download Form (ID: 102)', value: '102' },
+      { label: 'Hero 3-Minute Readiness Check (Quick Email) (ID: 103)', value: '103' },
+      { label: 'Quick Consultation / Inquiry (Single Email) (ID: 104)', value: '104' },
+      { label: 'Newsletter & DIB Intelligence (ID: 106)', value: '106' }
+    ];
+
+    function getForminatorOptions() {
+      if (window.scForminatorForms && Array.isArray(window.scForminatorForms) && window.scForminatorForms.length > 0) {
+        return window.scForminatorForms;
+      }
+      return defaultForminatorOptions;
+    }
+
+    /**
      * Helper to create standard block preview with ServerSideRender & Sidebar Controls
      */
     function createBlockRegistration(blockName, config) {
@@ -88,11 +107,13 @@
                 panel.fields.map(function (field, fIdx) {
                   const val = attributes[field.name] !== undefined ? attributes[field.name] : (field.default || '');
                   if (field.type === 'select') {
+                    const selectOptions = typeof field.options === 'function' ? field.options() : (field.options || (field.name === 'formId' ? getForminatorOptions() : []));
                     return el(SelectControl, {
                       key: 'field-' + field.name + '-' + fIdx,
                       label: field.label,
                       value: val,
-                      options: field.options,
+                      options: selectOptions,
+                      help: field.help || '',
                       onChange: function (newVal) {
                         const upd = {};
                         upd[field.name] = newVal;
@@ -488,6 +509,13 @@
               label: 'Privacy Note',
               value: attributes.quizNote !== undefined ? attributes.quizNote : '🔒 Work email required. Never submit classified or CUI information.',
               onChange: function (val) { setAttributes({ quizNote: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Select Forminator Form',
+              value: attributes.formId !== undefined ? String(attributes.formId) : '',
+              options: getForminatorOptions(),
+              help: 'Select the Forminator form to render in this Hero widget (Default: ID 103 for Hero 3-Minute Readiness Check, or Form 101/104).',
+              onChange: function (val) { setAttributes({ formId: val }); }
             })
           )
         );
@@ -2265,10 +2293,11 @@
               rows: 2,
               onChange: function (val) { setAttributes({ privacyNote: val }); }
             }),
-            el(TextControl, {
-              label: 'Forminator Shortcode ID (Optional)',
-              value: attributes.formId || '',
-              help: 'Leave blank to use the native interactive defense scoping form.',
+            el(SelectControl, {
+              label: 'Select Forminator Form',
+              value: attributes.formId !== undefined ? String(attributes.formId) : '',
+              options: getForminatorOptions(),
+              help: 'Select the Forminator form to render. Default: Form 101 (Contact & Discovery Call) or Form 102 (Checklist Download).',
               onChange: function (val) { setAttributes({ formId: val }); }
             })
           )
@@ -2861,7 +2890,15 @@
             { name: 'docType', label: 'Document Badge', default: 'PDF / EXCEL WORKBOOK' },
             { name: 'placeholder', label: 'Input Placeholder', default: 'Enter corporate email address' },
             { name: 'btnText', label: 'Button Text', default: 'Instant Free Download →' },
-            { name: 'disclaimer', label: 'Disclaimer Note', default: 'Strictly confidential. No spam guarantee.' }
+            { name: 'disclaimer', label: 'Disclaimer Note', default: 'Strictly confidential. No spam guarantee.' },
+            {
+              name: 'formId',
+              label: 'Select Forminator Form',
+              type: 'select',
+              default: '',
+              options: getForminatorOptions,
+              help: 'Select the Forminator form to render (Default: ID 102 for Checklist Download Form or ID 104 for Quick Consultation).'
+            }
           ]
         },
         {

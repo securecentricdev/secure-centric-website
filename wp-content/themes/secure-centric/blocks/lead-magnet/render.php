@@ -62,6 +62,12 @@ if ( empty( $ticks ) ) {
         </div>
 
         <div>
+          <?php
+          $lead_form_id = ! empty( $attributes['formId'] ) ? (string) $attributes['formId'] : '102';
+          if ( ! empty( $lead_form_id ) && shortcode_exists( 'forminator_form' ) ) :
+              echo do_shortcode( '[forminator_form id="' . esc_attr( $lead_form_id ) . '"]' );
+          else :
+          ?>
           <form onsubmit="event.preventDefault(); alert('Checklist sent! Check your inbox for the download link.');">
             <div style="margin-bottom: 10px;">
               <input type="email" class="form-input" placeholder="<?php echo esc_attr( $placeholder ); ?>" required />
@@ -71,6 +77,7 @@ if ( empty( $ticks ) ) {
               <?php echo esc_html( $disclaimer ); ?>
             </span>
           </form>
+          <?php endif; ?>
         </div>
       </div>
     </div>

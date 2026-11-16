@@ -48,6 +48,7 @@
     "quizPlaceholder": { "type": "string", "default": "Enter corporate work email" },
     "quizBtnText": { "type": "string", "default": "Start 3-Minute Readiness Check →" },
     "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." },
+    "formId": { "type": "string", "default": "" },
     "phasesData": { "type": "string", "default": "[\"Scope and site visit\",\"Assess\",\"Guide the fixes\",\"Document\",\"Prepare for assessment\",\"Maintain and affirm\"]" },
     "deliverablesData": { "type": "string", "default": "[\"Scope + data-flow diagram\",\"Ranked findings + SPRS estimate\",\"Remediation plan\",\"SSP, policies, POA&M\",\"Evidence index\",\"Annual affirmation pack\"]" },
     "audiencesData": { "type": "string", "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]" }

@@ -1912,3 +1912,160 @@ body,
   outline-offset: -2px;
   box-shadow: 0 0 0 1px #FFFFFF, 0 4px 20px rgba(47, 91, 255, 0.15) !important;
 }
+
+/* ==========================================================================
+   Forminator Theme Integration Styles
+   Matches Secure-Centric Design Tokens (Navy, Electric Blue, Cyan)
+   ========================================================================== */
+.forminator-ui.forminator-custom-form {
+  font-family: var(--font-primary) !important;
+  color: var(--color-navy) !important;
+  margin: 0 !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-row {
+  margin-bottom: 12px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-label {
+  font-family: var(--font-primary) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--color-navy) !important;
+  margin-bottom: 6px !important;
+  text-transform: none !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-required {
+  color: #ef4444 !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input,
+.forminator-ui.forminator-custom-form .forminator-textarea {
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  color: var(--color-navy) !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0 14px !important;
+  height: 46px !important;
+  line-height: normal !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-textarea {
+  height: auto !important;
+  padding: 12px 14px !important;
+  min-height: 100px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input:focus,
+.forminator-ui.forminator-custom-form .forminator-textarea:focus {
+  border-color: var(--color-electric-blue) !important;
+  box-shadow: 0 0 0 4px rgba(47, 91, 255, 0.15) !important;
+  outline: none !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input::placeholder,
+.forminator-ui.forminator-custom-form .forminator-textarea::placeholder {
+  color: var(--color-slate) !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-button-submit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, var(--color-navy) 0%, #1a365d 100%) !important;
+  color: #ffffff !important;
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 24px !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(10, 25, 47, 0.12) !important;
+  transition: all 0.2s ease !important;
+  height: 48px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-button-submit:hover {
+  background: linear-gradient(135deg, #1a365d 0%, var(--color-navy) 100%) !important;
+  box-shadow: 0 4px 16px rgba(10, 25, 47, 0.22) !important;
+  transform: translateY(-1px);
+}
+
+/* Compact Forms (Hero Quiz Card, Lead Magnet, Footer) */
+.hero-readiness-card .forminator-ui,
+.lead-magnet-band .forminator-ui,
+.footer-col .forminator-ui {
+  margin: 0 !important;
+}
+
+.hero-readiness-card .forminator-label,
+.lead-magnet-band .forminator-label,
+.footer-col .forminator-label {
+  display: none !important;
+}
+
+.hero-readiness-card .forminator-row,
+.lead-magnet-band .forminator-row,
+.footer-col .forminator-row {
+  margin-bottom: 8px !important;
+}
+
+.hero-readiness-card .forminator-button-submit {
+  background: var(--color-electric-blue) !important;
+  color: #ffffff !important;
+}
+
+.hero-readiness-card .forminator-button-submit:hover {
+  background: #254bda !important;
+}
+
+.lead-magnet-band .forminator-button-submit {
+  background: var(--color-electric-blue) !important;
+  color: #ffffff !important;
+}
+
+.lead-magnet-band .forminator-button-submit:hover {
+  background: #254bda !important;
+}
+
+.footer-col .forminator-input {
+  height: 38px !important;
+  font-size: 0.8125rem !important;
+}
+
+.footer-col .forminator-button-submit {
+  height: 38px !important;
+  padding: 8px 16px !important;
+  font-size: 0.8125rem !important;
+  background: var(--color-electric-blue) !important;
+}
+
+/* Forminator Response Alerts */
+.forminator-response-message.forminator-show {
+  padding: 14px 18px !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 16px !important;
+}
+
+.forminator-response-message.forminator-success {
+  background: rgba(0, 212, 255, 0.1) !important;
+  border: 1.5px solid var(--color-cyber-cyan) !important;
+  color: var(--color-navy) !important;
+}
+
+.forminator-response-message.forminator-error {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1.5px solid #ef4444 !important;
+  color: #991b1b !important;
+}

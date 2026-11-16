@@ -153,6 +153,42 @@ function secure_centric_register_custom_blocks() {
         false
     );
 
+    // Prepare Forminator form options for block inspector controls
+    $forminator_options = array(
+        array( 'value' => '', 'label' => __( '-- Select Forminator Form --', 'secure-centric' ) ),
+    );
+    if ( class_exists( 'Forminator_API' ) ) {
+        $forms = Forminator_API::get_forms( null, 1, 100 );
+        if ( ! empty( $forms ) ) {
+            foreach ( $forms as $f ) {
+                $form_title = get_the_title( $f->id );
+                if ( empty( $form_title ) ) {
+                    $form_title = ! empty( $f->name ) ? $f->name : 'Form #' . $f->id;
+                }
+                $forminator_options[] = array(
+                    'value' => (string) $f->id,
+                    'label' => sprintf( '%s (ID: %d)', $form_title, $f->id ),
+                );
+            }
+        }
+    }
+    if ( count( $forminator_options ) <= 1 ) {
+        $form_posts = get_posts( array(
+            'post_type'      => 'forminator_forms',
+            'posts_per_page' => 100,
+            'post_status'    => array( 'publish', 'draft' ),
+        ) );
+        if ( ! empty( $form_posts ) ) {
+            foreach ( $form_posts as $fp ) {
+                $forminator_options[] = array(
+                    'value' => (string) $fp->ID,
+                    'label' => sprintf( '%s (ID: %d)', $fp->post_title, $fp->ID ),
+                );
+            }
+        }
+    }
+    wp_localize_script( 'secure-centric-editor-blocks', 'scForminatorForms', $forminator_options );
+
     // Automatically register all custom blocks inside the blocks directory
     $block_json_files = glob( __DIR__ . '/blocks/*/block.json' );
     if ( ! empty( $block_json_files ) ) {
