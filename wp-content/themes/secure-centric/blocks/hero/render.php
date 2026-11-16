@@ -16,7 +16,7 @@ $title              = ! empty( $attributes['title'] ) ? $attributes['title'] : '
 $highlight_text     = ! empty( $attributes['highlightText'] ) ? $attributes['highlightText'] : 'Cyber AB RPO';
 $description        = ! empty( $attributes['description'] ) ? $attributes['description'] : 'We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation.';
 $primary_btn_text   = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
-$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : home_url( '/contact/' );
+$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : ( function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' );
 $secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? $attributes['secondaryBtnText'] : 'Explore Every Phase ↓';
 $secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['secondaryBtnUrl'] : '#phases-detail';
 $sub_text           = ! empty( $attributes['subText'] ) ? $attributes['subText'] : '30 min · No sales pitch · Signed NDA';
@@ -197,7 +197,11 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
                 <b style="color: var(--color-navy); font-size: 0.875rem; display: block;">Calculated Level Requirement:</b>
                 <span style="color: var(--color-electric-blue); font-weight: 800; font-size: 1.15rem;">CMMC Level 2 (110 Controls)</span>
               </div>
-              <a href="<?php echo esc_url( home_url( '/cmmc/level-2/' ) ); ?>" class="btn btn-primary" style="width: 100%;">View Level 2 Action Plan &rarr;</a>
+              <?php
+              $tool_btn_url  = ! empty( $attributes['toolBtnUrl'] ) ? $attributes['toolBtnUrl'] : ( ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : home_url( '/cmmc/level-2/' ) );
+              $tool_btn_text = ! empty( $attributes['toolBtnText'] ) ? $attributes['toolBtnText'] : 'View Level 2 Action Plan →';
+              ?>
+              <a href="<?php echo esc_url( $tool_btn_url ); ?>" class="btn btn-primary" style="width: 100%;"><?php echo esc_html( $tool_btn_text ); ?></a>
             </div>
           <?php else : ?>
             <div class="card-dark" style="padding: 28px;">

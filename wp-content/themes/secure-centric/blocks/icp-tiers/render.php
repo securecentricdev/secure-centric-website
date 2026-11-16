@@ -10,8 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// COMPLIANCE TIERS';
-$title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By CMMC Level: Where Your Contract Puts You';
+$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// COMPLIANCE TIERS';
+$title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By CMMC Level: Where Your Contract Puts You';
+$link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Explore Level Roadmap →';
+$link_url  = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/services/cmmc-compliance/' );
 
 $items = array();
 if ( ! empty( $attributes['tiersData'] ) ) {
@@ -48,7 +50,7 @@ if ( empty( $items ) ) {
             <p style="font-size: 0.875rem; color: var(--color-body-text); line-height: 1.5;"><?php echo esc_html( $level_desc ); ?></p>
           </div>
           <div style="margin-top: 20px; border-top: 1px solid var(--color-border); padding-top: 12px;">
-            <a href="<?php echo esc_url( home_url( '/services/cmmc-compliance/' ) ); ?>" class="text-link">Explore Level Roadmap &rarr;</a>
+            <a href="<?php echo esc_url( $link_url ); ?>" class="text-link"><?php echo esc_html( $link_text ); ?></a>
           </div>
         </div>
       <?php endforeach; ?>

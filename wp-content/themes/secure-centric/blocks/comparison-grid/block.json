@@ -16,6 +16,8 @@
     "eyebrow": { "type": "string", "default": "// APPROACH COMPARISON" },
     "title": { "type": "string", "default": "Three Ways Defense Subcontractors Approach CMMC" },
     "description": { "type": "string", "default": "Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility." },
+    "btnText": { "type": "string", "default": "Engage Secure-Centric →" },
+    "btnUrl": { "type": "string", "default": "/services/cmmc-consulting/" },
     "leftTitle": { "type": "string", "default": "What Secure-Centric Does" },
     "leftDesc": { "type": "string", "default": "We lead compliance governance, boundary scoping, document authorship, and assessor defense." },
     "leftPoints": {

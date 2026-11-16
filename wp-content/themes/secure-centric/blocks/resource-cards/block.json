@@ -34,7 +34,7 @@
         },
         "card1Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/cmmc/"
         },
         "card1Icon": {
             "type": "string",
@@ -50,7 +50,7 @@
         },
         "card2Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/cmmc/level-2/"
         },
         "card2Icon": {
             "type": "string",
@@ -66,7 +66,7 @@
         },
         "card3Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/nist-800-171/"
         },
         "card3Icon": {
             "type": "string",
@@ -82,7 +82,7 @@
         },
         "card4Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/cui/"
         },
         "card4Icon": {
             "type": "string",
@@ -98,7 +98,7 @@
         },
         "card5Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/services/cmmc-enclave/"
         },
         "card5Icon": {
             "type": "string",
@@ -114,7 +114,7 @@
         },
         "card6Link": {
             "type": "string",
-            "default": "#contact"
+            "default": "/resources/templates/checklist/level-2/"
         },
         "card6Icon": {
             "type": "string",

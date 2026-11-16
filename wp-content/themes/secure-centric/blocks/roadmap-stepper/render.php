@@ -12,10 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// THE CMMC PROCESS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Your CMMC journey, step by step';
 $link_text   = ! empty( $attributes['detailedProcessLinkText'] ) ? $attributes['detailedProcessLinkText'] : 'View Detailed 8-Step Process →';
-$raw_link_url = ! empty( $attributes['detailedProcessLinkUrl'] ) ? $attributes['detailedProcessLinkUrl'] : '';
-$link_url     = ( empty( $raw_link_url ) || '#page-19' === $raw_link_url || '#page' === substr( $raw_link_url, 0, 5 ) )
-    ? home_url( '/cmmc/cmmc-process/' )
-    : ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $raw_link_url ) : $raw_link_url );
+$link_url    = ! empty( $attributes['detailedProcessLinkUrl'] )
+    ? ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $attributes['detailedProcessLinkUrl'] ) : $attributes['detailedProcessLinkUrl'] )
+    : home_url( '/cmmc/cmmc-process/' );
 $flag_text   = ! empty( $attributes['flagText'] ) ? $attributes['flagText'] : 'Target C3PAO Certification Milestone';
 
 $default_steps = array(

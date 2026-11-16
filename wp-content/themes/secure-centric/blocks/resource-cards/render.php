@@ -31,37 +31,37 @@ if ( empty( $cards ) ) {
         1 => array(
             'title' => 'CMMC Complete Guide',
             'desc'  => 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.',
-            'link'  => '#contact',
+            'link'  => home_url( '/cmmc/' ),
             'icon'  => '📁',
         ),
         2 => array(
             'title' => 'CMMC Level 2 Guide',
             'desc'  => '110 requirements across 14 security families: technical breakdown and scoping rules.',
-            'link'  => '#contact',
+            'link'  => home_url( '/cmmc/level-2/' ),
             'icon'  => '📘',
         ),
         3 => array(
             'title' => 'NIST SP 800-171 Standard',
             'desc'  => 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.',
-            'link'  => '#contact',
+            'link'  => home_url( '/nist-800-171/' ),
             'icon'  => '🛡️',
         ),
         4 => array(
             'title' => 'CUI Scoping & Handling Guide',
             'desc'  => 'Controlled Unclassified Information: identification, markings, and boundary isolation.',
-            'link'  => '#contact',
+            'link'  => home_url( '/cui/' ),
             'icon'  => '🔒',
         ),
         5 => array(
             'title' => 'CMMC Enclave Advisory',
             'desc'  => 'How segregating your CUI network saves months of implementation and audit costs.',
-            'link'  => '#contact',
+            'link'  => home_url( '/services/cmmc-enclave/' ),
             'icon'  => '🏗️',
         ),
         6 => array(
             'title' => 'Level 2 Compliance Checklist',
             'desc'  => 'Downloadable 110-control Excel checklist with ownership and objective columns.',
-            'link'  => '#contact',
+            'link'  => home_url( '/resources/templates/checklist/level-2/' ),
             'icon'  => '📊',
         ),
     );

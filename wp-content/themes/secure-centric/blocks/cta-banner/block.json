@@ -31,11 +31,11 @@
         },
         "primaryBtnText": {
             "type": "string",
-            "default": "Book a Scoping Call"
+            "default": "Book a Discovery Call →"
         },
         "primaryBtnUrl": {
             "type": "string",
-            "default": "#page-2"
+            "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
         }
     },
     "supports": {

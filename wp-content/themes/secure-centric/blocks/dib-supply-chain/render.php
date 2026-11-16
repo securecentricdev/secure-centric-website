@@ -10,9 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// DEFENSE INDUSTRIAL BASE (DIB)';
-$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By Position in the Defense Supply Chain';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Where defense contractors sit in the DoD supply chain and what triggers compliance.';
+$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// DEFENSE INDUSTRIAL BASE (DIB)';
+$title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By Position in the Defense Supply Chain';
+$subtitle  = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Where defense contractors sit in the DoD supply chain and what triggers compliance.';
+$link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Explore Your Path →';
+$link_url  = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/contact/' );
 
 $items = array();
 if ( ! empty( $attributes['dibData'] ) ) {
@@ -75,7 +77,11 @@ if ( empty( $items ) ) {
             <span class="dib-label">First Action:</span>
             <p><?php echo esc_html( $it['firstStep'] ); ?></p>
           </div>
-          <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="text-link" style="margin-top: 12px; display: inline-block;">Explore Your Path &rarr;</a>
+          <?php
+          $item_url  = ! empty( $it['url'] ) ? $it['url'] : $link_url;
+          $item_text = ! empty( $it['linkText'] ) ? $it['linkText'] : $link_text;
+          ?>
+          <a href="<?php echo esc_url( $item_url ); ?>" class="text-link" style="margin-top: 12px; display: inline-block;"><?php echo esc_html( $item_text ); ?></a>
         </div>
       <?php endforeach; ?>
     </div>

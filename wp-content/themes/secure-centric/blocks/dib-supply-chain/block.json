@@ -15,6 +15,8 @@
     "eyebrow": { "type": "string", "default": "// DEFENSE INDUSTRIAL BASE (DIB)" },
     "title": { "type": "string", "default": "By Position in the Defense Supply Chain" },
     "subtitle": { "type": "string", "default": "Where defense contractors sit in the DoD supply chain and what triggers compliance." },
+    "linkText": { "type": "string", "default": "Explore Your Path →" },
+    "linkUrl": { "type": "string", "default": "/contact/" },
     "dibData": {
       "type": "string",
       "default": "[{\"role\":\"Prime Contractors (Tier 1)\",\"trigger\":\"Direct contract award from NAVAIR, NAVSEA, USAF, Army with DFARS 252.204-7021.\",\"level\":\"Level 2 / Level 3 Certification\",\"firstStep\":\"Enterprise CUI boundary segmentation & formal mock DIBCAC defense.\"},{\"role\":\"Subcontractors & Component Makers (Tier 2-3)\",\"trigger\":\"Flowdown clauses in purchase orders from Boeing, Lockheed Martin, Northrop Grumman, General Dynamics.\",\"level\":\"Level 2 (3-Year C3PAO Audit)\",\"firstStep\":\"On-site facility inspection, SPRS score calculation, and enclave scoping.\"},{\"role\":\"Build-to-Print Precision Machine Shops\",\"trigger\":\"DoD technical engineering drawings, CAD models, and specs marked as CUI.\",\"level\":\"Level 2 (Scoping Boundary Crucial)\",\"firstStep\":\"Isolate shop floor CNC controllers and build a secure enclave for CAD files.\"},{\"role\":\"Defense Software, MSPs & Cloud SaaS\",\"trigger\":\"Hosting, processing, or transmitting DoD data under DFARS 252.204-7012.\",\"level\":\"Level 2 + FedRAMP Moderate Equivalency\",\"firstStep\":\"Verify FedRAMP High/Moderate baseline and configure cloud identity boundary.\"}]"

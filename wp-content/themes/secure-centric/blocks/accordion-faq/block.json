@@ -38,7 +38,7 @@
         },
         "btnUrl": {
             "type": "string",
-            "default": "#contact"
+            "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
         },
         "faq1Q": {
             "type": "string",

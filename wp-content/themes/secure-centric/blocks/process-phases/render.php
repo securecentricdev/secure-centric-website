@@ -10,9 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// PHASE-BY-PHASE EXECUTION';
-$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What we do, phase by phase';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision before your official C3PAO assessment date.';
+$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// PHASE-BY-PHASE EXECUTION';
+$title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What we do, phase by phase';
+$subtitle  = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision before your official C3PAO assessment date.';
+$link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Phase Details →';
+$link_url  = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/cmmc/cmmc-process/' );
 
 $phases_raw = array();
 if ( ! empty( $attributes['phasesData'] ) ) {
@@ -91,7 +93,11 @@ $involved_roles = array(
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <span style="font-size: 0.6875rem; font-family: var(--font-mono); color: var(--color-slate); text-transform: uppercase;">Who is involved:</span>
             <span class="badge-chip" style="font-size: 0.75rem; background-color: #fff;"><?php echo esc_html( $role ); ?></span>
-            <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="text-link" style="font-size: 0.8125rem; margin-top: 4px;">Phase Details &rarr;</a>
+            <?php
+            $phase_url  = ! empty( $ph['url'] ) ? $ph['url'] : ( ! empty( $ph['link'] ) ? $ph['link'] : $link_url );
+            $phase_text = ! empty( $ph['linkText'] ) ? $ph['linkText'] : $link_text;
+            ?>
+            <a href="<?php echo esc_url( $phase_url ); ?>" class="text-link" style="font-size: 0.8125rem; margin-top: 4px;"><?php echo esc_html( $phase_text ); ?></a>
           </div>
         </div>
       <?php endforeach; ?>

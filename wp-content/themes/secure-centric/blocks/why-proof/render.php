@@ -14,9 +14,6 @@ $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Why Sec
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.';
 $link_text   = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Full Company Credentials →';
 $link_url    = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/about/' );
-if ( '#contact' === $link_url || empty( $link_url ) ) {
-    $link_url = home_url( '/about/' );
-}
 
 $stat1_number = ! empty( $attributes['stat1Number'] ) ? $attributes['stat1Number'] : '120+';
 $stat1_label  = ! empty( $attributes['stat1Label'] ) ? $attributes['stat1Label'] : 'Defense contractors prepared for CMMC & NIST SP 800-171 audits';

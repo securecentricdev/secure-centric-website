@@ -23,7 +23,7 @@
       <!-- wp:buttons {"style":{"spacing":{"margin":{"top":"24px"}}}} -->
       <div class="wp-block-buttons" style="margin-top:24px">
         <!-- wp:button {"backgroundColor":"electric-blue","textColor":"white"} -->
-        <div class="wp-block-button"><a class="wp-block-button__link has-white-color has-electric-blue-background-color has-text-color has-background wp-element-button" href="/services/cmmc-compliance/">Book a Discovery Call &rarr;</a></div>
+        <div class="wp-block-button"><a class="wp-block-button__link has-white-color has-electric-blue-background-color has-text-color has-background wp-element-button" href="https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll" target="_blank" rel="noopener noreferrer">Book a Discovery Call &rarr;</a></div>
         <!-- /wp:button -->
       </div>
       <!-- /wp:buttons -->

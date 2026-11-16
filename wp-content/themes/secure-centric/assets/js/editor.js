@@ -385,7 +385,7 @@
             }),
             el(TextControl, {
               label: 'Button Link URL',
-              value: attributes.primaryBtnUrl !== undefined ? attributes.primaryBtnUrl : '#contact',
+              value: attributes.primaryBtnUrl !== undefined ? attributes.primaryBtnUrl : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
               onChange: function (val) { setAttributes({ primaryBtnUrl: val }); }
             }),
             el(TextControl, {
@@ -411,7 +411,7 @@
             }),
             el(TextControl, {
               label: 'Topic 1 Link URL',
-              value: attributes.topic1Url !== undefined ? attributes.topic1Url : '/secure-centric/cmmc/',
+              value: attributes.topic1Url !== undefined ? attributes.topic1Url : '/cmmc/',
               onChange: function (val) { setAttributes({ topic1Url: val }); }
             }),
             el('hr', { style: { margin: '14px 0' } }),
@@ -428,7 +428,7 @@
             }),
             el(TextControl, {
               label: 'Topic 2 Link URL',
-              value: attributes.topic2Url !== undefined ? attributes.topic2Url : '/secure-centric/services/nist-800-171-compliance/',
+              value: attributes.topic2Url !== undefined ? attributes.topic2Url : '/services/nist-800-171-compliance/',
               onChange: function (val) { setAttributes({ topic2Url: val }); }
             }),
             el('hr', { style: { margin: '14px 0' } }),
@@ -445,7 +445,7 @@
             }),
             el(TextControl, {
               label: 'Topic 3 Link URL',
-              value: attributes.topic3Url !== undefined ? attributes.topic3Url : '/secure-centric/cui/',
+              value: attributes.topic3Url !== undefined ? attributes.topic3Url : '/cui/',
               onChange: function (val) { setAttributes({ topic3Url: val }); }
             })
           ),
@@ -1276,7 +1276,7 @@
             { name: 'title', label: 'Title', default: 'Why Secure-Centric' },
             { name: 'description', label: 'Description', type: 'textarea', default: 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.' },
             { name: 'linkText', label: 'Link Text', default: 'Full Company Credentials →' },
-            { name: 'linkUrl', label: 'Link URL', default: '#contact' }
+            { name: 'linkUrl', label: 'Link URL', default: '/about/' }
           ]
         },
         {
@@ -1351,12 +1351,12 @@
         const { attributes, setAttributes, isSelected, clientId } = props;
 
         const defaultCards = [
-          { title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '#contact', icon: '📁' },
-          { title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '#contact', icon: '📘' },
-          { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '#contact', icon: '🛡️' },
-          { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '#contact', icon: '🔒' },
-          { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '#contact', icon: '🏗️' },
-          { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '#contact', icon: '📊' }
+          { title: 'CMMC Complete Guide', desc: 'The definitive executive and technical overview of CMMC levels, rulemaking, and audits.', link: '/cmmc/', icon: '📁' },
+          { title: 'CMMC Level 2 Guide', desc: '110 requirements across 14 security families: technical breakdown and scoping rules.', link: '/cmmc/level-2/', icon: '📘' },
+          { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '/nist-800-171/', icon: '🛡️' },
+          { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '/cui/', icon: '🔒' },
+          { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '/services/cmmc-enclave/', icon: '🏗️' },
+          { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '/resources/templates/checklist/level-2/', icon: '📊' }
         ];
 
         let currentCards = safeParseJsonArray(attributes.resourcesData, defaultCards);
@@ -1918,7 +1918,7 @@
             }),
             el(TextControl, {
               label: 'Button URL',
-              value: attributes.btnUrl !== undefined ? attributes.btnUrl : '#contact',
+              value: attributes.btnUrl !== undefined ? attributes.btnUrl : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
               onChange: function (val) { setAttributes({ btnUrl: val }); }
             })
           ),
@@ -2014,7 +2014,9 @@
           fields: [
             { name: 'eyebrow', label: 'Eyebrow', default: '// APPROACH COMPARISON' },
             { name: 'title', label: 'Title', default: 'Three Ways Defense Subcontractors Approach CMMC' },
-            { name: 'description', label: 'Description', type: 'textarea', default: 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.' }
+            { name: 'description', label: 'Description', type: 'textarea', default: 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.' },
+            { name: 'btnText', label: 'CTA Button Text', default: 'Engage Secure-Centric →' },
+            { name: 'btnUrl', label: 'CTA Button URL', default: '/services/cmmc-consulting/' }
           ]
         },
         {
@@ -2068,7 +2070,7 @@
             { name: 'title', label: 'Headline', default: 'Planning to get started on CMMC?' },
             { name: 'description', label: 'Description', type: 'textarea', default: 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.' },
             { name: 'primaryBtnText', label: 'Primary Button Text', default: 'Book a Discovery Call →' },
-            { name: 'primaryBtnUrl', label: 'Primary Button URL', default: '#contact' },
+            { name: 'primaryBtnUrl', label: 'Primary Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' },
             { name: 'phoneText', label: 'Phone Call Text', default: 'Call (323) 410-5941' },
             { name: 'phoneUrl', label: 'Phone Call URL', default: 'tel:323-410-5941' }
           ]
@@ -3084,7 +3086,9 @@
           fields: [
             { name: 'eyebrow', label: 'Eyebrow', default: '// DECISION FRAMEWORK' },
             { name: 'title', label: 'Heading', default: 'How to choose a CMMC consultant: 7 checks' },
-            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Check every qualification before engaging any CMMC advisory firm.' }
+            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Check every qualification before engaging any CMMC advisory firm.' },
+            { name: 'btnText', label: 'Button Text', default: 'Book a Discovery Call →' },
+            { name: 'btnUrl', label: 'Button Link URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' }
           ]
         },
         {
@@ -3112,8 +3116,8 @@
             { name: 'stage', label: 'Stage Name', default: 'Compliance Phase' },
             { name: 'title', label: 'Right Eyebrow', default: 'Where you fit' },
             { name: 'line', label: 'Stage Explanation', type: 'textarea', default: 'You know CMMC applies but need clarity on scoping, timeline, and audit boundaries.' },
-            { name: 'serviceLink', label: 'Service Link URL', default: '/secure-centric/services/cmmc-compliance/' },
-            { name: 'processLink', label: 'Full Process Link URL', default: '/secure-centric/cmmc/cmmc-process/' }
+            { name: 'serviceLink', label: 'Service Link URL', default: '/services/cmmc-compliance/' },
+            { name: 'processLink', label: 'Full Process Link URL', default: '/cmmc/cmmc-process/' }
           ]
         }
       ]

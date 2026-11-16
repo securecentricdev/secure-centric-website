@@ -15,6 +15,8 @@
     "eyebrow": { "type": "string", "default": "// DECISION FRAMEWORK" },
     "title": { "type": "string", "default": "How to choose a CMMC consultant: 7 checks" },
     "subtitle": { "type": "string", "default": "Check every qualification before engaging any CMMC advisory firm." },
+    "btnText": { "type": "string", "default": "Book a Discovery Call →" },
+    "btnUrl": { "type": "string", "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll" },
     "checksData": {
       "type": "string",
       "default": "[{\"label\":\"Cyber AB Accredited Registered Provider Organization (RPO)\"},{\"label\":\"Employs certified Registered Practitioners (RP) on staff\"},{\"label\":\"Conducts in-person physical site walkthroughs of facility\"},{\"label\":\"100% independent advice (zero hardware/resale conflicts)\"},{\"label\":\"Transparent fixed flat-fee pricing with deliverable milestones\"},{\"label\":\"Proven C3PAO first-pass defense and mock assessment prep\"},{\"label\":\"Comprehensive System Security Plan (SSP) and POA&M authoring\"}]"

@@ -11,10 +11,10 @@
   "textdomain": "secure-centric",
   "attributes": {
     "stage": { "type": "string", "default": "Compliance Phase" },
-    "serviceLink": { "type": "string", "default": "/secure-centric/services/cmmc-compliance/" },
+    "serviceLink": { "type": "string", "default": "/services/cmmc-compliance/" },
     "title": { "type": "string", "default": "Where you fit" },
     "line": { "type": "string", "default": "You know CMMC applies but need clarity on scoping, timeline, and audit boundaries." },
-    "processLink": { "type": "string", "default": "/secure-centric/cmmc/cmmc-process/" }
+    "processLink": { "type": "string", "default": "/cmmc/cmmc-process/" }
   },
   "supports": {
     "align": ["full", "wide"],

@@ -54,6 +54,8 @@ if ( '2-col' === $layout ) :
     $left_desc   = ! empty( $attributes['leftDesc'] ) ? $attributes['leftDesc'] : ( ! empty( $attributes['col1Desc'] ) ? $attributes['col1Desc'] : 'We lead compliance governance, boundary scoping, document authorship, and assessor defense.' );
     $right_title = ! empty( $attributes['rightTitle'] ) ? $attributes['rightTitle'] : ( ! empty( $attributes['col2Title'] ) ? ( $is_cannot_do ? 'An RPO cannot' : $attributes['col2Title'] ) : $default_right_title );
     $right_desc  = ! empty( $attributes['rightDesc'] ) ? $attributes['rightDesc'] : ( ! empty( $attributes['col2Desc'] ) ? $attributes['col2Desc'] : 'Your IT team implements physical and digital configurations to satisfy our technical requirements.' );
+    $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Engage Secure-Centric →';
+    $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : home_url( '/services/cmmc-consulting/' );
 
     if ( function_exists( 'sc_clean_text' ) ) {
         $left_title  = sc_clean_text( $left_title );
@@ -140,7 +142,7 @@ if ( '2-col' === $layout ) :
               <?php endforeach; ?>
             </ul>
             <div style="margin-top: 28px;">
-              <a href="<?php echo esc_url( home_url( '/services/cmmc-consulting/' ) ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Engage Secure-Centric &rarr;</a>
+              <a href="<?php echo esc_url( $btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;"><?php echo esc_html( $btn_text ); ?></a>
             </div>
           </div>
 

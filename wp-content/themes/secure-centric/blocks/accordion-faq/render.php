@@ -15,9 +15,6 @@ $description = ! empty( $attributes['description'] ) ? $attributes['description'
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
 $default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
 $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : $default_booking;
-if ( stripos( $btn_text, 'book' ) !== false && ( empty( $btn_url ) || '#contact' === $btn_url || strpos( $btn_url, '/contact/' ) !== false ) ) {
-    $btn_url = $default_booking;
-}
 
 $faqs = array();
 

@@ -14,7 +14,7 @@
     "eyebrow": { "type": "string", "default": "// THE CMMC PROCESS" },
     "title": { "type": "string", "default": "Your CMMC journey, step by step" },
     "detailedProcessLinkText": { "type": "string", "default": "View Detailed 8-Step Process →" },
-    "detailedProcessLinkUrl": { "type": "string", "default": "#page-19" },
+    "detailedProcessLinkUrl": { "type": "string", "default": "/cmmc/cmmc-process/" },
     "autoplayDelay": { "type": "number", "default": 3800 },
     "flagText": { "type": "string", "default": "Target C3PAO Certification Milestone" },
     "stepsData": { "type": "string", "default": "" }

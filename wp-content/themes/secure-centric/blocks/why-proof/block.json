@@ -34,7 +34,7 @@
         },
         "linkUrl": {
             "type": "string",
-            "default": "#contact"
+            "default": "/about/"
         },
         "stat1Number": {
             "type": "string",
