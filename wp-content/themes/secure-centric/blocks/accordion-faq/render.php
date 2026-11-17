@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// FREQUENTLY ASKED QUESTIONS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// FREQUENTLY ASKED QUESTIONS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Common questions';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
@@ -74,7 +74,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
   <div class="site-container">
     <div class="faq-grid-layout">
       <div class="faq-intro-col">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
         <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
         <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: 24px;">
           <?php echo esc_html( $description ); ?>

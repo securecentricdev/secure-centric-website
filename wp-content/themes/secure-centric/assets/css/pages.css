@@ -210,7 +210,7 @@
   gap: 56px;
   width: max-content;
   white-space: nowrap;
-  animation: logoScroll 36s linear infinite;
+  animation: logoScroll 36s linear infinite reverse;
 }
 
 .logos-carousel-track:hover {

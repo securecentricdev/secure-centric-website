@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// DETAILED REVIEW STAGES';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DETAILED REVIEW STAGES';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Detailed review stages';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Every activity, team participant, and tangible deliverable produced during this review.';
 
@@ -56,7 +56,9 @@ if ( function_exists( 'sc_clean_text' ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-vertical">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 32px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

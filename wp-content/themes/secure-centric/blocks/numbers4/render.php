@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// VERIFIED DEFENSE METRICS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// VERIFIED DEFENSE METRICS';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC By the Numbers';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'CMMC compliance numbers grounded in Department of War regulatory criteria.';
 
@@ -35,7 +35,9 @@ if ( empty( $stats ) ) {
 <section class="numbers4-band-wrap wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/numbers4-stats">
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 36px; text-align: center;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); max-width: 600px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

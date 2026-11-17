@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// CORE PRINCIPLES & INDICATORS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// CORE PRINCIPLES & INDICATORS';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Key Indicators & Symptoms';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Observable symptoms and indicators that require immediate remediation.';
 
@@ -86,7 +86,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/bullets-grid"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 36px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

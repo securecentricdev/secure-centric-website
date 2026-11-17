@@ -32,7 +32,9 @@ if ( function_exists( 'sc_clean_text' ) ) {
         <a href="<?php echo esc_url( $service_link ); ?>" class="stage-link">Part of CMMC compliance services &rarr;</a>
       </div>
       <div class="stage-line-right">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="stage-eyebrow"><?php echo esc_html( $title ); ?></span>
+        <?php endif; ?>
         <p class="stage-sentence"><?php echo esc_html( $line ); ?></p>
         <a href="<?php echo esc_url( $process_link ); ?>" class="stage-link-subtle">See the full CMMC 8-step process &rarr;</a>
       </div>

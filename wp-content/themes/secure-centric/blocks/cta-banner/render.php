@@ -14,8 +14,8 @@ $description      = ! empty( $attributes['description'] ) ? $attributes['descrip
 $primary_btn_text = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
 $default_booking    = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
 $primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : $default_booking;
-$secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? $attributes['secondaryBtnText'] : ( ! empty( $attributes['phoneText'] ) ? $attributes['phoneText'] : 'Submit Your Query' );
-$secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $attributes['secondaryBtnUrl'] ) : $attributes['secondaryBtnUrl'] ) : ( ! empty( $attributes['phoneUrl'] ) ? $attributes['phoneUrl'] : home_url( '/contact/' ) );
+$secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? $attributes['secondaryBtnText'] : 'Submit Your Query';
+$secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $attributes['secondaryBtnUrl'] ) : $attributes['secondaryBtnUrl'] ) : home_url( '/contact/' );
 ?>
 
 <section class="final-cta-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'electric-blue'}" data-wp-pattern="secure-centric/final-cta-band">

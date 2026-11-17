@@ -25,7 +25,7 @@ $is_download_layout = (
 );
 
 if ( $is_download_layout ) :
-    $eyebrow       = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// INSTANT DOWNLOAD ACCESS';
+    $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// INSTANT DOWNLOAD ACCESS';
     $heading       = ! empty( $title ) ? $title : ( ! empty( $form_title ) ? $form_title : 'Download the Compliance Checklist' );
     $description   = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Enter your details below to receive the editable spreadsheet workbook and instructions directly in your inbox.';
     $doc_badge     = ! empty( $attributes['docBadge'] ) ? $attributes['docBadge'] : 'OFFICIAL DEFENSE CONTRACTOR WORKBOOK';
@@ -80,7 +80,9 @@ if ( $is_download_layout ) :
           </div>
 
           <div class="card-white" style="padding: 32px; border: 2px solid var(--color-soft-blue-line);">
+            <?php if ( ! empty( $eyebrow ) ) : ?>
             <span class="section-eyebrow" style="font-size: 0.6875rem;"><?php echo esc_html( $eyebrow ); ?></span>
+            <?php endif; ?>
             <h3 style="margin-bottom: 10px; color: var(--color-navy);"><?php echo esc_html( $heading ); ?></h3>
             <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 20px;">
               <?php echo esc_html( $description ); ?>
@@ -162,7 +164,7 @@ if ( $is_download_layout ) :
 <?php else : ?>
   <!-- Split Discovery Form Layout (Contact Page) -->
   <?php
-  $info_eyebrow   = ! empty( $attributes['infoEyebrow'] ) ? $attributes['infoEyebrow'] : '// DIRECT ENGAGEMENT';
+  $info_eyebrow = isset( $attributes['infoEyebrow'] ) ? trim( $attributes['infoEyebrow'] ) : '// DIRECT ENGAGEMENT';
   $info_title     = ! empty( $attributes['infoTitle'] ) ? $attributes['infoTitle'] : 'Direct Access to Registered Practitioners';
   $info_desc      = ! empty( $attributes['infoDesc'] ) ? $attributes['infoDesc'] : "Every discovery call is led directly by an accredited Cyber AB Registered Practitioner (RP), not a generalist salesperson. We review your contract's DFARS 252.204-7012 clauses and help determine your exact scoping boundaries.";
   $phone          = ! empty( $attributes['phone'] ) ? $attributes['phone'] : '(323) 410-5941';
@@ -225,7 +227,9 @@ if ( $is_download_layout ) :
       <div class="contact-grid-split">
         <!-- Left Info Column (Text Beside Form) -->
         <div class="contact-info-panel">
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow"><?php echo esc_html( $info_eyebrow ); ?></span>
+          <?php endif; ?>
           <h1 style="margin-bottom: 16px; font-size: clamp(1.85rem, 3vw, 2.35rem); color: var(--color-navy); line-height: 1.25;"><?php echo esc_html( $info_title ); ?></h1>
           <p style="color: var(--color-body-text); margin-bottom: 24px; line-height: 1.6;">
             <?php echo esc_html( $info_desc ); ?>

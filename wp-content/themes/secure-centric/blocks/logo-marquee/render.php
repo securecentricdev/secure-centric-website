@@ -86,7 +86,6 @@ $logos = array();
 if ( ! empty( $attributes['logosData'] ) ) {
     $decoded = json_decode( $attributes['logosData'], true );
     if ( is_array( $decoded ) && ! empty( $decoded ) ) {
-        // Verify if decoded items contain actual image URLs
         $has_image = false;
         foreach ( $decoded as $item ) {
             if ( ! empty( $item['imageUrl'] ) ) {
@@ -94,7 +93,8 @@ if ( ! empty( $attributes['logosData'] ) ) {
                 break;
             }
         }
-        if ( $has_image ) {
+        // If items have images or user has configured custom logos
+        if ( $has_image || count( $decoded ) !== 5 ) {
             $logos = $decoded;
         }
     }

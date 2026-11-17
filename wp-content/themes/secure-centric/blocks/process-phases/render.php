@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// PHASE-BY-PHASE EXECUTION';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// PHASE-BY-PHASE EXECUTION';
 $title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What we do, phase by phase';
 $subtitle  = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision before your official C3PAO assessment date.';
 $link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Phase Details →';
@@ -51,7 +51,9 @@ $involved_roles = array(
          data-wp-pattern="secure-centric/phase-by-phase-work">
   <div class="site-container">
     <div style="max-width: 780px; margin-bottom: 40px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2><?php echo esc_html( $title ); ?></h2>
       <p style="font-size: 1.0625rem; color: var(--color-body-text); margin-top: 8px;">
         <?php echo esc_html( $subtitle ); ?>

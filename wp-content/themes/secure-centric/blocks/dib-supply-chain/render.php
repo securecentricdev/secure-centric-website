@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// DEFENSE INDUSTRIAL BASE (DIB)';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DEFENSE INDUSTRIAL BASE (DIB)';
 $title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By Position in the Defense Supply Chain';
 $subtitle  = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Where defense contractors sit in the DoD supply chain and what triggers compliance.';
 $link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Explore Your Path →';
@@ -57,7 +57,9 @@ if ( empty( $items ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/dib-supply-chain">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 36px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

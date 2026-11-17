@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// KNOWLEDGE ECOSYSTEM';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// KNOWLEDGE ECOSYSTEM';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Related Compliance Resources';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Explore related compliance frameworks, staging guides, and scoping resources.';
 
@@ -51,7 +51,9 @@ if ( empty( $pages ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:columns" data-wp-pattern="secure-centric/related-pages">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 32px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

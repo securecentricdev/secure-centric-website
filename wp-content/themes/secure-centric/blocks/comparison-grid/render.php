@@ -30,7 +30,7 @@ if (
     $layout = '2-col';
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : ( '2-col' === $layout ? '// CLEAR DIVISION OF RESPONSIBILITIES' : '// APPROACH COMPARISON' );
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : ( '2-col' === $layout ? '// CLEAR DIVISION OF RESPONSIBILITIES' : '// APPROACH COMPARISON' );
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '' );
 
 if ( empty( $description ) ) {
@@ -117,7 +117,9 @@ if ( '2-col' === $layout ) :
              data-wp-pattern="secure-centric/rpo-vs-msp-cards"<?php echo $anchor_attr; ?>>
       <div class="site-container">
         <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h2><?php echo esc_html( $title ); ?></h2>
           <p style="font-size: 1rem; color: var(--color-body-text); margin-top: 10px;">
             <?php echo esc_html( $description ); ?>
@@ -239,7 +241,9 @@ if ( '2-col' === $layout ) :
     <section class="section-ice py-section wp-block-inspect" data-wp-pattern="secure-centric/comparison-table"<?php echo $anchor_attr; ?>>
       <div class="site-container">
         <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h2><?php echo esc_html( $title ); ?></h2>
           <p style="color: var(--color-slate); max-width: 640px; margin: 8px auto 0;">
             <?php echo esc_html( $description ); ?>

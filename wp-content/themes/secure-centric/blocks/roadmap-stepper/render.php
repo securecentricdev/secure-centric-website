@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// THE CMMC PROCESS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// THE CMMC PROCESS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Your CMMC journey, step by step';
 $link_text   = ! empty( $attributes['detailedProcessLinkText'] ) ? $attributes['detailedProcessLinkText'] : 'View Detailed 8-Step Process →';
 $link_url    = ! empty( $attributes['detailedProcessLinkUrl'] )
@@ -146,7 +146,9 @@ $flag_step_idx = ( $total_steps >= 7 ) ? 7 : $total_steps;
   <div class="site-container">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
       <div>
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
         <h2><?php echo esc_html( $title ); ?></h2>
       </div>
       <a href="<?php echo esc_url( $link_url ); ?>" class="text-link"><?php echo esc_html( $link_text ); ?></a>
@@ -242,7 +244,9 @@ $flag_step_idx = ( $total_steps >= 7 ) ? 7 : $total_steps;
       </div>
 
       <div class="step-detail-left">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow">MILESTONE <?php echo esc_html( $active_step['no'] . ' • ' . strtoupper( $active_step['name'] ) ); ?></span>
+        <?php endif; ?>
         <h3><?php echo esc_html( $active_step['name'] ); ?></h3>
         <?php if ( ! empty( $active_step['what_happens'] ) || ! empty( $active_step['how_we_help'] ) ) : ?>
           <div class="milestone-desc-sections" style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 14px;">

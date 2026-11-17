@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// 110 CONTROLS IN 14 FAMILIES';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// 110 CONTROLS IN 14 FAMILIES';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'The 14 Control Families of NIST SP 800-171';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'The complete NIST SP 800-171 Rev 2 security control architecture required for CMMC Level 2.';
 
@@ -45,7 +45,9 @@ if ( empty( $families ) ) {
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/14-control-families">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 36px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

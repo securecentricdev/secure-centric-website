@@ -19,7 +19,7 @@
     <div class="wp-block-button"><a class="wp-block-button__link has-navy-color has-white-background-color has-text-color has-background wp-element-button" href="https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll" target="_blank" rel="noopener noreferrer">Book a Discovery Call &rarr;</a></div>
     <!-- /wp:button -->
     <!-- wp:button {"className":"is-style-outline","textColor":"white"} -->
-    <div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="tel:323-410-5941">Call (323) 410-5941</a></div>
+    <div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="/contact/">Submit Your Query</a></div>
     <!-- /wp:button -->
   </div>
   <!-- /wp:buttons -->

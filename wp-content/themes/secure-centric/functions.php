@@ -97,6 +97,14 @@ function sc_resolve_page_url( $url ) {
         return home_url( '/' );
     }
 
+    $url = stripslashes( $url );
+    $trimmed = trim( $url );
+
+    // Normalize any legacy localhost or staging host prefixes
+    if ( preg_match( '#https?://[^/]+(?:/secure-centric)?(/.*)$#i', $trimmed, $m ) ) {
+        $trimmed = $m[1];
+    }
+
     static $page_map = array(
         '#page-1'       => '/',
         '#page-n1'      => '/about/',
@@ -122,12 +130,11 @@ function sc_resolve_page_url( $url ) {
         '#contact'      => '/contact/',
     );
 
-    $trimmed = trim( $url );
     if ( isset( $page_map[ $trimmed ] ) ) {
         return home_url( $page_map[ $trimmed ] );
     }
 
-    if ( strpos( $trimmed, '/' ) === 0 && strpos( $trimmed, home_url() ) === false ) {
+    if ( strpos( $trimmed, '/' ) === 0 ) {
         return home_url( $trimmed );
     }
 

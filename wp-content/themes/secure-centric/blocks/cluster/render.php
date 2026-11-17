@@ -45,7 +45,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/topic-cluster"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 36px; text-align: center;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;">// TOPIC CLUSTER</span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); max-width: 600px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

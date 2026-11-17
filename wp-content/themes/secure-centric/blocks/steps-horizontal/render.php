@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// ENGAGEMENT WORKFLOW';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// ENGAGEMENT WORKFLOW';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How an engagement starts';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'A structured, predictable path to verifiable defense compliance with zero surprises.';
 
@@ -60,7 +60,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-horizontal"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-center" style="text-align: center; margin-bottom: 36px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); max-width: 680px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

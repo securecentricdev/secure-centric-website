@@ -67,6 +67,171 @@
     /**
      * Helper to create standard block preview with ServerSideRender & Sidebar Controls
      */
+    function isRepeaterField(field) {
+      if (field.type === 'repeater') return true;
+      var nm = field.name || '';
+      if (nm.endsWith('Data') || nm.endsWith('Items') || nm === 'colsData' || nm === 'rowsData' || nm === 'pointsData' || nm === 'bulletsData' || nm === 'ticksData') {
+        return true;
+      }
+      return false;
+    }
+
+    function renderSmartRepeater(field, rawVal, onChange) {
+      var items = safeParseJsonArray(rawVal, []);
+      if (!Array.isArray(items)) items = [];
+      if (items.length === 0 && field.default) {
+        items = safeParseJsonArray(field.default, []);
+      }
+
+      function updateItems(newItems) {
+        onChange(JSON.stringify(newItems));
+      }
+
+      function addItem() {
+        if (items.length > 0 && typeof items[0] === 'object' && items[0] !== null) {
+          var template = {};
+          Object.keys(items[0]).forEach(function (k) {
+            template[k] = '';
+          });
+          updateItems(items.concat([template]));
+        } else {
+          updateItems(items.concat(['']));
+        }
+      }
+
+      function removeItem(idx) {
+        if (items.length <= 1) return;
+        updateItems(items.filter(function (_, i) { return i !== idx; }));
+      }
+
+      function updateItemProp(idx, key, newVal) {
+        var next = items.map(function (it, i) {
+          if (i === idx) {
+            if (typeof it === 'object' && it !== null) {
+              var upd = Object.assign({}, it);
+              upd[key] = newVal;
+              return upd;
+            } else {
+              return newVal;
+            }
+          }
+          return it;
+        });
+        updateItems(next);
+      }
+
+      var isObjectList = items.length > 0 && typeof items[0] === 'object' && items[0] !== null;
+      var cleanFieldLabel = (field.label || 'List Items').replace(/\s*\(JSON\)/gi, '').replace(/\s*JSON\s*Array/gi, '');
+
+      return el('div', {
+        key: 'smart-repeater-' + field.name,
+        style: {
+          marginBottom: '16px',
+          padding: '12px',
+          background: '#F8FAFC',
+          border: '1px solid #E2E8F0',
+          borderRadius: '8px'
+        }
+      },
+        el('div', {
+          style: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '12px',
+            paddingBottom: '6px',
+            borderBottom: '1px solid #E2E8F0'
+          }
+        },
+          el('strong', { style: { fontSize: '13px', color: '#1E293B' } }, cleanFieldLabel + ' (' + items.length + ')'),
+          el(Button, {
+            isSecondary: true,
+            isSmall: true,
+            onClick: addItem
+          }, '+ Add Item')
+        ),
+        items.map(function (item, idx) {
+          if (isObjectList) {
+            var keys = Object.keys(item);
+            return el('div', {
+              key: 'rep-item-' + idx,
+              style: {
+                background: '#FFFFFF',
+                border: '1px solid #CBD5E1',
+                borderRadius: '6px',
+                padding: '10px 12px',
+                marginBottom: '10px',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+              }
+            },
+              el('div', {
+                style: {
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '8px',
+                  borderBottom: '1px solid #F1F5F9',
+                  paddingBottom: '4px'
+                }
+              },
+                el('span', { style: { fontSize: '12px', fontWeight: 600, color: '#334155' } }, 'Item #' + (idx + 1) + (item.title || item.name || item.label ? ' • ' + (item.title || item.name || item.label) : '')),
+                items.length > 1 ? el(Button, {
+                  isDestructive: true,
+                  isSmall: true,
+                  onClick: function () { removeItem(idx); }
+                }, 'Remove') : null
+              ),
+              keys.map(function (k) {
+                var prettyLabel = k.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); });
+                var isLong = (k.toLowerCase().indexOf('desc') !== -1 || k.toLowerCase().indexOf('text') !== -1 || k.toLowerCase().indexOf('pain') !== -1 || k.toLowerCase().indexOf('gain') !== -1 || k.toLowerCase().indexOf('objective') !== -1 || k.toLowerCase().indexOf('evidence') !== -1 || k.toLowerCase().indexOf('controls') !== -1);
+                return isLong ? el(TextareaControl, {
+                  key: 'f-' + k + '-' + idx,
+                  label: prettyLabel,
+                  value: item[k] || '',
+                  rows: 2,
+                  onChange: function (v) { updateItemProp(idx, k, v); }
+                }) : el(TextControl, {
+                  key: 'f-' + k + '-' + idx,
+                  label: prettyLabel,
+                  value: item[k] || '',
+                  onChange: function (v) { updateItemProp(idx, k, v); }
+                });
+              })
+            );
+          } else {
+            return el('div', {
+              key: 'rep-item-' + idx,
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                marginBottom: '8px'
+              }
+            },
+              el('div', { style: { flex: 1 } },
+                el(TextControl, {
+                  value: item || '',
+                  placeholder: 'Enter item text...',
+                  onChange: function (v) { updateItemProp(idx, null, v); }
+                })
+              ),
+              items.length > 1 ? el(Button, {
+                isDestructive: true,
+                isSmall: true,
+                onClick: function () { removeItem(idx); }
+              }, '×') : null
+            );
+          }
+        }),
+        el(Button, {
+          isPrimary: true,
+          isSmall: true,
+          style: { width: '100%', justifyContent: 'center', marginTop: '6px' },
+          onClick: addItem
+        }, '+ Add New Item')
+      );
+    }
+
     function createBlockRegistration(blockName, config) {
       registerBlockType(blockName, {
         title: config.title,
@@ -101,16 +266,25 @@
                 PanelBody,
                 {
                   key: 'panel-' + pIdx,
-                  title: panel.title,
+                  title: (panel.title || '').replace(/\s*\(JSON\)/gi, ''),
                   initialOpen: panel.initialOpen !== undefined ? panel.initialOpen : (pIdx === 0)
                 },
                 panel.fields.map(function (field, fIdx) {
                   const val = attributes[field.name] !== undefined ? attributes[field.name] : (field.default || '');
-                  if (field.type === 'select') {
+                  const cleanLabel = (field.label || '').replace(/\s*\(JSON\)/gi, '').replace(/\s*JSON\s*Array/gi, '');
+                  const fieldLabel = (field.name === 'eyebrow' || field.name.toLowerCase().indexOf('eyebrow') !== -1) ? 'Tag' : cleanLabel;
+
+                  if (isRepeaterField(field)) {
+                    return renderSmartRepeater(field, val, function (newVal) {
+                      const upd = {};
+                      upd[field.name] = newVal;
+                      setAttributes(upd);
+                    });
+                  } else if (field.type === 'select') {
                     const selectOptions = typeof field.options === 'function' ? field.options() : (field.options || (field.name === 'formId' ? getForminatorOptions() : []));
                     return el(SelectControl, {
                       key: 'field-' + field.name + '-' + fIdx,
-                      label: field.label,
+                      label: fieldLabel,
                       value: val,
                       options: selectOptions,
                       help: field.help || '',
@@ -123,7 +297,7 @@
                   } else if (field.type === 'textarea') {
                     return el(TextareaControl, {
                       key: 'field-' + field.name + '-' + fIdx,
-                      label: field.label,
+                      label: fieldLabel,
                       value: val,
                       rows: field.rows || 3,
                       onChange: function (newVal) {
@@ -135,7 +309,7 @@
                   } else {
                     return el(TextControl, {
                       key: 'field-' + field.name + '-' + fIdx,
-                      label: field.label,
+                      label: fieldLabel,
                       value: val,
                       onChange: function (newVal) {
                         const upd = {};
@@ -374,7 +548,7 @@
             PanelBody,
             { title: 'Header & Main Headline', initialOpen: false },
             el(TextControl, {
-              label: 'Eyebrow Tag',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// NIST SP 800-171 / CMMC Compliance Consultants',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -568,6 +742,12 @@
           { name: '', alt: 'Weber Metals', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/weber-metals.webp', imageId: 0 }
         ];
         let currentLogos = safeParseJsonArray(attributes.logosData, defaultLogos);
+        if (Array.isArray(currentLogos) && currentLogos.length === 5) {
+          const hasRealLogos = currentLogos.some(function (l) { return l.imageUrl && l.imageUrl.length > 0; });
+          if (!hasRealLogos) {
+            currentLogos = defaultLogos;
+          }
+        }
 
         function updateLogos(newLogos) {
           setAttributes({
@@ -940,11 +1120,18 @@
           }
         };
 
+        const ssrAttributes = {
+          eyebrow: attributes.eyebrow,
+          title: attributes.title,
+          detailedProcessLinkText: attributes.detailedProcessLinkText,
+          detailedProcessLinkUrl: attributes.detailedProcessLinkUrl,
+          flagText: attributes.flagText,
+          autoplayDelay: attributes.autoplayDelay
+        };
+
         const previewElement = ServerSideRender ? el(ServerSideRender, {
           block: 'secure-centric/roadmap-stepper',
-          attributes: Object.assign({}, attributes, {
-            stepsData: JSON.stringify(currentSteps)
-          })
+          attributes: ssrAttributes
         }) : el('div', {
           style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
         }, el('strong', {}, 'Roadmap Stepper (' + currentSteps.length + ' Milestones)'));
@@ -983,7 +1170,7 @@
             PanelBody,
             { title: 'Roadmap Header & Navigation', initialOpen: true },
             el(TextControl, {
-              label: 'Section Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// THE CMMC PROCESS',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -1252,7 +1439,7 @@
               onChange: function (val) { setAttributes({ displayMode: val }); }
             }),
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// CLIENT TESTIMONIALS',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -1372,7 +1559,7 @@
           title: 'Explainer Content',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// SECTION EXPLAINER' },
+            { name: 'eyebrow', label: 'Tag', default: '// SECTION EXPLAINER' },
             { name: 'title', label: 'Title', default: 'What is CMMC compliance?' },
             { name: 'p1', label: 'Paragraph 1', type: 'textarea', rows: 3, default: 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense subcontractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).' },
             { name: 'p2', label: 'Paragraph 2', type: 'textarea', rows: 3, default: 'Under 32 CFR Part 170 and DFARS 252.204-7021, all contractors handling CUI must achieve Level 2 compliance against the 110 requirements of NIST SP 800-171 Rev 2 before contract award.' },
@@ -1394,7 +1581,7 @@
           title: 'Header & Links',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// PROOF & CREDENTIALS' },
+            { name: 'eyebrow', label: 'Tag', default: '// PROOF & CREDENTIALS' },
             { name: 'title', label: 'Title', default: 'Why Secure-Centric' },
             { name: 'description', label: 'Description', type: 'textarea', default: 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.' },
             { name: 'linkText', label: 'Link Text', default: 'Full Company Credentials →' },
@@ -1768,7 +1955,7 @@
             PanelBody,
             { title: 'Section Header', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// ACCREDITATIONS & HONORS',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -2018,7 +2205,7 @@
             PanelBody,
             { title: 'Header & CTA Button', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// FREQUENTLY ASKED QUESTIONS',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -2134,7 +2321,7 @@
           title: 'Section Heading',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// APPROACH COMPARISON' },
+            { name: 'eyebrow', label: 'Tag', default: '// APPROACH COMPARISON' },
             { name: 'title', label: 'Title', default: 'Three Ways Defense Subcontractors Approach CMMC' },
             { name: 'description', label: 'Description', type: 'textarea', default: 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.' },
             { name: 'btnText', label: 'CTA Button Text', default: 'Engage Secure-Centric →' },
@@ -2194,9 +2381,7 @@
             { name: 'primaryBtnText', label: 'Primary Button Text', default: 'Book a Discovery Call →' },
             { name: 'primaryBtnUrl', label: 'Primary Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' },
             { name: 'secondaryBtnText', label: 'Secondary Button Text', default: 'Submit Your Query' },
-            { name: 'secondaryBtnUrl', label: 'Secondary Button URL', default: '/contact/' },
-            { name: 'phoneText', label: 'Phone Call Text (Fallback)', default: 'Call (323) 410-5941' },
-            { name: 'phoneUrl', label: 'Phone Call URL (Fallback)', default: 'tel:323-410-5941' }
+            { name: 'secondaryBtnUrl', label: 'Secondary Button URL', default: '/contact/' }
           ]
         }
       ]
@@ -2281,7 +2466,7 @@
             PanelBody,
             { title: 'Text Beside Form (Left Info Column)', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.infoEyebrow !== undefined ? attributes.infoEyebrow : '// DIRECT ENGAGEMENT',
               onChange: function (val) { setAttributes({ infoEyebrow: val }); }
             }),
@@ -2539,7 +2724,7 @@
             PanelBody,
             { title: 'Header Copy', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// DEFENSE SPECIALISTS',
               onChange: function (val) { setAttributes({ eyebrow: val }); }
             }),
@@ -2719,7 +2904,7 @@
             PanelBody,
             { title: 'Results Header', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow || '// VERIFIED TRACK RECORD',
               onChange: function (v) { setAttributes({ eyebrow: v }); }
             }),
@@ -2855,7 +3040,7 @@
             PanelBody,
             { title: 'Principles Header', initialOpen: true },
             el(TextControl, {
-              label: 'Eyebrow',
+              label: 'Tag',
               value: attributes.eyebrow || '// CORE PRINCIPLES & INDICATORS',
               onChange: function (v) { setAttributes({ eyebrow: v }); }
             }),
@@ -2927,7 +3112,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// PHASE-BY-PHASE EXECUTION' },
+            { name: 'eyebrow', label: 'Tag', default: '// PHASE-BY-PHASE EXECUTION' },
             { name: 'title', label: 'Heading', default: 'What we do, phase by phase' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision.' }
           ]
@@ -2954,7 +3139,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// ENGAGEMENT WORKFLOW' },
+            { name: 'eyebrow', label: 'Tag', default: '// ENGAGEMENT WORKFLOW' },
             { name: 'title', label: 'Heading', default: 'How an engagement starts' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'A structured, predictable path to verifiable defense compliance with zero surprises.' }
           ]
@@ -2981,7 +3166,7 @@
           title: 'Lead Magnet Copy & Options',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// FREE DOWNLOADABLE RESOURCE' },
+            { name: 'eyebrow', label: 'Tag', default: '// FREE DOWNLOADABLE RESOURCE' },
             { name: 'name', label: 'Resource Title', default: 'First-Call Prep Checklist (what to have ready)' },
             { name: 'docType', label: 'Document Badge', default: 'PDF / EXCEL WORKBOOK' },
             { name: 'placeholder', label: 'Input Placeholder', default: 'Enter corporate email address' },
@@ -3019,7 +3204,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// COMPREHENSIVE COMPLIANCE ANALYSIS' },
+            { name: 'eyebrow', label: 'Tag', default: '// COMPREHENSIVE COMPLIANCE ANALYSIS' },
             { name: 'title', label: 'Heading', default: 'Long-form sections' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Explanations of requirements, timelines, and assessor expectations.' }
           ]
@@ -3046,7 +3231,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// KNOWLEDGE ECOSYSTEM' },
+            { name: 'eyebrow', label: 'Tag', default: '// KNOWLEDGE ECOSYSTEM' },
             { name: 'title', label: 'Heading', default: 'Related Compliance Resources' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Explore related compliance frameworks, staging guides, and scoping resources.' }
           ]
@@ -3073,7 +3258,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// COMPLIANCE TIERS' },
+            { name: 'eyebrow', label: 'Tag', default: '// COMPLIANCE TIERS' },
             { name: 'title', label: 'Heading', default: 'By CMMC Level: Where Your Contract Puts You' }
           ]
         },
@@ -3099,7 +3284,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// EXECUTIVE PERSONAS' },
+            { name: 'eyebrow', label: 'Tag', default: '// EXECUTIVE PERSONAS' },
             { name: 'title', label: 'Heading', default: 'By Role: What Each Executive Needs From Us' }
           ]
         },
@@ -3125,7 +3310,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// DEFENSE INDUSTRIAL BASE (DIB)' },
+            { name: 'eyebrow', label: 'Tag', default: '// DEFENSE INDUSTRIAL BASE (DIB)' },
             { name: 'title', label: 'Heading', default: 'By Position in the Defense Supply Chain' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Where defense contractors sit in the DoD supply chain and what triggers compliance.' }
           ]
@@ -3152,7 +3337,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// DEFENSE SUPPLY CHAIN PATHS' },
+            { name: 'eyebrow', label: 'Tag', default: '// DEFENSE SUPPLY CHAIN PATHS' },
             { name: 'title', label: 'Heading', default: 'Your Path, Step by Step' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Sequential milestones tailored to your exact role in the Defense Industrial Base.' }
           ]
@@ -3179,7 +3364,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// OBJECTIVE COMPARISON' },
+            { name: 'eyebrow', label: 'Tag', default: '// OBJECTIVE COMPARISON' },
             { name: 'title', label: 'Heading', default: 'Who needs an RPO, and who may not' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Understanding the fundamental regulatory distinctions to make informed compliance decisions.' }
           ]
@@ -3217,7 +3402,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// DECISION FRAMEWORK' },
+            { name: 'eyebrow', label: 'Tag', default: '// DECISION FRAMEWORK' },
             { name: 'title', label: 'Heading', default: 'How to choose a CMMC consultant: 7 checks' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Check every qualification before engaging any CMMC advisory firm.' },
             { name: 'btnText', label: 'Button Text', default: 'Book a Discovery Call →' },
@@ -3268,7 +3453,7 @@
           title: 'Header & Eyebrow',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// DETAILED REVIEW STAGES' },
+            { name: 'eyebrow', label: 'Tag', default: '// DETAILED REVIEW STAGES' },
             { name: 'title', label: 'Heading', default: 'Detailed review stages' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Every activity, team participant, and tangible deliverable produced during this review.' }
           ]
@@ -3295,7 +3480,7 @@
           title: 'Card Content',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// IN-PERSON VERIFICATION' },
+            { name: 'eyebrow', label: 'Tag', default: '// IN-PERSON VERIFICATION' },
             { name: 'title', label: 'Heading', default: 'On-Site Physical & Technical Walkthrough' },
             { name: 'lead', label: 'Lead Sentence', type: 'textarea', default: 'We inspect real hardware, server rooms, and shop floors.' }
           ]
@@ -3311,29 +3496,245 @@
     });
 
     // =========================================================================
-    // 29. DATA TABLE BLOCK
+    // 29. DATA TABLE BLOCK (GRANULAR EDITABLE HEADERS & SEPARATE CELL CONTROLS)
     // =========================================================================
-    createBlockRegistration('secure-centric/data-table', {
+    registerBlockType('secure-centric/data-table', {
       title: 'Data Table (Gap & Compliance Matrix)',
       icon: 'table-col-after',
       category: 'secure-centric-process',
-      panels: [
-        {
-          title: 'Table Header',
-          initialOpen: true,
-          fields: [
-            { name: 'title', label: 'Table Heading', default: 'Findings Matrix & Gap Breakdown' }
-          ]
-        },
-        {
-          title: 'Table Data (JSON)',
-          initialOpen: false,
-          fields: [
-            { name: 'colsData', label: 'Columns Header JSON Array', type: 'textarea' },
-            { name: 'rowsData', label: 'Rows Data JSON Array', type: 'textarea' }
-          ]
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const defaultCols = ['Category / Control', 'Status', 'Impact', 'Required Remediation', 'Owner'];
+        const defaultRows = [
+          ['AC.L2-3.1.1 (Access Control & Boundary Protection)', 'Non-Compliant', 'High (-5 SPRS)', 'Enforce centralized MFA & remove shared admin credentials'],
+          ['IA.L2-3.5.3 (Multifactor Authentication)', 'Partially Met', 'High (-5 SPRS)', 'Deploy FIPS 140-2 validated hardware tokens across all privileged sessions'],
+          ['SC.L2-3.13.11 (FIPS-Validated Cryptography)', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules'],
+          ['AU.L2-3.3.1 (Audit Logging & SIEM Review)', 'Compliant', 'Low (0 SPRS)', 'Weekly automated audit log analysis and tamper-proof log forwarding verified']
+        ];
+
+        let cols = safeParseJsonArray(attributes.colsData, defaultCols);
+        if (!Array.isArray(cols) || cols.length === 0) cols = defaultCols;
+
+        let rows = safeParseJsonArray(attributes.rowsData, defaultRows);
+        if (!Array.isArray(rows) || rows.length === 0) rows = defaultRows;
+
+        function updateCols(newCols) {
+          setAttributes({ colsData: JSON.stringify(newCols) });
         }
-      ]
+
+        function updateRows(newRows) {
+          setAttributes({ rowsData: JSON.stringify(newRows) });
+        }
+
+        function addColumn() {
+          const newCols = cols.concat(['Column ' + (cols.length + 1)]);
+          updateCols(newCols);
+          const newRows = rows.map(function (r) {
+            const arr = Array.isArray(r) ? r.slice() : [];
+            while (arr.length < newCols.length) arr.push('');
+            return arr;
+          });
+          updateRows(newRows);
+        }
+
+        function removeColumn(cIdx) {
+          if (cols.length <= 1) return;
+          const newCols = cols.filter(function (_, i) { return i !== cIdx; });
+          updateCols(newCols);
+          const newRows = rows.map(function (r) {
+            if (!Array.isArray(r)) return [];
+            return r.filter(function (_, i) { return i !== cIdx; });
+          });
+          updateRows(newRows);
+        }
+
+        function updateColHeader(cIdx, val) {
+          const newCols = cols.map(function (c, i) { return i === cIdx ? val : c; });
+          updateCols(newCols);
+        }
+
+        function addRow() {
+          const emptyRow = cols.map(function () { return ''; });
+          updateRows(rows.concat([emptyRow]));
+        }
+
+        function removeRow(rIdx) {
+          if (rows.length <= 1) return;
+          updateRows(rows.filter(function (_, i) { return i !== rIdx; }));
+        }
+
+        function updateCell(rIdx, cIdx, val) {
+          const newRows = rows.map(function (r, ri) {
+            if (ri === rIdx) {
+              const arr = Array.isArray(r) ? r.slice() : [];
+              while (arr.length < cols.length) arr.push('');
+              arr[cIdx] = val;
+              return arr;
+            }
+            return r;
+          });
+          updateRows(newRows);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        };
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Table Title & Anchor', initialOpen: true },
+            el(TextControl, {
+              label: 'Table Heading',
+              value: attributes.title !== undefined ? attributes.title : 'Findings Matrix & Gap Breakdown',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextControl, {
+              label: 'Anchor ID',
+              value: attributes.anchor || attributes.id || '',
+              onChange: function (val) { setAttributes({ anchor: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Table Column Headers (' + cols.length + ' Columns)', initialOpen: true },
+            el('p', { style: { fontSize: '12px', color: '#64748B', marginBottom: '12px' } },
+              'Customize the name of each column header. Adding or removing columns automatically adjusts table cells.'
+            ),
+            cols.map(function (c, cIdx) {
+              return el('div', {
+                key: 'col-header-' + cIdx,
+                style: {
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginBottom: '10px'
+                }
+              },
+                el('div', { style: { flex: 1 } },
+                  el(TextControl, {
+                    label: 'Column ' + (cIdx + 1) + ' Heading',
+                    value: c || '',
+                    onChange: function (v) { updateColHeader(cIdx, v); }
+                  })
+                ),
+                cols.length > 1 ? el(Button, {
+                  isDestructive: true,
+                  isSmall: true,
+                  style: { marginTop: '22px' },
+                  onClick: function () { removeColumn(cIdx); }
+                }, 'Remove') : null
+              );
+            }),
+            el(Button, {
+              isSecondary: true,
+              isSmall: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '6px' },
+              onClick: addColumn
+            }, '+ Add New Column Header')
+          ),
+          el(
+            PanelBody,
+            { title: 'Table Rows Data (' + rows.length + ' Rows)', initialOpen: true },
+            el('p', { style: { fontSize: '12px', color: '#64748B', marginBottom: '14px' } },
+              'Each row contains separate editable fields corresponding to each column header.'
+            ),
+            rows.map(function (row, rIdx) {
+              const rowArr = Array.isArray(row) ? row : [];
+              return el('div', {
+                key: 'table-row-' + rIdx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #CBD5E1',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '14px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '10px',
+                    paddingBottom: '6px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    'Row ' + (rIdx + 1) + (rowArr[0] ? ' • ' + (String(rowArr[0]).length > 25 ? String(rowArr[0]).substring(0, 25) + '...' : rowArr[0]) : '')
+                  ),
+                  rows.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeRow(rIdx); }
+                  }, 'Delete Row') : null
+                ),
+                cols.map(function (colName, cIdx) {
+                  const cellVal = rowArr[cIdx] !== undefined ? rowArr[cIdx] : '';
+                  const isLong = String(cellVal).length > 40 || colName.toLowerCase().indexOf('remediation') !== -1 || colName.toLowerCase().indexOf('desc') !== -1;
+                  return isLong ? el(TextareaControl, {
+                    key: 'cell-' + rIdx + '-' + cIdx,
+                    label: colName || ('Column ' + (cIdx + 1)),
+                    value: cellVal,
+                    rows: 2,
+                    onChange: function (v) { updateCell(rIdx, cIdx, v); }
+                  }) : el(TextControl, {
+                    key: 'cell-' + rIdx + '-' + cIdx,
+                    label: colName || ('Column ' + (cIdx + 1)),
+                    value: cellVal,
+                    onChange: function (v) { updateCell(rIdx, cIdx, v); }
+                  });
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              isSmall: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addRow
+            }, '+ Add New Table Row')
+          )
+        );
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/data-table',
+          attributes: attributes
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Data Table (' + rows.length + ' Rows, ' + cols.length + ' Columns)'));
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================
@@ -3348,7 +3749,7 @@
           title: 'Diagram Header',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// BOUNDARY SEGREGATION' },
+            { name: 'eyebrow', label: 'Tag', default: '// BOUNDARY SEGREGATION' },
             { name: 'title', label: 'Heading', default: 'CUI Data Flow & Boundary Isolation Architecture' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Data flow path defining CUI entry, processing, storage, and physical facility boundaries.' }
           ]
@@ -3419,7 +3820,7 @@
           title: 'Section Header',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// 110 NIST CONTROLS' },
+            { name: 'eyebrow', label: 'Tag', default: '// 110 NIST CONTROLS' },
             { name: 'title', label: 'Heading', default: 'The 110 Requirements Across 14 Families' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Click on any control family below to see requirement counts and scope objectives tested by C3PAO assessors.' }
           ]
@@ -3446,7 +3847,7 @@
           title: 'Section Header',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// 110 CONTROLS IN 14 FAMILIES' },
+            { name: 'eyebrow', label: 'Tag', default: '// 110 CONTROLS IN 14 FAMILIES' },
             { name: 'title', label: 'Heading', default: 'The 14 Control Families of NIST SP 800-171' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'The complete NIST SP 800-171 Rev 2 security control architecture required for CMMC Level 2.' }
           ]
@@ -3525,7 +3926,7 @@
           title: 'Section Header',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// VERIFICATION PROCEDURE' },
+            { name: 'eyebrow', label: 'Tag', default: '// VERIFICATION PROCEDURE' },
             { name: 'title', label: 'Heading', default: 'How to Verify Any CMMC RPO or Registered Practitioner' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Protect your company from unqualified consultants by verifying accreditation directly on the official Cyber AB registry.' }
           ]
@@ -3552,7 +3953,7 @@
           title: 'Section Header',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Eyebrow', default: '// VERIFIED DEFENSE METRICS' },
+            { name: 'eyebrow', label: 'Tag', default: '// VERIFIED DEFENSE METRICS' },
             { name: 'title', label: 'Heading', default: 'CMMC By the Numbers' },
             { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'CMMC compliance numbers grounded in Department of War regulatory criteria.' }
           ]

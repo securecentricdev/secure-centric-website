@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// BOUNDARY SEGREGATION';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// BOUNDARY SEGREGATION';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CUI Data Flow & Boundary Isolation Architecture';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Data flow path defining CUI entry, processing, storage, and physical facility boundaries.';
 
@@ -37,7 +37,9 @@ $total_steps = count( $steps );
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/boundary-diagram">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 32px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

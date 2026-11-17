@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// DEFENSE SPECIALISTS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DEFENSE SPECIALISTS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'The Team Behind Your CMMC Readiness';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Accredited Cyber AB Registered Practitioners with decades of technical engineering and audit defense experience.';
 
@@ -52,7 +52,9 @@ if ( empty( $members ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/leadership-team">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 40px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem; margin: 0;">
         <?php echo esc_html( $description ); ?>

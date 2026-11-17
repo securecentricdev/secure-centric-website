@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// DECISION FRAMEWORK';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DECISION FRAMEWORK';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How to choose a CMMC consultant: 7 checks';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Check every qualification before engaging any CMMC advisory firm.';
 $btn_text = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
@@ -40,7 +40,9 @@ if ( empty( $checks ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/consultant-scorer">
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 36px; text-align: center;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); max-width: 650px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

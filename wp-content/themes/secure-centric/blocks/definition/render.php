@@ -34,7 +34,9 @@ if ( empty( $points ) ) {
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/definition-callout">
   <div class="site-container">
     <div class="definition-card">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow">// COMPLIANCE ARTIFACT DEFINITION</span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 16px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h2>
       <p class="definition-desc"><?php echo esc_html( $desc ); ?></p>
       <div class="definition-points">

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// FREE DOWNLOADABLE RESOURCE';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// FREE DOWNLOADABLE RESOURCE';
 $name        = ! empty( $attributes['name'] ) ? $attributes['name'] : 'First-Call Prep Checklist (what to have ready)';
 $doc_type    = ! empty( $attributes['docType'] ) ? $attributes['docType'] : 'PDF / EXCEL WORKBOOK';
 $placeholder = ! empty( $attributes['placeholder'] ) ? $attributes['placeholder'] : 'Enter corporate email address';
@@ -42,7 +42,9 @@ if ( empty( $ticks ) ) {
     <div class="lead-magnet-band">
       <div class="lead-magnet-grid">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="font-size: 0.6875rem;"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h3 style="font-size: 1.25rem; margin-bottom: 8px;"><?php echo esc_html( $name ); ?></h3>
           <ul class="checklist-bullet-list">
             <?php foreach ( $ticks as $t ) : ?>

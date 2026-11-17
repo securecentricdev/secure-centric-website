@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// OBJECTIVE COMPARISON';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// OBJECTIVE COMPARISON';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Who needs an RPO, and who may not';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Understanding the fundamental regulatory distinctions to make informed compliance decisions.';
 
@@ -55,7 +55,9 @@ if ( empty( $col2_items ) ) {
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:columns" data-wp-pattern="secure-centric/two-col-compare">
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 40px; text-align: center;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); max-width: 700px; margin: 12px auto 0;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

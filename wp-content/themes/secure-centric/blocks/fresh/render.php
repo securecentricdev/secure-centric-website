@@ -35,7 +35,9 @@ if ( empty( $sources ) ) {
     <div class="freshness-card">
       <div class="freshness-header">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow">// REGULATORY CITATIONS</span>
+          <?php endif; ?>
           <h3 style="margin-bottom: 8px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h3>
           <p style="color: var(--color-body-text); font-size: 0.9375rem;">
             Last formally reviewed and verified against DoD acquisition rulemaking: <strong><?php echo esc_html( $updated ); ?></strong>.

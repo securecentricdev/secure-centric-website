@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// VERIFIED TRACK RECORD';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// VERIFIED TRACK RECORD';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Our results';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '100% C3PAO first-time pass record across defense primes and subcontractors nationwide.';
 
@@ -51,7 +51,9 @@ if ( empty( $results ) ) {
 <section class="section-midnight py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/results-numbers" style="background-color: var(--color-midnight); color: var(--color-white);">
   <div class="site-container">
     <div class="section-header-center" style="margin-bottom: 40px; text-align: center;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow dark" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="color: var(--color-white); margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-slate); max-width: 640px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

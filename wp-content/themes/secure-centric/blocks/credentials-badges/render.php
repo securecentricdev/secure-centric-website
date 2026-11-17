@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// ACCREDITATIONS & HONORS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// ACCREDITATIONS & HONORS';
 $title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Credentials and badges';
 
 $theme_uri = get_template_directory_uri();
@@ -74,7 +74,9 @@ if ( function_exists( 'sc_clean_text' ) ) {
   <div class="site-container">
     <div class="credentials-badges-header" style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow" style="display: block; margin-bottom: 8px;"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
       <?php endif; ?>
       <h3 style="font-size: 1.75rem; color: var(--color-navy); margin: 0;"><?php echo esc_html( $title ); ?></h3>
     </div>

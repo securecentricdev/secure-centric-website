@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// IN-PERSON VERIFICATION';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// IN-PERSON VERIFICATION';
 $title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'On-Site Physical & Technical Walkthrough';
 $lead    = ! empty( $attributes['lead'] ) ? $attributes['lead'] : 'We inspect real hardware, server rooms, and shop floors.';
 
@@ -38,7 +38,9 @@ if ( empty( $points ) ) {
       <div class="iconbox-header">
         <div class="iconbox-symbol">🏢</div>
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h3 style="margin-bottom: 10px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h3>
           <p style="font-size: 1.0625rem; color: var(--color-navy); font-weight: 600;"><?php echo esc_html( $lead ); ?></p>
         </div>

@@ -34,7 +34,9 @@ if ( empty( $rows ) ) {
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:table" data-wp-pattern="secure-centric/checklist-preview">
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 32px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow">// SAMPLE SPREADSHEET ARTIFACT</span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

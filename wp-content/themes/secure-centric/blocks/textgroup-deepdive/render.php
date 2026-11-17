@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// COMPREHENSIVE COMPLIANCE ANALYSIS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// COMPREHENSIVE COMPLIANCE ANALYSIS';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Long-Form Regulatory Analysis';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Explanations of requirements, timelines, and assessor expectations.';
 
@@ -62,7 +62,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/textgroup-deepdive"<?php echo $anchor_attr; ?>>
   <div class="site-container" style="max-width: 960px;">
     <div class="section-header-left" style="margin-bottom: 40px;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
       <p style="color: var(--color-body-text); font-size: 1.05rem; line-height: 1.7;"><?php echo esc_html( $subtitle ); ?></p>
     </div>

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $layout             = ! empty( $attributes['layout'] ) ? $attributes['layout'] : 'home';
-$eyebrow            = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// NIST SP 800-171 / CMMC Compliance Consultants';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// NIST SP 800-171 / CMMC Compliance Consultants';
 $title              = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC compliance for defense subcontractors, guided by a Cyber AB RPO';
 $highlight_text     = ! empty( $attributes['highlightText'] ) ? $attributes['highlightText'] : 'Cyber AB RPO';
 $description        = ! empty( $attributes['description'] ) ? $attributes['description'] : 'We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation.';
@@ -157,7 +157,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       </div>
       <div class="hero-home-grid">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           
           <div class="card-dark" style="background-color: rgba(11, 20, 55, 0.85); border-left: 3px solid var(--color-cyber-cyan); margin-bottom: 20px; padding: 18px 22px;">
@@ -229,7 +231,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     <div class="site-container">
       <div class="resource-hero-grid">
         <div class="resource-hero-left">
-          <span class="section-eyebrow dark" style="margin-bottom: 14px;">// COMPLIANCE RESOURCE &bull; INSTANT ACCESS</span>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
+          <span class="section-eyebrow dark" style="margin-bottom: 14px;"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead"><?php echo esc_html( $description ); ?></p>
 
@@ -320,7 +324,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
            data-wp-pattern="secure-centric/hero-center"
            style="text-align: center; border-bottom: 1px solid var(--color-dark-line); position: relative; overflow: hidden;">
     <div class="site-container" style="position: relative; z-index: 2; max-width: 860px; margin: 0 auto;">
+      <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow dark" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+      <?php endif; ?>
       <h1 style="color: var(--color-white); margin-bottom: 18px; font-size: clamp(2rem, 3.8vw, 3rem); line-height: 1.2;">
         <?php echo esc_html( $title ); ?>
       </h1>
@@ -346,7 +352,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       </div>
       <div class="hero-home-grid">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
           <div style="display: flex; gap: 16px; align-items: center; margin-top: 24px; flex-wrap: wrap;">
@@ -394,7 +402,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     <div class="site-container">
       <div class="hero-home-grid">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
           <div style="margin-top: 24px;">
@@ -432,7 +442,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       </div>
       <div class="hero-home-grid">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
           <div style="display: flex; gap: 16px; align-items: center; margin-top: 24px; flex-wrap: wrap;">
@@ -475,9 +487,11 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
            style="border-bottom: 1px solid var(--color-dark-line); position: relative; text-align: center;">
     <div class="site-container">
       <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="badge-chip dark" style="margin-bottom: 16px;">
           <i class="dot"></i> <?php echo esc_html( $eyebrow ); ?>
         </span>
+        <?php endif; ?>
         <h1 style="color: var(--color-white); font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 20px; line-height: 1.2;">
           <?php echo esc_html( $title ); ?>
         </h1>
@@ -503,7 +517,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     <div class="site-container">
       <div class="resource-hero-grid">
         <div class="resource-hero-left">
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark" style="margin-bottom: 14px;">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead"><?php echo esc_html( $description ); ?></p>
 
@@ -586,7 +602,9 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
     <div class="site-container" style="position: relative; z-index: 2;">
       <div class="hero-home-grid">
         <div class="hero-home-content">
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h1>
             <?php
             if ( ! empty( $highlight_text ) && false !== strpos( $title, $highlight_text ) ) {

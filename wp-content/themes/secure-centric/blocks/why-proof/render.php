@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// PROOF & CREDENTIALS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// PROOF & CREDENTIALS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Why Secure-Centric';
 $description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We help defense subcontractors navigate DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2 audits with defensible, assessor-tested evidence.';
 $link_text   = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Full Company Credentials →';
@@ -58,7 +58,9 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
   <div class="site-container">
     <div class="why-header-row" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
       <div style="max-width: 780px;">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
         <h2 style="margin-bottom: 12px;"><?php echo esc_html( $title ); ?></h2>
         <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">
           <?php echo esc_html( $description ); ?>

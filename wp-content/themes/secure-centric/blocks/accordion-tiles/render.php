@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// 110 NIST CONTROLS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// 110 NIST CONTROLS';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'The 110 Requirements Across 14 Families';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Click on any control family below to see requirement counts and scope objectives tested by C3PAO assessors.';
 
@@ -44,7 +44,9 @@ if ( empty( $families ) ) {
 
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group">
   <div class="site-container">
+    <?php if ( ! empty( $eyebrow ) ) : ?>
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+    <?php endif; ?>
     <h2><?php echo esc_html( $title ); ?></h2>
     <p style="font-size: 1rem; color: var(--color-body-text); margin-top: 8px;">
       <?php echo esc_html( $subtitle ); ?>

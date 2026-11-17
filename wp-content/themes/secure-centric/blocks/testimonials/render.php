@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $display_mode = ! empty( $attributes['displayMode'] ) ? $attributes['displayMode'] : 'carousel';
-$eyebrow      = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// CLIENT TESTIMONIALS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// CLIENT TESTIMONIALS';
 $title        = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What Defense Contractors Say About Working With Us';
 
 $default_reviews = array(
@@ -143,7 +143,9 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
   <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-grid" id="testimonials-section">
     <div class="site-container">
       <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
         <h2><?php echo esc_html( $title ); ?></h2>
         <p style="color: var(--color-slate); max-width: 600px; margin: 8px auto 0; font-size: 1.05rem;">
           <?php echo esc_html( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Real feedback from C-level executives and IT leadership across the defense industrial base.' ); ?>
@@ -161,7 +163,9 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
     <div class="site-container">
       <div class="testimonials-header-row">
         <div>
+          <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+          <?php endif; ?>
           <h2><?php echo esc_html( $title ); ?></h2>
           <?php if ( ! empty( $attributes['subtitle'] ) ) : ?>
             <p style="color: var(--color-body-text); font-size: 1.05rem; margin-top: 8px;"><?php echo esc_html( $attributes['subtitle'] ); ?></p>

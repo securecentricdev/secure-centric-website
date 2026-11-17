@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC guides, checklists and tools';
-$eyebrow  = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '';
 $theme    = ! empty( $attributes['theme'] ) ? $attributes['theme'] : ( ! empty( $attributes['backgroundColor'] ) ? $attributes['backgroundColor'] : 'white' );
 $is_dark  = ( 'midnight' === $theme || 'dark' === $theme );
@@ -93,7 +93,9 @@ if ( function_exists( 'sc_clean_text' ) ) {
   <div class="site-container">
     <div style="margin-bottom: 32px;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
+        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow <?php echo $is_dark ? 'dark' : ''; ?>" style="margin-bottom: 8px;"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
       <?php endif; ?>
       <h2 style="<?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?> margin-bottom: 10px; font-size: clamp(1.6rem, 2.8vw, 2.25rem);"><?php echo esc_html( $title ); ?></h2>
       <?php if ( ! empty( $subtitle ) ) : ?>

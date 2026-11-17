@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// SECTION EXPLAINER';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// SECTION EXPLAINER';
 $title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What is CMMC compliance?';
 
 $paras = array();
@@ -59,7 +59,9 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:group"<?php echo $anchor_attr; ?>>
   <div class="site-container" style="max-width: 900px;">
+    <?php if ( ! empty( $eyebrow ) ) : ?>
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+    <?php endif; ?>
     <h2 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h2>
     <?php foreach ( $paras as $para ) : ?>
       <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">

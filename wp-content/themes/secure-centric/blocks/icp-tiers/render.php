@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow   = ! empty( $attributes['eyebrow'] ) ? str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) : '// COMPLIANCE TIERS';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// COMPLIANCE TIERS';
 $title     = ! empty( $attributes['title'] ) ? $attributes['title'] : 'By CMMC Level: Where Your Contract Puts You';
 $link_text = ! empty( $attributes['linkText'] ) ? $attributes['linkText'] : 'Explore Level Roadmap →';
 $link_url  = ! empty( $attributes['linkUrl'] ) ? $attributes['linkUrl'] : home_url( '/services/cmmc-compliance/' );
@@ -35,7 +35,9 @@ if ( empty( $items ) ) {
 
 <section class="section-white py-section wp-block-inspect" data-wp-block="wp:columns {columns:4}">
   <div class="site-container">
+    <?php if ( ! empty( $eyebrow ) ) : ?>
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+    <?php endif; ?>
     <h2 style="margin-bottom: 32px;"><?php echo esc_html( $title ); ?></h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
       <?php foreach ( $items as $t ) : ?>
