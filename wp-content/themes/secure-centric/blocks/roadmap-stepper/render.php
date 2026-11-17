@@ -107,9 +107,6 @@ $default_steps = array(
         'link'         => home_url( '/services/virtual-ciso/' ),
     ),
 );
-        'link'   => home_url( '/services/virtual-ciso/' ),
-    ),
-);
 
 $steps_raw = array();
 if ( ! empty( $attributes['stepsData'] ) ) {
