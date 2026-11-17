@@ -403,3 +403,272 @@ function secure_centric_start_buffer() {
     }
 }
 add_action( 'template_redirect', 'secure_centric_start_buffer', 1 );
+
+/**
+ * =========================================================================
+ * WordPress Theme Customizer Integration (Appearance -> Customize)
+ * Supports Global Colors, Typography, Header Options, Footer Options & CSS
+ * =========================================================================
+ */
+
+/**
+ * Ensure Appearance -> Customize menu item appears in Admin for Block Theme
+ */
+function secure_centric_add_customizer_menu() {
+    add_theme_page(
+        __( 'Customize', 'secure-centric' ),
+        __( 'Customize', 'secure-centric' ),
+        'edit_theme_options',
+        'customize.php'
+    );
+}
+add_action( 'admin_menu', 'secure_centric_add_customizer_menu' );
+
+/**
+ * Register Customizer Panels, Sections, and Controls
+ */
+function secure_centric_customize_register( $wp_customize ) {
+    // -------------------------------------------------------------------------
+    // 1. Global Brand Colors & Typography
+    // -------------------------------------------------------------------------
+    $wp_customize->add_section( 'sc_global_section', array(
+        'title'       => __( 'Global Colors & Typography', 'secure-centric' ),
+        'priority'    => 20,
+        'description' => __( 'Configure site-wide brand colors and typography. Changes apply instantly across all pages and blocks.', 'secure-centric' ),
+    ) );
+
+    // Primary Brand Color (Navy)
+    $wp_customize->add_setting( 'sc_primary_color', array(
+        'default'           => '#0B1437',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sc_primary_color', array(
+        'label'       => __( 'Primary Brand Color (Navy)', 'secure-centric' ),
+        'description' => __( 'Used for headlines, dark backgrounds, navigation, and badges.', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'settings'    => 'sc_primary_color',
+    ) ) );
+
+    // Electric Blue Accent
+    $wp_customize->add_setting( 'sc_accent_blue', array(
+        'default'           => '#2F5BFF',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sc_accent_blue', array(
+        'label'       => __( 'Accent Electric Blue Color', 'secure-centric' ),
+        'description' => __( 'Used for primary CTA buttons, active state indicators, and links.', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'settings'    => 'sc_accent_blue',
+    ) ) );
+
+    // Cyber Cyan Highlight
+    $wp_customize->add_setting( 'sc_cyan_color', array(
+        'default'           => '#00D4FF',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sc_cyan_color', array(
+        'label'       => __( 'Cyber Cyan Highlight Color', 'secure-centric' ),
+        'description' => __( 'Used for glowing badges, borders, gradients, and accents.', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'settings'    => 'sc_cyan_color',
+    ) ) );
+
+    // Light Background (Ice)
+    $wp_customize->add_setting( 'sc_ice_bg', array(
+        'default'           => '#F4F7FE',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'sc_ice_bg', array(
+        'label'       => __( 'Light Section Background (Ice)', 'secure-centric' ),
+        'description' => __( 'Used for alternating section backgrounds and light cards.', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'settings'    => 'sc_ice_bg',
+    ) ) );
+
+    // Heading Font Family
+    $wp_customize->add_setting( 'sc_heading_font', array(
+        'default'           => "'Plus Jakarta Sans', sans-serif",
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_heading_font', array(
+        'label'       => __( 'Global Heading Font Family', 'secure-centric' ),
+        'description' => __( 'Select font applied to all headings (H1, H2, H3, H4, H5).', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'type'        => 'select',
+        'choices'     => array(
+            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans (Theme Default)',
+            "'Inter', sans-serif"              => 'Inter (Clean & Modern)',
+            "'Roboto', sans-serif"             => 'Roboto (Technical Standard)',
+            "'JetBrains Mono', monospace"      => 'JetBrains Mono (Defense/Cyber)',
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" => 'System UI Sans-Serif',
+        ),
+    ) );
+
+    // Body Font Family
+    $wp_customize->add_setting( 'sc_body_font', array(
+        'default'           => "'Plus Jakarta Sans', sans-serif",
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_body_font', array(
+        'label'       => __( 'Global Body Font Family', 'secure-centric' ),
+        'description' => __( 'Select font applied to body copy, paragraphs, lists, and inputs.', 'secure-centric' ),
+        'section'     => 'sc_global_section',
+        'type'        => 'select',
+        'choices'     => array(
+            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans (Theme Default)',
+            "'Inter', sans-serif"              => 'Inter (Clean & Modern)',
+            "'Roboto', sans-serif"             => 'Roboto (Technical Standard)',
+            "'Open Sans', sans-serif"          => 'Open Sans (Accessible Body)',
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" => 'System UI Sans-Serif',
+        ),
+    ) );
+
+    // -------------------------------------------------------------------------
+    // 2. Header Options
+    // -------------------------------------------------------------------------
+    $wp_customize->add_section( 'sc_header_section', array(
+        'title'       => __( 'Header Options', 'secure-centric' ),
+        'priority'    => 25,
+        'description' => __( 'Manage header call-to-action button, direct phone number, and links.', 'secure-centric' ),
+    ) );
+
+    $wp_customize->add_setting( 'sc_header_cta_text', array(
+        'default'           => 'Talk to an Expert →',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_header_cta_text', array(
+        'label'   => __( 'Header CTA Button Text', 'secure-centric' ),
+        'section' => 'sc_header_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'sc_header_cta_url', array(
+        'default'           => 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_header_cta_url', array(
+        'label'   => __( 'Header CTA Button URL', 'secure-centric' ),
+        'section' => 'sc_header_section',
+        'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'sc_header_phone', array(
+        'default'           => '(323) 410-5941',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_header_phone', array(
+        'label'   => __( 'Header Phone Number', 'secure-centric' ),
+        'section' => 'sc_header_section',
+        'type'    => 'text',
+    ) );
+
+    // -------------------------------------------------------------------------
+    // 3. Footer Options
+    // -------------------------------------------------------------------------
+    $wp_customize->add_section( 'sc_footer_section', array(
+        'title'       => __( 'Footer Options', 'secure-centric' ),
+        'priority'    => 30,
+        'description' => __( 'Configure footer contact details, legal disclaimers, and copyright.', 'secure-centric' ),
+    ) );
+
+    $wp_customize->add_setting( 'sc_footer_copyright', array(
+        'default'           => '© 2026 Secure-Centric LLC. All rights reserved.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_footer_copyright', array(
+        'label'   => __( 'Copyright Notice Text', 'secure-centric' ),
+        'section' => 'sc_footer_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'sc_footer_legal_notice', array(
+        'default'           => 'Secure-Centric is an accredited Cyber AB Registered Provider Organization (RPO). We provide cybersecurity readiness preparation, documentation, and advisory services. We are not a Certified Third-Party Assessment Organization (C3PAO) and do not issue official CMMC certifications.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'sc_footer_legal_notice', array(
+        'label'   => __( 'Footer Legal Disclaimer Notice', 'secure-centric' ),
+        'section' => 'sc_footer_section',
+        'type'    => 'textarea',
+    ) );
+}
+add_action( 'customize_register', 'secure_centric_customize_register' );
+
+/**
+ * Output Dynamic CSS Variables from Customizer Settings
+ */
+function secure_centric_customizer_css() {
+    $primary_color = get_theme_mod( 'sc_primary_color', '#0B1437' );
+    $accent_blue   = get_theme_mod( 'sc_accent_blue', '#2F5BFF' );
+    $cyan_color    = get_theme_mod( 'sc_cyan_color', '#00D4FF' );
+    $ice_bg        = get_theme_mod( 'sc_ice_bg', '#F4F7FE' );
+    $heading_font  = get_theme_mod( 'sc_heading_font', "'Plus Jakarta Sans', sans-serif" );
+    $body_font     = get_theme_mod( 'sc_body_font', "'Plus Jakarta Sans', sans-serif" );
+
+    echo '<style id="secure-centric-customizer-css">' . "\n";
+    echo ':root {' . "\n";
+    if ( ! empty( $primary_color ) ) {
+        echo '  --color-navy: ' . esc_attr( $primary_color ) . ' !important;' . "\n";
+    }
+    if ( ! empty( $accent_blue ) ) {
+        echo '  --color-electric-blue: ' . esc_attr( $accent_blue ) . ' !important;' . "\n";
+    }
+    if ( ! empty( $cyan_color ) ) {
+        echo '  --color-cyber-cyan: ' . esc_attr( $cyan_color ) . ' !important;' . "\n";
+    }
+    if ( ! empty( $ice_bg ) ) {
+        echo '  --color-ice: ' . esc_attr( $ice_bg ) . ' !important;' . "\n";
+    }
+    if ( ! empty( $heading_font ) ) {
+        echo '  --font-heading: ' . esc_attr( $heading_font ) . ' !important;' . "\n";
+    }
+    if ( ! empty( $body_font ) ) {
+        echo '  --font-primary: ' . esc_attr( $body_font ) . ' !important;' . "\n";
+        echo '  --font-body: ' . esc_attr( $body_font ) . ' !important;' . "\n";
+    }
+    echo '}' . "\n";
+    echo '</style>' . "\n";
+}
+add_action( 'wp_head', 'secure_centric_customizer_css', 100 );
+
+/**
+ * Filter Header & Footer Template Parts to Reflect Customizer Settings
+ */
+function secure_centric_filter_template_parts( $block_content, $block ) {
+    if ( ! empty( $block['blockName'] ) && 'core/template-part' === $block['blockName'] ) {
+        // Header template part
+        if ( isset( $block['attrs']['slug'] ) && 'header' === $block['attrs']['slug'] ) {
+            $cta_text = get_theme_mod( 'sc_header_cta_text', 'Talk to an Expert →' );
+            $cta_url  = get_theme_mod( 'sc_header_cta_url', 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' );
+            if ( ! empty( $cta_text ) ) {
+                $block_content = preg_replace( '/Talk to an Expert &rarr;/i', esc_html( $cta_text ), $block_content );
+            }
+            if ( ! empty( $cta_url ) ) {
+                $block_content = preg_replace( '/href="https:\/\/api\.leadconnectorhq\.com\/widget\/booking\/[^"]+"/i', 'href="' . esc_url( $cta_url ) . '"', $block_content );
+            }
+        }
+        // Footer template part
+        if ( isset( $block['attrs']['slug'] ) && 'footer' === $block['attrs']['slug'] ) {
+            $footer_legal = get_theme_mod( 'sc_footer_legal_notice', '' );
+            if ( ! empty( $footer_legal ) ) {
+                $block_content = preg_replace( '/<p class="legal-notice">.*?<\/p>/s', '<p class="legal-notice">' . esc_html( $footer_legal ) . '</p>', $block_content );
+            }
+            $footer_copy = get_theme_mod( 'sc_footer_copyright', '' );
+            if ( ! empty( $footer_copy ) ) {
+                $block_content = preg_replace( '/&copy;\s*2026\s*Secure-Centric\s*LLC\.\s*All\s*rights\s*reserved\./i', esc_html( $footer_copy ), $block_content );
+            }
+        }
+    }
+    return $block_content;
+}
+add_filter( 'render_block', 'secure_centric_filter_template_parts', 10, 2 );

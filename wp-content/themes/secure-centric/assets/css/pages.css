@@ -276,7 +276,7 @@
 
 .roadmap-timeline-nav {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   position: relative;
   margin: 32px 0 20px;
@@ -284,7 +284,16 @@
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+.roadmap-timeline-nav::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .roadmap-timeline-nav {
+    overflow-x: visible;
+  }
 }
 
 /* Background connecting rail & glowing active progress track */
@@ -319,10 +328,11 @@
   cursor: pointer;
   background: none;
   border: none;
-  padding: 6px;
-  min-width: 86px;
+  padding: 6px 4px;
+  flex: 1 1 0;
+  min-width: 80px;
+  max-width: 140px;
   text-align: center;
-  flex-shrink: 0;
   outline: none;
   transition: transform 0.2s ease;
 }
@@ -345,6 +355,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
+  flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
@@ -568,10 +579,17 @@
 }
 
 .step-node .node-label {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--color-slate);
-  white-space: nowrap;
+  white-space: normal !important;
+  text-align: center;
+  line-height: 1.25;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 120px;
+  display: block;
   transition: color 0.2s ease;
 }
 

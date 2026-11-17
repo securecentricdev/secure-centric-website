@@ -36,6 +36,14 @@
         "primaryBtnUrl": {
             "type": "string",
             "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
+        },
+        "secondaryBtnText": {
+            "type": "string",
+            "default": "Submit Your Query"
+        },
+        "secondaryBtnUrl": {
+            "type": "string",
+            "default": "/contact/"
         }
     },
     "supports": {

@@ -791,14 +791,94 @@
         const { attributes, setAttributes, isSelected, clientId } = props;
 
         const defaultSteps = [
-          { no: '01', name: 'Site visit', phase: 'Phase 1: Facility Walkthrough & Scope Discovery', help: 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.', who: 'You + Secure-Centric', output: 'Asset discovery baseline & boundary notes', link: '#page-2' },
-          { no: '02', name: 'Scoping', phase: 'Phase 2: CUI Boundary & Enclave Architecture', help: 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.', who: 'Secure-Centric + IT Leads', output: 'Formal Scope Document & Data-Flow Architecture', link: '#page-16' },
-          { no: '03', name: 'Gap assessment', phase: 'Phase 3: 110-Control Baseline Scoring', help: 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.', who: 'Secure-Centric', output: 'Defensible SPRS Score estimate & findings register', link: '#page-5' },
-          { no: '04', name: 'Remediation', phase: 'Phase 4: Engineering & Policy Remediation', help: 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.', who: 'Your IT/MSP (guided by us)', output: 'Remediation Roadmap with owners and completion targets', link: '#page-7' },
-          { no: '05', name: 'Documentation', phase: 'Phase 5: System Security Plan (SSP) & POA&M', help: 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.', who: 'Secure-Centric + You', output: 'Assessor-ready SSP and comprehensive policy suite', link: '#page-8' },
-          { no: '06', name: 'Readiness review', phase: 'Phase 6: C3PAO Mock Audit & Interview Prep', help: 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.', who: 'Secure-Centric RPs', output: 'Readiness sign-off report & Evidence Binder index', link: '#page-4' },
-          { no: '07', name: 'Assessment', phase: 'Phase 7: Official C3PAO Level 2 Assessment', help: 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.', who: 'Independent C3PAO', output: 'Level 2 CMMC Certification recommendation', link: '#page-19' },
-          { no: '08', name: 'Maintain', phase: 'Phase 8: Continuous Monitoring & Affirmation', help: 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.', who: 'Virtual CISO / You', output: 'Annual Affirmation pack & ongoing compliance posture', link: '#page-11' }
+          {
+            no: '01',
+            name: 'Site visit and CMMC awareness',
+            phase: 'Phase 1: Facility Walkthrough & Scope Discovery',
+            help: 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply. We examine your environment, review contract requirements, and identify your applicable CMMC level.',
+            what_happens: 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply.',
+            how_we_help: 'We examine your environment, review contract requirements, and identify your applicable CMMC level.',
+            who: 'You + Secure-Centric',
+            output: 'Clear CMMC requirements and define the next steps.',
+            link: '/services/cmmc-compliance/'
+          },
+          {
+            no: '02',
+            name: 'CUI identification and assessment boundaries',
+            phase: 'Phase 2: CUI Boundary & Enclave Architecture',
+            help: 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it. We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
+            what_happens: 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it.',
+            how_we_help: 'We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
+            who: 'Secure-Centric + IT Leads',
+            output: 'Verified CUI locations, asset inventory, and data-flow documentation.',
+            link: '/services/cmmc-enclave/'
+          },
+          {
+            no: '03',
+            name: 'CMMC gap assessment',
+            phase: 'Phase 3: 110-Control Baseline Scoring',
+            help: 'Compare your existing security practices against the applicable NIST SP 800-171 requirements. We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
+            what_happens: 'Compare your existing security practices against the applicable NIST SP 800-171 requirements.',
+            how_we_help: 'We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
+            who: 'Secure-Centric',
+            output: 'An estimated SPRS score and prioritized list of gaps.',
+            link: '/services/cmmc-readiness-assessment/gap-assessment/'
+          },
+          {
+            no: '04',
+            name: 'Gap remediation',
+            phase: 'Phase 4: Engineering & Policy Remediation',
+            help: 'Address security gaps through system configurations, security tools, processes, and training. We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
+            what_happens: 'Address security gaps through system configurations, security tools, processes, and training.',
+            how_we_help: 'We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
+            who: 'Your IT/MSP (guided by us)',
+            output: 'Implemented controls and verified supporting evidence.',
+            link: '/services/cmmc-implementation-remediation/'
+          },
+          {
+            no: '05',
+            name: 'Documentation and policies',
+            phase: 'Phase 5: System Security Plan (SSP) & POA&M',
+            help: 'Document how your organization implements and maintains the required security controls. We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
+            what_happens: 'Document how your organization implements and maintains the required security controls.',
+            how_we_help: 'We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
+            who: 'Secure-Centric + You',
+            output: 'An accurate SSP, documented policies, and a maintained POA&M.',
+            link: '/services/cmmc-implementation-remediation/ssp-poam-development/'
+          },
+          {
+            no: '06',
+            name: 'CMMC readiness review',
+            phase: 'Phase 6: C3PAO Mock Audit & Interview Prep',
+            help: 'Verify your security controls, documentation, and evidence before the formal assessment. We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
+            what_happens: 'Verify your security controls, documentation, and evidence before the formal assessment.',
+            how_we_help: 'We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
+            who: 'Secure-Centric RPs',
+            output: 'A verified readiness position and final list of corrective actions.',
+            link: '/services/cmmc-readiness-assessment/'
+          },
+          {
+            no: '07',
+            name: 'CMMC assessment',
+            phase: 'Phase 7: Formal Certification Assessment',
+            help: 'Complete the applicable CMMC self-assessment or formal C3PAO assessment, based on your contract requirements. We organize assessment evidence, guide your team through assessment requirements, and support assessment-related questions. An authorized C3PAO makes the formal certification determination.',
+            what_happens: 'Complete the applicable CMMC self-assessment or formal C3PAO assessment, based on your contract requirements.',
+            how_we_help: 'We organize assessment evidence, guide your team through assessment requirements, and support assessment-related questions. An authorized C3PAO makes the formal certification determination.',
+            who: 'Independent C3PAO',
+            output: 'Documented assessment results and applicable CMMC status.',
+            link: '/cmmc/cmmc-process/'
+          },
+          {
+            no: '08',
+            name: 'Ongoing compliance support',
+            phase: 'Phase 8: Continuous Monitoring & Affirmation',
+            help: 'Maintain CMMC compliance as your systems, personnel, and security requirements change. Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
+            what_happens: 'Maintain CMMC compliance as your systems, personnel, and security requirements change.',
+            how_we_help: 'Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
+            who: 'Virtual CISO / You',
+            output: 'Current documentation, reviewed evidence, and ongoing compliance oversight.',
+            link: '/services/virtual-ciso/'
+          }
         ];
 
         let currentSteps = safeParseJsonArray(attributes.stepsData, defaultSteps);
@@ -982,9 +1062,23 @@
                   onChange: function (v) { updateStepItem(idx, { phase: v }); }
                 }),
                 el(TextareaControl, {
-                  label: 'Detailed Description',
+                  label: 'What Happens',
+                  value: st.what_happens || '',
+                  rows: 2,
+                  help: 'Explanation of what occurs during this milestone.',
+                  onChange: function (v) { updateStepItem(idx, { what_happens: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'How We Help',
+                  value: st.how_we_help || '',
+                  rows: 2,
+                  help: 'Explanation of Secure-Centric guidance and advisory actions.',
+                  onChange: function (v) { updateStepItem(idx, { how_we_help: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'General/Combined Description (Fallback)',
                   value: st.help || '',
-                  rows: 3,
+                  rows: 2,
                   onChange: function (v) { updateStepItem(idx, { help: v }); }
                 }),
                 el(TextControl, {
@@ -2099,8 +2193,10 @@
             { name: 'description', label: 'Description', type: 'textarea', default: 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.' },
             { name: 'primaryBtnText', label: 'Primary Button Text', default: 'Book a Discovery Call →' },
             { name: 'primaryBtnUrl', label: 'Primary Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' },
-            { name: 'phoneText', label: 'Phone Call Text', default: 'Call (323) 410-5941' },
-            { name: 'phoneUrl', label: 'Phone Call URL', default: 'tel:323-410-5941' }
+            { name: 'secondaryBtnText', label: 'Secondary Button Text', default: 'Submit Your Query' },
+            { name: 'secondaryBtnUrl', label: 'Secondary Button URL', default: '/contact/' },
+            { name: 'phoneText', label: 'Phone Call Text (Fallback)', default: 'Call (323) 410-5941' },
+            { name: 'phoneUrl', label: 'Phone Call URL (Fallback)', default: 'tel:323-410-5941' }
           ]
         }
       ]

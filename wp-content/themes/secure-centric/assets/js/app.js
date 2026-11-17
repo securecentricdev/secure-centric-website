@@ -1012,9 +1012,26 @@
             <div class="step-detail-left">
               <span class="section-eyebrow ${isStep7 ? 'violet' : ''}">MILESTONE ${activeStep.no} &bull; ${esc(activeStep.name).toUpperCase()}</span>
               <h3>${esc(activeStep.name)}</h3>
-              <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
-                ${esc(activeStep.help)}
-              </p>
+              ${activeStep.what_happens || activeStep.how_we_help ? `
+                <div class="milestone-desc-sections" style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 14px;">
+                  ${activeStep.what_happens ? `
+                    <div class="milestone-desc-block">
+                      <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-electric-blue); margin-bottom: 4px;">What Happens</span>
+                      <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">${esc(activeStep.what_happens)}</p>
+                    </div>
+                  ` : ''}
+                  ${activeStep.how_we_help ? `
+                    <div class="milestone-desc-block">
+                      <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-navy); margin-bottom: 4px;">How We Help</span>
+                      <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">${esc(activeStep.how_we_help)}</p>
+                    </div>
+                  ` : ''}
+                </div>
+              ` : `
+                <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
+                  ${esc(activeStep.help)}
+                </p>
+              `}
               <div class="step-cta-group" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
                 ${isStep7 ? `
                   <a href="#page-19" class="btn btn-primary" style="background-color: var(--color-violet); border-color: var(--color-violet);">

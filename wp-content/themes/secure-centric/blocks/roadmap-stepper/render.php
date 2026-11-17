@@ -19,75 +19,94 @@ $flag_text   = ! empty( $attributes['flagText'] ) ? $attributes['flagText'] : 'T
 
 $default_steps = array(
     array(
-        'no'     => '01',
-        'name'   => 'Site visit',
-        'phase'  => 'Phase 1: Facility Walkthrough & Scope Discovery',
-        'help'   => 'In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.',
-        'who'    => 'You + Secure-Centric',
-        'output' => 'Asset discovery baseline & boundary notes',
-        'link'   => home_url( '/services/cmmc-compliance/' ),
+        'no'           => '01',
+        'name'         => 'Site visit and CMMC awareness',
+        'phase'        => 'Phase 1: Facility Walkthrough & Scope Discovery',
+        'help'         => 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply. We examine your environment, review contract requirements, and identify your applicable CMMC level.',
+        'what_happens' => 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply.',
+        'how_we_help'  => 'We examine your environment, review contract requirements, and identify your applicable CMMC level.',
+        'who'          => 'You + Secure-Centric',
+        'output'       => 'Clear CMMC requirements and define the next steps.',
+        'link'         => home_url( '/services/cmmc-compliance/' ),
     ),
     array(
-        'no'     => '02',
-        'name'   => 'Scoping',
-        'phase'  => 'Phase 2: CUI Boundary & Enclave Architecture',
-        'help'   => 'Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.',
-        'who'    => 'Secure-Centric + IT Leads',
-        'output' => 'Formal Scope Document & Data-Flow Architecture',
-        'link'   => home_url( '/services/cmmc-enclave/' ),
+        'no'           => '02',
+        'name'         => 'CUI identification and assessment boundaries',
+        'phase'        => 'Phase 2: CUI Boundary & Enclave Architecture',
+        'help'         => 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it. We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
+        'what_happens' => 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it.',
+        'how_we_help'  => 'We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
+        'who'          => 'Secure-Centric + IT Leads',
+        'output'       => 'Verified CUI locations, asset inventory, and data-flow documentation.',
+        'link'         => home_url( '/services/cmmc-enclave/' ),
     ),
     array(
-        'no'     => '03',
-        'name'   => 'Gap assessment',
-        'phase'  => 'Phase 3: 110-Control Baseline Scoring',
-        'help'   => 'Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.',
-        'who'    => 'Secure-Centric',
-        'output' => 'Defensible SPRS Score estimate & findings register',
-        'link'   => home_url( '/services/cmmc-readiness-assessment/gap-assessment/' ),
+        'no'           => '03',
+        'name'         => 'CMMC gap assessment',
+        'phase'        => 'Phase 3: 110-Control Baseline Scoring',
+        'help'         => 'Compare your existing security practices against the applicable NIST SP 800-171 requirements. We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
+        'what_happens' => 'Compare your existing security practices against the applicable NIST SP 800-171 requirements.',
+        'how_we_help'  => 'We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
+        'who'          => 'Secure-Centric',
+        'output'       => 'An estimated SPRS score and prioritized list of gaps.',
+        'link'         => home_url( '/services/cmmc-readiness-assessment/gap-assessment/' ),
     ),
     array(
-        'no'     => '04',
-        'name'   => 'Remediation',
-        'phase'  => 'Phase 4: Engineering & Policy Remediation',
-        'help'   => 'Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.',
-        'who'    => 'Your IT/MSP (guided by us)',
-        'output' => 'Remediation Roadmap with owners and completion targets',
-        'link'   => home_url( '/services/cmmc-implementation-remediation/' ),
+        'no'           => '04',
+        'name'         => 'Gap remediation',
+        'phase'        => 'Phase 4: Engineering & Policy Remediation',
+        'help'         => 'Address security gaps through system configurations, security tools, processes, and training. We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
+        'what_happens' => 'Address security gaps through system configurations, security tools, processes, and training.',
+        'how_we_help'  => 'We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
+        'who'          => 'Your IT/MSP (guided by us)',
+        'output'       => 'Implemented controls and verified supporting evidence.',
+        'link'         => home_url( '/services/cmmc-implementation-remediation/' ),
     ),
     array(
-        'no'     => '05',
-        'name'   => 'Documentation',
-        'phase'  => 'Phase 5: System Security Plan (SSP) & POA&M',
-        'help'   => 'Co-write your System Security Plan (SSP), POA&M, and all required operational policies.',
-        'who'    => 'Secure-Centric + You',
-        'output' => 'Assessor-ready SSP and comprehensive policy suite',
-        'link'   => home_url( '/services/cmmc-implementation-remediation/ssp-poam-development/' ),
+        'no'           => '05',
+        'name'         => 'Documentation and policies',
+        'phase'        => 'Phase 5: System Security Plan (SSP) & POA&M',
+        'help'         => 'Document how your organization implements and maintains the required security controls. We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
+        'what_happens' => 'Document how your organization implements and maintains the required security controls.',
+        'how_we_help'  => 'We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
+        'who'          => 'Secure-Centric + You',
+        'output'       => 'An accurate SSP, documented policies, and a maintained POA&M.',
+        'link'         => home_url( '/services/cmmc-implementation-remediation/ssp-poam-development/' ),
     ),
     array(
-        'no'     => '06',
-        'name'   => 'Readiness review',
-        'phase'  => 'Phase 6: C3PAO Mock Audit & Interview Prep',
-        'help'   => 'Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.',
-        'who'    => 'Secure-Centric RPs',
-        'output' => 'Readiness sign-off report & Evidence Binder index',
-        'link'   => home_url( '/services/cmmc-readiness-assessment/' ),
+        'no'           => '06',
+        'name'         => 'CMMC readiness review',
+        'phase'        => 'Phase 6: C3PAO Mock Audit & Interview Prep',
+        'help'         => 'Verify your security controls, documentation, and evidence before the formal assessment. We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
+        'what_happens' => 'Verify your security controls, documentation, and evidence before the formal assessment.',
+        'how_we_help'  => 'We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
+        'who'          => 'Secure-Centric RPs',
+        'output'       => 'A verified readiness position and final list of corrective actions.',
+        'link'         => home_url( '/services/cmmc-readiness-assessment/' ),
     ),
     array(
-        'no'     => '07',
-        'name'   => 'Assessment',
-        'phase'  => 'Phase 7: Official C3PAO Level 2 Assessment',
-        'help'   => 'We stand alongside your team during official DIBCAC or Authorized C3PAO evaluation.',
-        'who'    => 'Independent C3PAO',
-        'output' => 'Level 2 CMMC Certification recommendation',
-        'link'   => home_url( '/cmmc/cmmc-process/' ),
+        'no'           => '07',
+        'name'         => 'CMMC assessment',
+        'phase'        => 'Phase 7: Formal Certification Assessment',
+        'help'         => 'Complete the applicable CMMC self-assessment or formal C3PAO assessment, based on your contract requirements. We organize assessment evidence, guide your team through assessment requirements, and support assessment-related questions. An authorized C3PAO makes the formal certification determination.',
+        'what_happens' => 'Complete the applicable CMMC self-assessment or formal C3PAO assessment, based on your contract requirements.',
+        'how_we_help'  => 'We organize assessment evidence, guide your team through assessment requirements, and support assessment-related questions. An authorized C3PAO makes the formal certification determination.',
+        'who'          => 'Independent C3PAO',
+        'output'       => 'Documented assessment results and applicable CMMC status.',
+        'link'         => home_url( '/cmmc/cmmc-process/' ),
     ),
     array(
-        'no'     => '08',
-        'name'   => 'Maintain',
-        'phase'  => 'Phase 8: Continuous Monitoring & Affirmation',
-        'help'   => 'Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.',
-        'who'    => 'Virtual CISO / You',
-        'output' => 'Annual Affirmation pack & ongoing compliance posture',
+        'no'           => '08',
+        'name'         => 'Ongoing compliance support',
+        'phase'        => 'Phase 8: Continuous Monitoring & Affirmation',
+        'help'         => 'Maintain CMMC compliance as your systems, personnel, and security requirements change. Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
+        'what_happens' => 'Maintain CMMC compliance as your systems, personnel, and security requirements change.',
+        'how_we_help'  => 'Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
+        'who'          => 'Virtual CISO / You',
+        'output'       => 'Current documentation, reviewed evidence, and ongoing compliance oversight.',
+        'link'         => home_url( '/services/virtual-ciso/' ),
+    ),
+);
         'link'   => home_url( '/services/virtual-ciso/' ),
     ),
 );
@@ -109,13 +128,15 @@ $total_steps = count( $steps_raw );
 foreach ( $steps_raw as $i => $st ) {
     $num_str = sprintf( '%02d', $i + 1 );
     $steps[ $i + 1 ] = array(
-        'no'     => $num_str,
-        'name'   => ! empty( $st['name'] ) ? $st['name'] : 'Milestone ' . $num_str,
-        'phase'  => ! empty( $st['phase'] ) ? $st['phase'] : 'Phase ' . ( $i + 1 ),
-        'help'   => ! empty( $st['help'] ) ? $st['help'] : '',
-        'who'    => ! empty( $st['who'] ) ? $st['who'] : 'Secure-Centric + You',
-        'output' => ! empty( $st['output'] ) ? $st['output'] : '',
-        'link'   => ! empty( $st['link'] ) ? $st['link'] : '#page-2',
+        'no'           => $num_str,
+        'name'         => ! empty( $st['name'] ) ? $st['name'] : 'Milestone ' . $num_str,
+        'phase'        => ! empty( $st['phase'] ) ? $st['phase'] : 'Phase ' . ( $i + 1 ),
+        'help'         => ! empty( $st['help'] ) ? $st['help'] : '',
+        'what_happens' => ! empty( $st['what_happens'] ) ? $st['what_happens'] : '',
+        'how_we_help'  => ! empty( $st['how_we_help'] ) ? $st['how_we_help'] : '',
+        'who'          => ! empty( $st['who'] ) ? $st['who'] : 'Secure-Centric + You',
+        'output'       => ! empty( $st['output'] ) ? $st['output'] : '',
+        'link'         => ! empty( $st['link'] ) ? $st['link'] : '#page-2',
     );
 }
 
@@ -226,9 +247,30 @@ $flag_step_idx = ( $total_steps >= 7 ) ? 7 : $total_steps;
       <div class="step-detail-left">
         <span class="section-eyebrow">MILESTONE <?php echo esc_html( $active_step['no'] . ' • ' . strtoupper( $active_step['name'] ) ); ?></span>
         <h3><?php echo esc_html( $active_step['name'] ); ?></h3>
-        <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
-          <?php echo esc_html( $active_step['help'] ); ?>
-        </p>
+        <?php if ( ! empty( $active_step['what_happens'] ) || ! empty( $active_step['how_we_help'] ) ) : ?>
+          <div class="milestone-desc-sections" style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 14px;">
+            <?php if ( ! empty( $active_step['what_happens'] ) ) : ?>
+              <div class="milestone-desc-block">
+                <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-electric-blue); margin-bottom: 4px;">What Happens</span>
+                <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">
+                  <?php echo esc_html( $active_step['what_happens'] ); ?>
+                </p>
+              </div>
+            <?php endif; ?>
+            <?php if ( ! empty( $active_step['how_we_help'] ) ) : ?>
+              <div class="milestone-desc-block">
+                <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-navy); margin-bottom: 4px;">How We Help</span>
+                <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">
+                  <?php echo esc_html( $active_step['how_we_help'] ); ?>
+                </p>
+              </div>
+            <?php endif; ?>
+          </div>
+        <?php else : ?>
+          <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
+            <?php echo esc_html( $active_step['help'] ); ?>
+          </p>
+        <?php endif; ?>
         <div class="step-cta-group" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
           <?php if ( isset( $steps[2] ) ) : ?>
             <button type="button" class="btn btn-primary" onclick="window.selectRoadmapStep(1, event)">
