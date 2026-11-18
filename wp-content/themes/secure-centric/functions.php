@@ -679,3 +679,84 @@ function secure_centric_filter_template_parts( $block_content, $block ) {
     return $block_content;
 }
 add_filter( 'render_block', 'secure_centric_filter_template_parts', 10, 2 );
+
+/**
+ * --------------------------------------------------------------------------
+ * GoHighLevel Webhook Forwarder for Forminator Forms
+ * --------------------------------------------------------------------------
+ * Seamlessly forwards all form submissions to the corresponding GoHighLevel
+ * workflow inbound webhook URL.
+ */
+function secure_centric_forward_forminator_to_ghl( $form_id, $response, $entry_id ) {
+    $webhooks = array(
+        // Flow 1 - Newsletter Signup
+        106 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr',
+        // Flow 3 - Checklist & Lead Magnet Downloads
+        102 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
+        103 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
+        104 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
+        // Flow 4 - Contact Us Form
+        101 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/xF7p64ol6wtyvdgezRpJ',
+    );
+
+    if ( ! isset( $webhooks[ $form_id ] ) ) {
+        return;
+    }
+
+    $webhook_url = $webhooks[ $form_id ];
+    $entry = new Forminator_Form_Entry_Model( $entry_id );
+    if ( empty( $entry->meta_data ) ) {
+        return;
+    }
+
+    $raw_data = array();
+    foreach ( $entry->meta_data as $field_slug => $field_obj ) {
+        $raw_data[ $field_slug ] = isset( $field_obj['value'] ) ? $field_obj['value'] : '';
+    }
+
+    // Map to standardized GHL Contact payload
+    $name = isset( $raw_data['name-1'] ) ? trim( $raw_data['name-1'] ) : '';
+    $name_parts = explode( ' ', $name, 2 );
+    $first_name = isset( $name_parts[0] ) ? $name_parts[0] : '';
+    $last_name  = isset( $name_parts[1] ) ? $name_parts[1] : '';
+
+    $email   = isset( $raw_data['email-1'] ) ? trim( $raw_data['email-1'] ) : '';
+    $phone   = isset( $raw_data['phone-1'] ) ? trim( $raw_data['phone-1'] ) : '';
+    $company = isset( $raw_data['text-1'] ) ? trim( $raw_data['text-1'] ) : '';
+    $notes   = isset( $raw_data['textarea-1'] ) ? trim( $raw_data['textarea-1'] ) : '';
+
+    $form = Forminator_API::get_form( $form_id );
+    $form_name = $form ? $form->name : 'Form ' . $form_id;
+
+    $payload = array(
+        'first_name'   => $first_name,
+        'last_name'    => $last_name,
+        'name'         => $name,
+        'email'        => $email,
+        'phone'        => $phone,
+        'company_name' => $company,
+        'notes'        => $notes,
+        'form_id'      => $form_id,
+        'form_name'    => $form_name,
+        'entry_id'     => $entry_id,
+        'source'       => 'Secure-Centric Website',
+        'page_url'     => isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( $_SERVER['HTTP_REFERER'] ) : get_site_url(),
+        'submitted_at' => gmdate( 'c' ),
+        'raw_fields'   => $raw_data,
+    );
+
+    wp_remote_post( $webhook_url, array(
+        'method'      => 'POST',
+        'timeout'     => 10,
+        'redirection' => 5,
+        'httpversion' => '1.1',
+        'blocking'    => false, // Non-blocking: lightning fast user experience
+        'headers'     => array(
+            'Content-Type' => 'application/json; charset=utf-8',
+        ),
+        'body'        => wp_json_encode( $payload ),
+        'data_format' => 'body',
+    ) );
+}
+add_action( 'forminator_form_after_save_entry', 'secure_centric_forward_forminator_to_ghl', 10, 3 );
+add_action( 'forminator_custom_form_after_save_entry', 'secure_centric_forward_forminator_to_ghl', 10, 3 );
