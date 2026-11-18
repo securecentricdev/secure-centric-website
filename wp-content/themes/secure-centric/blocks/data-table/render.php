@@ -1,7 +1,7 @@
 <?php
 /**
  * Render Template for Data Table Block
- * Strictly matches demo/assets/js/app.js renderTable
+ * Dynamically renders custom headers and rows from Gutenberg block attributes
  *
  * @package SecureCentric
  */
@@ -10,75 +10,59 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$title = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Findings Matrix & Gap Breakdown';
+$title = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
 
+// 1. Resolve Columns / Headers from all possible attribute keys
 $cols = array();
 if ( ! empty( $attributes['colsData'] ) ) {
     $decoded_c = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['colsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['colsData'] ), true );
     if ( is_array( $decoded_c ) && ! empty( $decoded_c ) ) {
         $cols = $decoded_c;
     }
-}
-
-$headers = array();
-if ( ! empty( $attributes['headersData'] ) ) {
+} elseif ( ! empty( $attributes['headersData'] ) ) {
     $decoded_h = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['headersData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['headersData'] ), true );
     if ( is_array( $decoded_h ) && ! empty( $decoded_h ) ) {
-        $headers = $decoded_h;
+        $cols = $decoded_h;
     }
+} elseif ( ! empty( $attributes['headers'] ) ) {
+    $cols = is_array( $attributes['headers'] ) ? $attributes['headers'] : json_decode( $attributes['headers'], true );
+} elseif ( ! empty( $attributes['cols'] ) ) {
+    $cols = is_array( $attributes['cols'] ) ? $attributes['cols'] : json_decode( $attributes['cols'], true );
 }
 
+// 2. Resolve Rows from all possible attribute keys
 $rows = array();
 if ( ! empty( $attributes['rowsData'] ) ) {
     $decoded_r = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['rowsData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['rowsData'] ), true );
     if ( is_array( $decoded_r ) && ! empty( $decoded_r ) ) {
         $rows = $decoded_r;
     }
-}
-
-if ( empty( $rows ) || ! is_array( $rows ) || ( isset( $rows[0] ) && ! is_array( $rows[0] ) ) ) {
-    $title_lower = strtolower( $title );
-    if ( false !== strpos( $title_lower, 'levels' ) || false !== strpos( $title_lower, 'comparison' ) ) {
-        $rows = array(
-            array( 'Target Information Safeguarded', 'Federal Contract Information (FCI)', 'Controlled Unclassified Information (CUI)', 'High-Value Assets & Critical CUI' ),
-            array( 'Security Controls Baseline', '15 FAR 52.204-21 Basic Safeguards', '110 NIST SP 800-171 Requirements', '110 NIST SP 800-171 + Select 800-172 Controls' ),
-            array( 'Assessment & Audit Mechanism', 'Annual Self-Assessment in SPRS', 'Triennial Independent C3PAO Audit', 'Triennial Government-Led (DIBCAC) Audit' ),
-            array( 'Executive Affirmation', 'Annual Affirmation by Corporate Official', 'Annual Executive Affirmation in SPRS', 'Annual Executive Affirmation in SPRS' ),
-            array( 'Defense Supply Chain Tier', 'Subcontractors handling FCI only', 'Prime & Subcontractors handling DoD CUI', 'Defense Prime Contractors on critical programs' ),
-            array( 'Typical Implementation Timeline', '1 – 2 months', '6 – 9 months', '9 – 14 months' )
-        );
-    } else {
-        $rows = array(
-            array( 'AC.L2-3.1.1 (Access Control & Boundary Protection)', 'Non-Compliant', 'High (-5 SPRS)', 'Enforce centralized MFA & remove shared admin credentials' ),
-            array( 'IA.L2-3.5.3 (Multifactor Authentication)', 'Partially Met', 'High (-5 SPRS)', 'Deploy FIPS 140-2 validated hardware tokens across all privileged sessions' ),
-            array( 'SC.L2-3.13.11 (FIPS-Validated Cryptography)', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules' ),
-            array( 'AU.L2-3.3.1 (Audit Logging & SIEM Review)', 'Compliant', 'Low (0 SPRS)', 'Weekly automated audit log analysis and tamper-proof log forwarding verified' )
-        );
-    }
-}
-
-// Align column headers with body cells
-$row_col_count = ( ! empty( $rows[0] ) && is_array( $rows[0] ) ) ? count( $rows[0] ) : 0;
-if ( $row_col_count > 0 ) {
-    if ( ! empty( $headers ) && count( $headers ) === $row_col_count ) {
-        $cols = $headers;
-    } elseif ( ! empty( $cols ) && count( $cols ) !== $row_col_count ) {
-        if ( ! empty( $headers ) && count( $headers ) === $row_col_count ) {
-            $cols = $headers;
-        } elseif ( count( $cols ) === $row_col_count + 1 && empty( $cols[0] ) ) {
-            $cols = array_slice( $cols, 1 );
-        }
-    }
-}
-
-if ( empty( $cols ) ) {
-    $cols = array( 'Category / Control', 'Status', 'Impact', 'Required Remediation', 'Owner' );
+} elseif ( ! empty( $attributes['rows'] ) ) {
+    $rows = is_array( $attributes['rows'] ) ? $attributes['rows'] : json_decode( $attributes['rows'], true );
 }
 
 if ( function_exists( 'sc_clean_text' ) ) {
     $title = sc_clean_text( $title );
-    $cols  = sc_clean_text( $cols );
-    $rows  = sc_clean_text( $rows );
+    if ( is_array( $cols ) ) {
+        $cols = sc_clean_text( $cols );
+    }
+    if ( is_array( $rows ) ) {
+        $rows = sc_clean_text( $rows );
+    }
+}
+
+// Fallback only if both cols and rows are completely empty
+if ( empty( $cols ) && empty( $rows ) ) {
+    $cols = array( 'Category / Control', 'Status', 'Impact', 'Required Remediation' );
+    $rows = array(
+        array( '3.5.3 Multifactor Authentication', 'Non-Compliant', 'High (-5 SPRS)', 'Enforce centralized MFA & remove shared admin credentials' ),
+        array( '3.13.11 FIPS-Validated Cryptography', 'Non-Compliant', 'Medium (-3 SPRS)', 'Enable BitLocker with certified FIPS 140-2 cryptographic modules' )
+    );
+}
+
+// If cols is empty but rows exist, and first row looks like a header, promote it
+if ( empty( $cols ) && ! empty( $rows ) && count( $rows ) > 1 ) {
+    $cols = array_shift( $rows );
 }
 
 $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
@@ -89,29 +73,41 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
          data-wp-block="wp:table" 
          data-wp-pattern="secure-centric/data-table"<?php echo $anchor_attr; ?>>
   <div class="site-container">
-    <h3 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h3>
-    <div class="custom-table-wrap">
-      <table class="custom-table">
-        <thead>
-          <tr>
-            <?php foreach ( $cols as $c ) : ?>
-              <th><?php echo esc_html( $c ); ?></th>
-            <?php endforeach; ?>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ( $rows as $row ) : 
-            $row_cells = array_values( (array) $row );
-            if ( ! empty( $cols ) && count( $row_cells ) > count( $cols ) ) {
-                $row_cells = array_slice( $row_cells, 0, count( $cols ) );
-            }
-          ?>
-            <tr>
-              <?php foreach ( $row_cells as $cell ) : ?>
-                <td><?php echo esc_html( $cell ); ?></td>
+    <?php if ( ! empty( $title ) ) : ?>
+      <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: 700; color: #0F172A;"><?php echo esc_html( $title ); ?></h3>
+    <?php endif; ?>
+    <div class="custom-table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1px solid #E2E8F0;">
+      <table class="custom-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+        <?php if ( ! empty( $cols ) ) : ?>
+          <thead>
+            <tr style="background: #F8FAFC; border-bottom: 2px solid #E2E8F0;">
+              <?php foreach ( $cols as $c ) : ?>
+                <th style="padding: 14px 18px; font-weight: 700; color: #1E293B;"><?php echo esc_html( $c ); ?></th>
               <?php endforeach; ?>
             </tr>
-          <?php endforeach; ?>
+          </thead>
+        <?php endif; ?>
+        <tbody>
+          <?php if ( ! empty( $rows ) ) : ?>
+            <?php foreach ( $rows as $idx => $row ) : 
+              $row_cells = array_values( (array) $row );
+              $bg = ( $idx % 2 === 1 ) ? '#F8FAFC' : '#FFFFFF';
+            ?>
+              <tr style="background: <?php echo $bg; ?>; border-bottom: 1px solid #E2E8F0;">
+                <?php foreach ( $row_cells as $c_idx => $cell ) : 
+                  // If cell is an array, join it
+                  if ( is_array( $cell ) ) {
+                      $cell = implode( ', ', $cell );
+                  }
+                  $is_first = ( $c_idx === 0 );
+                  $weight = $is_first ? '600' : '400';
+                  $text_color = $is_first ? '#0F172A' : '#334155';
+                ?>
+                  <td style="padding: 14px 18px; color: <?php echo $text_color; ?>; font-weight: <?php echo $weight; ?>; vertical-align: top; line-height: 1.5;"><?php echo esc_html( $cell ); ?></td>
+                <?php endforeach; ?>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>

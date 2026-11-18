@@ -22,12 +22,7 @@ if ( ! empty( $attributes['rowsData'] ) ) {
 }
 
 if ( empty( $rows ) ) {
-    $rows = array(
-        array( 'req' => '3.1.1', 'family' => 'Access Control', 'objective' => 'Limit system access to authorized users', 'status' => 'Implemented', 'owner' => 'IT Director', 'evidence' => 'AD_User_Audit_2026.pdf' ),
-        array( 'req' => '3.1.2', 'family' => 'Access Control', 'objective' => 'Limit system access to authorized devices', 'status' => 'Implemented', 'owner' => 'Network Admin', 'evidence' => 'NAC_Policy_Config.xml' ),
-        array( 'req' => '3.5.3', 'family' => 'Identification & Auth', 'objective' => 'Use multifactor authentication for local and network access', 'status' => 'In Progress', 'owner' => 'Security Lead', 'evidence' => 'Duo_MFA_Rollout_Plan.xlsx' ),
-        array( 'req' => '3.13.1', 'family' => 'System & Comms', 'objective' => 'Monitor, control, and protect organizational communications', 'status' => 'Implemented', 'owner' => 'Firewall Engineer', 'evidence' => 'PaloAlto_Edge_Rules.pdf' ),
-    );
+    return;
 }
 ?>
 

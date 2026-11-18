@@ -172,18 +172,10 @@ a:hover {
   color: var(--color-violet);
 }
 
-/* Section Eyebrow (Strict Brand Spec: JetBrains Mono uppercase) */
-.section-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-electric-blue);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+/* Section Eyebrow - Hidden per user instruction across the entire site */
+.section-eyebrow,
+.eyebrow {
+  display: none !important;
 }
 
 .section-eyebrow::before {
