@@ -126,7 +126,7 @@
         },
         "card6Link": {
             "type": "string",
-            "default": "/resources/templates/checklist/level-2/"
+            "default": "/resources/checklist/level-2/"
         },
         "card6Icon": {
             "type": "string",

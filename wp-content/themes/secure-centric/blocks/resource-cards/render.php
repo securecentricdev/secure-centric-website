@@ -65,7 +65,7 @@ if ( empty( $cards ) ) {
         6 => array(
             'title' => 'Level 2 Compliance Checklist',
             'desc'  => 'Downloadable 110-control Excel checklist with ownership and objective columns.',
-            'link'  => home_url( '/resources/templates/checklist/level-2/' ),
+            'link'  => home_url( '/resources/checklist/level-2/' ),
             'icon'  => '📊',
         ),
     );

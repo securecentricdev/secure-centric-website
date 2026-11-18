@@ -1665,7 +1665,7 @@
           { title: 'NIST SP 800-171 Standard', desc: 'The foundational standard behind DFARS 7012 and Level 2 C3PAO certifications.', link: '/nist-800-171/', icon: '🛡️' },
           { title: 'CUI Scoping & Handling Guide', desc: 'Controlled Unclassified Information: identification, markings, and boundary isolation.', link: '/cui/', icon: '🔒' },
           { title: 'CMMC Enclave Advisory', desc: 'How segregating your CUI network saves months of implementation and audit costs.', link: '/services/cmmc-enclave/', icon: '🏗️' },
-          { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '/resources/templates/checklist/level-2/', icon: '📊' }
+          { title: 'Level 2 Compliance Checklist', desc: 'Downloadable 110-control Excel checklist with ownership and objective columns.', link: '/resources/checklist/level-2/', icon: '📊' }
         ];
 
         let currentCards = safeParseJsonArray(attributes.resourcesData, defaultCards);

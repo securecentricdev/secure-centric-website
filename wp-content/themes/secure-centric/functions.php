@@ -123,9 +123,9 @@ function sc_resolve_page_url( $url ) {
         '#page-16'      => '/services/cmmc-enclave/',
         '#page-19'      => '/cmmc/cmmc-process/',
         '#page-20'      => '/cmmc/rpo/',
-        '#page-21'      => '/resources/templates/checklist/level-2/',
-        '#page-22'      => '/resources/templates/checklist/unmarked-cui/',
-        '#page-23'      => '/resources/templates/checklist/level-1/',
+        '#page-21'      => '/resources/checklist/level-2/',
+        '#page-22'      => '/resources/checklist/unmarked-cui/',
+        '#page-23'      => '/resources/checklist/level-1/',
         '#page-contact' => '/contact/',
         '#contact'      => '/contact/',
     );
