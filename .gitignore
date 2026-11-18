@@ -31,7 +31,10 @@ wp-content/debug.log
 *.tar.gz
 *.zip
 
-# Operating System Files
+# Large offline media copies
+documentation-and-media/videos/
+documentation-and-media/pdfs/
+
 .DS_Store
 .DS_Store?
 ._*
