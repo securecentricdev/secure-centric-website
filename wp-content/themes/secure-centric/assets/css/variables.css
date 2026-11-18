@@ -51,6 +51,8 @@
   /* Typography */
   --font-primary: 'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'IBM Plex Mono', Consolas, Menlo, Monaco, monospace;
+  --wp--preset--font-family--primary: 'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --wp--preset--font-family--mono: 'JetBrains Mono', 'IBM Plex Mono', Consolas, Menlo, Monaco, monospace;
 
   /* WordPress Gutenberg theme.json mappings */
   --wp--preset--color--midnight: var(--color-midnight);
@@ -108,7 +110,7 @@ html {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-primary) !important;
   color: var(--color-body-text);
   background-color: var(--color-white);
   line-height: 1.6;
@@ -126,7 +128,7 @@ body {
 /* Typography Presets */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-navy);
-  font-family: var(--font-primary);
+  font-family: var(--font-primary) !important;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.02em;

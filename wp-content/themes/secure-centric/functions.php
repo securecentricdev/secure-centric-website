@@ -230,6 +230,15 @@ function secure_centric_register_pattern_categories() {
 add_action( 'init', 'secure_centric_register_pattern_categories' );
 
 /**
+ * Preconnect to Google Fonts for optimal font loading
+ */
+function secure_centric_font_preconnect() {
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+}
+add_action( 'wp_head', 'secure_centric_font_preconnect', 1 );
+
+/**
  * Enqueue Theme Scripts & Styles
  */
 function secure_centric_enqueue_assets() {
@@ -498,7 +507,7 @@ function secure_centric_customize_register( $wp_customize ) {
 
     // Heading Font Family
     $wp_customize->add_setting( 'sc_heading_font', array(
-        'default'           => "'Plus Jakarta Sans', sans-serif",
+        'default'           => "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
@@ -508,7 +517,8 @@ function secure_centric_customize_register( $wp_customize ) {
         'section'     => 'sc_global_section',
         'type'        => 'select',
         'choices'     => array(
-            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans (Theme Default)',
+            "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" => 'Plus Jakarta Sans / Manrope (Geometric Sans)',
+            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans',
             "'Inter', sans-serif"              => 'Inter (Clean & Modern)',
             "'Roboto', sans-serif"             => 'Roboto (Technical Standard)',
             "'JetBrains Mono', monospace"      => 'JetBrains Mono (Defense/Cyber)',
@@ -518,7 +528,7 @@ function secure_centric_customize_register( $wp_customize ) {
 
     // Body Font Family
     $wp_customize->add_setting( 'sc_body_font', array(
-        'default'           => "'Plus Jakarta Sans', sans-serif",
+        'default'           => "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
@@ -528,7 +538,8 @@ function secure_centric_customize_register( $wp_customize ) {
         'section'     => 'sc_global_section',
         'type'        => 'select',
         'choices'     => array(
-            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans (Theme Default)',
+            "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" => 'Plus Jakarta Sans / Manrope (Geometric Sans)',
+            "'Plus Jakarta Sans', sans-serif" => 'Plus Jakarta Sans',
             "'Inter', sans-serif"              => 'Inter (Clean & Modern)',
             "'Roboto', sans-serif"             => 'Roboto (Technical Standard)',
             "'Open Sans', sans-serif"          => 'Open Sans (Accessible Body)',
@@ -612,38 +623,66 @@ function secure_centric_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'secure_centric_customize_register' );
 
 /**
- * Output Dynamic CSS Variables from Customizer Settings
+ * Sanitize and clean font strings for direct CSS output without HTML entities
+ */
+function secure_centric_clean_css_font( $font_string ) {
+    if ( empty( $font_string ) ) {
+        return "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    }
+    // Decode any HTML entities like &#039; or &quot;
+    $font = html_entity_decode( $font_string, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+    $font = wp_strip_all_tags( $font );
+    // Retain only safe CSS font-family characters: alphanumeric, spaces, commas, quotes, hyphens, underscores
+    $font = preg_replace( '/[^a-zA-Z0-9\s,\'"\-_]/', '', $font );
+    return trim( $font );
+}
+
+/**
+ * Output Dynamic CSS Variables and Universal Font Rules from Customizer Settings
  */
 function secure_centric_customizer_css() {
     $primary_color = get_theme_mod( 'sc_primary_color', '#0B1437' );
     $accent_blue   = get_theme_mod( 'sc_accent_blue', '#2F5BFF' );
     $cyan_color    = get_theme_mod( 'sc_cyan_color', '#00D4FF' );
     $ice_bg        = get_theme_mod( 'sc_ice_bg', '#F4F7FE' );
-    $heading_font  = get_theme_mod( 'sc_heading_font', "'Plus Jakarta Sans', sans-serif" );
-    $body_font     = get_theme_mod( 'sc_body_font', "'Plus Jakarta Sans', sans-serif" );
+
+    $default_primary = "'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    $default_mono    = "'JetBrains Mono', 'IBM Plex Mono', Menlo, Monaco, Consolas, monospace";
+
+    $heading_font = secure_centric_clean_css_font( get_theme_mod( 'sc_heading_font', $default_primary ) );
+    $body_font    = secure_centric_clean_css_font( get_theme_mod( 'sc_body_font', $default_primary ) );
 
     echo '<style id="secure-centric-customizer-css">' . "\n";
     echo ':root {' . "\n";
     if ( ! empty( $primary_color ) ) {
-        echo '  --color-navy: ' . esc_attr( $primary_color ) . ' !important;' . "\n";
+        echo '  --color-navy: ' . sanitize_hex_color( $primary_color ) . ' !important;' . "\n";
     }
     if ( ! empty( $accent_blue ) ) {
-        echo '  --color-electric-blue: ' . esc_attr( $accent_blue ) . ' !important;' . "\n";
+        echo '  --color-electric-blue: ' . sanitize_hex_color( $accent_blue ) . ' !important;' . "\n";
     }
     if ( ! empty( $cyan_color ) ) {
-        echo '  --color-cyber-cyan: ' . esc_attr( $cyan_color ) . ' !important;' . "\n";
+        echo '  --color-cyber-cyan: ' . sanitize_hex_color( $cyan_color ) . ' !important;' . "\n";
     }
     if ( ! empty( $ice_bg ) ) {
-        echo '  --color-ice: ' . esc_attr( $ice_bg ) . ' !important;' . "\n";
+        echo '  --color-ice: ' . sanitize_hex_color( $ice_bg ) . ' !important;' . "\n";
     }
-    if ( ! empty( $heading_font ) ) {
-        echo '  --font-heading: ' . esc_attr( $heading_font ) . ' !important;' . "\n";
-    }
-    if ( ! empty( $body_font ) ) {
-        echo '  --font-primary: ' . esc_attr( $body_font ) . ' !important;' . "\n";
-        echo '  --font-body: ' . esc_attr( $body_font ) . ' !important;' . "\n";
-    }
+    echo '  --font-primary: ' . $body_font . ' !important;' . "\n";
+    echo '  --font-heading: ' . $heading_font . ' !important;' . "\n";
+    echo '  --font-body: ' . $body_font . ' !important;' . "\n";
+    echo '  --font-mono: ' . $default_mono . ' !important;' . "\n";
+    echo '  --wp--preset--font-family--primary: ' . $body_font . ' !important;' . "\n";
+    echo '  --wp--preset--font-family--mono: ' . $default_mono . ' !important;' . "\n";
     echo '}' . "\n";
+    echo 'html, body {' . "\n";
+    echo '  font-family: ' . $body_font . ' !important;' . "\n";
+    echo '}' . "\n";
+    echo 'h1, h2, h3, h4, h5, h6, .hero-lead, .btn {' . "\n";
+    echo '  font-family: ' . $heading_font . ' !important;' . "\n";
+    echo '}' . "\n";
+    echo '.hero-top-label, .hero-top-badge, .badge-chip, .meta-chip, .breadcrumb, .hero-breadcrumb, .btn-subtext, .subtext, .hero-subtext, span.hero-subtext, div.hero-subtext, .cta-note, .disclaimer, .form-note, .btn-note, .evidence-link, pre, code, .site-data-table th, table thead th {' . "\n";
+    echo '  font-family: ' . $default_mono . ' !important;' . "\n";
+    echo '}' . "\n";
+    echo '.section-eyebrow, .eyebrow { display: none !important; }' . "\n";
     echo '</style>' . "\n";
 }
 add_action( 'wp_head', 'secure_centric_customizer_css', 100 );
