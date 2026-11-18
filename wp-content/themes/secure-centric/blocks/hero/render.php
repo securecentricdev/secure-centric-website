@@ -618,7 +618,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
           <p class="hero-lead"><?php echo esc_html( $description ); ?></p>
           <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
             <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
-            <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);"><?php echo esc_html( $sub_text ); ?></span>
+            <span class="hero-subtext" style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);"><?php echo esc_html( $sub_text ); ?></span>
           </div>
           <div class="hero-topic-cards">
             <a href="<?php echo esc_url( $topic1_url ); ?>" class="hero-topic-card">

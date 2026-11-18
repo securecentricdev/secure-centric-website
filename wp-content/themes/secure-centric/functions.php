@@ -233,10 +233,10 @@ add_action( 'init', 'secure_centric_register_pattern_categories' );
  * Enqueue Theme Scripts & Styles
  */
 function secure_centric_enqueue_assets() {
-    // Google Fonts
+    // Google Fonts: Plus Jakarta Sans & Manrope (Geometric Sans-Serif), JetBrains Mono & IBM Plex Mono (Monospace)
     wp_enqueue_style(
         'secure-centric-fonts',
-        'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+        'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap',
         array(),
         null
     );
@@ -306,7 +306,7 @@ add_action( 'wp_enqueue_scripts', 'secure_centric_enqueue_assets' );
 function secure_centric_editor_assets() {
     wp_enqueue_style(
         'secure-centric-editor-fonts',
-        'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+        'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap',
         array(),
         null
     );

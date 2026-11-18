@@ -9,8 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// ACCREDITATIONS & HONORS';
-$title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Credentials and badges';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '';
+$title   = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
+
+// Remove 'Credentials and badges' title per instruction
+if ( stripos( $title, 'credentials' ) !== false || stripos( $title, 'badges' ) !== false ) {
+    $title = '';
+}
 
 $theme_uri = get_template_directory_uri();
 $default_badges = array(
@@ -72,14 +77,11 @@ if ( function_exists( 'sc_clean_text' ) ) {
 
 <section class="section-white py-section credentials-badges-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'white'}" data-wp-pattern="secure-centric/credentials-badges">
   <div class="site-container">
+    <?php if ( ! empty( $title ) ) : ?>
     <div class="credentials-badges-header" style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
-      <?php if ( ! empty( $eyebrow ) ) : ?>
-        <?php if ( ! empty( $eyebrow ) ) : ?>
-        <span class="section-eyebrow" style="display: block; margin-bottom: 8px;"><?php echo esc_html( $eyebrow ); ?></span>
-        <?php endif; ?>
-      <?php endif; ?>
       <h3 style="font-size: 1.75rem; color: var(--color-navy); margin: 0;"><?php echo esc_html( $title ); ?></h3>
     </div>
+    <?php endif; ?>
 
     <div class="credentials-badges-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; align-items: center; justify-items: center;">
       <?php foreach ( $badges as $badge ) : ?>

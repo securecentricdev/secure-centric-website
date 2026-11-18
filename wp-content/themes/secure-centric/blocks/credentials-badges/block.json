@@ -13,11 +13,11 @@
   "attributes": {
     "eyebrow": {
       "type": "string",
-      "default": "// ACCREDITATIONS & HONORS"
+      "default": ""
     },
     "title": {
       "type": "string",
-      "default": "Credentials and badges"
+      "default": ""
     },
     "badgesData": {
       "type": "string",
