@@ -4,62 +4,208 @@
   "name": "secure-centric/hero",
   "version": "1.2.0",
   "title": "Secure-Centric Hero (Multi-Layout)",
-  "category": "secure-centric-heroes",
+  "category": "custom-blocks",
   "icon": "cover-image",
   "description": "Multi-layout hero block with customizable video/image background media, editable headlines, topics, and interactive readiness quiz card.",
-  "keywords": ["hero", "header", "video", "background", "cmmc", "defense"],
+  "keywords": [
+    "hero",
+    "header",
+    "video",
+    "background",
+    "cmmc",
+    "defense"
+  ],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "attributes": {
-    "layout": { "type": "string", "default": "home" },
-    "breadcrumbCurrent": { "type": "string", "default": "CMMC COMPLIANCE SERVICES" },
-    "secondaryBtnText": { "type": "string", "default": "Explore Services →" },
-    "secondaryBtnUrl": { "type": "string", "default": "#services" },
-    "bgMediaType": { "type": "string", "default": "video" },
-    "bgVideoUrl": { "type": "string", "default": "" },
-    "bgVideoId": { "type": "number", "default": 0 },
-    "bgPosterUrl": { "type": "string", "default": "" },
-    "bgPosterId": { "type": "number", "default": 0 },
-    "bgImageUrl": { "type": "string", "default": "" },
-    "bgImageId": { "type": "number", "default": 0 },
-    "bgOverlayOpacity": { "type": "number", "default": 70 },
-    "eyebrow": { "type": "string", "default": "// NIST SP 800-171 / CMMC Compliance Consultants" },
-    "title": { "type": "string", "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB RPO" },
-    "highlightText": { "type": "string", "default": "Cyber AB RPO" },
-    "description": { "type": "string", "default": "We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation." },
-    "primaryBtnText": { "type": "string", "default": "Book a Discovery Call →" },
-    "primaryBtnUrl": { "type": "string", "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll" },
-    "subText": { "type": "string", "default": "30 min · No sales pitch · Signed NDA" },
-    "toolBtnText": { "type": "string", "default": "View Level 2 Action Plan →" },
-    "toolBtnUrl": { "type": "string", "default": "/cmmc/level-2/" },
-    "topic1Title": { "type": "string", "default": "CMMC" },
-    "topic1Desc": { "type": "string", "default": "Maturity levels & framework" },
-    "topic1Url": { "type": "string", "default": "/cmmc/" },
-    "topic2Title": { "type": "string", "default": "NIST SP 800-171" },
-    "topic2Desc": { "type": "string", "default": "110 controls & DFARS 7012" },
-    "topic2Url": { "type": "string", "default": "/services/nist-800-171-compliance/" },
-    "topic3Title": { "type": "string", "default": "CUI" },
-    "topic3Desc": { "type": "string", "default": "Controlled Unclassified Info" },
-    "topic3Url": { "type": "string", "default": "/cui/" },
-    "quizBadge": { "type": "string", "default": "CMMC READINESS CHECK · 3 MINUTES" },
-    "quizChip": { "type": "string", "default": "Free Tool" },
-    "quizTitle": { "type": "string", "default": "Find out where you stand" },
-    "quizDesc": { "type": "string", "default": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit." },
-    "quizPlaceholder": { "type": "string", "default": "Enter corporate work email" },
-    "quizBtnText": { "type": "string", "default": "Start 3-Minute Readiness Check →" },
-    "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." },
-    "formId": { "type": "string", "default": "" },
-    "cardTitle": { "type": "string", "default": "Talk to a CMMC Advisor" },
-    "cardDesc": { "type": "string", "default": "Submit your details below to schedule your confidential 30-minute scoping review:" },
-    "cardBadge": { "type": "string", "default": "// DIRECT ADVISORY" },
-    "rightSideMode": { "type": "string", "default": "form" },
-    "phasesData": { "type": "string", "default": "[\"Scope and site visit\",\"Assess\",\"Guide the fixes\",\"Document\",\"Prepare for assessment\",\"Maintain and affirm\"]" },
-    "deliverablesData": { "type": "string", "default": "[\"Scope + data-flow diagram\",\"Ranked findings + SPRS estimate\",\"Remediation plan\",\"SSP, policies, POA&M\",\"Evidence index\",\"Annual affirmation pack\"]" },
-    "audiencesData": { "type": "string", "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]" }
+    "layout": {
+      "type": "string",
+      "default": "home"
+    },
+    "breadcrumbCurrent": {
+      "type": "string",
+      "default": "CMMC COMPLIANCE SERVICES"
+    },
+    "secondaryBtnText": {
+      "type": "string",
+      "default": "Explore Services \u2192"
+    },
+    "secondaryBtnUrl": {
+      "type": "string",
+      "default": "#services"
+    },
+    "bgMediaType": {
+      "type": "string",
+      "default": "video"
+    },
+    "bgVideoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgVideoId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgPosterUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgPosterId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgOverlayOpacity": {
+      "type": "number",
+      "default": 70
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "// NIST SP 800-171 / CMMC Compliance Consultants"
+    },
+    "title": {
+      "type": "string",
+      "default": "CMMC compliance for defense subcontractors, guided by a Cyber AB RPO"
+    },
+    "highlightText": {
+      "type": "string",
+      "default": "Cyber AB RPO"
+    },
+    "description": {
+      "type": "string",
+      "default": "We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation."
+    },
+    "primaryBtnText": {
+      "type": "string",
+      "default": "Book a Discovery Call \u2192"
+    },
+    "primaryBtnUrl": {
+      "type": "string",
+      "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
+    },
+    "subText": {
+      "type": "string",
+      "default": "30 min \u00b7 No sales pitch \u00b7 Signed NDA"
+    },
+    "toolBtnText": {
+      "type": "string",
+      "default": "View Level 2 Action Plan \u2192"
+    },
+    "toolBtnUrl": {
+      "type": "string",
+      "default": "/cmmc/level-2/"
+    },
+    "topic1Title": {
+      "type": "string",
+      "default": "CMMC"
+    },
+    "topic1Desc": {
+      "type": "string",
+      "default": "Maturity levels & framework"
+    },
+    "topic1Url": {
+      "type": "string",
+      "default": "/cmmc/"
+    },
+    "topic2Title": {
+      "type": "string",
+      "default": "NIST SP 800-171"
+    },
+    "topic2Desc": {
+      "type": "string",
+      "default": "110 controls & DFARS 7012"
+    },
+    "topic2Url": {
+      "type": "string",
+      "default": "/services/nist-800-171-compliance/"
+    },
+    "topic3Title": {
+      "type": "string",
+      "default": "CUI"
+    },
+    "topic3Desc": {
+      "type": "string",
+      "default": "Controlled Unclassified Info"
+    },
+    "topic3Url": {
+      "type": "string",
+      "default": "/cui/"
+    },
+    "quizBadge": {
+      "type": "string",
+      "default": "CMMC READINESS CHECK \u00b7 3 MINUTES"
+    },
+    "quizChip": {
+      "type": "string",
+      "default": "Free Tool"
+    },
+    "quizTitle": {
+      "type": "string",
+      "default": "Find out where you stand"
+    },
+    "quizDesc": {
+      "type": "string",
+      "default": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit."
+    },
+    "quizPlaceholder": {
+      "type": "string",
+      "default": "Enter corporate work email"
+    },
+    "quizBtnText": {
+      "type": "string",
+      "default": "Start 3-Minute Readiness Check \u2192"
+    },
+    "quizNote": {
+      "type": "string",
+      "default": "\ud83d\udd12 Work email required. Never submit classified or CUI information."
+    },
+    "formId": {
+      "type": "string",
+      "default": ""
+    },
+    "cardTitle": {
+      "type": "string",
+      "default": "Talk to a CMMC Advisor"
+    },
+    "cardDesc": {
+      "type": "string",
+      "default": "Submit your details below to schedule your confidential 30-minute scoping review:"
+    },
+    "cardBadge": {
+      "type": "string",
+      "default": "// DIRECT ADVISORY"
+    },
+    "rightSideMode": {
+      "type": "string",
+      "default": "form"
+    },
+    "phasesData": {
+      "type": "string",
+      "default": "[\"Scope and site visit\",\"Assess\",\"Guide the fixes\",\"Document\",\"Prepare for assessment\",\"Maintain and affirm\"]"
+    },
+    "deliverablesData": {
+      "type": "string",
+      "default": "[\"Scope + data-flow diagram\",\"Ranked findings + SPRS estimate\",\"Remediation plan\",\"SSP, policies, POA&M\",\"Evidence index\",\"Annual affirmation pack\"]"
+    },
+    "audiencesData": {
+      "type": "string",
+      "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]"
+    }
   },
   "supports": {
     "html": false,
-    "align": ["wide", "full"]
+    "align": [
+      "wide",
+      "full"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

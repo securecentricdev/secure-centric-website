@@ -4,10 +4,16 @@
   "name": "secure-centric/cluster",
   "version": "1.0.0",
   "title": "Topic Cluster Links Grid",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "networking",
   "description": "Cross-linked compliance pillars, staging guides, and checklists.",
-  "keywords": ["cluster", "links", "topic", "pills", "navigation"],
+  "keywords": [
+    "cluster",
+    "links",
+    "topic",
+    "pills",
+    "navigation"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "title": {
@@ -25,7 +31,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

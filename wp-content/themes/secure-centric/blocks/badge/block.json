@@ -4,24 +4,34 @@
   "name": "secure-centric/badge",
   "version": "1.0.0",
   "title": "Accreditation Badge Strip",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "shield",
   "description": "Cyber AB Registered Provider Organization accreditation and compliance metadata strip.",
-  "keywords": ["badge", "accreditation", "cyber ab", "rpo", "shield"],
+  "keywords": [
+    "badge",
+    "accreditation",
+    "cyber ab",
+    "rpo",
+    "shield"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "shieldText": {
       "type": "string",
-      "default": "🛡️ Cyber AB Registered Provider Organization · CPN #3942"
+      "default": "\ud83d\udee1\ufe0f Cyber AB Registered Provider Organization \u00b7 CPN #3942"
     },
     "metaText": {
       "type": "string",
-      "default": "Formally Reviewed: November 2026 · 32 CFR 170 Compliant"
+      "default": "Formally Reviewed: November 2026 \u00b7 32 CFR 170 Compliant"
     }
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

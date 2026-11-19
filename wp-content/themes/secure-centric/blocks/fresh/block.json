@@ -4,10 +4,16 @@
   "name": "secure-centric/fresh",
   "version": "1.0.0",
   "title": "Regulatory Citations Freshness Card",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "calendar-alt",
   "description": "Regulatory rulemaking verification status and official DoD/NIST source citations.",
-  "keywords": ["citations", "regulatory", "freshness", "sources", "32 cfr 170"],
+  "keywords": [
+    "citations",
+    "regulatory",
+    "freshness",
+    "sources",
+    "32 cfr 170"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "title": {
@@ -25,7 +31,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

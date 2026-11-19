@@ -207,6 +207,23 @@ function secure_centric_register_custom_blocks() {
 add_action( 'init', 'secure_centric_register_custom_blocks' );
 
 /**
+ * Register Custom Block Categories in Gutenberg Inserter
+ */
+function secure_centric_register_block_categories( $categories, $block_editor_context ) {
+    return array_merge(
+        array(
+            array(
+                'slug'  => 'custom-blocks',
+                'title' => __( 'Custom Blocks', 'secure-centric' ),
+                'icon'  => 'shield',
+            ),
+        ),
+        $categories
+    );
+}
+add_filter( 'block_categories_all', 'secure_centric_register_block_categories', 10, 2 );
+
+/**
  * Register Custom Block Pattern Categories
  */
 function secure_centric_register_pattern_categories() {

@@ -4,17 +4,32 @@
   "name": "secure-centric/numbers-results",
   "version": "1.0.0",
   "title": "Secure-Centric Results & Numbers",
-  "category": "secure-centric-proof",
+  "category": "custom-blocks",
   "icon": "chart-bar",
   "description": "Verified track record results grid with large glowing cyan numbers.",
-  "keywords": ["numbers", "stats", "results", "proof", "track record"],
+  "keywords": [
+    "numbers",
+    "stats",
+    "results",
+    "proof",
+    "track record"
+  ],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow": { "type": "string", "default": "// VERIFIED TRACK RECORD" },
-    "title": { "type": "string", "default": "Our results" },
-    "subtitle": { "type": "string", "default": "100% C3PAO first-time pass record across defense primes and subcontractors nationwide." },
+    "eyebrow": {
+      "type": "string",
+      "default": "// VERIFIED TRACK RECORD"
+    },
+    "title": {
+      "type": "string",
+      "default": "Our results"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "100% C3PAO first-time pass record across defense primes and subcontractors nationwide."
+    },
     "resultsData": {
       "type": "string",
       "default": "[{\"number\":\"120+\",\"title\":\"Defense Contractors Prepared\",\"desc\":\"Guided across 45 states protecting $2.4B in active DoD solicitations.\"},{\"number\":\"100%\",\"title\":\"C3PAO First-Time Pass Rate\",\"desc\":\"Zero clients failed an official external third-party audit after readiness sign-off.\"},{\"number\":\"3 Weeks\",\"title\":\"On-Site Walkthrough Guarantee\",\"desc\":\"In-person facility inspection of server rooms and shop-floor enclaves.\"},{\"number\":\"Flat-Fee\",\"title\":\"Fixed Transparent Scope\",\"desc\":\"Zero hourly billing surprises, travel markups, or tool licensing kickbacks.\"}]"
@@ -22,6 +37,10 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
-  }
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "example": {}
 }

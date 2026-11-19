@@ -236,7 +236,8 @@
       registerBlockType(blockName, {
         title: config.title,
         icon: config.icon || 'shield',
-        category: config.category || 'secure-centric-process',
+        category: 'custom-blocks',
+        example: {},
         edit: function (props) {
           const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -353,7 +354,8 @@
     registerBlockType('secure-centric/hero', {
       title: 'Hero Section (CMMC Interactive)',
       icon: 'shield',
-      category: 'secure-centric-heroes',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -840,7 +842,8 @@
     registerBlockType('secure-centric/logo-marquee', {
       title: 'Client Logos Marquee',
       icon: 'images-alt2',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -1085,7 +1088,8 @@
     registerBlockType('secure-centric/roadmap-stepper', {
       title: 'Interactive Journey Roadmap (Dynamic Steps)',
       icon: 'randomize',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -1435,7 +1439,8 @@
     registerBlockType('secure-centric/testimonials', {
       title: 'Defense Client Testimonials (Dynamic)',
       icon: 'format-quote',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -1672,7 +1677,7 @@
     createBlockRegistration('secure-centric/section-explainer', {
       title: 'Section Explainer & Overview',
       icon: 'text',
-      category: 'secure-centric-heroes',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Explainer Content',
@@ -1694,7 +1699,7 @@
     createBlockRegistration('secure-centric/why-proof', {
       title: 'Why Secure-Centric & Proof Grid',
       icon: 'awards',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Links',
@@ -1774,7 +1779,8 @@
     registerBlockType('secure-centric/resource-cards', {
       title: 'Resource Guides & Checklists Grid (Dynamic)',
       icon: 'portfolio',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -1979,7 +1985,8 @@
     registerBlockType('secure-centric/credentials-badges', {
       title: 'Credentials & Badges',
       icon: 'awards',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -2223,7 +2230,8 @@
     registerBlockType('secure-centric/accordion-faq', {
       title: 'FAQ Accordion (Dynamic Questions)',
       icon: 'editor-help',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -2434,7 +2442,7 @@
     createBlockRegistration('secure-centric/comparison-grid', {
       title: 'Three Approaches Comparison Grid',
       icon: 'columns',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Heading',
@@ -2489,7 +2497,7 @@
     createBlockRegistration('secure-centric/cta-banner', {
       title: 'Call to Action Band',
       icon: 'megaphone',
-      category: 'secure-centric-cta',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Banner Content & Actions',
@@ -2512,7 +2520,8 @@
     registerBlockType('secure-centric/form-embed', {
       title: 'Interactive Defense Lead & Scoping Form',
       icon: 'feedback',
-      category: 'secure-centric-cta',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -2721,7 +2730,8 @@
     registerBlockType('secure-centric/team-grid', {
       title: 'Leadership & Specialists Team Grid',
       icon: 'groups',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -2956,6 +2966,8 @@
        13. NUMBERS & RESULTS GRID BLOCK
        ========================================================================== */
     registerBlockType('secure-centric/numbers-results', {
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const attributes = props.attributes;
         const setAttributes = props.setAttributes;
@@ -3092,6 +3104,8 @@
        14. BULLETS & PRINCIPLES GRID BLOCK
        ========================================================================== */
     registerBlockType('secure-centric/bullets-grid', {
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const attributes = props.attributes;
         const setAttributes = props.setAttributes;
@@ -3225,7 +3239,7 @@
     createBlockRegistration('secure-centric/process-phases', {
       title: 'Phase-by-Phase Advisory Process',
       icon: 'clipboard',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3252,7 +3266,7 @@
     createBlockRegistration('secure-centric/steps-horizontal', {
       title: 'Horizontal Steps Workflow',
       icon: 'ellipsis',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3279,7 +3293,7 @@
     createBlockRegistration('secure-centric/lead-magnet', {
       title: 'Lead Magnet Download Band',
       icon: 'download',
-      category: 'secure-centric-cta',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Lead Magnet Copy & Options',
@@ -3317,7 +3331,7 @@
     createBlockRegistration('secure-centric/textgroup-deepdive', {
       title: 'Long-Form Deep Dive Analysis',
       icon: 'text',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3344,7 +3358,7 @@
     createBlockRegistration('secure-centric/related-resources', {
       title: 'Related Compliance Resources',
       icon: 'grid-view',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3371,7 +3385,7 @@
     createBlockRegistration('secure-centric/icp-tiers', {
       title: 'Compliance Contract Tiers',
       icon: 'shield',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3397,7 +3411,7 @@
     createBlockRegistration('secure-centric/icp-personas', {
       title: 'Executive Buyer Personas',
       icon: 'admin-users',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3423,7 +3437,7 @@
     createBlockRegistration('secure-centric/dib-supply-chain', {
       title: 'Defense Industrial Base (DIB) Supply Chain',
       icon: 'networking',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3450,7 +3464,7 @@
     createBlockRegistration('secure-centric/audience-paths', {
       title: 'Supply Chain Sequential Pathways',
       icon: 'randomize',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3477,7 +3491,7 @@
     createBlockRegistration('secure-centric/two-col', {
       title: 'Two Column Comparison Cards',
       icon: 'columns',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3515,7 +3529,7 @@
     createBlockRegistration('secure-centric/consultant-scorer', {
       title: 'Consultant Selection Scorer (7 Checks)',
       icon: 'yes',
-      category: 'secure-centric-proof',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3544,7 +3558,7 @@
     createBlockRegistration('secure-centric/stageline', {
       title: 'Stage Line Bar',
       icon: 'flag',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Stage Settings',
@@ -3566,7 +3580,7 @@
     createBlockRegistration('secure-centric/steps-vertical', {
       title: 'Steps Vertical (Review Stages)',
       icon: 'editor-ul',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Eyebrow',
@@ -3593,7 +3607,7 @@
     createBlockRegistration('secure-centric/iconbox', {
       title: 'IconBox Highlight Card',
       icon: 'building',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Card Content',
@@ -3620,7 +3634,8 @@
     registerBlockType('secure-centric/data-table', {
       title: 'Data Table (Gap & Compliance Matrix)',
       icon: 'table-col-after',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
+      example: {},
       edit: function (props) {
         const { attributes, setAttributes, isSelected, clientId } = props;
 
@@ -3862,7 +3877,7 @@
     createBlockRegistration('secure-centric/diagram', {
       title: 'Boundary Segregation Diagram',
       icon: 'networking',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Diagram Header',
@@ -3889,7 +3904,7 @@
     createBlockRegistration('secure-centric/badge', {
       title: 'Accreditation Badge Strip',
       icon: 'shield',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Badge Content',
@@ -3908,7 +3923,7 @@
     createBlockRegistration('secure-centric/toc', {
       title: 'On-This-Page Table of Contents',
       icon: 'list-view',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Header & Title',
@@ -3933,7 +3948,7 @@
     createBlockRegistration('secure-centric/accordion-tiles', {
       title: 'NIST 14 Control Families (Accordion / Interactive Tiles)',
       icon: 'grid-view',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Header',
@@ -3960,7 +3975,7 @@
     createBlockRegistration('secure-centric/tiles', {
       title: 'NIST 14 Control Families (Grid Cards)',
       icon: 'screenoptions',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Header',
@@ -3987,7 +4002,7 @@
     createBlockRegistration('secure-centric/cluster', {
       title: 'Topic Cluster Links Grid',
       icon: 'networking',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Header',
@@ -4013,7 +4028,7 @@
     createBlockRegistration('secure-centric/fresh', {
       title: 'Regulatory Citations Freshness Card',
       icon: 'calendar-alt',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Card Header',
@@ -4039,7 +4054,7 @@
     createBlockRegistration('secure-centric/howto', {
       title: 'Verification Procedure How-To Steps',
       icon: 'clipboard',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Header',
@@ -4066,7 +4081,7 @@
     createBlockRegistration('secure-centric/numbers4', {
       title: 'Verified Defense Metrics (Numbers 4 Band)',
       icon: 'chart-bar',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Section Header',
@@ -4093,7 +4108,7 @@
     createBlockRegistration('secure-centric/definition', {
       title: 'Compliance Artifact Definition Card',
       icon: 'media-document',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Card Header',
@@ -4119,7 +4134,7 @@
     createBlockRegistration('secure-centric/preview', {
       title: 'Checklist Spreadsheet Table Preview',
       icon: 'analytics',
-      category: 'secure-centric-process',
+      category: 'custom-blocks',
       panels: [
         {
           title: 'Table Header',

@@ -4,10 +4,16 @@
   "name": "secure-centric/howto",
   "version": "1.0.0",
   "title": "Verification Procedure How-To Steps",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "clipboard",
   "description": "Numbered procedural cards for verifying official Cyber AB accreditation credentials.",
-  "keywords": ["howto", "procedure", "verification", "cyber ab", "steps"],
+  "keywords": [
+    "howto",
+    "procedure",
+    "verification",
+    "cyber ab",
+    "steps"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "eyebrow": {
@@ -29,7 +35,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

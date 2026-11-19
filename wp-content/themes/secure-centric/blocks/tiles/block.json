@@ -4,10 +4,16 @@
   "name": "secure-centric/tiles",
   "version": "1.0.0",
   "title": "NIST 14 Control Families (Grid Cards)",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "screenoptions",
   "description": "Grid cards showcasing the 14 NIST SP 800-171 Rev 2 control families and control counts.",
-  "keywords": ["nist", "control families", "tiles", "cards", "110 controls"],
+  "keywords": [
+    "nist",
+    "control families",
+    "tiles",
+    "cards",
+    "110 controls"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "eyebrow": {
@@ -29,7 +35,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

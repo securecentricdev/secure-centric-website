@@ -4,20 +4,41 @@
   "name": "secure-centric/iconbox",
   "version": "1.0.0",
   "title": "IconBox Highlight",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "building",
   "description": "Highlighted in-person verification card with check points.",
-  "keywords": ["iconbox", "highlight", "walkthrough", "verification"],
+  "keywords": [
+    "iconbox",
+    "highlight",
+    "walkthrough",
+    "verification"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
-    "eyebrow": { "type": "string", "default": "// IN-PERSON VERIFICATION" },
-    "title": { "type": "string", "default": "On-Site Physical & Technical Walkthrough" },
-    "lead": { "type": "string", "default": "We inspect real hardware, server rooms, and shop floors." },
-    "pointsData": { "type": "string", "default": "" }
+    "eyebrow": {
+      "type": "string",
+      "default": "// IN-PERSON VERIFICATION"
+    },
+    "title": {
+      "type": "string",
+      "default": "On-Site Physical & Technical Walkthrough"
+    },
+    "lead": {
+      "type": "string",
+      "default": "We inspect real hardware, server rooms, and shop floors."
+    },
+    "pointsData": {
+      "type": "string",
+      "default": ""
+    }
   },
   "supports": {
-    "align": ["full", "wide"],
+    "align": [
+      "full",
+      "wide"
+    ],
     "html": false
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

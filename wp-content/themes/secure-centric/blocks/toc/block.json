@@ -4,10 +4,16 @@
   "name": "secure-centric/toc",
   "version": "1.0.0",
   "title": "On-This-Page Table of Contents",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "list-view",
   "description": "On-page jump navigation bar for pillar guide sections.",
-  "keywords": ["toc", "navigation", "jump", "table of contents", "pillar"],
+  "keywords": [
+    "toc",
+    "navigation",
+    "jump",
+    "table of contents",
+    "pillar"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "title": {
@@ -21,7 +27,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

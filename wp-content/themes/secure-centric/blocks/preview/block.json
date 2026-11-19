@@ -4,10 +4,16 @@
   "name": "secure-centric/preview",
   "version": "1.0.0",
   "title": "Checklist Spreadsheet Table Preview",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "analytics",
   "description": "Live spreadsheet table preview showing columns, objectives, status chips, and evidence links.",
-  "keywords": ["preview", "checklist", "spreadsheet", "table", "status"],
+  "keywords": [
+    "preview",
+    "checklist",
+    "spreadsheet",
+    "table",
+    "status"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "title": {
@@ -25,7 +31,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

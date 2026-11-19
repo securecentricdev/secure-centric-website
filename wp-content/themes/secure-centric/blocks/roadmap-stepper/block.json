@@ -4,24 +4,55 @@
   "name": "secure-centric/roadmap-stepper",
   "version": "1.2.0",
   "title": "CMMC Interactive Journey Roadmap",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "flag",
   "description": "Interactive milestone journey with animated walking assessor SVG. Add, remove, or customize any number of milestones.",
-  "keywords": ["roadmap", "steps", "journey", "milestones", "cmmc"],
+  "keywords": [
+    "roadmap",
+    "steps",
+    "journey",
+    "milestones",
+    "cmmc"
+  ],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "attributes": {
-    "eyebrow": { "type": "string", "default": "// THE CMMC PROCESS" },
-    "title": { "type": "string", "default": "Your CMMC journey, step by step" },
-    "detailedProcessLinkText": { "type": "string", "default": "View Detailed 8-Step Process →" },
-    "detailedProcessLinkUrl": { "type": "string", "default": "/cmmc/cmmc-process/" },
-    "autoplayDelay": { "type": "number", "default": 3800 },
-    "flagText": { "type": "string", "default": "Target C3PAO Certification Milestone" },
-    "stepsData": { "type": "string", "default": "" }
+    "eyebrow": {
+      "type": "string",
+      "default": "// THE CMMC PROCESS"
+    },
+    "title": {
+      "type": "string",
+      "default": "Your CMMC journey, step by step"
+    },
+    "detailedProcessLinkText": {
+      "type": "string",
+      "default": "View Detailed 8-Step Process \u2192"
+    },
+    "detailedProcessLinkUrl": {
+      "type": "string",
+      "default": "/cmmc/cmmc-process/"
+    },
+    "autoplayDelay": {
+      "type": "number",
+      "default": 3800
+    },
+    "flagText": {
+      "type": "string",
+      "default": "Target C3PAO Certification Milestone"
+    },
+    "stepsData": {
+      "type": "string",
+      "default": ""
+    }
   },
   "supports": {
     "html": false,
-    "align": ["wide", "full"]
+    "align": [
+      "wide",
+      "full"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

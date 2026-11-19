@@ -4,10 +4,16 @@
   "name": "secure-centric/numbers4",
   "version": "1.0.0",
   "title": "Verified Defense Metrics (Numbers 4 Band)",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "chart-bar",
   "description": "Band of 4 verified defense metrics and statistics with large numerals and labels.",
-  "keywords": ["numbers", "metrics", "stats", "defense metrics", "numbers4"],
+  "keywords": [
+    "numbers",
+    "metrics",
+    "stats",
+    "defense metrics",
+    "numbers4"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "eyebrow": {
@@ -29,7 +35,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

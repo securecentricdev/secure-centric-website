@@ -4,17 +4,32 @@
   "name": "secure-centric/related-resources",
   "version": "1.0.0",
   "title": "Secure-Centric Related Compliance Resources",
-  "category": "secure-centric-proof",
+  "category": "custom-blocks",
   "icon": "grid-view",
   "description": "Grid of 4 related service pages, guides, or checklists.",
-  "keywords": ["related", "resources", "ecosystem", "links", "cards"],
+  "keywords": [
+    "related",
+    "resources",
+    "ecosystem",
+    "links",
+    "cards"
+  ],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow": { "type": "string", "default": "// KNOWLEDGE ECOSYSTEM" },
-    "title": { "type": "string", "default": "Related Compliance Resources" },
-    "subtitle": { "type": "string", "default": "Explore related compliance frameworks, staging guides, and scoping resources." },
+    "eyebrow": {
+      "type": "string",
+      "default": "// KNOWLEDGE ECOSYSTEM"
+    },
+    "title": {
+      "type": "string",
+      "default": "Related Compliance Resources"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Explore related compliance frameworks, staging guides, and scoping resources."
+    },
     "pagesData": {
       "type": "string",
       "default": "[{\"title\":\"CMMC Complete Guide\",\"desc\":\"Everything defense contractors need to know about levels, rulemaking, and audits.\",\"url\":\"/cmmc/\"},{\"title\":\"CMMC Level 2 Guide\",\"desc\":\"110 requirements across 14 families: technical details and self vs C3PAO rules.\",\"url\":\"/cmmc/level-2/\"},{\"title\":\"NIST SP 800-171 Explained\",\"desc\":\"The technical foundation of CMMC Level 2 and DFARS 7012 requirements.\",\"url\":\"/nist-800-171/\"},{\"title\":\"CMMC Enclave Advisory\",\"desc\":\"How shrinking your CUI scope saves months of time and tens of thousands in audit costs.\",\"url\":\"/services/cmmc-enclave/\"}]"
@@ -22,6 +37,10 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
-  }
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "example": {}
 }

@@ -4,19 +4,40 @@
   "name": "secure-centric/process-phases",
   "version": "1.0.0",
   "title": "Secure-Centric Phase-by-Phase Process",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "clipboard",
   "description": "Structured 6-phase advisory delivery execution with deliverables and role chips.",
-  "keywords": ["phases", "process", "delivery", "advisory", "milestones"],
+  "keywords": [
+    "phases",
+    "process",
+    "delivery",
+    "advisory",
+    "milestones"
+  ],
   "textdomain": "secure-centric",
   "editorScript": "secure-centric-editor-blocks",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow": { "type": "string", "default": "// PHASE-BY-PHASE EXECUTION" },
-    "title": { "type": "string", "default": "What we do, phase by phase" },
-    "subtitle": { "type": "string", "default": "Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision before your official C3PAO assessment date." },
-    "linkText": { "type": "string", "default": "Phase Details →" },
-    "linkUrl": { "type": "string", "default": "/cmmc/cmmc-process/" },
+    "eyebrow": {
+      "type": "string",
+      "default": "// PHASE-BY-PHASE EXECUTION"
+    },
+    "title": {
+      "type": "string",
+      "default": "What we do, phase by phase"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Our structured 6-phase advisory engagement ensures every control is scoped, addressed, and documented with precision before your official C3PAO assessment date."
+    },
+    "linkText": {
+      "type": "string",
+      "default": "Phase Details \u2192"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "/cmmc/cmmc-process/"
+    },
     "phasesData": {
       "type": "string",
       "default": "[[\"Scope and site visit\",\"Find where FCI and CUI live; draw the boundary\",\"Scope document, asset list, data-flow diagram\"],[\"Assess\",\"Check all 110 requirements against how you really work; optional mock day\",\"Ranked findings, estimated SPRS score\"],[\"Guide the fixes\",\"Prioritise fixes by risk and score; advise your IT/MSP\",\"Remediation plan with owners and dates\"],[\"Document\",\"Write the SSP, policies, procedures and POA&M with you\",\"Assessor-ready SSP, policies, POA&M\"],[\"Prepare for assessment\",\"Full mock audit with interview practice for your team\",\"Confidence on assessment day; no surprises\"],[\"Maintain and affirm\",\"Annual affirmation, incident response and change control\",\"Annual affirmation pack and defensible record\"]]"
@@ -24,6 +45,10 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
-  }
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "example": {}
 }

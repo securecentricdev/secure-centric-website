@@ -4,10 +4,16 @@
   "name": "secure-centric/accordion-tiles",
   "version": "1.0.0",
   "title": "NIST 14 Control Families (Accordion / Interactive Tiles)",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "grid-view",
   "description": "Interactive cards detailing the 14 NIST SP 800-171 Rev 2 control families and requirements count.",
-  "keywords": ["nist", "control families", "110 controls", "accordion", "tiles"],
+  "keywords": [
+    "nist",
+    "control families",
+    "110 controls",
+    "accordion",
+    "tiles"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
     "eyebrow": {
@@ -29,7 +35,11 @@
   },
   "supports": {
     "html": false,
-    "align": ["full", "wide"]
+    "align": [
+      "full",
+      "wide"
+    ]
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }

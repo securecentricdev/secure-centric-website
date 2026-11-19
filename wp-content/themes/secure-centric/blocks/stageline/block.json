@@ -4,21 +4,45 @@
   "name": "secure-centric/stageline",
   "version": "1.0.0",
   "title": "Stage Line Bar",
-  "category": "secure-centric-process",
+  "category": "custom-blocks",
   "icon": "flag",
   "description": "Displays where this engagement stage fits within the overall 8-step CMMC journey.",
-  "keywords": ["stage", "process", "workflow", "banner"],
+  "keywords": [
+    "stage",
+    "process",
+    "workflow",
+    "banner"
+  ],
   "textdomain": "secure-centric",
   "attributes": {
-    "stage": { "type": "string", "default": "Compliance Phase" },
-    "serviceLink": { "type": "string", "default": "/services/cmmc-compliance/" },
-    "title": { "type": "string", "default": "Where you fit" },
-    "line": { "type": "string", "default": "You know CMMC applies but need clarity on scoping, timeline, and audit boundaries." },
-    "processLink": { "type": "string", "default": "/cmmc/cmmc-process/" }
+    "stage": {
+      "type": "string",
+      "default": "Compliance Phase"
+    },
+    "serviceLink": {
+      "type": "string",
+      "default": "/services/cmmc-compliance/"
+    },
+    "title": {
+      "type": "string",
+      "default": "Where you fit"
+    },
+    "line": {
+      "type": "string",
+      "default": "You know CMMC applies but need clarity on scoping, timeline, and audit boundaries."
+    },
+    "processLink": {
+      "type": "string",
+      "default": "/cmmc/cmmc-process/"
+    }
   },
   "supports": {
-    "align": ["full", "wide"],
+    "align": [
+      "full",
+      "wide"
+    ],
     "html": false
   },
-  "render": "file:./render.php"
+  "render": "file:./render.php",
+  "example": {}
 }
