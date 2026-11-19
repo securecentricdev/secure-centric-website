@@ -184,7 +184,7 @@
     },
     "rightSideMode": {
       "type": "string",
-      "default": "form"
+      "default": ""
     },
     "phasesData": {
       "type": "string",
