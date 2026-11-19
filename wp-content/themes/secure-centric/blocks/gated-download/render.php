@@ -93,47 +93,53 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
        data-file-url="<?php echo esc_attr( $file_url ); ?>"
        data-file-name="<?php echo esc_attr( $file_name ); ?>"
        data-form-id="<?php echo esc_attr( $form_id ); ?>"
-       style="display: none; position: fixed; inset: 0; background: rgba(11, 20, 55, 0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 999999; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease;">
+       style="display: none; position: fixed; inset: 0; background: rgba(11, 20, 55, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 999999; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 48px); opacity: 0; transition: opacity 0.25s ease;">
     
-    <div class="sc-gated-modal-card" style="background: #ffffff; border-radius: 12px; max-width: 540px; width: 100%; padding: clamp(24px, 4vw, 36px); box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.25s ease;">
+    <div class="sc-gated-modal-card" style="background: #ffffff; border-radius: 14px; max-width: 1200px; width: 100%; padding: clamp(28px, 4vw, 48px); box-shadow: 0 25px 60px rgba(0,0,0,0.35); position: relative; max-height: calc(100vh - clamp(32px, 6vw, 80px)); overflow-y: auto; transform: translateY(20px); transition: transform 0.25s ease;">
       <!-- Close button -->
       <button type="button" 
               class="sc-gated-modal-close" 
               aria-label="Close modal" 
-              style="position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--color-border); background: #f8fafc; color: var(--color-navy); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;">
+              style="position: absolute; top: 18px; right: 18px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--color-border); background: #f8fafc; color: var(--color-navy); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; z-index: 10;">
         ✕
       </button>
 
       <!-- Modal Header -->
-      <div class="sc-gated-modal-header" style="margin-bottom: 20px; padding-right: 30px;">
+      <div class="sc-gated-modal-header" style="margin-bottom: 24px; padding-right: 50px;">
         <span style="font-size: 0.75rem; font-family: var(--font-mono); font-weight: 700; color: var(--color-electric-blue); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">
           INSTANT ACCESS // STEP 1 OF 1
         </span>
-        <h3 style="font-size: 1.35rem; color: var(--color-navy); margin-bottom: 8px; font-weight: 700;">
+        <h3 style="font-size: clamp(1.4rem, 2.2vw, 1.85rem); color: var(--color-navy); margin-bottom: 8px; font-weight: 700;">
           <?php echo esc_html( $modal_title ); ?>
         </h3>
-        <p style="font-size: 0.9375rem; color: var(--color-body-text); line-height: 1.5; margin: 0;">
+        <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.55; margin: 0; max-width: 800px;">
           <?php echo esc_html( $modal_subtitle ); ?>
         </p>
       </div>
 
       <!-- Forminator Form Container -->
-      <div class="sc-gated-form-container">
+      <div class="sc-gated-form-container" style="width: 100%;">
         <?php
         if ( ! empty( $form_id ) && shortcode_exists( 'forminator_form' ) ) :
             echo do_shortcode( '[forminator_form id="' . esc_attr( $form_id ) . '"]' );
         else :
         ?>
           <form class="sc-gated-fallback-form" onsubmit="event.preventDefault(); window.scTriggerGatedDownload('<?php echo esc_js( $unique_id ); ?>');">
-            <div style="margin-bottom: 12px;">
-              <label style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Full Name *</label>
-              <input type="text" class="form-input" placeholder="e.g. John Doe" required style="width: 100%;" />
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
+              <div>
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Full Name *</label>
+                <input type="text" class="form-input" placeholder="e.g. John Doe" required style="width: 100%; padding: 12px 14px; font-size: 0.9375rem;" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Work Email *</label>
+                <input type="email" class="form-input" placeholder="john@defensecompany.com" required style="width: 100%; padding: 12px 14px; font-size: 0.9375rem;" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Company / Facility Name</label>
+                <input type="text" class="form-input" placeholder="e.g. Precision Aerospace Inc." style="width: 100%; padding: 12px 14px; font-size: 0.9375rem;" />
+              </div>
             </div>
-            <div style="margin-bottom: 16px;">
-              <label style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Work Email *</label>
-              <input type="email" class="form-input" placeholder="john@defensecompany.com" required style="width: 100%;" />
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; font-weight: 700; padding: 12px 20px;">
+            <button type="submit" class="btn btn-primary" style="font-weight: 700; padding: 14px 32px; font-size: 1rem; border-radius: 6px;">
               Download Now →
             </button>
           </form>

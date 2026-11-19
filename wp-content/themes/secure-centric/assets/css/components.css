@@ -2084,3 +2084,26 @@ body,
   border: 1.5px solid #ef4444 !important;
   color: #991b1b !important;
 }
+
+/* Gated Resource Download Modal (Full Screen with Padding) */
+.sc-gated-modal-overlay {
+  box-sizing: border-box;
+}
+
+.sc-gated-modal-card {
+  width: 100% !important;
+  max-width: 1200px !important;
+  box-sizing: border-box;
+}
+
+.sc-gated-form-container .forminator-ui,
+.sc-gated-form-container .forminator-custom-form {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .sc-gated-modal-card {
+    padding: 24px 18px !important;
+  }
+}
