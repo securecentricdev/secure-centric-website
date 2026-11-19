@@ -2277,6 +2277,10 @@
 
         let currentFaqs = safeParseJsonArray(attributes.faqsData, defaultFaqs);
 
+        if (!attributes.faqsData) {
+          setAttributes({ faqsData: JSON.stringify(defaultFaqs) });
+        }
+
         function updateFaqs(newFaqs) {
           setAttributes({ faqsData: JSON.stringify(newFaqs) });
         }

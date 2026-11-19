@@ -76,13 +76,13 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
     <?php if ( ! empty( $title ) ) : ?>
       <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: 700; color: #0F172A;"><?php echo esc_html( $title ); ?></h3>
     <?php endif; ?>
-    <div class="custom-table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1px solid #E2E8F0;">
+    <div class="custom-table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1.5px solid #1E293B; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background-color: #0B1437;">
       <table class="custom-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
         <?php if ( ! empty( $cols ) ) : ?>
           <thead>
-            <tr style="background: #F8FAFC; border-bottom: 2px solid #E2E8F0;">
+            <tr style="background: #FFFFFF; border-bottom: 2px solid #CBD5E1;">
               <?php foreach ( $cols as $c ) : ?>
-                <th style="padding: 14px 18px; font-weight: 700; color: #1E293B;"><?php echo esc_html( $c ); ?></th>
+                <th style="padding: 16px 20px; font-weight: 800; font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; color: #0B1437; font-family: var(--font-mono, monospace); background-color: #FFFFFF;"><?php echo esc_html( $c ); ?></th>
               <?php endforeach; ?>
             </tr>
           </thead>
@@ -91,19 +91,19 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
           <?php if ( ! empty( $rows ) ) : ?>
             <?php foreach ( $rows as $idx => $row ) : 
               $row_cells = array_values( (array) $row );
-              $bg = ( $idx % 2 === 1 ) ? '#F8FAFC' : '#FFFFFF';
+              $bg = ( $idx % 2 === 1 ) ? '#0B1437' : '#101E56';
             ?>
-              <tr style="background: <?php echo $bg; ?>; border-bottom: 1px solid #E2E8F0;">
+              <tr style="background: <?php echo $bg; ?>; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
                 <?php foreach ( $row_cells as $c_idx => $cell ) : 
                   // If cell is an array, join it
                   if ( is_array( $cell ) ) {
                       $cell = implode( ', ', $cell );
                   }
                   $is_first = ( $c_idx === 0 );
-                  $weight = $is_first ? '600' : '400';
-                  $text_color = $is_first ? '#0F172A' : '#334155';
+                  $weight = $is_first ? '500' : '600';
+                  $text_color = $is_first ? '#FFFFFF' : '#38BDF8';
                 ?>
-                  <td style="padding: 14px 18px; color: <?php echo $text_color; ?>; font-weight: <?php echo $weight; ?>; vertical-align: top; line-height: 1.5;"><?php echo esc_html( $cell ); ?></td>
+                  <td style="padding: 16px 20px; color: <?php echo $text_color; ?>; background-color: <?php echo $bg; ?>; font-weight: <?php echo $weight; ?>; vertical-align: middle; line-height: 1.6; font-size: 0.9375rem;"><?php echo esc_html( $cell ); ?></td>
                 <?php endforeach; ?>
               </tr>
             <?php endforeach; ?>

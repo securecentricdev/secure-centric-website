@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// FREQUENTLY ASKED QUESTIONS';
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Common questions';
-$description = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
+$has_explicit_desc = array_key_exists( 'description', $attributes ) || array_key_exists( 'subtitle', $attributes );
+$description = $has_explicit_desc ? ( array_key_exists( 'description', $attributes ) ? trim( (string) $attributes['description'] ) : trim( (string) $attributes['subtitle'] ) ) : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
 $default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
 $btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : $default_booking;
@@ -26,36 +27,20 @@ if ( ! empty( $attributes['faqsData'] ) ) {
 }
 
 if ( empty( $faqs ) ) {
-    $default_faqs = array(
-        1 => array(
-            'q' => 'What is CMMC compliance?',
-            'a' => 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense contractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).',
-        ),
-        2 => array(
-            'q' => 'Do you come to our site?',
-            'a' => 'Yes, absolutely. An on-site facility walkthrough is step 1 of every engagement. We inspect physical boundaries, server rooms, and shop-floor terminals in person.',
-        ),
-        3 => array(
-            'q' => 'Do you only work on CMMC and NIST SP 800-171?',
+    $faqs = array(
+        array(
+            'q' => 'Where is Secure-Centric based?',
             'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
         ),
-        4 => array(
-            'q' => 'What happens after I book a discovery call?',
-            'a' => 'Having your prime contract Section I DFARS clauses (e.g. 252.204-7012, 7019, 7020), your high-level network topology, and whether you handle CUI or FCI will make the call most productive.',
-        ),
-        5 => array(
-            'q' => 'Who will we work with day to day?',
+        array(
+            'q' => 'Do you sell tools or managed IT?',
             'a' => 'Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.',
+        ),
+        array(
+            'q' => 'How long have you worked on CMMC?',
+            'a' => 'Most defense contractors complete their readiness, remediation, and documentation within 4 to 8 months, depending on boundary size and facility count.',
         ),
     );
-
-    for ( $i = 1; $i <= 5; $i++ ) {
-        $def = $default_faqs[ $i ];
-        $faqs[] = array(
-            'q' => ! empty( $attributes[ 'faq' . $i . 'Q' ] ) ? $attributes[ 'faq' . $i . 'Q' ] : $def['q'],
-            'a' => ! empty( $attributes[ 'faq' . $i . 'A' ] ) ? $attributes[ 'faq' . $i . 'A' ] : $def['a'],
-        );
-    }
 }
 
 if ( function_exists( 'sc_clean_text' ) ) {
@@ -77,10 +62,12 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
         <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
         <?php endif; ?>
-        <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
+        <h2<?php echo empty( $description ) ? ' style="margin-bottom: 24px;"' : ' style="margin-bottom: 16px;"'; ?>><?php echo esc_html( $title ); ?></h2>
+        <?php if ( ! empty( $description ) ) : ?>
         <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: 24px;">
           <?php echo esc_html( $description ); ?>
         </p>
+        <?php endif; ?>
         <a href="<?php echo esc_url( $btn_url ); ?>" class="btn btn-secondary-outline"><?php echo esc_html( $btn_text ); ?></a>
       </div>
 

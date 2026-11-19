@@ -18,7 +18,7 @@
   "attributes": {
     "faqsData": {
       "type": "string",
-      "default": ""
+      "default": "[{\"q\":\"Where is Secure-Centric based?\",\"a\":\"Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.\"},{\"q\":\"Do you sell tools or managed IT?\",\"a\":\"Our Cyber AB Registered Practitioners conduct in-depth scoping and compliance reviews to guarantee defensible alignment with Department of War standards.\"},{\"q\":\"How long have you worked on CMMC?\",\"a\":\"Most defense contractors complete their readiness, remediation, and documentation within 4 to 8 months, depending on boundary size and facility count.\"}]"
     },
     "eyebrow": {
       "type": "string",
