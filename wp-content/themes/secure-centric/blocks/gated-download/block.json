@@ -23,6 +23,10 @@
   "editorScript": "secure-centric-editor-blocks",
   "render": "file:./render.php",
   "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
     "eyebrow": {
       "type": "string",
       "default": "// FREE DOWNLOADABLE RESOURCE"

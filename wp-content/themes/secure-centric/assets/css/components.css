@@ -1894,11 +1894,56 @@ body,
    Gutenberg Editor Block Wrapper & Selection States
    Allows seamless clicking and selecting of dynamic ServerSideRender blocks
    ========================================================================== */
+/* ==========================================================================
+   Backend Gutenberg Editor Full-Width Rules
+   Ensures all custom blocks and ServerSideRender previews span full width
+   ========================================================================== */
+.editor-styles-wrapper .wp-block[data-type^="secure-centric/"],
+.block-editor-block-list__layout .wp-block[data-type^="secure-centric/"],
+.is-root-container > .wp-block[data-type^="secure-centric/"],
+.wp-block[data-type^="secure-centric/"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 .sc-gutenberg-block-wrapper {
   position: relative;
   cursor: pointer !important;
   transition: box-shadow 0.2s ease, outline 0.2s ease;
   user-select: none;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.sc-gutenberg-block-wrapper .components-server-side-render,
+.editor-styles-wrapper .components-server-side-render {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .sc-gutenberg-block-wrapper section,
+.editor-styles-wrapper [data-wp-pattern] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .site-container {
+  width: 100% !important;
+  max-width: 1240px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .card,
+.editor-styles-wrapper .card-white {
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* Ensure clicks anywhere on preview elements select the Gutenberg block */

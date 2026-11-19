@@ -2828,18 +2828,23 @@
 
         const blockProps = useBlockProps ? useBlockProps({
           className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
-          style: { position: 'relative', cursor: 'pointer' },
+          style: { position: 'relative', cursor: 'pointer', width: '100%', maxWidth: '100%' },
           onClick: function () {
             if (clientId && wp.data && wp.data.dispatch) {
               wp.data.dispatch('core/block-editor').selectBlock(clientId);
             }
           }
-        }) : {};
+        }) : {
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer', width: '100%', maxWidth: '100%' }
+        };
 
         const previewElement = ServerSideRender ? el(ServerSideRender, {
           block: 'secure-centric/gated-download',
-          attributes: attributes
-        }) : el('div', { style: { padding: '24px', background: '#F8FAFC', border: '1px dashed #2F5BFF' } }, 'Gated Download Block');
+          attributes: attributes,
+          className: 'sc-ssr-fullwidth',
+          style: { width: '100%', maxWidth: '100%' }
+        }) : el('div', { style: { padding: '24px', background: '#F8FAFC', border: '1px dashed #2F5BFF', width: '100%' } }, 'Gated Download Block');
 
         const inspectorControls = el(
           InspectorControls,
