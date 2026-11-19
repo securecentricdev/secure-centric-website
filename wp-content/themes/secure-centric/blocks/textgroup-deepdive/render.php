@@ -109,7 +109,6 @@ if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
                 $trimmed = trim( $line );
                 if ( '' === $trimmed ) {
                     $flush_p();
-                    $close_list();
                     continue;
                 }
 
@@ -177,8 +176,13 @@ if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
       <?php foreach ( $sections as $i => $sec ) : ?>
         <?php
         $sec_title = ! empty( $sec['title'] ) ? $sec['title'] : 'Section ' . ( $i + 1 );
+        $sec_tag   = ! empty( $sec['tag'] ) ? $sec['tag'] : '';
+        $sec_sub   = ! empty( $sec['sub'] ) ? $sec['sub'] : ( ! empty( $sec['subtitle'] ) ? $sec['subtitle'] : '' );
+
         $raw_content = '';
-        if ( isset( $sec['content'] ) && '' !== $sec['content'] ) {
+        if ( isset( $sec['body'] ) && '' !== $sec['body'] ) {
+            $raw_content = $sec['body'];
+        } elseif ( isset( $sec['content'] ) && '' !== $sec['content'] ) {
             $raw_content = $sec['content'];
         } elseif ( isset( $sec['paragraphs'] ) && ! empty( $sec['paragraphs'] ) ) {
             $raw_content = $sec['paragraphs'];
@@ -189,7 +193,13 @@ if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
         }
         ?>
         <div class="textgroup-item">
+          <?php if ( ! empty( $sec_tag ) ) : ?>
+            <span class="textgroup-item-tag" style="display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--color-electric-blue); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">// <?php echo esc_html( $sec_tag ); ?></span>
+          <?php endif; ?>
           <h3 class="textgroup-title"><span class="textgroup-num">§ <?php echo esc_html( $i + 1 ); ?></span> <?php echo esc_html( $sec_title ); ?></h3>
+          <?php if ( ! empty( $sec_sub ) ) : ?>
+            <p class="textgroup-sub" style="font-size: 1.05rem; font-weight: 600; color: var(--color-navy); margin-bottom: 16px; line-height: 1.5;"><?php echo esc_html( $sec_sub ); ?></p>
+          <?php endif; ?>
           <div class="textgroup-content">
             <?php echo sc_render_deepdive_section_content( $raw_content ); ?>
           </div>

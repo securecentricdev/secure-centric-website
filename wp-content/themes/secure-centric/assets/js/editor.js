@@ -183,8 +183,22 @@
               ),
               keys.map(function (k) {
                 var prettyLabel = k.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); });
-                var isContentField = (k.toLowerCase().indexOf('para') !== -1 || k.toLowerCase().indexOf('content') !== -1);
-                var isLong = isContentField || (k.toLowerCase().indexOf('desc') !== -1 || k.toLowerCase().indexOf('text') !== -1 || k.toLowerCase().indexOf('pain') !== -1 || k.toLowerCase().indexOf('gain') !== -1 || k.toLowerCase().indexOf('objective') !== -1 || k.toLowerCase().indexOf('evidence') !== -1 || k.toLowerCase().indexOf('controls') !== -1);
+                var isContentField = (
+                  k.toLowerCase() === 'body' ||
+                  k.toLowerCase().indexOf('body') !== -1 ||
+                  k.toLowerCase().indexOf('para') !== -1 ||
+                  k.toLowerCase().indexOf('content') !== -1
+                );
+                var isSubField = (k.toLowerCase() === 'sub' || k.toLowerCase().indexOf('sub') !== -1);
+                var isLong = isContentField || isSubField || (
+                  k.toLowerCase().indexOf('desc') !== -1 ||
+                  k.toLowerCase().indexOf('text') !== -1 ||
+                  k.toLowerCase().indexOf('pain') !== -1 ||
+                  k.toLowerCase().indexOf('gain') !== -1 ||
+                  k.toLowerCase().indexOf('objective') !== -1 ||
+                  k.toLowerCase().indexOf('evidence') !== -1 ||
+                  k.toLowerCase().indexOf('controls') !== -1
+                );
                 
                 var displayVal = item[k];
                 if (Array.isArray(displayVal)) {
