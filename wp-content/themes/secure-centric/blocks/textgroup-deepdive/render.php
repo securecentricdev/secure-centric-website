@@ -57,10 +57,115 @@ if ( function_exists( 'sc_clean_text' ) ) {
 
 $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
+
+if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
+    function sc_render_deepdive_section_content( $content ) {
+        if ( empty( $content ) ) {
+            return '';
+        }
+
+        $items = is_array( $content ) ? $content : array( $content );
+        $final_output = '';
+
+        foreach ( $items as $raw_chunk ) {
+            $text = trim( (string) $raw_chunk );
+            if ( '' === $text ) {
+                continue;
+            }
+
+            // If it already has HTML block tags (<p>, <ul>, <ol>, <div>, <blockquote>), pass through wp_kses_post
+            if ( preg_match( '/<\s*(p|ul|ol|li|div|blockquote|table)\b[^>]*>/i', $text ) ) {
+                $processed = preg_replace( '/<ul>/i', '<ul class="textgroup-bullets">', $text );
+                $final_output .= wp_kses_post( wpautop( $processed ) ) . "\n";
+                continue;
+            }
+
+            // Parse lines for markdown paragraphs, checklists (✓), bullets (-, *, •), and numbered lists (1.)
+            $lines = preg_split( '/\r\n|\r|\n/', $text );
+            $in_list = false;
+            $list_type = ''; // 'checklist', 'bullets', 'ol'
+            $p_buffer = array();
+
+            $flush_p = function() use ( &$final_output, &$p_buffer ) {
+                if ( ! empty( $p_buffer ) ) {
+                    $final_output .= '<p class="textgroup-para">' . implode( '<br>', $p_buffer ) . "</p>\n";
+                    $p_buffer = array();
+                }
+            };
+
+            $close_list = function() use ( &$final_output, &$in_list, &$list_type ) {
+                if ( $in_list ) {
+                    if ( 'checklist' === $list_type || 'bullets' === $list_type ) {
+                        $final_output .= "</ul>\n";
+                    } elseif ( 'ol' === $list_type ) {
+                        $final_output .= "</ol>\n";
+                    }
+                    $in_list = false;
+                    $list_type = '';
+                }
+            };
+
+            foreach ( $lines as $line ) {
+                $trimmed = trim( $line );
+                if ( '' === $trimmed ) {
+                    $flush_p();
+                    $close_list();
+                    continue;
+                }
+
+                // Check for checkmark: ✓ or ✔ or [x] or [ ]
+                if ( preg_match( '/^([✓✔]|\x{2713}|\x{2714}|\[[xX]\])\s*(.*)$/u', $trimmed, $m ) ) {
+                    $flush_p();
+                    if ( ! $in_list || 'checklist' !== $list_type ) {
+                        $close_list();
+                        $final_output .= "<ul class=\"textgroup-checklist\">\n";
+                        $in_list = true;
+                        $list_type = 'checklist';
+                    }
+                    $item_content = preg_replace( '/\*\*(.*?)\*\*/', '<strong>$1</strong>', $m[2] );
+                    $final_output .= '  <li><span class="check-icon">✓</span><span>' . wp_kses_post( $item_content ) . "</span></li>\n";
+                }
+                // Check for bullet: -, *, •, –, +
+                elseif ( preg_match( '/^([-*•–+]|\x{2022})\s+(.*)$/u', $trimmed, $m ) ) {
+                    $flush_p();
+                    if ( ! $in_list || 'bullets' !== $list_type ) {
+                        $close_list();
+                        $final_output .= "<ul class=\"textgroup-bullets\">\n";
+                        $in_list = true;
+                        $list_type = 'bullets';
+                    }
+                    $item_content = preg_replace( '/\*\*(.*?)\*\*/', '<strong>$1</strong>', $m[2] );
+                    $final_output .= '  <li>' . wp_kses_post( $item_content ) . "</li>\n";
+                }
+                // Check for numbered list: 1. or 1)
+                elseif ( preg_match( '/^(\d+[\.)]\s+)(.*)$/', $trimmed, $m ) ) {
+                    $flush_p();
+                    if ( ! $in_list || 'ol' !== $list_type ) {
+                        $close_list();
+                        $final_output .= "<ol class=\"textgroup-numbered\">\n";
+                        $in_list = true;
+                        $list_type = 'ol';
+                    }
+                    $item_content = preg_replace( '/\*\*(.*?)\*\*/', '<strong>$1</strong>', $m[2] );
+                    $final_output .= '  <li>' . wp_kses_post( $item_content ) . "</li>\n";
+                } else {
+                    $close_list();
+                    $p_content = preg_replace( '/\*\*(.*?)\*\*/', '<strong>$1</strong>', $trimmed );
+                    $p_buffer[] = wp_kses_post( $p_content );
+                }
+            }
+
+            $flush_p();
+            $close_list();
+        }
+
+        return $final_output;
+    }
+}
 ?>
 
 <section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/textgroup-deepdive"<?php echo $anchor_attr; ?>>
-  <div class="site-container" style="max-width: 960px;">
+  <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 40px;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
@@ -72,13 +177,22 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
       <?php foreach ( $sections as $i => $sec ) : ?>
         <?php
         $sec_title = ! empty( $sec['title'] ) ? $sec['title'] : 'Section ' . ( $i + 1 );
-        $paras     = ! empty( $sec['paragraphs'] ) ? (array) $sec['paragraphs'] : array();
+        $raw_content = '';
+        if ( isset( $sec['content'] ) && '' !== $sec['content'] ) {
+            $raw_content = $sec['content'];
+        } elseif ( isset( $sec['paragraphs'] ) && ! empty( $sec['paragraphs'] ) ) {
+            $raw_content = $sec['paragraphs'];
+        } elseif ( isset( $sec['desc'] ) && '' !== $sec['desc'] ) {
+            $raw_content = $sec['desc'];
+        } elseif ( isset( $sec['text'] ) && '' !== $sec['text'] ) {
+            $raw_content = $sec['text'];
+        }
         ?>
         <div class="textgroup-item">
           <h3 class="textgroup-title"><span class="textgroup-num">§ <?php echo esc_html( $i + 1 ); ?></span> <?php echo esc_html( $sec_title ); ?></h3>
-          <?php foreach ( $paras as $p ) : ?>
-            <p class="textgroup-para"><?php echo esc_html( $p ); ?></p>
-          <?php endforeach; ?>
+          <div class="textgroup-content">
+            <?php echo sc_render_deepdive_section_content( $raw_content ); ?>
+          </div>
         </div>
       <?php endforeach; ?>
     </div>

@@ -183,17 +183,26 @@
               ),
               keys.map(function (k) {
                 var prettyLabel = k.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); });
-                var isLong = (k.toLowerCase().indexOf('desc') !== -1 || k.toLowerCase().indexOf('text') !== -1 || k.toLowerCase().indexOf('pain') !== -1 || k.toLowerCase().indexOf('gain') !== -1 || k.toLowerCase().indexOf('objective') !== -1 || k.toLowerCase().indexOf('evidence') !== -1 || k.toLowerCase().indexOf('controls') !== -1);
+                var isContentField = (k.toLowerCase().indexOf('para') !== -1 || k.toLowerCase().indexOf('content') !== -1);
+                var isLong = isContentField || (k.toLowerCase().indexOf('desc') !== -1 || k.toLowerCase().indexOf('text') !== -1 || k.toLowerCase().indexOf('pain') !== -1 || k.toLowerCase().indexOf('gain') !== -1 || k.toLowerCase().indexOf('objective') !== -1 || k.toLowerCase().indexOf('evidence') !== -1 || k.toLowerCase().indexOf('controls') !== -1);
+                
+                var displayVal = item[k];
+                if (Array.isArray(displayVal)) {
+                  displayVal = displayVal.join('\n\n');
+                } else if (displayVal === null || displayVal === undefined) {
+                  displayVal = '';
+                }
+
                 return isLong ? el(TextareaControl, {
                   key: 'f-' + k + '-' + idx,
-                  label: prettyLabel,
-                  value: item[k] || '',
-                  rows: 2,
+                  label: prettyLabel + (isContentField ? ' (Supports multiple paragraphs, HTML & checklists ✓, -)' : ''),
+                  value: displayVal,
+                  rows: isContentField ? 6 : 3,
                   onChange: function (v) { updateItemProp(idx, k, v); }
                 }) : el(TextControl, {
                   key: 'f-' + k + '-' + idx,
                   label: prettyLabel,
-                  value: item[k] || '',
+                  value: displayVal,
                   onChange: function (v) { updateItemProp(idx, k, v); }
                 });
               })
@@ -4024,10 +4033,10 @@
           ]
         },
         {
-          title: 'Sections Data (JSON)',
-          initialOpen: false,
+          title: 'Deep Dive Sections',
+          initialOpen: true,
           fields: [
-            { name: 'sectionsData', label: 'Deep Dive Sections JSON', type: 'textarea' }
+            { name: 'sectionsData', label: 'Deep Dive Sections (Supports multiple paragraphs, HTML & checklists ✓, -)', type: 'textarea' }
           ]
         }
       ]

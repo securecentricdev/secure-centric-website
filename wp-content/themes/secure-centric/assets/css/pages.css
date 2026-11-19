@@ -1491,6 +1491,82 @@ body.mobile-preview-mode .roadmap-timeline-nav {
   margin-bottom: 0;
 }
 
+.textgroup-item ul.textgroup-checklist {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 16px 0 20px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.textgroup-item ul.textgroup-checklist li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--color-body-text) !important;
+}
+
+.textgroup-item ul.textgroup-checklist li .check-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: rgba(0, 102, 255, 0.12) !important;
+  color: var(--color-electric-blue) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  margin-top: 3px !important;
+}
+
+.textgroup-item ul.textgroup-bullets {
+  list-style: disc !important;
+  padding-left: 24px !important;
+  margin: 14px 0 18px 0 !important;
+}
+
+.textgroup-item ul.textgroup-bullets li {
+  font-size: 1rem !important;
+  line-height: 1.65 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 8px !important;
+  padding-left: 4px !important;
+}
+
+.textgroup-item ul.textgroup-bullets li::marker {
+  color: var(--color-electric-blue) !important;
+}
+
+.textgroup-item ol.textgroup-numbered {
+  list-style: decimal !important;
+  padding-left: 24px !important;
+  margin: 14px 0 18px 0 !important;
+}
+
+.textgroup-item ol.textgroup-numbered li {
+  font-size: 1rem !important;
+  line-height: 1.65 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 8px !important;
+  padding-left: 4px !important;
+}
+
+.textgroup-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-body-text);
+  margin-bottom: 14px;
+}
+
+.textgroup-content p:last-child {
+  margin-bottom: 0;
+}
+
 /* Related Pages 4-Card Strip */
 .related-pages-grid {
   display: grid;
