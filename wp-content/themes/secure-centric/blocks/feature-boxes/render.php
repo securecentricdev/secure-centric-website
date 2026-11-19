@@ -107,8 +107,8 @@ $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( 
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/feature-boxes"<?php echo $anchor_attr; ?>>
-  <div class="site-container">
+<section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/feature-boxes"<?php echo $anchor_attr; ?> style="width: 100%;">
+  <div class="site-container" style="width: 100%; max-width: 1240px; margin: 0 auto; padding-left: 24px; padding-right: 24px; box-sizing: border-box;">
     <div class="section-heading-center" style="margin-bottom: <?php echo ! empty( $subtitle ) ? '40px' : '28px'; ?>; text-align: center;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
@@ -121,7 +121,7 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
       <?php endif; ?>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; width: 100%;">
       <?php foreach ( $boxes as $b ) : ?>
         <div class="card card-white" style="padding: 32px; display: flex; flex-direction: column; border-radius: 8px; border: 1px solid var(--color-border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); background: #ffffff;">
           <?php if ( ! empty( $b['badge'] ) ) : ?>
@@ -138,41 +138,47 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
     </div>
 
     <?php if ( $show_footer || ! empty( $footer_col1_title ) || ! empty( $footer_col1_desc ) || ! empty( $footer_col2_title ) || ! empty( $footer_col2_desc ) || ! empty( $footer_cta_text ) ) : ?>
-    <div class="card card-white" style="margin-top: 32px; border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 16px rgba(0,0,0,0.04); padding: clamp(28px, 4vw, 40px); background: #ffffff;">
+    <div class="card card-white" style="width: 100%; box-sizing: border-box; margin-top: 36px; border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 16px rgba(0,0,0,0.04); padding: clamp(32px, 5vw, 48px); background: #ffffff;">
       <?php if ( ! empty( $footer_eyebrow ) ) : ?>
-      <span class="section-eyebrow" style="margin-bottom: 16px; display: inline-flex;"><?php echo esc_html( $footer_eyebrow ); ?></span>
+      <span class="section-eyebrow" style="margin-bottom: 20px; display: inline-flex;"><?php echo esc_html( $footer_eyebrow ); ?></span>
       <?php endif; ?>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: center;">
+
+      <!-- 2 Full-Width Content Columns -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 36px; width: 100%; margin-bottom: <?php echo ! empty( $footer_cta_text ) ? '32px' : '0'; ?>;">
         <?php if ( ! empty( $footer_col1_title ) || ! empty( $footer_col1_desc ) ) : ?>
-        <div style="flex: 1;">
+        <div style="display: flex; flex-direction: column;">
           <?php if ( ! empty( $footer_col1_title ) ) : ?>
-          <h4 style="font-size: 1.15rem; color: var(--color-navy); font-weight: 700; margin-bottom: 8px;"><?php echo esc_html( $footer_col1_title ); ?></h4>
+          <h4 style="font-size: 1.25rem; color: var(--color-navy); font-weight: 700; margin-bottom: 10px; line-height: 1.35;"><?php echo esc_html( $footer_col1_title ); ?></h4>
           <?php endif; ?>
           <?php if ( ! empty( $footer_col1_desc ) ) : ?>
-          <p style="font-size: 0.95rem; color: var(--color-body-text); line-height: 1.6; margin: 0;"><?php echo nl2br( esc_html( $footer_col1_desc ) ); ?></p>
+          <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.65; margin: 0;"><?php echo nl2br( esc_html( $footer_col1_desc ) ); ?></p>
           <?php endif; ?>
         </div>
         <?php endif; ?>
 
         <?php if ( ! empty( $footer_col2_title ) || ! empty( $footer_col2_desc ) ) : ?>
-        <div style="flex: 1;">
+        <div style="display: flex; flex-direction: column;">
           <?php if ( ! empty( $footer_col2_title ) ) : ?>
-          <h4 style="font-size: 1.15rem; color: var(--color-navy); font-weight: 700; margin-bottom: 8px;"><?php echo esc_html( $footer_col2_title ); ?></h4>
+          <h4 style="font-size: 1.25rem; color: var(--color-navy); font-weight: 700; margin-bottom: 10px; line-height: 1.35;"><?php echo esc_html( $footer_col2_title ); ?></h4>
           <?php endif; ?>
           <?php if ( ! empty( $footer_col2_desc ) ) : ?>
-          <p style="font-size: 0.95rem; color: var(--color-body-text); line-height: 1.6; margin: 0;"><?php echo nl2br( esc_html( $footer_col2_desc ) ); ?></p>
+          <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.65; margin: 0;"><?php echo nl2br( esc_html( $footer_col2_desc ) ); ?></p>
           <?php endif; ?>
-        </div>
-        <?php endif; ?>
-
-        <?php if ( ! empty( $footer_cta_text ) ) : ?>
-        <div style="display: flex; justify-content: flex-start; align-items: center; flex-shrink: 0;">
-          <a href="<?php echo esc_url( $footer_cta_url ); ?>" class="btn btn-primary" style="padding: 14px 28px; font-weight: 700; border-radius: 6px; white-space: nowrap; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.25);" target="_blank" rel="noopener noreferrer">
-            <?php echo esc_html( $footer_cta_text ); ?>
-          </a>
         </div>
         <?php endif; ?>
       </div>
+
+      <!-- Dedicated Full-Width Action Banner & CTA -->
+      <?php if ( ! empty( $footer_cta_text ) ) : ?>
+      <div style="width: 100%; border-top: 1px solid var(--color-border); padding-top: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+        <span style="font-size: 0.95rem; color: var(--color-slate); font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 8px;">
+          <span>⚡</span> Actionable scoping &amp; fixed-fee delivery timeline in writing
+        </span>
+        <a href="<?php echo esc_url( $footer_cta_url ); ?>" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.05rem; font-weight: 700; border-radius: 6px; white-space: nowrap; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.35); text-align: center; justify-content: center;" target="_blank" rel="noopener noreferrer">
+          <?php echo esc_html( $footer_cta_text ); ?>
+        </a>
+      </div>
+      <?php endif; ?>
     </div>
     <?php endif; ?>
   </div>
