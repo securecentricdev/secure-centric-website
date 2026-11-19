@@ -33,6 +33,14 @@
     "p3": {
       "type": "string",
       "default": "Our Cyber AB Registered Practitioners conduct on-site facility walkthroughs, map exact CUI boundaries, guide technical remediation, and co-author your assessor-ready System Security Plan (SSP)."
+    },
+    "p4": {
+      "type": "string",
+      "default": ""
+    },
+    "p5": {
+      "type": "string",
+      "default": ""
     }
   },
   "supports": {

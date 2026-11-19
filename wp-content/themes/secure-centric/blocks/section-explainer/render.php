@@ -31,6 +31,12 @@ if ( empty( $paras ) ) {
     if ( ! empty( $attributes['p3'] ) ) {
         $paras[] = $attributes['p3'];
     }
+    if ( ! empty( $attributes['p4'] ) ) {
+        $paras[] = $attributes['p4'];
+    }
+    if ( ! empty( $attributes['p5'] ) ) {
+        $paras[] = $attributes['p5'];
+    }
     if ( empty( $paras ) && ! empty( $attributes['desc'] ) ) {
         $paras[] = $attributes['desc'];
     }
