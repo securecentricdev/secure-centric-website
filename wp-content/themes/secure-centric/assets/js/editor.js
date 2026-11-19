@@ -12,7 +12,7 @@
     const { createElement: el, Fragment } = wp.element;
     const blockEditor = wp.blockEditor || wp.editor;
     const { InspectorControls, useBlockProps } = blockEditor;
-    const { PanelBody, TextControl, TextareaControl, SelectControl, Button, RangeControl } = wp.components;
+    const { PanelBody, TextControl, TextareaControl, SelectControl, Button, RangeControl, CheckboxControl, ToggleControl } = wp.components;
     const ServerSideRender = wp.serverSideRender;
 
     /**
@@ -4217,12 +4217,12 @@
           el(
             PanelBody,
             { title: 'Checklist Points (' + checks.length + ' Checks) & Badges', initialOpen: true },
-            el(CheckboxControl, {
+            CheckboxControl ? el(CheckboxControl, {
               label: 'Show "Verified" Badge on each item',
               checked: attributes.showBadge !== undefined ? attributes.showBadge : true,
               help: 'Uncheck to completely remove the "✓ Secure-Centric Verified" badge.',
               onChange: function (v) { setAttributes({ showBadge: v }); }
-            }),
+            }) : null,
             (attributes.showBadge !== false) ? el(TextControl, {
               label: 'Badge Text',
               value: attributes.badgeText !== undefined ? attributes.badgeText : 'Secure-Centric Verified',
@@ -4230,6 +4230,7 @@
             }) : null,
             el('hr', { style: { margin: '14px 0' } }),
             checks.map(function (c, cIdx) {
+              if (!c) return null;
               const itemLabel = (typeof c === 'string') ? c : (c.label || '');
               const itemDesc  = (typeof c === 'object' && c.desc) ? c.desc : '';
               return el('div', {
