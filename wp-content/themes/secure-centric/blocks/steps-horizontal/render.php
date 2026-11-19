@@ -74,13 +74,17 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
     <div class="steps-horizontal-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
       <?php foreach ( $steps as $i => $st ) : ?>
         <?php
-        $num   = ! empty( $st['no'] ) ? $st['no'] : sprintf( '%02d', $i + 1 );
-        $st_t  = ! empty( $st['title'] ) ? $st['title'] : ( ! empty( $st['name'] ) ? $st['name'] : 'Step ' . $num );
+        $num   = isset( $st['no'] ) ? trim( (string) $st['no'] ) : sprintf( '%02d', $i + 1 );
+        $st_t  = ! empty( $st['title'] ) ? $st['title'] : ( ! empty( $st['name'] ) ? $st['name'] : ( ! empty( $num ) ? 'Step ' . $num : '' ) );
         $st_d  = ! empty( $st['desc'] ) ? $st['desc'] : ( ! empty( $st['text'] ) ? $st['text'] : '' );
         ?>
         <div class="step-h-card">
-          <div class="step-h-num"><?php echo esc_html( $num ); ?></div>
-          <h4 class="step-h-title"><?php echo esc_html( $st_t ); ?></h4>
+          <?php if ( ! empty( $num ) && 'none' !== strtolower( $num ) ) : ?>
+            <div class="step-h-num"><?php echo esc_html( $num ); ?></div>
+          <?php endif; ?>
+          <?php if ( ! empty( $st_t ) ) : ?>
+            <h4 class="step-h-title"><?php echo esc_html( $st_t ); ?></h4>
+          <?php endif; ?>
           <p class="step-h-desc"><?php echo esc_html( $st_d ); ?></p>
         </div>
       <?php endforeach; ?>

@@ -3908,7 +3908,7 @@
                   }
                 },
                   el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
-                    'Step ' + (st.no || defaultNo) + ': ' + (st.title || 'Untitled Step')
+                    (st.no ? 'Step ' + st.no + ': ' : '') + (st.title || 'Untitled Step')
                   ),
                   currentSteps.length > 1 ? el(Button, {
                     isDestructive: true,
@@ -3917,8 +3917,8 @@
                   }, 'Remove') : null
                 ),
                 el(TextControl, {
-                  label: 'Step Number Badge',
-                  value: st.no || defaultNo,
+                  label: 'Step Number Badge (Leave blank to remove)',
+                  value: st.no !== undefined ? st.no : defaultNo,
                   onChange: function (v) { updateStepItem(idx, { no: v }); }
                 }),
                 el(TextControl, {
