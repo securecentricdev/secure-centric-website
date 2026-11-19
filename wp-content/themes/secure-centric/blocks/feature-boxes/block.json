@@ -70,6 +70,38 @@
     "box3Desc": {
       "type": "string",
       "default": "• Compliance Leadership: Get structured directions for coordinating security work across your team."
+    },
+    "showFooter": {
+      "type": "boolean",
+      "default": false
+    },
+    "footerEyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCol1Title": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCol1Desc": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCol2Title": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCol2Desc": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCtaText": {
+      "type": "string",
+      "default": ""
+    },
+    "footerCtaUrl": {
+      "type": "string",
+      "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
     }
   },
   "supports": {

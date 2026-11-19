@@ -28,19 +28,34 @@ $box3_badge = ! empty( $attributes['box3Badge'] ) ? $attributes['box3Badge'] : '
 $box3_title = ! empty( $attributes['box3Title'] ) ? $attributes['box3Title'] : 'Lead and oversee';
 $box3_desc  = ! empty( $attributes['box3Desc'] ) ? $attributes['box3Desc'] : '';
 
+$show_footer       = ! empty( $attributes['showFooter'] );
+$footer_eyebrow    = ! empty( $attributes['footerEyebrow'] ) ? $attributes['footerEyebrow'] : '';
+$footer_col1_title = ! empty( $attributes['footerCol1Title'] ) ? $attributes['footerCol1Title'] : '';
+$footer_col1_desc  = ! empty( $attributes['footerCol1Desc'] ) ? $attributes['footerCol1Desc'] : '';
+$footer_col2_title = ! empty( $attributes['footerCol2Title'] ) ? $attributes['footerCol2Title'] : '';
+$footer_col2_desc  = ! empty( $attributes['footerCol2Desc'] ) ? $attributes['footerCol2Desc'] : '';
+$footer_cta_text   = ! empty( $attributes['footerCtaText'] ) ? $attributes['footerCtaText'] : '';
+$footer_cta_url    = ! empty( $attributes['footerCtaUrl'] ) ? $attributes['footerCtaUrl'] : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+
 if ( function_exists( 'sc_clean_text' ) ) {
-    $eyebrow    = sc_clean_text( $eyebrow );
-    $title      = sc_clean_text( $title );
-    $subtitle   = sc_clean_text( $subtitle );
-    $box1_badge = sc_clean_text( $box1_badge );
-    $box1_title = sc_clean_text( $box1_title );
-    $box1_desc  = sc_clean_text( $box1_desc );
-    $box2_badge = sc_clean_text( $box2_badge );
-    $box2_title = sc_clean_text( $box2_title );
-    $box2_desc  = sc_clean_text( $box2_desc );
-    $box3_badge = sc_clean_text( $box3_badge );
-    $box3_title = sc_clean_text( $box3_title );
-    $box3_desc  = sc_clean_text( $box3_desc );
+    $eyebrow           = sc_clean_text( $eyebrow );
+    $title             = sc_clean_text( $title );
+    $subtitle          = sc_clean_text( $subtitle );
+    $box1_badge        = sc_clean_text( $box1_badge );
+    $box1_title        = sc_clean_text( $box1_title );
+    $box1_desc         = sc_clean_text( $box1_desc );
+    $box2_badge        = sc_clean_text( $box2_badge );
+    $box2_title        = sc_clean_text( $box2_title );
+    $box2_desc         = sc_clean_text( $box2_desc );
+    $box3_badge        = sc_clean_text( $box3_badge );
+    $box3_title        = sc_clean_text( $box3_title );
+    $box3_desc         = sc_clean_text( $box3_desc );
+    $footer_eyebrow    = sc_clean_text( $footer_eyebrow );
+    $footer_col1_title = sc_clean_text( $footer_col1_title );
+    $footer_col1_desc  = sc_clean_text( $footer_col1_desc );
+    $footer_col2_title = sc_clean_text( $footer_col2_title );
+    $footer_col2_desc  = sc_clean_text( $footer_col2_desc );
+    $footer_cta_text   = sc_clean_text( $footer_cta_text );
 }
 
 if ( ! function_exists( 'sc_format_feature_box_content' ) ) {
@@ -121,5 +136,44 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
         </div>
       <?php endforeach; ?>
     </div>
+
+    <?php if ( $show_footer || ! empty( $footer_col1_title ) || ! empty( $footer_col1_desc ) || ! empty( $footer_col2_title ) || ! empty( $footer_col2_desc ) || ! empty( $footer_cta_text ) ) : ?>
+    <div class="card card-white" style="margin-top: 32px; border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 16px rgba(0,0,0,0.04); padding: clamp(28px, 4vw, 40px); background: #ffffff;">
+      <?php if ( ! empty( $footer_eyebrow ) ) : ?>
+      <span class="section-eyebrow" style="margin-bottom: 16px; display: inline-flex;"><?php echo esc_html( $footer_eyebrow ); ?></span>
+      <?php endif; ?>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: center;">
+        <?php if ( ! empty( $footer_col1_title ) || ! empty( $footer_col1_desc ) ) : ?>
+        <div style="flex: 1;">
+          <?php if ( ! empty( $footer_col1_title ) ) : ?>
+          <h4 style="font-size: 1.15rem; color: var(--color-navy); font-weight: 700; margin-bottom: 8px;"><?php echo esc_html( $footer_col1_title ); ?></h4>
+          <?php endif; ?>
+          <?php if ( ! empty( $footer_col1_desc ) ) : ?>
+          <p style="font-size: 0.95rem; color: var(--color-body-text); line-height: 1.6; margin: 0;"><?php echo nl2br( esc_html( $footer_col1_desc ) ); ?></p>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ( ! empty( $footer_col2_title ) || ! empty( $footer_col2_desc ) ) : ?>
+        <div style="flex: 1;">
+          <?php if ( ! empty( $footer_col2_title ) ) : ?>
+          <h4 style="font-size: 1.15rem; color: var(--color-navy); font-weight: 700; margin-bottom: 8px;"><?php echo esc_html( $footer_col2_title ); ?></h4>
+          <?php endif; ?>
+          <?php if ( ! empty( $footer_col2_desc ) ) : ?>
+          <p style="font-size: 0.95rem; color: var(--color-body-text); line-height: 1.6; margin: 0;"><?php echo nl2br( esc_html( $footer_col2_desc ) ); ?></p>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ( ! empty( $footer_cta_text ) ) : ?>
+        <div style="display: flex; justify-content: flex-start; align-items: center; flex-shrink: 0;">
+          <a href="<?php echo esc_url( $footer_cta_url ); ?>" class="btn btn-primary" style="padding: 14px 28px; font-weight: 700; border-radius: 6px; white-space: nowrap; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.25);" target="_blank" rel="noopener noreferrer">
+            <?php echo esc_html( $footer_cta_text ); ?>
+          </a>
+        </div>
+        <?php endif; ?>
+      </div>
+    </div>
+    <?php endif; ?>
   </div>
 </section>

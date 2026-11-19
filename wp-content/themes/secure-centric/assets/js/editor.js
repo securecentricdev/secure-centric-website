@@ -307,6 +307,18 @@
                         setAttributes(upd);
                       }
                     });
+                  } else if (field.type === 'checkbox') {
+                    return CheckboxControl ? el(CheckboxControl, {
+                      key: 'field-' + field.name + '-' + fIdx,
+                      label: fieldLabel,
+                      checked: !!val,
+                      help: field.help || '',
+                      onChange: function (newVal) {
+                        const upd = {};
+                        upd[field.name] = newVal;
+                        setAttributes(upd);
+                      }
+                    }) : null;
                   } else {
                     return el(TextControl, {
                       key: 'field-' + field.name + '-' + fIdx,
@@ -2760,6 +2772,20 @@
             { name: 'box3Badge', label: 'Top Badge (Optional)', default: '' },
             { name: 'box3Title', label: 'Title', default: 'Lead and oversee' },
             { name: 'box3Desc', label: 'Content (Supports Bullets & Bold Prefix)', type: 'textarea', rows: 6, default: '• Compliance Leadership: Get structured directions for coordinating security work across your team.' }
+          ]
+        },
+        {
+          title: 'After Points / Planning Banner (Optional)',
+          initialOpen: false,
+          fields: [
+            { name: 'showFooter', label: 'Show Planning & Sequencing Banner', type: 'checkbox', default: false, help: 'Enable to display the full-width planning card below the three boxes.' },
+            { name: 'footerEyebrow', label: 'Banner Tag / Eyebrow', default: '' },
+            { name: 'footerCol1Title', label: 'Column 1 Title (e.g. Pre preps)', default: '' },
+            { name: 'footerCol1Desc', label: 'Column 1 Description', type: 'textarea', rows: 3, default: '' },
+            { name: 'footerCol2Title', label: 'Column 2 Title (e.g. Order of work)', default: '' },
+            { name: 'footerCol2Desc', label: 'Column 2 Description', type: 'textarea', rows: 3, default: '' },
+            { name: 'footerCtaText', label: 'CTA Button Text (e.g. Get your engagement plan →)', default: '' },
+            { name: 'footerCtaUrl', label: 'CTA Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' }
           ]
         }
       ]

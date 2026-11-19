@@ -40,20 +40,20 @@ $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( 
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/gated-download"<?php echo $anchor_attr; ?>>
-  <div class="site-container">
-    <div class="card card-white" style="border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: clamp(28px, 4vw, 44px); position: relative; overflow: hidden; background: #ffffff;">
+<section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/gated-download"<?php echo $anchor_attr; ?> style="width: 100%;">
+  <div class="site-container" style="width: 100%; max-width: 1240px; margin: 0 auto; padding-left: 24px; padding-right: 24px; box-sizing: border-box;">
+    <div class="card card-white" style="width: 100%; box-sizing: border-box; border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: clamp(32px, 5vw, 56px); position: relative; overflow: hidden; background: #ffffff;">
       <?php if ( $show_doc_card ) : ?>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: center;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: center; width: 100%;">
         <div>
           <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="margin-bottom: 12px; display: inline-flex;"><?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
-          <h2 style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '24px'; ?>; line-height: 1.25; font-weight: 700;">
+          <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.25rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '24px'; ?>; line-height: 1.25; font-weight: 700;">
             <?php echo esc_html( $title ); ?>
           </h2>
           <?php if ( ! empty( $description ) ) : ?>
-          <p style="font-size: 1.05rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px; max-width: 620px;">
+          <p style="font-size: 1.05rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
             <?php echo esc_html( $description ); ?>
           </p>
           <?php endif; ?>
@@ -87,26 +87,26 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
         </div>
       </div>
       <?php else : ?>
-      <div style="max-width: 860px;">
+      <div style="width: 100%;">
         <?php if ( ! empty( $eyebrow ) ) : ?>
-        <span class="section-eyebrow" style="margin-bottom: 12px; display: inline-flex;"><?php echo esc_html( $eyebrow ); ?></span>
+        <span class="section-eyebrow" style="margin-bottom: 14px; display: inline-flex;"><?php echo esc_html( $eyebrow ); ?></span>
         <?php endif; ?>
-        <h2 style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '24px'; ?>; line-height: 1.25; font-weight: 700;">
+        <h2 style="font-size: clamp(1.6rem, 2.8vw, 2.25rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '26px'; ?>; line-height: 1.25; font-weight: 700;">
           <?php echo esc_html( $title ); ?>
         </h2>
         <?php if ( ! empty( $description ) ) : ?>
-        <p style="font-size: 1.05rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px; max-width: 780px;">
+        <p style="font-size: 1.075rem; color: var(--color-body-text); line-height: 1.65; margin-bottom: 28px; max-width: 1000px;">
           <?php echo esc_html( $description ); ?>
         </p>
         <?php endif; ?>
-        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px;">
           <button type="button" 
                   class="btn btn-primary sc-gated-open-trigger" 
                   data-modal-id="<?php echo esc_attr( $unique_id ); ?>" 
-                  style="font-size: 1.05rem; padding: 14px 28px; cursor: pointer; border: none; font-weight: 700; border-radius: 6px; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.35);">
+                  style="font-size: 1.05rem; padding: 15px 32px; cursor: pointer; border: none; font-weight: 700; border-radius: 6px; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.35);">
             <?php echo esc_html( $btn_text ); ?>
           </button>
-          <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 6px;">
+          <span style="font-size: 0.85rem; color: var(--color-slate); font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 8px;">
             <span>🔒</span> Instant File Access · No Sales Pitch
           </span>
         </div>
