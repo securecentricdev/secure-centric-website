@@ -978,10 +978,17 @@ body.admin-bar .on-this-page-toc {
 
 .custom-table {
   width: 100%;
-  min-width: 600px;
+  table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
   font-size: 0.875rem;
+}
+
+.custom-table th,
+.custom-table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .custom-table th {

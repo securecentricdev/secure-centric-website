@@ -36,15 +36,15 @@ if ( empty( $rows ) ) {
       <p style="color: var(--color-body-text); font-size: 1.05rem;"><?php echo esc_html( $subtitle ); ?></p>
     </div>
     <div class="table-responsive-wrapper">
-      <table class="site-data-table">
+      <table class="site-data-table" style="width: 100%; table-layout: fixed; border-collapse: collapse;">
         <thead>
-          <tr>
-            <th>Req ID</th>
-            <th>Domain Family</th>
-            <th>Assessment Objective</th>
-            <th>Status</th>
-            <th>Assigned Owner</th>
-            <th>Evidence Artifact</th>
+          <tr style="background: #FFFFFF;">
+            <th style="width: 16%; word-wrap: break-word; overflow-wrap: break-word;">Req ID</th>
+            <th style="width: 17%; word-wrap: break-word; overflow-wrap: break-word;">Domain Family</th>
+            <th style="width: 25%; word-wrap: break-word; overflow-wrap: break-word;">Assessment Objective</th>
+            <th style="width: 14%; word-wrap: break-word; overflow-wrap: break-word;">Status</th>
+            <th style="width: 14%; word-wrap: break-word; overflow-wrap: break-word;">Assigned Owner</th>
+            <th style="width: 14%; word-wrap: break-word; overflow-wrap: break-word;">Evidence Artifact</th>
           </tr>
         </thead>
         <tbody>
@@ -59,12 +59,12 @@ if ( empty( $rows ) ) {
             $is_green = ( 'Implemented' === $r_status );
             ?>
             <tr>
-              <td><strong><?php echo esc_html( $r_req ); ?></strong></td>
-              <td><?php echo esc_html( $r_family ); ?></td>
-              <td><?php echo esc_html( $r_obj ); ?></td>
-              <td><span class="status-chip <?php echo $is_green ? 'green' : 'amber'; ?>"><?php echo esc_html( $r_status ); ?></span></td>
-              <td><?php echo esc_html( $r_owner ); ?></td>
-              <td><span class="evidence-link"><?php echo esc_html( $r_ev ); ?></span></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><strong><?php echo esc_html( $r_req ); ?></strong></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html( $r_family ); ?></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html( $r_obj ); ?></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><span class="status-chip <?php echo $is_green ? 'green' : 'amber'; ?>"><?php echo esc_html( $r_status ); ?></span></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html( $r_owner ); ?></td>
+              <td style="word-wrap: break-word; overflow-wrap: break-word;"><span class="evidence-link"><?php echo esc_html( $r_ev ); ?></span></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

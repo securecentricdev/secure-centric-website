@@ -211,10 +211,26 @@ div.hero-subtext {
 
 .site-data-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.9375rem;
   text-align: left;
   background-color: var(--color-navy) !important;
+}
+
+.site-data-table th,
+.site-data-table td,
+.custom-table th,
+.custom-table td,
+.wp-block-table th,
+.wp-block-table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.wp-block-table table {
+  width: 100%;
+  table-layout: fixed;
 }
 
 .site-data-table thead,

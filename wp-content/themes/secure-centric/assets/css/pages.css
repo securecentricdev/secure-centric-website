@@ -2153,10 +2153,16 @@ body.mobile-preview-mode .roadmap-timeline-nav {
 }
 .site-data-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.9375rem;
   text-align: left;
   background-color: var(--color-navy);
+}
+.site-data-table th,
+.site-data-table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 .site-data-table thead,
 .site-data-table thead tr {

@@ -67,6 +67,9 @@ if ( empty( $cols ) && ! empty( $rows ) && count( $rows ) > 1 ) {
 
 $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
+
+$col_count = count( $cols );
+$col_width = ( $col_count > 0 ) ? round( 100 / $col_count, 3 ) . '%' : 'auto';
 ?>
 
 <section class="section-white py-section wp-block-inspect wp-pattern-inspect" 
@@ -77,12 +80,12 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
       <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: 700; color: #0F172A;"><?php echo esc_html( $title ); ?></h3>
     <?php endif; ?>
     <div class="custom-table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1.5px solid #1E293B; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background-color: #0B1437;">
-      <table class="custom-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+      <table class="custom-table" style="width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; font-size: 15px;">
         <?php if ( ! empty( $cols ) ) : ?>
           <thead>
             <tr style="background: #FFFFFF; border-bottom: 2px solid #CBD5E1;">
               <?php foreach ( $cols as $c ) : ?>
-                <th style="padding: 16px 20px; font-weight: 800; font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; color: #0B1437; font-family: var(--font-mono, monospace); background-color: #FFFFFF;"><?php echo esc_html( $c ); ?></th>
+                <th style="width: <?php echo esc_attr( $col_width ); ?>; padding: 16px 20px; font-weight: 800; font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; color: #0B1437; font-family: var(--font-mono, monospace); background-color: #FFFFFF; word-wrap: break-word; overflow-wrap: break-word; word-break: normal;"><?php echo esc_html( $c ); ?></th>
               <?php endforeach; ?>
             </tr>
           </thead>
@@ -103,7 +106,7 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
                   $weight = $is_first ? '500' : '600';
                   $text_color = $is_first ? '#FFFFFF' : '#38BDF8';
                 ?>
-                  <td style="padding: 16px 20px; color: <?php echo $text_color; ?>; background-color: <?php echo $bg; ?>; font-weight: <?php echo $weight; ?>; vertical-align: middle; line-height: 1.6; font-size: 0.9375rem;"><?php echo esc_html( $cell ); ?></td>
+                  <td style="width: <?php echo esc_attr( $col_width ); ?>; padding: 16px 20px; color: <?php echo $text_color; ?>; background-color: <?php echo $bg; ?>; font-weight: <?php echo $weight; ?>; vertical-align: middle; line-height: 1.6; font-size: 0.9375rem; word-wrap: break-word; overflow-wrap: break-word; word-break: normal;"><?php echo esc_html( $cell ); ?></td>
                 <?php endforeach; ?>
               </tr>
             <?php endforeach; ?>
