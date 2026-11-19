@@ -199,10 +199,12 @@ if ( function_exists( 'sc_clean_text' ) ) {
         $card_title = is_array( $res ) ? ( ! empty( $res['title'] ) ? $res['title'] : '' ) : (string) $res;
         $card_desc  = is_array( $res ) ? ( ! empty( $res['desc'] ) ? $res['desc'] : ( ! empty( $res['text'] ) ? $res['text'] : '' ) ) : '';
         $card_link  = is_array( $res ) ? ( ! empty( $res['link'] ) ? $res['link'] : ( ! empty( $res['url'] ) ? $res['url'] : '' ) ) : '';
-        $card_icon  = ( is_array( $res ) && ! empty( $res['icon'] ) && false === strpos( $res['icon'], 'u00' ) ) ? $res['icon'] : '📁';
+        $card_icon  = ( is_array( $res ) && ! empty( $res['icon'] ) && false === strpos( $res['icon'], 'u00' ) ) ? trim( (string) $res['icon'] ) : '';
         ?>
         <div class="<?php echo $is_dark ? 'card-dark' : 'card-white'; ?>" style="display: flex; flex-direction: column; <?php echo $is_dark ? 'background-color: #0B1437; border: 1.5px solid var(--color-dark-outline); padding: 24px;' : 'padding: 24px;'; ?>">
-          <div class="card-icon-box" style="margin-bottom: 12px; font-size: 1.25rem; <?php echo $is_dark ? 'background: rgba(0, 212, 255, 0.12); color: var(--color-cyber-cyan);' : ''; ?>"><?php echo esc_html( $card_icon ); ?></div>
+          <?php if ( ! empty( $card_icon ) && 'none' !== strtolower( $card_icon ) ) : ?>
+            <div class="card-icon-box" style="margin-bottom: 12px; font-size: 1.25rem; <?php echo $is_dark ? 'background: rgba(0, 212, 255, 0.12); color: var(--color-cyber-cyan);' : ''; ?>"><?php echo esc_html( $card_icon ); ?></div>
+          <?php endif; ?>
           <h4 style="font-size: 1.15rem; margin-bottom: 8px; <?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?>"><?php echo esc_html( $card_title ); ?></h4>
           <?php if ( ! empty( $card_desc ) ) : ?>
           <p style="<?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?> font-size: 0.9375rem; margin: 0 0 16px; flex-grow: 1; line-height: 1.55;">

@@ -1974,7 +1974,7 @@
             title: 'New Compliance Resource Guide',
             desc: 'Practical, audit-tested guidance designed specifically for defense subcontractors.',
             link: '#contact',
-            icon: '📄'
+            icon: ''
           }]);
           updateCards(next);
         }
@@ -2121,7 +2121,7 @@
                   }
                 },
                   el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
-                    (c.icon || '📄') + ' ' + (c.title || 'Untitled Card')
+                    (c.icon ? c.icon + ' ' : '') + (c.title || 'Untitled Card')
                   ),
                   currentCards.length > 1 ? el(Button, {
                     isDestructive: true,
