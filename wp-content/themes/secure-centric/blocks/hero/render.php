@@ -431,49 +431,93 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
   </section>
 
 <?php elseif ( 'split' === $layout ) : ?>
-  <!-- Split Layout with Advisor Scoping Card (Pages 4, 5, 6, 7, 8, 11, 16) -->
+  <!-- Split Layout with Right-Hand Contact Form / Advisor Card (Services & Advisory Pages) -->
   <section class="section-midnight py-section wp-block-inspect wp-pattern-inspect" 
            data-wp-block="wp:group {align:'full', backgroundColor:'midnight'}" 
            data-wp-pattern="secure-centric/hero-split-stage"
-           style="border-bottom: 1px solid var(--color-dark-line);">
+           style="border-bottom: 1px solid var(--color-dark-line); position: relative;">
     <div class="site-container">
+      <?php if ( ! empty( $breadcrumb_current ) ) : ?>
       <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-bottom: 16px;">
         HOME / SERVICES / <span style="color: var(--color-cyber-cyan);"><?php echo esc_html( strtoupper( $breadcrumb_current ) ); ?></span>
       </div>
-      <div class="hero-home-grid">
+      <?php endif; ?>
+      <div class="hero-home-grid" style="align-items: flex-start;">
         <div>
           <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
-          <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
+          <p class="hero-lead" style="color: var(--color-text-on-dark); margin-bottom: 24px;"><?php echo esc_html( $description ); ?></p>
           <div style="display: flex; gap: 16px; align-items: center; margin-top: 24px; flex-wrap: wrap;">
+            <?php if ( ! empty( $primary_btn_text ) ) : ?>
             <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+            <?php endif; ?>
+            <?php if ( ! empty( $secondary_btn_text ) ) : ?>
             <a href="<?php echo esc_url( $secondary_btn_url ); ?>" class="text-link on-dark"><?php echo esc_html( $secondary_btn_text ); ?> &darr;</a>
+            <?php endif; ?>
           </div>
+          <?php if ( ! empty( $sub_text ) ) : ?>
+          <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-top: 14px;">
+            <?php echo esc_html( $sub_text ); ?>
+          </div>
+          <?php endif; ?>
         </div>
 
-        <div class="card-white" style="padding: 28px; border-radius: 14px;">
-          <span class="section-eyebrow">// DIRECT ADVISORY</span>
-          <h3 style="color: var(--color-navy); margin-bottom: 8px;">Talk to a CMMC Advisor</h3>
-          <p style="font-size: 0.875rem; color: var(--color-body-text); margin: 8px 0 16px;">
-            Here is exactly what you receive on your confidential 30-minute scoping review:
+        <div class="card-white" style="padding: 28px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+          <?php
+          $right_mode    = ! empty( $attributes['rightSideMode'] ) ? $attributes['rightSideMode'] : 'form';
+          $card_title    = ! empty( $attributes['cardTitle'] ) ? $attributes['cardTitle'] : ( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Talk to a CMMC Advisor' );
+          $card_desc     = ! empty( $attributes['cardDesc'] ) ? $attributes['cardDesc'] : ( ! empty( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Submit your details below to schedule your confidential 30-minute scoping review:' );
+          $split_form_id = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
+          ?>
+          <h3 style="color: var(--color-navy); margin-bottom: 8px; font-size: 1.35rem;"><?php echo esc_html( $card_title ); ?></h3>
+          <p style="font-size: 0.875rem; color: var(--color-body-text); margin: 8px 0 16px; line-height: 1.5;">
+            <?php echo esc_html( $card_desc ); ?>
           </p>
-          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
-              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-              <span>Where you stand today against NIST 800-171</span>
+
+          <?php if ( 'advisor_card' === $right_mode ) : ?>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+              <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+                <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+                <span>Where you stand today against NIST 800-171</span>
+              </div>
+              <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+                <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+                <span>Which level and scoping boundary fits your contracts</span>
+              </div>
+              <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
+                <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
+                <span>A concrete, written first step before committing budget</span>
+              </div>
             </div>
-            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
-              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-              <span>Which level and scoping boundary fits your contracts</span>
-            </div>
-            <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
-              <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-              <span>A concrete, written first step before committing budget</span>
-            </div>
-          </div>
-          <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Discovery Call &rarr;</a>
+            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Discovery Call &rarr;</a>
+          <?php else : ?>
+            <?php if ( ! empty( $split_form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
+              <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $split_form_id ) . '"]' ); ?>
+            <?php else : ?>
+              <form class="hero-split-contact-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="POST" style="display: flex; flex-direction: column; gap: 12px;">
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); margin-bottom: 4px; text-transform: uppercase;">Full Name*</label>
+                  <input type="text" name="name" class="form-input" placeholder="e.g. John Miller" required style="width: 100%; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--color-border);" />
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); margin-bottom: 4px; text-transform: uppercase;">Work Email*</label>
+                  <input type="email" name="email" class="form-input" placeholder="john@defensecompany.com" required style="width: 100%; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--color-border);" />
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); margin-bottom: 4px; text-transform: uppercase;">Company Name*</label>
+                  <input type="text" name="company" class="form-input" placeholder="e.g. Precision Dynamics LLC" required style="width: 100%; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--color-border);" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 46px; margin-top: 4px;">
+                  Talk to a CMMC Advisor &rarr;
+                </button>
+                <div style="font-size: 0.75rem; color: var(--color-slate); text-align: center; margin-top: 4px;">
+                  🔒 Mutual NDA signed first · Zero sales pressure
+                </div>
+              </form>
+            <?php endif; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -645,7 +689,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             <?php echo esc_html( $quiz_desc ); ?>
           </p>
           <?php
-          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '103';
+          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
           if ( ! empty( $hero_quiz_form ) && shortcode_exists( 'forminator_form' ) ) :
               echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_quiz_form ) . '"]' );
           else :

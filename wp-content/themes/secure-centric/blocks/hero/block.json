@@ -49,6 +49,10 @@
     "quizBtnText": { "type": "string", "default": "Start 3-Minute Readiness Check →" },
     "quizNote": { "type": "string", "default": "🔒 Work email required. Never submit classified or CUI information." },
     "formId": { "type": "string", "default": "" },
+    "cardTitle": { "type": "string", "default": "Talk to a CMMC Advisor" },
+    "cardDesc": { "type": "string", "default": "Submit your details below to schedule your confidential 30-minute scoping review:" },
+    "cardBadge": { "type": "string", "default": "// DIRECT ADVISORY" },
+    "rightSideMode": { "type": "string", "default": "form" },
     "phasesData": { "type": "string", "default": "[\"Scope and site visit\",\"Assess\",\"Guide the fixes\",\"Document\",\"Prepare for assessment\",\"Maintain and affirm\"]" },
     "deliverablesData": { "type": "string", "default": "[\"Scope + data-flow diagram\",\"Ranked findings + SPRS estimate\",\"Remediation plan\",\"SSP, policies, POA&M\",\"Evidence index\",\"Annual affirmation pack\"]" },
     "audiencesData": { "type": "string", "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]" }
