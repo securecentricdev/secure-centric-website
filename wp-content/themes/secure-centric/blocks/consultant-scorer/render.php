@@ -10,11 +10,18 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DECISION FRAMEWORK';
+$eyebrow  = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DECISION FRAMEWORK';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How to choose a CMMC consultant: 7 checks';
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Check every qualification before engaging any CMMC advisory firm.';
 $btn_text = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
 $btn_url  = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+
+$show_badge   = isset( $attributes['showBadge'] ) ? (bool) $attributes['showBadge'] : true;
+$badge_text   = isset( $attributes['badgeText'] ) ? $attributes['badgeText'] : 'Secure-Centric Verified';
+$score_val    = isset( $attributes['scoreVal'] ) ? $attributes['scoreVal'] : '7 / 7';
+$score_sub    = isset( $attributes['scoreSub'] ) ? $attributes['scoreSub'] : 'Full Compliance';
+$result_title = isset( $attributes['resultTitle'] ) ? $attributes['resultTitle'] : '100% Verified CMMC Advisory Standard';
+$result_desc  = isset( $attributes['resultDesc'] ) ? $attributes['resultDesc'] : 'The perfect choice is the firm that can explain how your engagement will run, show useful work samples, name the people responsible, and state what it will not do.';
 
 $checks = array();
 if ( ! empty( $attributes['checksData'] ) ) {
@@ -26,14 +33,26 @@ if ( ! empty( $attributes['checksData'] ) ) {
 
 if ( empty( $checks ) ) {
     $checks = array(
-        array( 'label' => 'Cyber AB Accredited Registered Provider Organization (RPO)' ),
-        array( 'label' => 'Employs certified Registered Practitioners (RP) on staff' ),
-        array( 'label' => 'Conducts in-person physical site walkthroughs of facility' ),
-        array( 'label' => '100% independent advice (zero hardware/resale conflicts)' ),
-        array( 'label' => 'Transparent fixed flat-fee pricing with deliverable milestones' ),
-        array( 'label' => 'Proven C3PAO first-pass defense and mock assessment prep' ),
-        array( 'label' => 'Comprehensive System Security Plan (SSP) and POA&M authoring' ),
+        array( 'label' => 'Verify Cyber AB status', 'desc' => 'Confirm the organization\'s current listing and ask which credentialed people will work on your account.' ),
+        array( 'label' => 'Ask who owns the engagement', 'desc' => 'You should know the name and role of your day-to-day CMMC advisor before signing.' ),
+        array( 'label' => 'Request a written scope method', 'desc' => 'The provider should explain how it traces contracts, CUI, systems, users, facilities, and outside services.' ),
+        array( 'label' => 'Inspect sample deliverables', 'desc' => 'Review redacted examples of an SSP section, gap register, evidence request, or remediation tracker.' ),
+        array( 'label' => 'Separate preparation from assessment', 'desc' => 'A consultant prepares you. An independent C3PAO performs the official Level 2 certification assessment.' ),
+        array( 'label' => 'Define the implementation boundary', 'desc' => 'Ask which tasks the consultant performs, which belong to your IT team or MSP, and how work is validated.' ),
+        array( 'label' => 'Check how evidence is managed', 'desc' => 'Ask where evidence is stored, how it is linked to requirements, and how environment changes are recorded.' ),
     );
+}
+
+if ( function_exists( 'sc_clean_text' ) ) {
+    $eyebrow      = sc_clean_text( $eyebrow );
+    $title        = sc_clean_text( $title );
+    $subtitle     = sc_clean_text( $subtitle );
+    $btn_text     = sc_clean_text( $btn_text );
+    $badge_text   = sc_clean_text( $badge_text );
+    $score_val    = sc_clean_text( $score_val );
+    $score_sub    = sc_clean_text( $score_sub );
+    $result_title = sc_clean_text( $result_title );
+    $result_desc  = sc_clean_text( $result_desc );
 }
 ?>
 
@@ -49,24 +68,47 @@ if ( empty( $checks ) ) {
     <div class="tool-scorer-card">
       <div class="scorer-list">
         <?php foreach ( $checks as $i => $c ) : ?>
-          <?php $lbl = is_array( $c ) && ! empty( $c['label'] ) ? $c['label'] : ( is_string( $c ) ? $c : '' ); ?>
-          <label class="scorer-item">
-            <input type="checkbox" checked disabled class="scorer-check" />
-            <span class="scorer-label"><strong>0<?php echo esc_html( $i + 1 ); ?>.</strong> <?php echo esc_html( $lbl ); ?></span>
-            <span class="scorer-status-pass">&check; Secure-Centric Verified</span>
+          <?php 
+          $lbl  = is_array( $c ) && ! empty( $c['label'] ) ? $c['label'] : ( is_string( $c ) ? $c : '' ); 
+          $desc = is_array( $c ) && ! empty( $c['desc'] ) ? $c['desc'] : '';
+          $num  = ( $i + 1 < 10 ) ? '0' . ( $i + 1 ) : ( $i + 1 );
+          ?>
+          <label class="scorer-item" style="align-items: flex-start;">
+            <input type="checkbox" checked disabled class="scorer-check" style="margin-top: 3px; flex-shrink: 0;" />
+            <div class="scorer-label" style="flex: 1;">
+              <strong style="color: var(--color-navy);"><?php echo esc_html( $num ); ?>.</strong> <span style="font-weight: 600; color: var(--color-navy);"><?php echo esc_html( $lbl ); ?></span>
+              <?php if ( ! empty( $desc ) ) : ?>
+                <div style="font-size: 0.84rem; color: var(--color-body-text); margin-top: 4px; line-height: 1.5; font-weight: normal;"><?php echo esc_html( $desc ); ?></div>
+              <?php endif; ?>
+            </div>
+            <?php if ( $show_badge && ! empty( $badge_text ) ) : ?>
+              <span class="scorer-status-pass" style="white-space: nowrap; flex-shrink: 0; align-self: flex-start; margin-top: 2px;">&check; <?php echo esc_html( $badge_text ); ?></span>
+            <?php endif; ?>
           </label>
         <?php endforeach; ?>
       </div>
       <div class="scorer-result-box">
+        <?php if ( ! empty( $score_val ) || ! empty( $score_sub ) ) : ?>
         <div class="scorer-score-circle">
-          <span class="score-val">7 / 7</span>
-          <span class="score-sub">Full Compliance</span>
+          <?php if ( ! empty( $score_val ) ) : ?>
+          <span class="score-val"><?php echo esc_html( $score_val ); ?></span>
+          <?php endif; ?>
+          <?php if ( ! empty( $score_sub ) ) : ?>
+          <span class="score-sub"><?php echo esc_html( $score_sub ); ?></span>
+          <?php endif; ?>
         </div>
-        <h4 style="color: var(--color-navy); font-size: 1.15rem; margin-bottom: 10px;">100% Verified CMMC Advisory Standard</h4>
+        <?php endif; ?>
+        <?php if ( ! empty( $result_title ) ) : ?>
+        <h4 style="color: var(--color-navy); font-size: 1.15rem; margin-bottom: 10px; font-weight: 700;"><?php echo esc_html( $result_title ); ?></h4>
+        <?php endif; ?>
+        <?php if ( ! empty( $result_desc ) ) : ?>
         <p style="color: var(--color-body-text); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 18px;">
-          Secure-Centric satisfies all 7 rigorous criteria: Cyber AB RPO accreditation, active Registered Practitioners, on-site audits, 100% independent conflict-free advice, flat-fee pricing, and guaranteed readiness.
+          <?php echo nl2br( esc_html( $result_desc ) ); ?>
         </p>
+        <?php endif; ?>
+        <?php if ( ! empty( $btn_text ) ) : ?>
         <a href="<?php echo esc_url( $btn_url ); ?>" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $btn_text ); ?></a>
+        <?php endif; ?>
       </div>
     </div>
   </div>

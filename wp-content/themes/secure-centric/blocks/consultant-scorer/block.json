@@ -38,9 +38,33 @@
       "type": "string",
       "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
     },
+    "showBadge": {
+      "type": "boolean",
+      "default": true
+    },
+    "badgeText": {
+      "type": "string",
+      "default": "Secure-Centric Verified"
+    },
+    "scoreVal": {
+      "type": "string",
+      "default": "7 / 7"
+    },
+    "scoreSub": {
+      "type": "string",
+      "default": "Full Compliance"
+    },
+    "resultTitle": {
+      "type": "string",
+      "default": "100% Verified CMMC Advisory Standard"
+    },
+    "resultDesc": {
+      "type": "string",
+      "default": "The perfect choice is the firm that can explain how your engagement will run, show useful work samples, name the people responsible, and state what it will not do."
+    },
     "checksData": {
       "type": "string",
-      "default": "[{\"label\":\"Cyber AB Accredited Registered Provider Organization (RPO)\"},{\"label\":\"Employs certified Registered Practitioners (RP) on staff\"},{\"label\":\"Conducts in-person physical site walkthroughs of facility\"},{\"label\":\"100% independent advice (zero hardware/resale conflicts)\"},{\"label\":\"Transparent fixed flat-fee pricing with deliverable milestones\"},{\"label\":\"Proven C3PAO first-pass defense and mock assessment prep\"},{\"label\":\"Comprehensive System Security Plan (SSP) and POA&M authoring\"}]"
+      "default": "[{\"label\":\"Verify Cyber AB status\",\"desc\":\"Confirm the organization's current listing and ask which credentialed people will work on your account.\"},{\"label\":\"Ask who owns the engagement\",\"desc\":\"You should know the name and role of your day-to-day CMMC advisor before signing.\"},{\"label\":\"Request a written scope method\",\"desc\":\"The provider should explain how it traces contracts, CUI, systems, users, facilities, and outside services.\"},{\"label\":\"Inspect sample deliverables\",\"desc\":\"Review redacted examples of an SSP section, gap register, evidence request, or remediation tracker.\"},{\"label\":\"Separate preparation from assessment\",\"desc\":\"A consultant prepares you. An independent C3PAO performs the official Level 2 certification assessment.\"},{\"label\":\"Define the implementation boundary\",\"desc\":\"Ask which tasks the consultant performs, which belong to your IT team or MSP, and how work is validated.\"},{\"label\":\"Check how evidence is managed\",\"desc\":\"Ask where evidence is stored, how it is linked to requirements, and how environment changes are recorded.\"}]"
     }
   },
   "supports": {

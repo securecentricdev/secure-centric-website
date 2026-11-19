@@ -4128,32 +4128,198 @@
     });
 
     // =========================================================================
-    // 25. CONSULTANT SCORER BLOCK
+    // 25. CONSULTANT SCORER BLOCK (INTERACTIVE 7-CHECK DECISION MATRIX)
     // =========================================================================
-    createBlockRegistration('secure-centric/consultant-scorer', {
+    registerBlockType('secure-centric/consultant-scorer', {
       title: 'Consultant Selection Scorer (7 Checks)',
       icon: 'yes',
       category: 'custom-blocks',
-      panels: [
-        {
-          title: 'Header & Eyebrow',
-          initialOpen: true,
-          fields: [
-            { name: 'eyebrow', label: 'Tag', default: '// DECISION FRAMEWORK' },
-            { name: 'title', label: 'Heading', default: 'How to choose a CMMC consultant: 7 checks' },
-            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'Check every qualification before engaging any CMMC advisory firm.' },
-            { name: 'btnText', label: 'Button Text', default: 'Book a Discovery Call →' },
-            { name: 'btnUrl', label: 'Button Link URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' }
-          ]
-        },
-        {
-          title: 'Scorer Checks Data (JSON)',
-          initialOpen: false,
-          fields: [
-            { name: 'checksData', label: '7 Checks Array JSON', type: 'textarea' }
-          ]
+      example: {},
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const defaultChecks = [
+          { label: 'Verify Cyber AB status', desc: "Confirm the organization's current listing and ask which credentialed people will work on your account." },
+          { label: 'Ask who owns the engagement', desc: 'You should know the name and role of your day-to-day CMMC advisor before signing.' },
+          { label: 'Request a written scope method', desc: 'The provider should explain how it traces contracts, CUI, systems, users, facilities, and outside services.' },
+          { label: 'Inspect sample deliverables', desc: 'Review redacted examples of an SSP section, gap register, evidence request, or remediation tracker.' },
+          { label: 'Separate preparation from assessment', desc: 'A consultant prepares you. An independent C3PAO performs the official Level 2 certification assessment.' },
+          { label: 'Define the implementation boundary', desc: 'Ask which tasks the consultant performs, which belong to your IT team or MSP, and how work is validated.' },
+          { label: 'Check how evidence is managed', desc: 'Ask where evidence is stored, how it is linked to requirements, and how environment changes are recorded.' }
+        ];
+
+        let checks = safeParseJsonArray(attributes.checksData, defaultChecks);
+        if (!Array.isArray(checks) || checks.length === 0) checks = defaultChecks;
+
+        function updateChecks(newList) {
+          setAttributes({ checksData: JSON.stringify(newList) });
         }
-      ]
+
+        function updateCheckItem(index, key, val) {
+          const next = checks.slice();
+          const current = (typeof next[index] === 'string') ? { label: next[index], desc: '' } : Object.assign({}, next[index]);
+          current[key] = val;
+          next[index] = current;
+          updateChecks(next);
+        }
+
+        function addCheckItem() {
+          const next = checks.concat([{ label: 'New Check Point', desc: '' }]);
+          updateChecks(next);
+        }
+
+        function removeCheckItem(index) {
+          if (checks.length <= 1) return;
+          const next = checks.filter(function (_, i) { return i !== index; });
+          updateChecks(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/consultant-scorer',
+          attributes: attributes
+        }) : el('div', { style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' } },
+          el('strong', {}, 'Consultant Selection Scorer (' + checks.length + ' Checks)')
+        );
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Header & Eyebrow', initialOpen: true },
+            el(TextControl, {
+              label: 'Tag / Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// DECISION FRAMEWORK',
+              onChange: function (v) { setAttributes({ eyebrow: v }); }
+            }),
+            el(TextControl, {
+              label: 'Main Heading',
+              value: attributes.title !== undefined ? attributes.title : 'How to choose a CMMC consultant: 7 key points',
+              onChange: function (v) { setAttributes({ title: v }); }
+            }),
+            el(TextareaControl, {
+              label: 'Subtitle / Intro',
+              rows: 2,
+              value: attributes.subtitle !== undefined ? attributes.subtitle : 'Choosing a consultant for a sales presentation alone makes it difficult to compare firms. Apply the same checks to every provider.',
+              onChange: function (v) { setAttributes({ subtitle: v }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Checklist Points (' + checks.length + ' Checks) & Badges', initialOpen: true },
+            el(CheckboxControl, {
+              label: 'Show "Verified" Badge on each item',
+              checked: attributes.showBadge !== undefined ? attributes.showBadge : true,
+              help: 'Uncheck to completely remove the "✓ Secure-Centric Verified" badge.',
+              onChange: function (v) { setAttributes({ showBadge: v }); }
+            }),
+            (attributes.showBadge !== false) ? el(TextControl, {
+              label: 'Badge Text',
+              value: attributes.badgeText !== undefined ? attributes.badgeText : 'Secure-Centric Verified',
+              onChange: function (v) { setAttributes({ badgeText: v }); }
+            }) : null,
+            el('hr', { style: { margin: '14px 0' } }),
+            checks.map(function (c, cIdx) {
+              const itemLabel = (typeof c === 'string') ? c : (c.label || '');
+              const itemDesc  = (typeof c === 'object' && c.desc) ? c.desc : '';
+              return el('div', {
+                key: 'check-item-' + cIdx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  marginBottom: '10px'
+                }
+              },
+                el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
+                  el('strong', { style: { fontSize: '12px', color: '#0F172A' } }, 'Point ' + (cIdx + 1)),
+                  el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeCheckItem(cIdx); }
+                  }, 'Remove')
+                ),
+                el(TextControl, {
+                  label: 'Point Title',
+                  value: itemLabel,
+                  onChange: function (v) { updateCheckItem(cIdx, 'label', v); }
+                }),
+                el(TextareaControl, {
+                  label: 'Point Description / Details (optional)',
+                  rows: 2,
+                  value: itemDesc,
+                  onChange: function (v) { updateCheckItem(cIdx, 'desc', v); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '6px' },
+              onClick: addCheckItem
+            }, '+ Add Check Point')
+          ),
+          el(
+            PanelBody,
+            { title: 'Right-Side Result Card & Text', initialOpen: true },
+            el(TextControl, {
+              label: 'Score Badge (Top Circle)',
+              value: attributes.scoreVal !== undefined ? attributes.scoreVal : '7 / 7',
+              onChange: function (v) { setAttributes({ scoreVal: v }); }
+            }),
+            el(TextControl, {
+              label: 'Score Subtitle',
+              value: attributes.scoreSub !== undefined ? attributes.scoreSub : 'Full Compliance',
+              onChange: function (v) { setAttributes({ scoreSub: v }); }
+            }),
+            el(TextControl, {
+              label: 'Card Heading',
+              value: attributes.resultTitle !== undefined ? attributes.resultTitle : '100% Verified CMMC Advisory Standard',
+              onChange: function (v) { setAttributes({ resultTitle: v }); }
+            }),
+            el(TextareaControl, {
+              label: 'Card Description / Summary Text',
+              rows: 4,
+              value: attributes.resultDesc !== undefined ? attributes.resultDesc : 'The perfect choice is the firm that can explain how your engagement will run, show useful work samples, name the people responsible, and state what it will not do.',
+              onChange: function (v) { setAttributes({ resultDesc: v }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Button Text',
+              value: attributes.btnText !== undefined ? attributes.btnText : 'Book a Discovery Call →',
+              onChange: function (v) { setAttributes({ btnText: v }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Button Link URL',
+              value: attributes.btnUrl !== undefined ? attributes.btnUrl : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
+              onChange: function (v) { setAttributes({ btnUrl: v }); }
+            })
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================
