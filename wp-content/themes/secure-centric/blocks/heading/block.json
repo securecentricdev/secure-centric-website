@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/heading",
+  "version": "1.0.0",
+  "title": "Secure-Centric Heading",
+  "category": "custom-blocks",
+  "icon": "heading",
+  "description": "Custom branded heading block with H1, H2, H3, H4 selection, optional subtitle, alignment, and theme styling.",
+  "keywords": [
+    "heading",
+    "title",
+    "headline",
+    "h1",
+    "h2",
+    "h3",
+    "h4"
+  ],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "level": {
+      "type": "string",
+      "default": "h2"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Section Heading"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "textAlign": {
+      "type": "string",
+      "default": "left"
+    },
+    "theme": {
+      "type": "string",
+      "default": "navy"
+    },
+    "wrapContainer": {
+      "type": "boolean",
+      "default": true
+    },
+    "marginBottom": {
+      "type": "string",
+      "default": "32px"
+    },
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "example": {}
+}

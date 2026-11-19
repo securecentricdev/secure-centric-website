@@ -2270,3 +2270,37 @@ body,
   margin-top: 4px;
 }
 
+/* ==========================================================================
+   Custom Heading Block (H1, H2, H3, H4)
+   ========================================================================== */
+.sc-heading-block {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sc-heading-block .sc-heading-title {
+  margin-top: 0;
+  font-family: var(--font-primary) !important;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.sc-heading-block .sc-heading-subtitle {
+  font-family: var(--font-primary);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sc-heading-align-left {
+  text-align: left;
+}
+
+.sc-heading-align-center {
+  text-align: center;
+}
+
+.sc-heading-align-right {
+  text-align: right;
+}
+
+

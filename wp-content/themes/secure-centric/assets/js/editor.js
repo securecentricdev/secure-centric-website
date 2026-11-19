@@ -11,7 +11,7 @@
     const { registerBlockType } = wp.blocks;
     const { createElement: el, Fragment } = wp.element;
     const blockEditor = wp.blockEditor || wp.editor;
-    const { InspectorControls, useBlockProps } = blockEditor;
+    const { InspectorControls, BlockControls, useBlockProps } = blockEditor;
     const { PanelBody, TextControl, TextareaControl, SelectControl, Button, RangeControl, CheckboxControl, ToggleControl } = wp.components;
     const ServerSideRender = wp.serverSideRender;
 
@@ -5013,6 +5013,154 @@
           ]
         }
       ]
+    });
+
+    // =========================================================================
+    // 41. CUSTOM HEADING BLOCK (H1, H2, H3, H4 SELECTION)
+    // =========================================================================
+    registerBlockType('secure-centric/heading', {
+      title: 'Secure-Centric Heading',
+      icon: 'heading',
+      category: 'custom-blocks',
+      example: {},
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+        const currentLevel = attributes.level || 'h2';
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const ToolbarGroup = wp.components.ToolbarGroup || (blockEditor && blockEditor.ToolbarGroup);
+        const ToolbarButton = wp.components.ToolbarButton || (blockEditor && blockEditor.ToolbarButton);
+
+        const blockControls = (BlockControls && ToolbarGroup && ToolbarButton) ? el(
+          BlockControls,
+          {},
+          el(
+            ToolbarGroup,
+            {},
+            ['h1', 'h2', 'h3', 'h4'].map(function (lvl) {
+              return el(ToolbarButton, {
+                key: lvl,
+                isPressed: currentLevel === lvl,
+                onClick: function () { setAttributes({ level: lvl }); }
+              }, lvl.toUpperCase());
+            })
+          )
+        ) : null;
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/heading',
+          attributes: attributes
+        }) : el('div', { style: { padding: '16px', background: '#F8FAFC' } },
+          el(currentLevel, { style: { margin: 0 } }, attributes.heading || 'Section Heading')
+        );
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Heading Level & Hierarchy', initialOpen: true },
+            el(SelectControl, {
+              label: 'Heading Level (Tag)',
+              value: currentLevel,
+              options: [
+                { label: 'H1 (Main Hero / Page Title)', value: 'h1' },
+                { label: 'H2 (Section Heading — Recommended)', value: 'h2' },
+                { label: 'H3 (Sub-Section Title)', value: 'h3' },
+                { label: 'H4 (Minor Title / Card Header)', value: 'h4' }
+              ],
+              help: 'Select the semantic HTML heading tag for accessibility and SEO hierarchy.',
+              onChange: function (val) { setAttributes({ level: val }); }
+            }),
+            el('div', { style: { display: 'flex', gap: '8px', marginTop: '10px' } },
+              ['h1', 'h2', 'h3', 'h4'].map(function (lvl) {
+                return el(Button, {
+                  key: lvl,
+                  isPrimary: currentLevel === lvl,
+                  isSecondary: currentLevel !== lvl,
+                  isSmall: true,
+                  style: { flex: 1, justifyContent: 'center', fontWeight: 'bold' },
+                  onClick: function () { setAttributes({ level: lvl }); }
+                }, lvl.toUpperCase());
+              })
+            )
+          ),
+          el(
+            PanelBody,
+            { title: 'Content & Typography', initialOpen: true },
+            el(TextControl, {
+              label: 'Headline Text',
+              value: attributes.heading !== undefined ? attributes.heading : 'Section Heading',
+              onChange: function (val) { setAttributes({ heading: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Intro / Subtitle (Optional)',
+              value: attributes.subtitle || '',
+              rows: 3,
+              placeholder: 'Add an optional lead paragraph or description below the heading...',
+              onChange: function (val) { setAttributes({ subtitle: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Text Alignment',
+              value: attributes.textAlign || 'left',
+              options: [
+                { label: 'Left Aligned (Default)', value: 'left' },
+                { label: 'Centered', value: 'center' },
+                { label: 'Right Aligned', value: 'right' }
+              ],
+              onChange: function (val) { setAttributes({ textAlign: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Heading Color Theme',
+              value: attributes.theme || 'navy',
+              options: [
+                { label: 'Deep Navy (Standard on Light Sections)', value: 'navy' },
+                { label: 'Pure White (For Midnight / Dark Sections)', value: 'white' },
+                { label: 'Cyber Cyan (Brand Accent)', value: 'cyan' }
+              ],
+              onChange: function (val) { setAttributes({ theme: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Bottom Spacing (Margin)',
+              value: attributes.marginBottom || '32px',
+              options: [
+                { label: 'None (0px)', value: '0px' },
+                { label: 'Tight (16px)', value: '16px' },
+                { label: 'Compact (24px)', value: '24px' },
+                { label: 'Normal (32px)', value: '32px' },
+                { label: 'Spacious (48px)', value: '48px' }
+              ],
+              onChange: function (val) { setAttributes({ marginBottom: val }); }
+            }),
+            el(ToggleControl, {
+              label: 'Constrain to Site Container (1240px)',
+              help: 'Keeps heading aligned within the website grid margins.',
+              checked: attributes.wrapContainer !== undefined ? attributes.wrapContainer : true,
+              onChange: function (val) { setAttributes({ wrapContainer: val }); }
+            })
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          blockControls,
+          inspectorControls,
+          el('div', blockProps, previewElement)
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
