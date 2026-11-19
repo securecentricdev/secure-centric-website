@@ -16,6 +16,10 @@
   ],
   "textdomain": "secure-centric",
   "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// COMPLIANCE ARTIFACT DEFINITION"
+    },
     "title": {
       "type": "string",
       "default": "What is this compliance artifact?"
@@ -27,6 +31,26 @@
     "pointsData": {
       "type": "string",
       "default": ""
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
+    },
+    "ctaSubtext": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryCtaText": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryCtaUrl": {
+      "type": "string",
+      "default": "/contact/"
     }
   },
   "supports": {

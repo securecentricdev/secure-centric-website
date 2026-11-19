@@ -5008,15 +5008,27 @@
           title: 'Card Header',
           initialOpen: true,
           fields: [
+            { name: 'eyebrow', label: 'Tag / Eyebrow', default: '// COMPLIANCE ARTIFACT DEFINITION' },
             { name: 'title', label: 'Heading', default: 'What is this compliance artifact?' },
             { name: 'desc', label: 'Description', type: 'textarea', default: 'A structured, assessor-tested Excel and PDF template designed to evaluate internal technical controls.' }
           ]
         },
         {
-          title: 'Points List (JSON)',
-          initialOpen: false,
+          title: 'Points List',
+          initialOpen: true,
           fields: [
-            { name: 'pointsData', label: 'Points JSON Array', type: 'textarea' }
+            { name: 'pointsData', label: 'Points (JSON Array or 1 item per line)', type: 'textarea' }
+          ]
+        },
+        {
+          title: 'Call to Action (CTA) Button',
+          initialOpen: true,
+          fields: [
+            { name: 'ctaText', label: 'Primary CTA Text (e.g. Download Checklist →)', default: '' },
+            { name: 'ctaUrl', label: 'Primary CTA URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' },
+            { name: 'ctaSubtext', label: 'CTA Subtext (e.g. Instant PDF & Excel access)', default: '' },
+            { name: 'secondaryCtaText', label: 'Secondary CTA Text (Optional)', default: '' },
+            { name: 'secondaryCtaUrl', label: 'Secondary CTA URL', default: '/contact/' }
           ]
         }
       ]
