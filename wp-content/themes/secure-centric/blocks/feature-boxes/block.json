@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/feature-boxes",
+  "version": "1.0.0",
+  "title": "Three Feature Boxes (Equal Weight)",
+  "category": "custom-blocks",
+  "icon": "screenoptions",
+  "description": "Three equal-weight capability or service boxes with formatted bullet points and equal visual importance.",
+  "keywords": [
+    "boxes",
+    "features",
+    "capabilities",
+    "services",
+    "columns",
+    "equal"
+  ],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// CAPABILITIES"
+    },
+    "title": {
+      "type": "string",
+      "default": "More ways Secure-Centric can help"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "theme": {
+      "type": "string",
+      "default": "ice"
+    },
+    "box1Badge": {
+      "type": "string",
+      "default": ""
+    },
+    "box1Title": {
+      "type": "string",
+      "default": "Assess and prepare"
+    },
+    "box1Desc": {
+      "type": "string",
+      "default": "Risk Assessments: Find your security risks and use the results to make decisions.\n\nPre-Assessment Preparation: Check your documentation and implementation of evidence before the required assessment."
+    },
+    "box2Badge": {
+      "type": "string",
+      "default": ""
+    },
+    "box2Title": {
+      "type": "string",
+      "default": "Document and scope"
+    },
+    "box2Desc": {
+      "type": "string",
+      "default": "• NIST SP 800-171 Support: Know your requirement and plan security improvements.\n\n• CUI Scope and Enclave Guidance: Pin down where Controlled Unclassified Information (CUI) is handled, and which systems may fall in scope.\n\n• POA&M Support: Organize eligible open items with owners, where applicable CMMC rules permit a POA&M."
+    },
+    "box3Badge": {
+      "type": "string",
+      "default": ""
+    },
+    "box3Title": {
+      "type": "string",
+      "default": "Lead and oversee"
+    },
+    "box3Desc": {
+      "type": "string",
+      "default": "• Compliance Leadership: Get structured directions for coordinating security work across your team."
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "example": {}
+}

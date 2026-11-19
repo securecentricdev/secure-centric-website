@@ -2463,41 +2463,119 @@
             { name: 'eyebrow', label: 'Tag', default: '// APPROACH COMPARISON' },
             { name: 'title', label: 'Title', default: 'Three Ways Defense Subcontractors Approach CMMC' },
             { name: 'description', label: 'Description', type: 'textarea', default: 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.' },
+            {
+              name: 'layout',
+              label: 'Layout Mode',
+              type: 'select',
+              options: [
+                { label: '3-Column (3 Options / Capability Boxes)', value: '3-col' },
+                { label: '2-Column (RPO vs MSP Responsibilities)', value: '2-col' }
+              ],
+              default: '3-col'
+            },
+            {
+              name: 'highlightBox',
+              label: 'Box Highlight Style',
+              type: 'select',
+              options: [
+                { label: 'All Boxes Equal (No Highlight)', value: 'none' },
+                { label: 'Highlight Box 3 (Secure-Centric)', value: 'box3' },
+                { label: 'Highlight Box 1', value: 'box1' }
+              ],
+              default: 'none'
+            },
             { name: 'btnText', label: 'CTA Button Text', default: 'Engage Secure-Centric →' },
             { name: 'btnUrl', label: 'CTA Button URL', default: '/services/cmmc-consulting/' }
           ]
         },
         {
-          title: 'Option 1: DIY / In-House IT',
+          title: 'Option 1 / Box 1',
           initialOpen: false,
           fields: [
             { name: 'opt1Badge', label: 'Badge', default: 'Option 1' },
             { name: 'opt1Title', label: 'Title', default: 'DIY / In-House IT' },
-            { name: 'opt1Desc', label: 'Description', type: 'textarea', default: 'Internal IT teams download templates and attempt to interpret all 110 NIST controls alone.' },
-            { name: 'opt1RiskTitle', label: 'Risk Heading', default: '❌ High Audit Failure Risk' },
-            { name: 'opt1RiskDesc', label: 'Risk Details', type: 'textarea', default: 'Massive scope sprawl. Incomplete evidence packages fail official C3PAO audits on Day 1.' }
+            { name: 'opt1Desc', label: 'Description / Content', type: 'textarea', default: 'Internal IT teams download templates and attempt to interpret all 110 NIST controls alone.' },
+            { name: 'opt1RiskTitle', label: 'Risk / Note Heading (Optional)', default: '' },
+            { name: 'opt1RiskDesc', label: 'Risk / Note Details (Optional)', type: 'textarea', default: '' }
           ]
         },
         {
-          title: 'Option 2: Generic Managed MSP',
+          title: 'Option 2 / Box 2',
           initialOpen: false,
           fields: [
             { name: 'opt2Badge', label: 'Badge', default: 'Option 2' },
             { name: 'opt2Title', label: 'Title', default: 'Generic Managed MSP' },
-            { name: 'opt2Desc', label: 'Description', type: 'textarea', default: 'IT vendors sell bundled cloud licenses and automated compliance portal subscriptions.' },
-            { name: 'opt2RiskTitle', label: 'Risk Heading', default: '⚠️ Conflict of Interest' },
-            { name: 'opt2RiskDesc', label: 'Risk Details', type: 'textarea', default: 'MSPs grade their own homework. Portal checkmarks crumble during rigorous in-person DIBCAC interviews.' }
+            { name: 'opt2Desc', label: 'Description / Content', type: 'textarea', default: 'IT vendors sell bundled cloud licenses and automated compliance portal subscriptions.' },
+            { name: 'opt2RiskTitle', label: 'Risk / Note Heading (Optional)', default: '' },
+            { name: 'opt2RiskDesc', label: 'Risk / Note Details (Optional)', type: 'textarea', default: '' }
           ]
         },
         {
-          title: 'Option 3: Secure-Centric Independent Advisory',
+          title: 'Option 3 / Box 3',
           initialOpen: false,
           fields: [
             { name: 'opt3Badge', label: 'Badge', default: 'Option 3: Secure-Centric' },
             { name: 'opt3Title', label: 'Title', default: 'Independent RPO Advisory' },
-            { name: 'opt3Desc', label: 'Description', type: 'textarea', default: 'Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit.' },
-            { name: 'opt3RiskTitle', label: 'Risk Heading', default: '✅ 100% First-Pass Defensibility' },
-            { name: 'opt3RiskDesc', label: 'Risk Details', type: 'textarea', default: 'Rigorous mock assessments, verified SSP documentation, and scope reduction saving $50k+.' }
+            { name: 'opt3Desc', label: 'Description / Content', type: 'textarea', default: 'Accredited RPO walks your facilities, reduces CUI scope, engineers controls, and stands beside you through the audit.' },
+            { name: 'opt3RiskTitle', label: 'Risk / Note Heading (Optional)', default: '' },
+            { name: 'opt3RiskDesc', label: 'Risk / Note Details (Optional)', type: 'textarea', default: '' }
+          ]
+        }
+      ]
+    });
+
+    // =========================================================================
+    // 9B. THREE FEATURE BOXES (EQUAL WEIGHT)
+    // =========================================================================
+    createBlockRegistration('secure-centric/feature-boxes', {
+      title: 'Three Feature Boxes (Equal Weight)',
+      icon: 'screenoptions',
+      category: 'custom-blocks',
+      panels: [
+        {
+          title: 'Section Heading',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Tag', default: '// CAPABILITIES' },
+            { name: 'title', label: 'Headline', default: 'More ways Secure-Centric can help' },
+            { name: 'subtitle', label: 'Intro / Subtitle', type: 'textarea', default: '' },
+            {
+              name: 'theme',
+              label: 'Background Theme',
+              type: 'select',
+              options: [
+                { label: 'Soft Ice-Blue Background', value: 'ice' },
+                { label: 'Clean White Background', value: 'white' }
+              ],
+              default: 'ice'
+            }
+          ]
+        },
+        {
+          title: 'Box 1',
+          initialOpen: false,
+          fields: [
+            { name: 'box1Badge', label: 'Top Badge (Optional)', default: '' },
+            { name: 'box1Title', label: 'Title', default: 'Assess and prepare' },
+            { name: 'box1Desc', label: 'Content (Supports Bullets & Bold Prefix)', type: 'textarea', rows: 6, default: 'Risk Assessments: Find your security risks and use the results to make decisions.\n\nPre-Assessment Preparation: Check your documentation and implementation of evidence before the required assessment.' }
+          ]
+        },
+        {
+          title: 'Box 2',
+          initialOpen: false,
+          fields: [
+            { name: 'box2Badge', label: 'Top Badge (Optional)', default: '' },
+            { name: 'box2Title', label: 'Title', default: 'Document and scope' },
+            { name: 'box2Desc', label: 'Content (Supports Bullets & Bold Prefix)', type: 'textarea', rows: 6, default: '• NIST SP 800-171 Support: Know your requirement and plan security improvements.\n\n• CUI Scope and Enclave Guidance: Pin down where Controlled Unclassified Information (CUI) is handled, and which systems may fall in scope.\n\n• POA&M Support: Organize eligible open items with owners, where applicable CMMC rules permit a POA&M.' }
+          ]
+        },
+        {
+          title: 'Box 3',
+          initialOpen: false,
+          fields: [
+            { name: 'box3Badge', label: 'Top Badge (Optional)', default: '' },
+            { name: 'box3Title', label: 'Title', default: 'Lead and oversee' },
+            { name: 'box3Desc', label: 'Content (Supports Bullets & Bold Prefix)', type: 'textarea', rows: 6, default: '• Compliance Leadership: Get structured directions for coordinating security work across your team.' }
           ]
         }
       ]
