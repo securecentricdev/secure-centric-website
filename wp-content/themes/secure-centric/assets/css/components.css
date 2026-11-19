@@ -2303,4 +2303,39 @@ body,
   text-align: right;
 }
 
+/* ==========================================================================
+   Section Explainer Bullet Points & Typography
+   ========================================================================== */
+.section-explainer-content p {
+  font-size: 1.0625rem !important;
+  line-height: 1.75 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 20px !important;
+}
+
+.section-explainer-content ul.explainer-list {
+  list-style: disc !important;
+  margin: 0 0 24px 28px !important;
+  padding: 0 !important;
+}
+
+.section-explainer-content ol.explainer-list {
+  list-style: decimal !important;
+  margin: 0 0 24px 28px !important;
+  padding: 0 !important;
+}
+
+.section-explainer-content .explainer-list li {
+  font-size: 1.0625rem !important;
+  line-height: 1.7 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 10px !important;
+  padding-left: 6px !important;
+}
+
+.section-explainer-content ul.explainer-list li::marker {
+  color: var(--color-electric-blue) !important;
+}
+
+
 
