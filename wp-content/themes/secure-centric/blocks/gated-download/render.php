@@ -13,7 +13,8 @@ $unique_id = 'sc-gated-' . wp_unique_id();
 
 $eyebrow        = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// FREE DOWNLOADABLE RESOURCE';
 $title          = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC Level 2 Compliance Checklist & Scoring Engine';
-$description    = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Assess your readiness against all 110 NIST SP 800-171 controls with automated SPRS scoring formulas, evidence templates, and team milestone tracking.';
+$has_explicit_desc = array_key_exists( 'description', $attributes );
+$description    = $has_explicit_desc ? trim( (string) $attributes['description'] ) : 'Assess your readiness against all 110 NIST SP 800-171 controls with automated SPRS scoring formulas, evidence templates, and team milestone tracking.';
 $doc_type       = ! empty( $attributes['docType'] ) ? $attributes['docType'] : 'EXCEL & PDF WORKBOOK';
 $file_url       = ! empty( $attributes['fileUrl'] ) ? esc_url( $attributes['fileUrl'] ) : '';
 $file_name      = ! empty( $attributes['fileName'] ) ? esc_attr( $attributes['fileName'] ) : '';
@@ -46,12 +47,14 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
           <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="margin-bottom: 12px; display: inline-flex;"><?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
-          <h2 style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--color-navy); margin-bottom: 14px; line-height: 1.25; font-weight: 700;">
+          <h2 style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '24px'; ?>; line-height: 1.25; font-weight: 700;">
             <?php echo esc_html( $title ); ?>
           </h2>
+          <?php if ( ! empty( $description ) ) : ?>
           <p style="font-size: 1.05rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px; max-width: 620px;">
             <?php echo esc_html( $description ); ?>
           </p>
+          <?php endif; ?>
           <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
             <button type="button" 
                     class="btn btn-primary sc-gated-open-trigger" 

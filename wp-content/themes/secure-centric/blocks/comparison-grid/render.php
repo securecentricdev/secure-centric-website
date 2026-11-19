@@ -31,9 +31,11 @@ if (
 }
 
 $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : ( '2-col' === $layout ? '// CLEAR DIVISION OF RESPONSIBILITIES' : '// APPROACH COMPARISON' );
-$description = ! empty( $attributes['description'] ) ? $attributes['description'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '' );
 
-if ( empty( $description ) ) {
+$has_explicit_desc = array_key_exists( 'description', $attributes ) || array_key_exists( 'subtitle', $attributes );
+if ( $has_explicit_desc ) {
+    $description = array_key_exists( 'description', $attributes ) ? trim( (string) $attributes['description'] ) : trim( (string) $attributes['subtitle'] );
+} else {
     $description = ( '2-col' === $layout )
         ? 'Defense contractors frequently ask: "Can our MSP do this alone?" Here is how an accredited Cyber AB RPO works alongside your existing technical team without overlap.'
         : 'Why internal teams struggle with DIBCAC audits and where independent advisory creates true defensibility.';
@@ -116,14 +118,16 @@ if ( '2-col' === $layout ) :
              data-wp-block="wp:columns {columns:2}" 
              data-wp-pattern="secure-centric/rpo-vs-msp-cards"<?php echo $anchor_attr; ?>>
       <div class="site-container">
-        <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
+        <div style="text-align: center; max-width: 720px; margin: 0 auto <?php echo ! empty( $description ) ? '36px' : '24px'; ?>;">
           <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
-          <h2><?php echo esc_html( $title ); ?></h2>
+          <h2<?php echo empty( $description ) ? ' style="margin-bottom: 0;"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
+          <?php if ( ! empty( $description ) ) : ?>
           <p style="font-size: 1rem; color: var(--color-body-text); margin-top: 10px;">
             <?php echo esc_html( $description ); ?>
           </p>
+          <?php endif; ?>
         </div>
 
         <div class="comparison-grid">
@@ -245,14 +249,16 @@ if ( '2-col' === $layout ) :
     ?>
     <section class="section-ice py-section wp-block-inspect" data-wp-pattern="secure-centric/comparison-table"<?php echo $anchor_attr; ?>>
       <div class="site-container">
-        <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
+        <div class="section-heading-center" style="margin-bottom: <?php echo ! empty( $description ) ? '40px' : '28px'; ?>; text-align: center;">
           <?php if ( ! empty( $eyebrow ) ) : ?>
           <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
-          <h2><?php echo esc_html( $title ); ?></h2>
+          <h2<?php echo empty( $description ) ? ' style="margin-bottom: 0;"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
+          <?php if ( ! empty( $description ) ) : ?>
           <p style="color: var(--color-slate); max-width: 640px; margin: 8px auto 0;">
             <?php echo esc_html( $description ); ?>
           </p>
+          <?php endif; ?>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch;">

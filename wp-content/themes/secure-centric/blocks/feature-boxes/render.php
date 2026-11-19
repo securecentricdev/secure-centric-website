@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $eyebrow  = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// CAPABILITIES';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'More ways Secure-Centric can help';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '';
+$has_explicit_desc = array_key_exists( 'description', $attributes ) || array_key_exists( 'subtitle', $attributes );
+$subtitle = $has_explicit_desc ? ( array_key_exists( 'description', $attributes ) ? trim( (string) $attributes['description'] ) : trim( (string) $attributes['subtitle'] ) ) : '';
 $theme    = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'ice';
 $is_ice   = ( 'ice' === $theme );
 
@@ -93,11 +94,11 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 
 <section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/feature-boxes"<?php echo $anchor_attr; ?>>
   <div class="site-container">
-    <div class="section-heading-center" style="margin-bottom: 40px; text-align: center;">
+    <div class="section-heading-center" style="margin-bottom: <?php echo ! empty( $subtitle ) ? '40px' : '28px'; ?>; text-align: center;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
       <?php endif; ?>
-      <h2><?php echo esc_html( $title ); ?></h2>
+      <h2<?php echo empty( $subtitle ) ? ' style="margin-bottom: 0;"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
       <?php if ( ! empty( $subtitle ) ) : ?>
       <p style="color: var(--color-slate); max-width: 680px; margin: 8px auto 0; font-size: 1.05rem; line-height: 1.6;">
         <?php echo esc_html( $subtitle ); ?>
