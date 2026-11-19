@@ -3516,30 +3516,217 @@
     });
 
     // =========================================================================
-    // 16. STEPS HORIZONTAL BLOCK
+    // 16. STEPS HORIZONTAL BLOCK (DYNAMIC REPEATER)
     // =========================================================================
-    createBlockRegistration('secure-centric/steps-horizontal', {
+    registerBlockType('secure-centric/steps-horizontal', {
       title: 'Horizontal Steps Workflow',
       icon: 'ellipsis',
       category: 'custom-blocks',
-      panels: [
-        {
-          title: 'Header & Eyebrow',
-          initialOpen: true,
-          fields: [
-            { name: 'eyebrow', label: 'Tag', default: '// ENGAGEMENT WORKFLOW' },
-            { name: 'title', label: 'Heading', default: 'How an engagement starts' },
-            { name: 'subtitle', label: 'Subtitle', type: 'textarea', default: 'A structured, predictable path to verifiable defense compliance with zero surprises.' }
-          ]
-        },
-        {
-          title: 'Steps Data (JSON)',
-          initialOpen: false,
-          fields: [
-            { name: 'stepsData', label: 'Steps Array JSON', type: 'textarea' }
-          ]
+      example: {},
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+
+        const defaultSteps = [
+          { no: '01', title: 'Discovery Call', desc: '30-minute scoping discussion under bilateral NDA to review your contracts, timeline, and current SPRS status.' },
+          { no: '02', title: 'NDA Signed', desc: 'Bilateral non-disclosure executed within 2 hours. We review your statements of work and DFARS 7012 flowdowns.' },
+          { no: '03', title: 'In-Person Walkthrough', desc: 'Our Registered Practitioners visit your facility, inspect network infrastructure, and interview key personnel on site.' },
+          { no: '04', title: 'Scope & Action Plan', desc: 'You receive a formal CUI boundary map, estimated SPRS baseline score, and a prioritized remediation roadmap.' }
+        ];
+
+        let currentSteps = safeParseJsonArray(attributes.stepsData, defaultSteps);
+
+        function updateSteps(newSteps) {
+          setAttributes({ stepsData: JSON.stringify(newSteps) });
         }
-      ]
+
+        function addStep() {
+          const nextNum = String(currentSteps.length + 1).padStart(2, '0');
+          const next = currentSteps.concat([{
+            no: nextNum,
+            title: 'New Step',
+            desc: 'Describe what occurs during this milestone or stage.'
+          }]);
+          updateSteps(next);
+        }
+
+        function removeStep(idx) {
+          if (currentSteps.length <= 1) return;
+          const next = currentSteps.filter(function (_, i) { return i !== idx; });
+          updateSteps(next);
+        }
+
+        function updateStepItem(idx, fields) {
+          const next = currentSteps.map(function (item, i) {
+            if (i === idx) {
+              return Object.assign({}, item, fields);
+            }
+            return item;
+          });
+          updateSteps(next);
+        }
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/steps-horizontal',
+          attributes: Object.assign({}, attributes, {
+            stepsData: JSON.stringify(currentSteps)
+          })
+        }) : el('div', {
+          style: { padding: '24px', border: '1px dashed #2F5BFF', background: '#F8FAFC', borderRadius: '8px' }
+        }, el('strong', {}, 'Horizontal Steps (' + currentSteps.length + ' Steps)'));
+
+        const inlineActionBar = isSelected ? el('div', {
+          style: {
+            position: 'absolute',
+            bottom: '12px',
+            right: '12px',
+            zIndex: 9999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid #CBD5E1',
+            borderRadius: '8px',
+            padding: '8px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }
+        },
+          el('span', { style: { fontSize: '13px', color: '#1E293B', fontWeight: 600 } },
+            '🪜 Workflow Steps (' + currentSteps.length + ' Steps)'
+          ),
+          el(Button, {
+            isPrimary: true,
+            isSmall: true,
+            onClick: addStep
+          }, '+ Add Step')
+        ) : null;
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Section Header', initialOpen: true },
+            el(TextControl, {
+              label: 'Tag / Eyebrow',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// ENGAGEMENT WORKFLOW',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.title !== undefined ? attributes.title : 'How an engagement starts',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Intro / Subtitle',
+              value: attributes.subtitle !== undefined ? attributes.subtitle : '',
+              rows: 2,
+              onChange: function (val) { setAttributes({ subtitle: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Background Theme',
+              value: attributes.theme || 'ice',
+              options: [
+                { label: 'Soft Ice-Blue Background', value: 'ice' },
+                { label: 'Clean White Background', value: 'white' }
+              ],
+              onChange: function (val) { setAttributes({ theme: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Workflow Steps Manager (' + currentSteps.length + ' Steps)', initialOpen: false },
+            el('div', { style: { marginBottom: '16px' } },
+              el(Button, {
+                isPrimary: true,
+                style: { width: '100%', justifyContent: 'center' },
+                onClick: addStep
+              }, '+ Add New Step')
+            ),
+            currentSteps.map(function (st, idx) {
+              const defaultNo = String(idx + 1).padStart(2, '0');
+              return el('div', {
+                key: 'step-' + idx,
+                style: {
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  marginBottom: '16px'
+                }
+              },
+                el('div', {
+                  style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #E2E8F0'
+                  }
+                },
+                  el('strong', { style: { fontSize: '13px', color: '#1E293B' } },
+                    'Step ' + (st.no || defaultNo) + ': ' + (st.title || 'Untitled Step')
+                  ),
+                  currentSteps.length > 1 ? el(Button, {
+                    isDestructive: true,
+                    isSmall: true,
+                    onClick: function () { removeStep(idx); }
+                  }, 'Remove') : null
+                ),
+                el(TextControl, {
+                  label: 'Step Number Badge',
+                  value: st.no || defaultNo,
+                  onChange: function (v) { updateStepItem(idx, { no: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Step Title',
+                  value: st.title || '',
+                  placeholder: 'e.g. Understand',
+                  onChange: function (v) { updateStepItem(idx, { title: v }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Step Description',
+                  value: st.desc || '',
+                  rows: 3,
+                  placeholder: 'e.g. We talk through your contract needs...',
+                  onChange: function (v) { updateStepItem(idx, { desc: v }); }
+                })
+              );
+            }),
+            el(Button, {
+              isPrimary: true,
+              style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+              onClick: addStep
+            }, '+ Add New Step')
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement,
+            inlineActionBar
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
     });
 
     // =========================================================================

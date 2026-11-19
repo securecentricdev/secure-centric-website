@@ -12,7 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// ENGAGEMENT WORKFLOW';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How an engagement starts';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'A structured, predictable path to verifiable defense compliance with zero surprises.';
+$has_explicit_desc = array_key_exists( 'description', $attributes ) || array_key_exists( 'subtitle', $attributes );
+$subtitle = $has_explicit_desc ? ( array_key_exists( 'description', $attributes ) ? trim( (string) $attributes['description'] ) : trim( (string) $attributes['subtitle'] ) ) : 'A structured, predictable path to verifiable defense compliance with zero surprises.';
+$theme    = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'ice';
+$is_ice   = ( 'ice' === $theme );
 
 $steps = array();
 if ( ! empty( $attributes['stepsData'] ) ) {
@@ -57,16 +60,18 @@ $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( 
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-ice py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-horizontal"<?php echo $anchor_attr; ?>>
+<section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/steps-horizontal"<?php echo $anchor_attr; ?>>
   <div class="site-container">
-    <div class="section-header-center" style="text-align: center; margin-bottom: 36px;">
+    <div class="section-header-center" style="text-align: center; margin-bottom: <?php echo ! empty( $subtitle ) ? '36px' : '28px'; ?>;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
       <span class="section-eyebrow" style="justify-content: center;"><?php echo esc_html( $eyebrow ); ?></span>
       <?php endif; ?>
-      <h2 style="margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h2>
+      <h2<?php echo empty( $subtitle ) ? ' style="margin-bottom: 0;"' : ' style="margin-bottom: 16px;"'; ?>><?php echo esc_html( $title ); ?></h2>
+      <?php if ( ! empty( $subtitle ) ) : ?>
       <p style="color: var(--color-body-text); max-width: 680px; margin: 0 auto;"><?php echo esc_html( $subtitle ); ?></p>
+      <?php endif; ?>
     </div>
-    <div class="steps-horizontal-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+    <div class="steps-horizontal-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
       <?php foreach ( $steps as $i => $st ) : ?>
         <?php
         $num   = ! empty( $st['no'] ) ? $st['no'] : sprintf( '%02d', $i + 1 );
