@@ -1857,7 +1857,9 @@
             { name: 'p2', label: 'Paragraph 2', type: 'textarea', rows: 3, default: 'Under 32 CFR Part 170 and DFARS 252.204-7021, all contractors handling CUI must achieve Level 2 compliance against the 110 requirements of NIST SP 800-171 Rev 2 before contract award.' },
             { name: 'p3', label: 'Paragraph 3', type: 'textarea', rows: 3, default: 'Our Cyber AB Registered Practitioners conduct on-site facility walkthroughs, map exact CUI boundaries, guide technical remediation, and co-author your assessor-ready System Security Plan (SSP).' },
             { name: 'p4', label: 'Paragraph 4', type: 'textarea', rows: 3, default: '' },
-            { name: 'p5', label: 'Paragraph 5', type: 'textarea', rows: 3, default: '' }
+            { name: 'p5', label: 'Paragraph 5', type: 'textarea', rows: 3, default: '' },
+            { name: 'ctaText', label: 'CTA Button Text (Optional)', default: '' },
+            { name: 'ctaUrl', label: 'CTA Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' }
           ]
         }
       ]
@@ -2804,10 +2806,15 @@
           initialOpen: true,
           fields: [
             { name: 'title', label: 'Headline', default: 'Planning to get started on CMMC?' },
-            { name: 'description', label: 'Description', type: 'textarea', default: 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.' },
+            { name: 'theme', label: 'Background Theme', type: 'select', options: [
+              { label: 'Electric Blue (Default)', value: 'electric-blue' },
+              { label: 'Dark Navy', value: 'navy' },
+              { label: 'White / Clean Section', value: 'white' }
+            ], default: 'electric-blue' },
+            { name: 'description', label: 'Description / Checklist (Supports ✓, -, *)', type: 'textarea', default: 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.' },
             { name: 'primaryBtnText', label: 'Primary Button Text', default: 'Book a Discovery Call →' },
             { name: 'primaryBtnUrl', label: 'Primary Button URL', default: 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' },
-            { name: 'secondaryBtnText', label: 'Secondary Button Text', default: 'Submit Your Query' },
+            { name: 'secondaryBtnText', label: 'Secondary Button Text (Leave empty to hide)', default: 'Submit Your Query' },
             { name: 'secondaryBtnUrl', label: 'Secondary Button URL', default: '/contact/' }
           ]
         }

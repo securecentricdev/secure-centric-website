@@ -2337,5 +2337,77 @@ body,
   color: var(--color-electric-blue) !important;
 }
 
+/* ==========================================================================
+   CTA Banner Checklist & Theme Variants
+   ========================================================================== */
+.final-cta-section.theme-navy {
+  background-color: var(--color-navy) !important;
+}
+
+.final-cta-section.theme-white {
+  background-color: var(--color-white) !important;
+  color: var(--color-navy) !important;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.final-cta-section.theme-white h2 {
+  color: var(--color-navy) !important;
+}
+
+.final-cta-section.theme-white p {
+  color: var(--color-body-text) !important;
+}
+
+.cta-checklist {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 auto 32px !important;
+  max-width: 580px !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.cta-checklist li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  font-size: clamp(1rem, 1.8vw, 1.125rem) !important;
+  line-height: 1.5 !important;
+  color: #FFFFFF !important;
+}
+
+.final-cta-section.theme-white .cta-checklist li {
+  color: var(--color-navy) !important;
+}
+
+.cta-check-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.final-cta-section.theme-white .cta-check-icon {
+  background: rgba(0, 102, 255, 0.12) !important;
+  color: var(--color-electric-blue) !important;
+}
+
+.cta-check-text strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+
 
 

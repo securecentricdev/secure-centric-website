@@ -45,6 +45,14 @@
     "p5": {
       "type": "string",
       "default": ""
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
     }
   },
   "supports": {

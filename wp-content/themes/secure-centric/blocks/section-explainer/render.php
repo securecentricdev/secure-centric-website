@@ -62,6 +62,10 @@ if ( function_exists( 'sc_clean_text' ) ) {
 $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 
+$cta_text = ! empty( $attributes['ctaText'] ) ? trim( (string) $attributes['ctaText'] ) : '';
+$default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+$cta_url  = ! empty( $attributes['ctaUrl'] ) ? ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $attributes['ctaUrl'] ) : $attributes['ctaUrl'] ) : $default_booking;
+
 if ( ! function_exists( 'sc_render_explainer_paragraphs' ) ) {
     function sc_render_explainer_paragraphs( $text ) {
         if ( empty( trim( (string) $text ) ) ) {
@@ -150,5 +154,10 @@ if ( ! function_exists( 'sc_render_explainer_paragraphs' ) ) {
         <?php echo sc_render_explainer_paragraphs( $para ); ?>
       <?php endforeach; ?>
     </div>
+    <?php if ( ! empty( $cta_text ) ) : ?>
+    <div class="section-explainer-cta" style="margin-top: 32px;">
+      <a href="<?php echo esc_url( $cta_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $cta_text ); ?></a>
+    </div>
+    <?php endif; ?>
   </div>
 </section>

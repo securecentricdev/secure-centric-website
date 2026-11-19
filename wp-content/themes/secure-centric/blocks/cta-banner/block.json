@@ -44,6 +44,10 @@
     "secondaryBtnUrl": {
       "type": "string",
       "default": "/contact/"
+    },
+    "theme": {
+      "type": "string",
+      "default": "electric-blue"
     }
   },
   "supports": {
