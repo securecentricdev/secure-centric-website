@@ -3625,6 +3625,39 @@
           {},
           el(
             PanelBody,
+            { title: 'Layout & Styling', initialOpen: true },
+            el(SelectControl, {
+              label: 'Layout Variant',
+              value: attributes.variant || 'standard',
+              options: [
+                { label: 'Standard Card Grid', value: 'standard' },
+                { label: 'Slim Full-Width Strip (e.g. Who This Is For)', value: 'slim-strip' }
+              ],
+              onChange: function (v) { setAttributes({ variant: v }); }
+            }),
+            el(SelectControl, {
+              label: 'Background Theme',
+              value: attributes.theme || 'white',
+              options: [
+                { label: 'White', value: 'white' },
+                { label: 'Soft Ice', value: 'ice' },
+                { label: 'Midnight Blue', value: 'midnight' }
+              ],
+              onChange: function (v) { setAttributes({ theme: v }); }
+            }),
+            el(SelectControl, {
+              label: 'Columns (Desktop)',
+              value: String(attributes.columns || 4),
+              options: [
+                { label: '2 Columns', value: '2' },
+                { label: '3 Columns', value: '3' },
+                { label: '4 Columns', value: '4' }
+              ],
+              onChange: function (v) { setAttributes({ columns: parseInt(v, 10) }); }
+            })
+          ),
+          el(
+            PanelBody,
             { title: 'Principles Header', initialOpen: true },
             el(TextControl, {
               label: 'Tag',

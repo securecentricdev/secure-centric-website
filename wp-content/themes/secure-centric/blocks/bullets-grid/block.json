@@ -18,6 +18,22 @@
   "editorScript": "secure-centric-editor-blocks",
   "render": "file:./render.php",
   "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "variant": {
+      "type": "string",
+      "default": "standard"
+    },
+    "theme": {
+      "type": "string",
+      "default": "white"
+    },
+    "columns": {
+      "type": "number",
+      "default": 4
+    },
     "eyebrow": {
       "type": "string",
       "default": "// CORE PRINCIPLES & INDICATORS"

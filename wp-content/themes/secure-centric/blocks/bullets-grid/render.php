@@ -79,11 +79,63 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $bullets  = sc_clean_text( $bullets );
 }
 
+$variant  = ! empty( $attributes['variant'] ) ? $attributes['variant'] : 'standard';
+$theme    = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'white';
+$columns  = ! empty( $attributes['columns'] ) ? intval( $attributes['columns'] ) : 4;
+$sec_theme = ( 'ice' === $theme ) ? 'section-ice' : ( ( 'midnight' === $theme ) ? 'section-midnight' : 'section-white' );
+$is_dark   = ( 'midnight' === $theme );
+
 $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( $attributes['id'] ) ? $attributes['id'] : '' );
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
+
+if ( 'slim-strip' === $variant ) :
+?>
+<section class="section-who-strip <?php echo esc_attr( $sec_theme ); ?> py-strip wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/bullets-grid-strip"<?php echo $anchor_attr; ?>>
+  <div class="site-container">
+    <div class="who-strip-inner">
+      <div class="who-strip-header">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
+        <span class="section-eyebrow <?php echo $is_dark ? 'dark' : ''; ?>" style="margin-bottom: 4px;"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
+        <h3 class="who-strip-title" style="<?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?>"><?php echo esc_html( $title ); ?></h3>
+        <?php if ( ! empty( $subtitle ) ) : ?>
+        <p class="who-strip-subtitle" style="<?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?>"><?php echo esc_html( $subtitle ); ?></p>
+        <?php endif; ?>
+      </div>
+      <div class="who-strip-grid col-<?php echo esc_attr( $columns ); ?>">
+        <?php foreach ( $bullets as $b ) : ?>
+          <?php
+          $b_title = '';
+          $b_desc  = '';
+          if ( is_array( $b ) ) {
+              $b_title = ! empty( $b['title'] ) ? $b['title'] : ( ! empty( $b['name'] ) ? $b['name'] : '' );
+              $b_desc  = ! empty( $b['desc'] ) ? $b['desc'] : '';
+          } elseif ( is_string( $b ) ) {
+              $b_title = $b;
+          }
+          ?>
+          <div class="who-strip-card <?php echo $is_dark ? 'card-dark' : 'card-white'; ?>">
+            <div class="who-strip-icon-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="who-strip-content">
+              <div class="who-strip-text" style="<?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?>"><?php echo esc_html( $b_title ); ?></div>
+              <?php if ( ! empty( $b_desc ) ) : ?>
+                <div class="who-strip-desc" style="<?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?>"><?php echo esc_html( $b_desc ); ?></div>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+</section>
+<?php
+return;
+endif;
 ?>
 
-<section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/bullets-grid"<?php echo $anchor_attr; ?>>
+<section class="<?php echo esc_attr( $sec_theme ); ?> py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/bullets-grid"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="section-header-left" style="margin-bottom: 36px;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
