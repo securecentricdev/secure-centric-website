@@ -10,9 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// CORE PRINCIPLES & INDICATORS';
+$has_explicit_eyebrow = array_key_exists( 'eyebrow', $attributes );
+$eyebrow = $has_explicit_eyebrow ? trim( str_replace( array( 'U0026', 'u0026' ), '&', (string) $attributes['eyebrow'] ) ) : '// CORE PRINCIPLES & INDICATORS';
 $title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Key Indicators & Symptoms';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Observable symptoms and indicators that require immediate remediation.';
+$has_explicit_sub = array_key_exists( 'subtitle', $attributes );
+$subtitle = $has_explicit_sub ? trim( (string) $attributes['subtitle'] ) : 'Observable symptoms and indicators that require immediate remediation.';
 
 $bullets = array();
 if ( ! empty( $attributes['bulletsData'] ) ) {
