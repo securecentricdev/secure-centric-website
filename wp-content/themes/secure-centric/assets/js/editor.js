@@ -1884,7 +1884,7 @@
           {},
           el(
             PanelBody,
-            { title: 'Section Header', initialOpen: true },
+            { title: 'Section Header & Grid Layout', initialOpen: true },
             el(TextControl, {
               label: 'Headline',
               value: attributes.title !== undefined ? attributes.title : 'CMMC guides, checklists and tools',
@@ -1895,6 +1895,28 @@
               value: attributes.subtitle !== undefined ? attributes.subtitle : '',
               rows: 2,
               onChange: function (val) { setAttributes({ subtitle: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Cards Per Row (Desktop)',
+              value: attributes.columns || 'auto',
+              options: [
+                { label: 'Auto Responsive (Default ~3-4 per row)', value: 'auto' },
+                { label: '2 in a Row (Responsive: 1 on mobile)', value: '2' },
+                { label: '3 in a Row (Responsive: 1 on mobile, 2 on tablet)', value: '3' },
+                { label: '4 in a Row (Responsive: 1 on mobile, 2 on tablet)', value: '4' },
+                { label: '5 in a Row (Responsive: 1 on mobile, 2 on tablet, 3 on laptop)', value: '5' }
+              ],
+              help: 'Controls maximum cards per row on larger displays. Automatically fluid and reduces on tablets and mobile screens.',
+              onChange: function (val) { setAttributes({ columns: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Background Theme',
+              value: attributes.theme || 'white',
+              options: [
+                { label: 'Clean White Background', value: 'white' },
+                { label: 'Dark Midnight Background', value: 'midnight' }
+              ],
+              onChange: function (val) { setAttributes({ theme: val }); }
             })
           ),
           el(

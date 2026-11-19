@@ -14,6 +14,98 @@ $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 
 $subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '';
 $theme    = ! empty( $attributes['theme'] ) ? $attributes['theme'] : ( ! empty( $attributes['backgroundColor'] ) ? $attributes['backgroundColor'] : 'white' );
 $is_dark  = ( 'midnight' === $theme || 'dark' === $theme );
+$columns  = ! empty( $attributes['columns'] ) ? (string) $attributes['columns'] : 'auto';
+$grid_id  = 'sc-res-grid-' . wp_unique_id();
+
+$grid_css = '';
+switch ( $columns ) {
+    case '2':
+        $grid_css = "
+#{$grid_id} {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 640px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}";
+        break;
+    case '3':
+        $grid_css = "
+#{$grid_id} {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 640px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}";
+        break;
+    case '4':
+        $grid_css = "
+#{$grid_id} {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 576px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 860px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}";
+        break;
+    case '5':
+        $grid_css = "
+#{$grid_id} {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 576px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 820px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1150px) {
+  #{$grid_id} {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}";
+        break;
+    case 'auto':
+    default:
+        $grid_css = "
+#{$grid_id} {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}";
+        break;
+}
 
 // Route "Credentials and badges" sections directly to the badges block template
 if ( stripos( $title, 'credentials' ) !== false && stripos( $title, 'badges' ) !== false ) {
@@ -89,20 +181,19 @@ if ( function_exists( 'sc_clean_text' ) ) {
 }
 ?>
 
+<style><?php echo $grid_css; ?></style>
 <section class="<?php echo $is_dark ? 'section-midnight' : 'section-white'; ?> py-section wp-block-inspect" data-wp-block="wp:columns" style="<?php echo $is_dark ? 'border-top: 1px solid var(--color-dark-line); border-bottom: 1px solid var(--color-dark-line);' : ''; ?>">
   <div class="site-container">
     <div style="margin-bottom: 32px;">
       <?php if ( ! empty( $eyebrow ) ) : ?>
-        <?php if ( ! empty( $eyebrow ) ) : ?>
         <span class="section-eyebrow <?php echo $is_dark ? 'dark' : ''; ?>" style="margin-bottom: 8px;"><?php echo esc_html( $eyebrow ); ?></span>
-        <?php endif; ?>
       <?php endif; ?>
-      <h2 style="<?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?> margin-bottom: 10px; font-size: clamp(1.6rem, 2.8vw, 2.25rem);"><?php echo esc_html( $title ); ?></h2>
+      <h2 style="<?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?> margin-bottom: <?php echo ! empty( $subtitle ) ? '10px' : '0'; ?>; font-size: clamp(1.6rem, 2.8vw, 2.25rem);"><?php echo esc_html( $title ); ?></h2>
       <?php if ( ! empty( $subtitle ) ) : ?>
         <p style="<?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?> font-size: 1.05rem; margin: 0; max-width: 720px; line-height: 1.6;"><?php echo esc_html( $subtitle ); ?></p>
       <?php endif; ?>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
+    <div id="<?php echo esc_attr( $grid_id ); ?>" class="sc-resource-cards-grid">
       <?php foreach ( $cards as $res ) : ?>
         <?php
         $card_title = is_array( $res ) ? ( ! empty( $res['title'] ) ? $res['title'] : '' ) : (string) $res;
@@ -113,9 +204,11 @@ if ( function_exists( 'sc_clean_text' ) ) {
         <div class="<?php echo $is_dark ? 'card-dark' : 'card-white'; ?>" style="display: flex; flex-direction: column; <?php echo $is_dark ? 'background-color: #0B1437; border: 1.5px solid var(--color-dark-outline); padding: 24px;' : 'padding: 24px;'; ?>">
           <div class="card-icon-box" style="margin-bottom: 12px; font-size: 1.25rem; <?php echo $is_dark ? 'background: rgba(0, 212, 255, 0.12); color: var(--color-cyber-cyan);' : ''; ?>"><?php echo esc_html( $card_icon ); ?></div>
           <h4 style="font-size: 1.15rem; margin-bottom: 8px; <?php echo $is_dark ? 'color: var(--color-white);' : 'color: var(--color-navy);'; ?>"><?php echo esc_html( $card_title ); ?></h4>
-          <p style="font-size: 0.9375rem; <?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?> margin: 0 0 16px; flex-grow: 1; line-height: 1.55;">
+          <?php if ( ! empty( $card_desc ) ) : ?>
+          <p style="<?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?> font-size: 0.9375rem; margin: 0 0 16px; flex-grow: 1; line-height: 1.55;">
             <?php echo esc_html( $card_desc ); ?>
           </p>
+          <?php endif; ?>
           <?php
           $card_cta = ! empty( $res['cta'] ) ? $res['cta'] : ( ! empty( $res['ctaText'] ) ? $res['ctaText'] : ( ! empty( $res['linkText'] ) ? $res['linkText'] : ( ! empty( $res['btnText'] ) ? $res['btnText'] : 'Explore Resource →' ) ) );
           ?>
