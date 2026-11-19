@@ -4338,11 +4338,31 @@
           {},
           el(
             PanelBody,
-            { title: 'Table Title & Anchor', initialOpen: true },
+            { title: 'Table Headers, Text & Anchor', initialOpen: true },
+            el(TextControl, {
+              label: 'Tag / Eyebrow (optional)',
+              value: attributes.eyebrow || '',
+              placeholder: 'e.g. // COMPLIANCE MATRIX',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
             el(TextControl, {
               label: 'Table Heading',
               value: attributes.title !== undefined ? attributes.title : 'Findings Matrix & Gap Breakdown',
               onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Text Below Title / Description (optional)',
+              rows: 3,
+              value: attributes.subtitle !== undefined ? attributes.subtitle : (attributes.description || ''),
+              placeholder: 'Enter text or paragraph to display directly below the table heading...',
+              onChange: function (val) { setAttributes({ subtitle: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Text Below Table / Footnote (optional)',
+              rows: 3,
+              value: attributes.footerNote !== undefined ? attributes.footerNote : (attributes.footnote || attributes.afterText || ''),
+              placeholder: 'Enter notes, explanations, or footnotes to display immediately after the table...',
+              onChange: function (val) { setAttributes({ footerNote: val }); }
             }),
             el(TextControl, {
               label: 'Anchor ID',

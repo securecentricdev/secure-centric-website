@@ -10,7 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$title = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
+$title       = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
+$eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '';
+$subtitle    = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : ( ! empty( $attributes['description'] ) ? $attributes['description'] : '' );
+$footer_note = ! empty( $attributes['footerNote'] ) ? $attributes['footerNote'] : ( ! empty( $attributes['footnote'] ) ? $attributes['footnote'] : ( ! empty( $attributes['afterText'] ) ? $attributes['afterText'] : '' ) );
 
 // 1. Resolve Columns / Headers from all possible attribute keys
 $cols = array();
@@ -42,7 +45,10 @@ if ( ! empty( $attributes['rowsData'] ) ) {
 }
 
 if ( function_exists( 'sc_clean_text' ) ) {
-    $title = sc_clean_text( $title );
+    $title       = sc_clean_text( $title );
+    $eyebrow     = sc_clean_text( $eyebrow );
+    $subtitle    = sc_clean_text( $subtitle );
+    $footer_note = sc_clean_text( $footer_note );
     if ( is_array( $cols ) ) {
         $cols = sc_clean_text( $cols );
     }
@@ -76,8 +82,14 @@ $col_width = ( $col_count > 0 ) ? round( 100 / $col_count, 3 ) . '%' : 'auto';
          data-wp-block="wp:table" 
          data-wp-pattern="secure-centric/data-table"<?php echo $anchor_attr; ?>>
   <div class="site-container">
+    <?php if ( ! empty( $eyebrow ) ) : ?>
+      <span class="section-eyebrow" style="margin-bottom: 12px; display: inline-block;"><?php echo esc_html( $eyebrow ); ?></span>
+    <?php endif; ?>
     <?php if ( ! empty( $title ) ) : ?>
-      <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: 700; color: #0F172A;"><?php echo esc_html( $title ); ?></h3>
+      <h3 style="margin-bottom: <?php echo ! empty( $subtitle ) ? '12px' : '24px'; ?>; font-size: 24px; font-weight: 700; color: #0F172A;"><?php echo esc_html( $title ); ?></h3>
+    <?php endif; ?>
+    <?php if ( ! empty( $subtitle ) ) : ?>
+      <p style="color: var(--color-body-text, #475569); font-size: 1.05rem; line-height: 1.6; margin-bottom: 24px; max-width: 840px;"><?php echo nl2br( esc_html( $subtitle ) ); ?></p>
     <?php endif; ?>
     <div class="custom-table-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1.5px solid #1E293B; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background-color: #0B1437;">
       <table class="custom-table" style="width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; font-size: 15px;">
@@ -114,5 +126,10 @@ $col_width = ( $col_count > 0 ) ? round( 100 / $col_count, 3 ) . '%' : 'auto';
         </tbody>
       </table>
     </div>
+    <?php if ( ! empty( $footer_note ) ) : ?>
+      <div style="margin-top: 18px; font-size: 0.875rem; color: var(--color-slate, #64748B); line-height: 1.6; max-width: 840px;">
+        <?php echo nl2br( esc_html( $footer_note ) ); ?>
+      </div>
+    <?php endif; ?>
   </div>
 </section>

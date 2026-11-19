@@ -20,6 +20,18 @@
       "type": "string",
       "default": "Findings Matrix & Gap Breakdown"
     },
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "footerNote": {
+      "type": "string",
+      "default": ""
+    },
     "colsData": {
       "type": "string",
       "default": ""
