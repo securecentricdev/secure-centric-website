@@ -63,14 +63,14 @@ $anchor = ! empty( $attributes['anchor'] ) ? $attributes['anchor'] : ( ! empty( 
 $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 ?>
 
-<section class="section-white py-section wp-block-inspect" data-wp-block="wp:group"<?php echo $anchor_attr; ?>>
-  <div class="site-container" style="max-width: 900px;">
+<section class="section-white py-section wp-block-inspect" data-wp-block="wp:group" data-wp-pattern="secure-centric/section-explainer"<?php echo $anchor_attr; ?>>
+  <div class="site-container">
     <?php if ( ! empty( $eyebrow ) ) : ?>
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
     <?php endif; ?>
-    <h2 style="margin-bottom: 20px;"><?php echo esc_html( $title ); ?></h2>
+    <h2 style="margin-bottom: 24px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h2>
     <?php foreach ( $paras as $para ) : ?>
-      <p style="font-size: 1.0625rem; line-height: 1.7; color: var(--color-body-text); margin-bottom: 16px;">
+      <p style="font-size: 1.0625rem; line-height: 1.75; color: var(--color-body-text); margin-bottom: 20px;">
         <?php echo esc_html( $para ); ?>
       </p>
     <?php endforeach; ?>

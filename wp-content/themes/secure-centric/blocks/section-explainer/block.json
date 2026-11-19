@@ -14,6 +14,10 @@
     "compliance"
   ],
   "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
     "eyebrow": {
       "type": "string",
       "default": "// SECTION EXPLAINER"
