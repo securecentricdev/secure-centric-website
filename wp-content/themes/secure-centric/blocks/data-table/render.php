@@ -13,7 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : '';
 $eyebrow     = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '';
 $subtitle    = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : ( ! empty( $attributes['description'] ) ? $attributes['description'] : '' );
-$footer_note = ! empty( $attributes['footerNote'] ) ? $attributes['footerNote'] : ( ! empty( $attributes['footnote'] ) ? $attributes['footnote'] : ( ! empty( $attributes['afterText'] ) ? $attributes['afterText'] : '' ) );
+$after_text  = ! empty( $attributes['afterText'] ) ? $attributes['afterText'] : ( ! empty( $attributes['normalText'] ) ? $attributes['normalText'] : '' );
+$footer_note = ! empty( $attributes['footerNote'] ) ? $attributes['footerNote'] : ( ! empty( $attributes['footnote'] ) ? $attributes['footnote'] : '' );
+$cta_text    = ! empty( $attributes['ctaText'] ) ? $attributes['ctaText'] : ( ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : '' );
+$cta_url     = ! empty( $attributes['ctaUrl'] ) ? $attributes['ctaUrl'] : ( ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : ( function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' ) );
+$cta_subtext = ! empty( $attributes['ctaSubtext'] ) ? $attributes['ctaSubtext'] : '';
 
 // 1. Resolve Columns / Headers from all possible attribute keys
 $cols = array();
@@ -48,7 +52,10 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $title       = sc_clean_text( $title );
     $eyebrow     = sc_clean_text( $eyebrow );
     $subtitle    = sc_clean_text( $subtitle );
+    $after_text  = sc_clean_text( $after_text );
     $footer_note = sc_clean_text( $footer_note );
+    $cta_text    = sc_clean_text( $cta_text );
+    $cta_subtext = sc_clean_text( $cta_subtext );
     if ( is_array( $cols ) ) {
         $cols = sc_clean_text( $cols );
     }
@@ -126,9 +133,26 @@ $col_width = ( $col_count > 0 ) ? round( 100 / $col_count, 3 ) . '%' : 'auto';
         </tbody>
       </table>
     </div>
+    <?php if ( ! empty( $after_text ) ) : ?>
+      <div class="custom-table-after-text" style="margin-top: 24px; font-size: 1.05rem; color: var(--color-body-text, #334155); line-height: 1.65; max-width: 860px;">
+        <?php echo wp_kses_post( wpautop( $after_text ) ); ?>
+      </div>
+    <?php endif; ?>
     <?php if ( ! empty( $footer_note ) ) : ?>
-      <div style="margin-top: 18px; font-size: 0.875rem; color: var(--color-slate, #64748B); line-height: 1.6; max-width: 840px;">
+      <div class="custom-table-footnote" style="margin-top: <?php echo ! empty( $after_text ) ? '12px' : '18px'; ?>; font-size: 0.875rem; color: var(--color-slate, #64748B); line-height: 1.6; max-width: 840px;">
         <?php echo nl2br( esc_html( $footer_note ) ); ?>
+      </div>
+    <?php endif; ?>
+    <?php if ( ! empty( $cta_text ) ) : ?>
+      <div class="custom-table-cta-wrap" style="margin-top: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <a href="<?php echo esc_url( $cta_url ); ?>" class="btn btn-primary btn-lg">
+          <?php echo esc_html( $cta_text ); ?>
+        </a>
+        <?php if ( ! empty( $cta_subtext ) ) : ?>
+          <span style="font-size: 0.8125rem; color: var(--color-slate, #64748B); font-family: var(--font-mono, monospace);">
+            <?php echo esc_html( $cta_subtext ); ?>
+          </span>
+        <?php endif; ?>
       </div>
     <?php endif; ?>
   </div>

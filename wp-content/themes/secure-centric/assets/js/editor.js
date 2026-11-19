@@ -4595,11 +4595,37 @@
               onChange: function (val) { setAttributes({ subtitle: val }); }
             }),
             el(TextareaControl, {
-              label: 'Text Below Table / Footnote (optional)',
+              label: 'Normal Text After Table (optional)',
               rows: 3,
-              value: attributes.footerNote !== undefined ? attributes.footerNote : (attributes.footnote || attributes.afterText || ''),
-              placeholder: 'Enter notes, explanations, or footnotes to display immediately after the table...',
+              value: attributes.afterText || '',
+              placeholder: 'Enter standard readable body text or paragraphs to display directly below the table...',
+              help: 'Renders in normal body font size and color (unlike muted footnotes).',
+              onChange: function (val) { setAttributes({ afterText: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Muted Footnote / Small Note (optional)',
+              rows: 2,
+              value: attributes.footerNote !== undefined ? attributes.footerNote : (attributes.footnote || ''),
+              placeholder: 'Enter small gray footnote or disclaimer note...',
               onChange: function (val) { setAttributes({ footerNote: val }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Button Text (optional)',
+              value: attributes.ctaText || '',
+              placeholder: 'e.g. Schedule a CMMC Scoping Call →',
+              onChange: function (val) { setAttributes({ ctaText: val }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Button URL',
+              value: attributes.ctaUrl || '',
+              placeholder: 'https://... or #contact',
+              onChange: function (val) { setAttributes({ ctaUrl: val }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Subtext Note (optional)',
+              value: attributes.ctaSubtext || '',
+              placeholder: 'e.g. 30 min · No sales pitch · Signed NDA',
+              onChange: function (val) { setAttributes({ ctaSubtext: val }); }
             }),
             el(TextControl, {
               label: 'Anchor ID',

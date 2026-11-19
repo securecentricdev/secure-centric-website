@@ -28,7 +28,23 @@
       "type": "string",
       "default": ""
     },
+    "afterText": {
+      "type": "string",
+      "default": ""
+    },
     "footerNote": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaSubtext": {
       "type": "string",
       "default": ""
     },
