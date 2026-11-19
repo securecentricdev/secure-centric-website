@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/gated-download",
+  "version": "1.0.0",
+  "title": "Gated Resource Download (Popup Form)",
+  "category": "custom-blocks",
+  "icon": "download",
+  "description": "Downloadable file card with a popup Forminator lead capture form and automatic file download upon submission.",
+  "keywords": [
+    "download",
+    "gated",
+    "file",
+    "pdf",
+    "excel",
+    "checklist",
+    "lead",
+    "form",
+    "popup",
+    "modal"
+  ],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// FREE DOWNLOADABLE RESOURCE"
+    },
+    "title": {
+      "type": "string",
+      "default": "CMMC Level 2 Compliance Checklist & Scoring Engine"
+    },
+    "description": {
+      "type": "string",
+      "default": "Assess your readiness against all 110 NIST SP 800-171 controls with automated SPRS scoring formulas, evidence templates, and team milestone tracking."
+    },
+    "docType": {
+      "type": "string",
+      "default": "EXCEL & PDF WORKBOOK"
+    },
+    "fileUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "fileId": {
+      "type": "number",
+      "default": 0
+    },
+    "fileName": {
+      "type": "string",
+      "default": ""
+    },
+    "btnText": {
+      "type": "string",
+      "default": "Download Free Checklist →"
+    },
+    "formId": {
+      "type": "string",
+      "default": "102"
+    },
+    "modalTitle": {
+      "type": "string",
+      "default": "Where should we send your download?"
+    },
+    "modalSubtitle": {
+      "type": "string",
+      "default": "Enter your name and corporate work email below. Your file will download immediately upon submission."
+    },
+    "badgeText": {
+      "type": "string",
+      "default": "INSTANT UNLOCK"
+    },
+    "theme": {
+      "type": "string",
+      "default": "ice"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "example": {}
+}

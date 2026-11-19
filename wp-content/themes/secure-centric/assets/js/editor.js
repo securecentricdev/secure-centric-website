@@ -2605,6 +2605,149 @@
     });
 
     // =========================================================================
+    // 10B. GATED RESOURCE DOWNLOAD BLOCK (POPUP MODAL & FILE TRIGGER)
+    // =========================================================================
+    registerBlockType('secure-centric/gated-download', {
+      title: 'Gated Resource Download (Popup Form)',
+      icon: 'download',
+      category: 'custom-blocks',
+      example: {},
+      edit: function (props) {
+        const { attributes, setAttributes, isSelected, clientId } = props;
+        const MediaUploadComponent = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
+
+        const blockProps = useBlockProps ? useBlockProps({
+          className: 'sc-gutenberg-block-wrapper' + (isSelected ? ' is-selected' : ''),
+          style: { position: 'relative', cursor: 'pointer' },
+          onClick: function () {
+            if (clientId && wp.data && wp.data.dispatch) {
+              wp.data.dispatch('core/block-editor').selectBlock(clientId);
+            }
+          }
+        }) : {};
+
+        const previewElement = ServerSideRender ? el(ServerSideRender, {
+          block: 'secure-centric/gated-download',
+          attributes: attributes
+        }) : el('div', { style: { padding: '24px', background: '#F8FAFC', border: '1px dashed #2F5BFF' } }, 'Gated Download Block');
+
+        const inspectorControls = el(
+          InspectorControls,
+          {},
+          el(
+            PanelBody,
+            { title: 'Card & Section Content', initialOpen: true },
+            el(TextControl, {
+              label: 'Eyebrow / Tag',
+              value: attributes.eyebrow !== undefined ? attributes.eyebrow : '// FREE DOWNLOADABLE RESOURCE',
+              onChange: function (val) { setAttributes({ eyebrow: val }); }
+            }),
+            el(TextControl, {
+              label: 'Headline',
+              value: attributes.title !== undefined ? attributes.title : 'CMMC Level 2 Compliance Checklist & Scoring Engine',
+              onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Description',
+              rows: 3,
+              value: attributes.description !== undefined ? attributes.description : '',
+              onChange: function (val) { setAttributes({ description: val }); }
+            }),
+            el(TextControl, {
+              label: 'Document Badge (e.g. EXCEL & PDF)',
+              value: attributes.docType !== undefined ? attributes.docType : 'EXCEL & PDF WORKBOOK',
+              onChange: function (val) { setAttributes({ docType: val }); }
+            }),
+            el(TextControl, {
+              label: 'CTA Button Text',
+              value: attributes.btnText !== undefined ? attributes.btnText : 'Download Free Checklist →',
+              onChange: function (val) { setAttributes({ btnText: val }); }
+            }),
+            el(SelectControl, {
+              label: 'Background Theme',
+              value: attributes.theme || 'ice',
+              options: [
+                { label: 'Soft Ice-Blue Background', value: 'ice' },
+                { label: 'Clean White Background', value: 'white' }
+              ],
+              onChange: function (val) { setAttributes({ theme: val }); }
+            })
+          ),
+          el(
+            PanelBody,
+            { title: 'Download File Settings', initialOpen: false },
+            el(TextControl, {
+              label: 'Direct File URL',
+              value: attributes.fileUrl || '',
+              help: 'Paste file URL or select a file from the Media Library below.',
+              onChange: function (val) { setAttributes({ fileUrl: val }); }
+            }),
+            el(TextControl, {
+              label: 'Download File Name (Optional)',
+              value: attributes.fileName || '',
+              placeholder: 'e.g. CMMC-Level-2-Checklist.xlsx',
+              help: 'Sets custom filename for browser download.',
+              onChange: function (val) { setAttributes({ fileName: val }); }
+            }),
+            MediaUploadComponent ? el(MediaUploadComponent, {
+              onSelect: function (media) {
+                setAttributes({
+                  fileUrl: media.url,
+                  fileId: media.id,
+                  fileName: attributes.fileName || media.filename || media.title || ''
+                });
+              },
+              render: function (obj) {
+                return el(Button, {
+                  isSecondary: true,
+                  style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
+                  onClick: obj.open
+                }, attributes.fileUrl ? '📁 Replace File from Media Library' : '📁 Select File from Media Library');
+              }
+            }) : null,
+            attributes.fileUrl ? el('div', { style: { marginTop: '10px', fontSize: '12px', color: '#00875A', fontWeight: 600 } }, '✓ File linked: ' + attributes.fileUrl.split('/').pop()) : null
+          ),
+          el(
+            PanelBody,
+            { title: 'Form & Modal Settings', initialOpen: false },
+            el(SelectControl, {
+              label: 'Forminator Form (Lead Capture & Flow)',
+              value: attributes.formId || '102',
+              options: getForminatorOptions(),
+              help: 'Select the Forminator form that collects user details and triggers your workflow.',
+              onChange: function (val) { setAttributes({ formId: val }); }
+            }),
+            el(TextControl, {
+              label: 'Modal Headline',
+              value: attributes.modalTitle !== undefined ? attributes.modalTitle : 'Where should we send your download?',
+              onChange: function (val) { setAttributes({ modalTitle: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Modal Subtitle / Instructions',
+              rows: 2,
+              value: attributes.modalSubtitle !== undefined ? attributes.modalSubtitle : 'Enter your name and corporate work email below. Your file will download immediately upon submission.',
+              onChange: function (val) { setAttributes({ modalSubtitle: val }); }
+            })
+          )
+        );
+
+        return el(
+          Fragment,
+          {},
+          inspectorControls,
+          el(
+            'div',
+            blockProps,
+            previewElement
+          )
+        );
+      },
+      save: function () {
+        return null;
+      }
+    });
+
+    // =========================================================================
     // 11. FORM EMBED BLOCK (SPLIT & CARD LAYOUT WITH FULL SIDEBAR CONTROLS)
     // =========================================================================
     registerBlockType('secure-centric/form-embed', {
