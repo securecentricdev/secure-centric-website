@@ -1889,6 +1889,12 @@
               label: 'Headline',
               value: attributes.title !== undefined ? attributes.title : 'CMMC guides, checklists and tools',
               onChange: function (val) { setAttributes({ title: val }); }
+            }),
+            el(TextareaControl, {
+              label: 'Intro / Subtitle',
+              value: attributes.subtitle !== undefined ? attributes.subtitle : '',
+              rows: 2,
+              onChange: function (val) { setAttributes({ subtitle: val }); }
             })
           ),
           el(
@@ -1951,6 +1957,12 @@
                   label: 'Link URL',
                   value: c.link || '',
                   onChange: function (v) { updateCardItem(idx, { link: v }); }
+                }),
+                el(TextControl, {
+                  label: 'Button / CTA Text (Optional)',
+                  placeholder: 'e.g. See your readiness report now',
+                  value: c.cta || c.ctaText || '',
+                  onChange: function (v) { updateCardItem(idx, { cta: v, ctaText: v }); }
                 })
               );
             }),

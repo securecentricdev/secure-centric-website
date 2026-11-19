@@ -116,8 +116,11 @@ if ( function_exists( 'sc_clean_text' ) ) {
           <p style="font-size: 0.9375rem; <?php echo $is_dark ? 'color: var(--color-text-on-dark);' : 'color: var(--color-body-text);'; ?> margin: 0 0 16px; flex-grow: 1; line-height: 1.55;">
             <?php echo esc_html( $card_desc ); ?>
           </p>
+          <?php
+          $card_cta = ! empty( $res['cta'] ) ? $res['cta'] : ( ! empty( $res['ctaText'] ) ? $res['ctaText'] : ( ! empty( $res['linkText'] ) ? $res['linkText'] : ( ! empty( $res['btnText'] ) ? $res['btnText'] : 'Explore Resource →' ) ) );
+          ?>
           <?php if ( ! empty( $card_link ) && '#' !== $card_link ) : ?>
-            <a href="<?php echo esc_url( $card_link ); ?>" class="text-link <?php echo $is_dark ? 'on-dark' : ''; ?>" style="font-weight: 700; margin-top: auto;">Explore Resource &rarr;</a>
+            <a href="<?php echo esc_url( $card_link ); ?>" class="text-link <?php echo $is_dark ? 'on-dark' : ''; ?>" style="font-weight: 700; margin-top: auto;"><?php echo esc_html( $card_cta ); ?></a>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
