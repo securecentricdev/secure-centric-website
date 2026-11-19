@@ -22,6 +22,7 @@ $btn_text       = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : '
 $form_id        = ! empty( $attributes['formId'] ) ? (string) $attributes['formId'] : '102';
 $modal_title    = ! empty( $attributes['modalTitle'] ) ? $attributes['modalTitle'] : 'Where should we send your download?';
 $modal_subtitle = ! empty( $attributes['modalSubtitle'] ) ? $attributes['modalSubtitle'] : 'Enter your name and corporate work email below. Your file will download immediately upon submission.';
+$show_doc_card  = ! empty( $attributes['showDocCard'] ) ? (bool) $attributes['showDocCard'] : false;
 $theme          = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'ice';
 $is_ice         = ( 'ice' === $theme );
 
@@ -42,6 +43,7 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
 <section class="<?php echo $is_ice ? 'section-ice' : 'section-white'; ?> py-section wp-block-inspect" data-wp-pattern="secure-centric/gated-download"<?php echo $anchor_attr; ?>>
   <div class="site-container">
     <div class="card card-white" style="border-radius: 12px; border: 1.5px solid var(--color-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: clamp(28px, 4vw, 44px); position: relative; overflow: hidden; background: #ffffff;">
+      <?php if ( $show_doc_card ) : ?>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; align-items: center;">
         <div>
           <?php if ( ! empty( $eyebrow ) ) : ?>
@@ -84,6 +86,32 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
           </div>
         </div>
       </div>
+      <?php else : ?>
+      <div style="max-width: 860px;">
+        <?php if ( ! empty( $eyebrow ) ) : ?>
+        <span class="section-eyebrow" style="margin-bottom: 12px; display: inline-flex;"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php endif; ?>
+        <h2 style="font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--color-navy); margin-bottom: <?php echo ! empty( $description ) ? '14px' : '24px'; ?>; line-height: 1.25; font-weight: 700;">
+          <?php echo esc_html( $title ); ?>
+        </h2>
+        <?php if ( ! empty( $description ) ) : ?>
+        <p style="font-size: 1.05rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px; max-width: 780px;">
+          <?php echo esc_html( $description ); ?>
+        </p>
+        <?php endif; ?>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
+          <button type="button" 
+                  class="btn btn-primary sc-gated-open-trigger" 
+                  data-modal-id="<?php echo esc_attr( $unique_id ); ?>" 
+                  style="font-size: 1.05rem; padding: 14px 28px; cursor: pointer; border: none; font-weight: 700; border-radius: 6px; box-shadow: 0 4px 14px rgba(47, 91, 255, 0.35);">
+            <?php echo esc_html( $btn_text ); ?>
+          </button>
+          <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 6px;">
+            <span>🔒</span> Instant File Access · No Sales Pitch
+          </span>
+        </div>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 

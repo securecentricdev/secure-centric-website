@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $eyebrow  = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// DECISION FRAMEWORK';
-$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How to choose a CMMC consultant: 7 checks';
-$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Check every qualification before engaging any CMMC advisory firm.';
+$title    = ! empty( $attributes['title'] ) ? $attributes['title'] : 'How to choose a CMMC consultant: 7 key points';
+$subtitle = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Choosing a consultant for a sales presentation alone makes it difficult to compare firms. Apply the same checks to every provider.';
 $btn_text = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
 $btn_url  = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
 

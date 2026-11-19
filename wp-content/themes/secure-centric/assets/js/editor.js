@@ -2837,11 +2837,17 @@
               value: attributes.description !== undefined ? attributes.description : '',
               onChange: function (val) { setAttributes({ description: val }); }
             }),
-            el(TextControl, {
+            CheckboxControl ? el(CheckboxControl, {
+              label: 'Show Right-Side Document Preview Card',
+              checked: attributes.showDocCard !== undefined ? !!attributes.showDocCard : false,
+              help: 'Keep unchecked to remove the Excel & PDF preview card and display a clean full-width download band.',
+              onChange: function (val) { setAttributes({ showDocCard: val }); }
+            }) : null,
+            (attributes.showDocCard === true) ? el(TextControl, {
               label: 'Document Badge (e.g. EXCEL & PDF)',
               value: attributes.docType !== undefined ? attributes.docType : 'EXCEL & PDF WORKBOOK',
               onChange: function (val) { setAttributes({ docType: val }); }
-            }),
+            }) : null,
             el(TextControl, {
               label: 'CTA Button Text',
               value: attributes.btnText !== undefined ? attributes.btnText : 'Download Free Checklist →',

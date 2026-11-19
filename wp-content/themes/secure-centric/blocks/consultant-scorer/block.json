@@ -24,11 +24,11 @@
     },
     "title": {
       "type": "string",
-      "default": "How to choose a CMMC consultant: 7 checks"
+      "default": "How to choose a CMMC consultant: 7 key points"
     },
     "subtitle": {
       "type": "string",
-      "default": "Check every qualification before engaging any CMMC advisory firm."
+      "default": "Choosing a consultant for a sales presentation alone makes it difficult to compare firms. Apply the same checks to every provider."
     },
     "btnText": {
       "type": "string",

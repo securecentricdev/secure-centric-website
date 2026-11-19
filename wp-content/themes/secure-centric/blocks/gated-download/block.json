@@ -35,6 +35,10 @@
       "type": "string",
       "default": "Assess your readiness against all 110 NIST SP 800-171 controls with automated SPRS scoring formulas, evidence templates, and team milestone tracking."
     },
+    "showDocCard": {
+      "type": "boolean",
+      "default": false
+    },
     "docType": {
       "type": "string",
       "default": "EXCEL & PDF WORKBOOK"
