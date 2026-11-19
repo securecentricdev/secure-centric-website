@@ -197,6 +197,14 @@
     "audiencesData": {
       "type": "string",
       "default": "[\"Machine Shops & Precision CNC\",\"Defense Aerospace & Avionics\",\"Defense Software & IT Contractors\",\"Electronics & Specialized Hardware\"]"
+    },
+    "icpHeading": {
+      "type": "string",
+      "default": "SELECT YOUR SITUATION"
+    },
+    "icpNote": {
+      "type": "string",
+      "default": "Not sure? Start with your contract tier below \u2193"
     }
   },
   "supports": {

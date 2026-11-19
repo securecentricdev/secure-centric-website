@@ -384,6 +384,7 @@
         const isSplitLayout = (layout === 'split');
         const isResourceLayout = (layout === 'resource' || layout === 'cui-session' || layout === 'landing');
         const isGuideLayout = (layout === 'guide');
+        const isIcpLayout = (layout === 'icp');
 
         const panels = [];
 
@@ -581,7 +582,7 @@
           el(
             PanelBody,
             { title: isSplitLayout ? 'Breadcrumb & Headline' : 'Header & Main Headline', initialOpen: isSplitLayout },
-            (isSplitLayout || isGuideLayout || isResourceLayout) ? el(TextControl, {
+            (isSplitLayout || isGuideLayout || isResourceLayout || isIcpLayout) ? el(TextControl, {
               label: 'Breadcrumb Current Text',
               value: attributes.breadcrumbCurrent !== undefined ? attributes.breadcrumbCurrent : 'CMMC COMPLIANCE SERVICES',
               onChange: function (val) { setAttributes({ breadcrumbCurrent: val }); }
@@ -677,6 +678,161 @@
                 help: 'Select the Forminator form to render on the right (Default: ID 101 Contact & Discovery Call Form, or Form 104 Quick Consultation).',
                 onChange: function (val) { setAttributes({ formId: val }); }
               }) : null
+            )
+          );
+        }
+
+        // Panel 4b: Right-Hand Side Situation Selector / Cards / Form (for ICP Layout)
+        if (isIcpLayout) {
+          let situationCards = [];
+          try {
+            if (attributes.audiencesData) {
+              const parsed = typeof attributes.audiencesData === 'string' ? JSON.parse(attributes.audiencesData) : attributes.audiencesData;
+              if (Array.isArray(parsed)) {
+                situationCards = parsed.map(function (item) {
+                  if (typeof item === 'string') {
+                    return { title: item, link: '#tiers', linkText: 'See Your Path →' };
+                  }
+                  return {
+                    title: item.title || item.name || '',
+                    link: item.link || item.url || '#tiers',
+                    linkText: item.linkText || item.cta || 'See Your Path →'
+                  };
+                });
+              }
+            }
+          } catch (e) {
+            situationCards = [];
+          }
+
+          if (situationCards.length === 0) {
+            situationCards = [
+              { title: 'Subcontractor or supplier', link: '#tiers', linkText: 'See Your Path →' },
+              { title: 'Small or mid-size manufacturer', link: '#tiers', linkText: 'See Your Path →' },
+              { title: 'Stuck or starting over', link: '#tiers', linkText: 'See Your Path →' },
+              { title: 'Need an RPO before a C3PAO assessment', link: '#tiers', linkText: 'See Your Path →' }
+            ];
+          }
+
+          const updateSituationCard = function (index, field, value) {
+            const next = situationCards.map(function (card, idx) {
+              if (idx !== index) return card;
+              const updated = Object.assign({}, card);
+              updated[field] = value;
+              return updated;
+            });
+            setAttributes({ audiencesData: JSON.stringify(next) });
+          };
+
+          const addSituationCard = function () {
+            const next = situationCards.concat([{
+              title: 'New Situation',
+              link: '#tiers',
+              linkText: 'See Your Path →'
+            }]);
+            setAttributes({ audiencesData: JSON.stringify(next) });
+          };
+
+          const removeSituationCard = function (index) {
+            const next = situationCards.filter(function (_, idx) {
+              return idx !== index;
+            });
+            setAttributes({ audiencesData: JSON.stringify(next) });
+          };
+
+          const rightMode = attributes.rightSideMode || 'tiles';
+
+          panels.push(
+            el(
+              PanelBody,
+              { title: 'Right-Hand Side: Situation Selector & Content', initialOpen: true },
+              el(SelectControl, {
+                label: 'Right-Hand Side Mode',
+                value: rightMode,
+                options: [
+                  { label: 'Situation Selector Cards (ICP Tiles)', value: 'tiles' },
+                  { label: 'Contact Form (Forminator Form)', value: 'form' },
+                  { label: 'Direct Advisory Card (Call Button & Bullets)', value: 'advisor_card' }
+                ],
+                onChange: function (val) { setAttributes({ rightSideMode: val }); }
+              }),
+              (rightMode === 'tiles') ? el(Fragment, {},
+                el(TextControl, {
+                  label: 'Section Eyebrow / Heading',
+                  value: attributes.icpHeading !== undefined ? attributes.icpHeading : 'SELECT YOUR SITUATION',
+                  onChange: function (val) { setAttributes({ icpHeading: val }); }
+                }),
+                el(TextControl, {
+                  label: 'Bottom Subtext Note',
+                  value: attributes.icpNote !== undefined ? attributes.icpNote : 'Not sure? Start with your contract tier below ↓',
+                  onChange: function (val) { setAttributes({ icpNote: val }); }
+                }),
+                el('hr', { style: { margin: '14px 0' } }),
+                el('p', { style: { fontSize: '12px', fontWeight: 'bold', margin: '0 0 10px', color: '#1E293B' } },
+                  'Situation Cards (' + situationCards.length + '):'
+                ),
+                situationCards.map(function (card, idx) {
+                  return el('div', {
+                    key: 'situation-card-' + idx,
+                    style: {
+                      background: '#F8FAFC',
+                      border: '1px solid #E2E8F0',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      marginBottom: '12px'
+                    }
+                  },
+                    el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
+                      el('strong', { style: { fontSize: '12px', color: '#0F172A' } }, 'Card ' + (idx + 1)),
+                      el(Button, {
+                        isDestructive: true,
+                        isSmall: true,
+                        onClick: function () { removeSituationCard(idx); }
+                      }, 'Remove')
+                    ),
+                    el(TextControl, {
+                      label: 'Card Title / Situation',
+                      value: card.title,
+                      onChange: function (val) { updateSituationCard(idx, 'title', val); }
+                    }),
+                    el(TextControl, {
+                      label: 'Button / Link Text',
+                      value: card.linkText,
+                      onChange: function (val) { updateSituationCard(idx, 'linkText', val); }
+                    }),
+                    el(TextControl, {
+                      label: 'Target URL / Anchor',
+                      value: card.link,
+                      placeholder: '#tiers',
+                      onChange: function (val) { updateSituationCard(idx, 'link', val); }
+                    })
+                  );
+                }),
+                el(Button, {
+                  isPrimary: true,
+                  style: { width: '100%', justifyContent: 'center', marginTop: '6px' },
+                  onClick: addSituationCard
+                }, '+ Add Situation Card')
+              ) : el(Fragment, {},
+                el(TextControl, {
+                  label: 'Card / Form Title',
+                  value: attributes.cardTitle !== undefined ? attributes.cardTitle : 'Talk to a CMMC Advisor',
+                  onChange: function (val) { setAttributes({ cardTitle: val }); }
+                }),
+                el(TextareaControl, {
+                  label: 'Card Subtitle / Description',
+                  rows: 2,
+                  value: attributes.cardDesc !== undefined ? attributes.cardDesc : 'Submit your details below to schedule your confidential 30-minute scoping review:',
+                  onChange: function (val) { setAttributes({ cardDesc: val }); }
+                }),
+                (rightMode === 'form') ? el(SelectControl, {
+                  label: 'Select Forminator Form',
+                  value: attributes.formId !== undefined && attributes.formId !== '' ? String(attributes.formId) : '101',
+                  options: getForminatorOptions(),
+                  help: 'Select the Forminator form to render on the right (Default: ID 101 Contact & Discovery Call Form).',
+                  onChange: function (val) { setAttributes({ formId: val }); }
+                }) : null
+              )
             )
           );
         }

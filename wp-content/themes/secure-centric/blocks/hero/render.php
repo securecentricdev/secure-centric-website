@@ -157,8 +157,10 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       </div>
       <div class="hero-home-grid">
         <div>
-          <?php if ( ! empty( $eyebrow ) ) : ?>
-          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php if ( ! empty( $eyebrow ) ) : 
+            $clean_eyebrow = ltrim( $eyebrow, '/ ' );
+          ?>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $clean_eyebrow ); ?></span>
           <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           
@@ -352,8 +354,10 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       </div>
       <div class="hero-home-grid">
         <div>
-          <?php if ( ! empty( $eyebrow ) ) : ?>
-          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php if ( ! empty( $eyebrow ) ) : 
+            $clean_eyebrow = ltrim( $eyebrow, '/ ' );
+          ?>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $clean_eyebrow ); ?></span>
           <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
@@ -400,31 +404,122 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
            data-wp-pattern="secure-centric/hero-icp-tiles"
            style="border-bottom: 1px solid var(--color-dark-line);">
     <div class="site-container">
+      <?php if ( ! empty( $breadcrumb_current ) ) : ?>
+      <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); margin-bottom: 16px;">
+        HOME / SERVICES / <span style="color: var(--color-cyber-cyan);"><?php echo esc_html( strtoupper( $breadcrumb_current ) ); ?></span>
+      </div>
+      <?php endif; ?>
       <div class="hero-home-grid">
         <div>
-          <?php if ( ! empty( $eyebrow ) ) : ?>
-          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php if ( ! empty( $eyebrow ) ) : 
+            $clean_eyebrow = ltrim( $eyebrow, '/ ' );
+          ?>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $clean_eyebrow ); ?></span>
           <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark);"><?php echo esc_html( $description ); ?></p>
-          <div style="margin-top: 24px;">
+          <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
             <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary btn-lg"><?php echo esc_html( $primary_btn_text ); ?></a>
+            <?php if ( ! empty( $secondary_btn_text ) ) : ?>
+            <a href="<?php echo esc_url( $secondary_btn_url ); ?>" class="btn btn-secondary-outline btn-lg"><?php echo esc_html( $secondary_btn_text ); ?></a>
+            <?php endif; ?>
           </div>
+          <?php if ( ! empty( $sub_text ) ) : ?>
+          <div style="margin-top: 10px; font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);">
+            <?php echo esc_html( $sub_text ); ?>
+          </div>
+          <?php endif; ?>
         </div>
 
         <div>
-          <span class="section-eyebrow dark" style="font-size: 0.75rem;">SELECT YOUR SITUATION</span>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
-            <?php foreach ( $audiences_list as $aud ) : ?>
-              <div class="card-dark" style="cursor: pointer; padding: 20px;">
-                <h4 style="font-size: 0.9375rem; color: var(--color-white); margin-bottom: 8px;"><?php echo esc_html( $aud ); ?></h4>
-                <a href="#tiers" class="text-link on-dark" style="font-size: 0.75rem;">See Your Path &rarr;</a>
-              </div>
-            <?php endforeach; ?>
-          </div>
-          <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); text-align: center; margin-top: 12px;">
-            Not sure? Start with your contract tier below &darr;
-          </div>
+          <?php
+          $icp_right_mode = ! empty( $attributes['rightSideMode'] ) ? $attributes['rightSideMode'] : 'tiles';
+          $card_title     = ! empty( $attributes['cardTitle'] ) ? $attributes['cardTitle'] : 'Talk to a CMMC Advisor';
+          $card_desc      = ! empty( $attributes['cardDesc'] ) ? $attributes['cardDesc'] : 'Submit your details below to schedule your confidential 30-minute scoping review:';
+          $icp_form_id    = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
+          ?>
+          <?php if ( 'form' === $icp_right_mode ) : ?>
+            <div class="card card-white" style="border-radius: 14px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); background: #ffffff;">
+              <h3 style="color: var(--color-navy); margin-bottom: 8px; font-size: 1.35rem; font-weight: 700;"><?php echo esc_html( $card_title ); ?></h3>
+              <p style="font-size: 0.875rem; color: var(--color-slate); margin-bottom: 16px; line-height: 1.5;"><?php echo esc_html( $card_desc ); ?></p>
+              <?php
+              $rendered_form = false;
+              if ( shortcode_exists( 'forminator_form' ) ) {
+                  $f_html = do_shortcode( '[forminator_form id="' . esc_attr( $icp_form_id ) . '"]' );
+                  if ( ! empty( $f_html ) && false === strpos( $f_html, 'forminator_form id=' ) ) {
+                      echo $f_html;
+                      $rendered_form = true;
+                  }
+              }
+              if ( ! $rendered_form ) :
+              ?>
+                <form class="sc-hero-fallback-form" action="<?php echo esc_url( home_url( '/contact/' ) ); ?>" method="get">
+                  <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Full Name *</label>
+                    <input type="text" name="name" class="form-input" placeholder="e.g. John Doe" required style="width: 100%; font-size: 0.875rem; padding: 10px 12px;" />
+                  </div>
+                  <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Work Email *</label>
+                    <input type="email" name="email" class="form-input" placeholder="john@defensecontractor.com" required style="width: 100%; font-size: 0.875rem; padding: 10px 12px;" />
+                  </div>
+                  <div style="margin-bottom: 14px;">
+                    <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px; color: var(--color-navy);">Company / Facility Name</label>
+                    <input type="text" name="company" class="form-input" placeholder="e.g. Precision Aerospace Inc." style="width: 100%; font-size: 0.875rem; padding: 10px 12px;" />
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="width: 100%; font-weight: 700; padding: 12px 20px; font-size: 0.9375rem;">
+                    Submit Inquiry →
+                  </button>
+                </form>
+              <?php endif; ?>
+            </div>
+          <?php elseif ( 'advisor_card' === $icp_right_mode ) : ?>
+            <div class="card card-white" style="border-radius: 14px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); background: #ffffff;">
+              <h3 style="color: var(--color-navy); margin-bottom: 8px; font-size: 1.35rem; font-weight: 700;"><?php echo esc_html( $card_title ); ?></h3>
+              <p style="font-size: 0.875rem; color: var(--color-slate); margin-bottom: 16px; line-height: 1.5;"><?php echo esc_html( $card_desc ); ?></p>
+              <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
+                <li style="display: flex; gap: 8px; margin-bottom: 10px; font-size: 0.875rem; color: var(--color-body-text);">
+                  <span style="color: var(--color-electric-blue); font-weight: 700;">✓</span>
+                  <span>Where you stand today against NIST 800-171</span>
+                </li>
+                <li style="display: flex; gap: 8px; margin-bottom: 10px; font-size: 0.875rem; color: var(--color-body-text);">
+                  <span style="color: var(--color-electric-blue); font-weight: 700;">✓</span>
+                  <span>Which level and scoping boundary fits your contracts</span>
+                </li>
+                <li style="display: flex; gap: 8px; margin-bottom: 10px; font-size: 0.875rem; color: var(--color-body-text);">
+                  <span style="color: var(--color-electric-blue); font-weight: 700;">✓</span>
+                  <span>A concrete, written first step before committing budget</span>
+                </li>
+              </ul>
+              <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; text-align: center; display: block; font-weight: 700; padding: 12px 20px;">
+                Book Discovery Call →
+              </a>
+            </div>
+          <?php else : ?>
+            <?php
+            $icp_heading = ! empty( $attributes['icpHeading'] ) ? $attributes['icpHeading'] : ( ! empty( $attributes['cardTitle'] ) && 'Talk to a CMMC Advisor' !== $attributes['cardTitle'] ? $attributes['cardTitle'] : 'SELECT YOUR SITUATION' );
+            $icp_note    = isset( $attributes['icpNote'] ) ? $attributes['icpNote'] : ( isset( $attributes['footerNote'] ) ? $attributes['footerNote'] : 'Not sure? Start with your contract tier below &darr;' );
+            ?>
+            <?php if ( ! empty( $icp_heading ) ) : ?>
+            <span class="section-eyebrow dark" style="font-size: 0.75rem;"><?php echo esc_html( $icp_heading ); ?></span>
+            <?php endif; ?>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 10px;">
+              <?php foreach ( $audiences_list as $aud ) : 
+                $aud_title = is_array( $aud ) ? ( ! empty( $aud['title'] ) ? $aud['title'] : ( ! empty( $aud['name'] ) ? $aud['name'] : '' ) ) : (string) $aud;
+                $aud_link  = is_array( $aud ) ? ( ! empty( $aud['link'] ) ? $aud['link'] : ( ! empty( $aud['url'] ) ? $aud['url'] : '#tiers' ) ) : '#tiers';
+                $aud_cta   = is_array( $aud ) ? ( ! empty( $aud['linkText'] ) ? $aud['linkText'] : ( ! empty( $aud['cta'] ) ? $aud['cta'] : 'See Your Path →' ) ) : 'See Your Path →';
+              ?>
+                <div class="card-dark" style="cursor: pointer; padding: 20px; display: flex; flex-direction: column;">
+                  <h4 style="font-size: 0.9375rem; color: var(--color-white); margin-bottom: 8px; flex-grow: 1;"><?php echo esc_html( $aud_title ); ?></h4>
+                  <a href="<?php echo esc_url( $aud_link ); ?>" class="text-link on-dark" style="font-size: 0.75rem; margin-top: auto;"><?php echo esc_html( $aud_cta ); ?></a>
+                </div>
+              <?php endforeach; ?>
+            </div>
+            <?php if ( ! empty( $icp_note ) ) : ?>
+            <div style="font-size: 0.75rem; color: var(--color-slate); font-family: var(--font-mono); text-align: center; margin-top: 12px;">
+              <?php echo esc_html( $icp_note ); ?>
+            </div>
+            <?php endif; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -444,8 +539,10 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
       <?php endif; ?>
       <div class="hero-home-grid" style="align-items: flex-start;">
         <div>
-          <?php if ( ! empty( $eyebrow ) ) : ?>
-          <span class="section-eyebrow dark">// <?php echo esc_html( $eyebrow ); ?></span>
+          <?php if ( ! empty( $eyebrow ) ) : 
+            $clean_eyebrow = ltrim( $eyebrow, '/ ' );
+          ?>
+          <span class="section-eyebrow dark">// <?php echo esc_html( $clean_eyebrow ); ?></span>
           <?php endif; ?>
           <h1 style="color: var(--color-white); margin-bottom: 16px;"><?php echo esc_html( $title ); ?></h1>
           <p class="hero-lead" style="color: var(--color-text-on-dark); margin-bottom: 24px;"><?php echo esc_html( $description ); ?></p>
