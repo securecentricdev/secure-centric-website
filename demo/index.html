@@ -179,15 +179,18 @@
 
           <!-- Column 5: Newsletter & Updates -->
           <div class="footer-col">
-            <h5>DIB Intelligence</h5>
-            <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 12px;">
-              Get critical rulemaking updates on DFARS 252.204-7021 and CMMC enforcement timelines.
+            <h5>NEWSLETTER</h5>
+            <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 12px; line-height: 1.45;">
+              Get every update on CMMC and NIST SP 800-171, straight to your inbox.
             </p>
             <form onsubmit="event.preventDefault(); alert('Subscribed to CMMC Defense Updates!');">
-              <input type="email" class="form-input" placeholder="Your work email" required style="margin-bottom: 8px; height: 38px;" />
+              <input type="email" class="form-input" placeholder="Company email" required style="margin-bottom: 8px; height: 38px;" />
               <button type="submit" class="btn btn-primary" style="width: 100%; padding: 8px 16px; font-size: 0.8125rem;">
                 Subscribe &rarr;
               </button>
+              <p style="font-size: 0.75rem; color: var(--color-slate); margin-top: 8px; margin-bottom: 0;">
+                No spam. Unsubscribe anytime.
+              </p>
             </form>
           </div>
         </div>
@@ -244,20 +247,24 @@
     </div>
   </div>
 
-  <!-- Bottom-Right Floating Lead Popup (Summit 7 Style) -->
+  <!-- Bottom-Right Floating Lead Popup (Secure-Centric Newsletter) -->
   <div class="floating-lead-popup" id="floating-lead-popup">
     <div class="popup-banner">
       <div class="popup-banner-header">
-        <span class="popup-logo-tag">SECURE-CENTRIC // PATHFINDER</span>
+        <span class="popup-logo-tag">SECURE-CENTRIC NEWSLETTER</span>
         <button type="button" class="popup-close-btn" onclick="window.dismissPopup()" aria-label="Close popup">✕</button>
       </div>
-      <h4>Find your path to CMMC in under 5 minutes</h4>
+      <h4>Stay ahead of CMMC changes</h4>
     </div>
     <div class="popup-body">
-      <p class="popup-desc">Get your custom Level 1 or Level 2 readiness roadmap and 2026 contractor checklist.</p>
-      <form onsubmit="event.preventDefault(); alert('CMMC Pathfinder assessment sent! Check your inbox.'); window.dismissPopup();">
-        <input type="email" class="form-input" placeholder="EMAIL*" required style="margin-bottom: 10px; height: 38px;" />
-        <button type="submit" class="popup-btn">Start the Quiz &rarr;</button>
+      <p class="popup-desc">Get every update on CMMC and NIST SP 800-171, straight to your inbox.</p>
+      <form onsubmit="event.preventDefault(); alert('Subscribed to CMMC Newsletter! Check your inbox.'); window.dismissPopup();">
+        <input type="text" class="form-input" placeholder="Full name" required style="margin-bottom: 10px; height: 38px;" />
+        <input type="email" class="form-input" placeholder="Company email" required style="margin-bottom: 10px; height: 38px;" />
+        <button type="submit" class="popup-btn">Subscribe &rarr;</button>
+        <p style="font-size: 0.75rem; color: #64748B; margin-top: 10px; margin-bottom: 0; text-align: center;">
+          No spam. Unsubscribe anytime.
+        </p>
       </form>
     </div>
   </div>
@@ -265,7 +272,7 @@
   <!-- Minimized Floating Pill -->
   <div class="floating-min-trigger" id="floating-min-trigger" onclick="window.restorePopup()">
     <span class="pulse-dot"></span>
-    <span>🎯 CMMC Pathfinder (5 Min)</span>
+    <span>📬 CMMC Newsletter</span>
   </div>
 
   <!-- Scripts -->

@@ -66,16 +66,23 @@
 
       <!-- Column 5: Newsletter & Updates -->
       <div class="footer-col">
-        <h5>DIB Intelligence</h5>
-        <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 12px;">
-          Get critical rulemaking updates on DFARS 252.204-7021 and CMMC enforcement timelines.
+        <h5>NEWSLETTER</h5>
+        <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 12px; line-height: 1.45;">
+          Get every update on CMMC and NIST SP 800-171, straight to your inbox.
         </p>
-        <form onsubmit="event.preventDefault(); alert('Subscribed to CMMC Defense Updates!');">
-          <input type="email" class="form-input" placeholder="Your work email" required style="margin-bottom: 8px; height: 38px;" />
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 8px 16px; font-size: 0.8125rem;">
+        <form id="sc-footer-newsletter-form">
+          <input type="email" class="form-input" name="email" id="sc-footer-email" placeholder="Company email" required style="margin-bottom: 8px; height: 38px; width: 100%; box-sizing: border-box;" />
+          <button type="submit" class="btn btn-primary" id="sc-footer-submit-btn" style="width: 100%; padding: 8px 16px; font-size: 0.8125rem;">
             Subscribe &rarr;
           </button>
+          <p style="font-size: 0.75rem; color: var(--color-slate, #94a3b8); margin-top: 8px; margin-bottom: 0;">
+            No spam. Unsubscribe anytime.
+          </p>
         </form>
+        <div id="sc-footer-newsletter-success" style="display: none; padding: 12px 10px; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 4px; color: #86EFAC; font-size: 0.8125rem; margin-top: 8px; text-align: center; line-height: 1.4;">
+          <div style="font-weight: 700;">✓ Subscribed!</div>
+          Thank you for subscribing.
+        </div>
       </div>
     </div>
 
