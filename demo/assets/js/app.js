@@ -115,30 +115,39 @@
               </div>
             </div>
             
-            <div class="hero-readiness-card cui-magnet-card" style="background: #ffffff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box;">
-              <div class="eyebrow" style="margin-bottom: 8px;">
-                <span style="color: #2563EB; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.5px; text-transform: uppercase;">STEP 1 OF 2</span>
-              </div>
-              <h3 style="color: #0B1437; font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 20px;">Book your free CUI identification session</h3>
-              <form class="readiness-inline-form cui-session-form" action="/cui-session/" method="GET" onsubmit="window.location.href='/cui-session/'; return false;">
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Full name</label>
-                  <input type="text" name="name" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
-                </div>
-                <div style="margin-bottom: 14px;">
-                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Work email</label>
-                  <input type="email" name="email" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
-                </div>
-                <div style="margin-bottom: 18px;">
-                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Company</label>
-                  <input type="text" name="company" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px; background: #3B82F6; color: #ffffff; font-weight: 700; border-radius: 8px; border: none; font-size: 1rem;">
-                  Check my CUI
-                </button>
-              </form>
-              <p class="cui-magnet-card-note" style="font-size: 0.8125rem; color: #64748B; margin-top: 14px; margin-bottom: 0; text-align: left; line-height: 1.4;">
-                No cost and no obligation. We never share your details.
+            <div class="hero-readiness-card cui-magnet-card">
+              <h3 class="cui-magnet-title">Not sure if you handle CUI?</h3>
+              <ul class="cui-magnet-bullets">
+                <li class="cui-magnet-bullet-item">
+                  <span class="cui-magnet-check" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                  <span class="cui-magnet-bullet-text">Find out if you have CUI or FCI in your contracts and environment</span>
+                </li>
+                <li class="cui-magnet-bullet-item">
+                  <span class="cui-magnet-check" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                  <span class="cui-magnet-bullet-text">See where it's likely showing up, before you spend time and money on CMMC</span>
+                </li>
+                <li class="cui-magnet-bullet-item">
+                  <span class="cui-magnet-check" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                  <span class="cui-magnet-bullet-text">Get clear next steps in writing from our senior CMMC experts (if you have CUI or FCI)</span>
+                </li>
+              </ul>
+              <a href="/cui-session/" class="cui-magnet-btn">
+                Book my free CUI session
+              </a>
+              <p class="cui-magnet-card-note">
+                No cost and no obligation.
               </p>
             </div>
           </div>

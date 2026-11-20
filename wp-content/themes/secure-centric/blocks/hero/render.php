@@ -46,14 +46,18 @@ $topic3_title = ! empty( $attributes['topic3Title'] ) ? $attributes['topic3Title
 $topic3_desc  = ! empty( $attributes['topic3Desc'] ) ? $attributes['topic3Desc'] : 'Controlled Unclassified Info';
 $topic3_url   = ! empty( $attributes['topic3Url'] ) ? $attributes['topic3Url'] : home_url( '/cui/' );
 
-// Quiz Card
-$quiz_badge       = ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : 'CMMC READINESS CHECK · 3 MINUTES';
-$quiz_chip        = ! empty( $attributes['quizChip'] ) ? $attributes['quizChip'] : 'Free Tool';
-$quiz_title       = ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Find out where you stand';
-$quiz_desc        = isset( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.';
+// Quiz / CUI CTA Card
+$quiz_badge       = ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : '';
+$quiz_chip        = ! empty( $attributes['quizChip'] ) ? $attributes['quizChip'] : '';
+$quiz_title       = ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Not sure if you handle CUI?';
+$quiz_desc        = isset( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : '';
+$quiz_bullet_1    = isset( $attributes['quizBullet1'] ) ? $attributes['quizBullet1'] : 'Find out if you have CUI or FCI in your contracts and environment';
+$quiz_bullet_2    = isset( $attributes['quizBullet2'] ) ? $attributes['quizBullet2'] : "See where it's likely showing up, before you spend time and money on CMMC";
+$quiz_bullet_3    = isset( $attributes['quizBullet3'] ) ? $attributes['quizBullet3'] : 'Get clear next steps in writing from our senior CMMC experts (if you have CUI or FCI)';
 $quiz_placeholder = ! empty( $attributes['quizPlaceholder'] ) ? $attributes['quizPlaceholder'] : 'Enter corporate work email';
-$quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Start 3-Minute Readiness Check →';
-$quiz_note        = ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : '🔒 Work email required. Never submit classified or CUI information.';
+$quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Book my free CUI session';
+$quiz_btn_url     = ! empty( $attributes['quizBtnUrl'] ) ? $attributes['quizBtnUrl'] : '/cui-session/';
+$quiz_note        = isset( $attributes['quizNote'] ) ? $attributes['quizNote'] : 'No cost and no obligation.';
 
 // Multi-entry arrays for specialized layouts
 $phases_list = array(
@@ -776,46 +780,78 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             </a>
           </div>
         </div>
-        <div class="hero-readiness-card cui-magnet-card" style="background: #ffffff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box;">
-          <div class="eyebrow" style="margin-bottom: 8px;">
-            <span style="color: #2563EB; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.5px; text-transform: uppercase;"><?php echo esc_html( ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : $quiz_badge ); ?></span>
+        <div class="hero-readiness-card cui-magnet-card">
+          <?php if ( ! empty( $quiz_badge ) ) : ?>
+          <div class="eyebrow cui-magnet-badge" style="margin-bottom: 10px;">
+            <span style="color: #4F65F6; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.5px; text-transform: uppercase;"><?php echo esc_html( $quiz_badge ); ?></span>
             <?php if ( ! empty( $quiz_chip ) && 'Free Tool' !== $quiz_chip ) : ?>
-            <span class="badge-chip accent" style="font-size: 0.65rem;"><?php echo esc_html( $quiz_chip ); ?></span>
+            <span class="badge-chip accent" style="font-size: 0.65rem; margin-left: 6px;"><?php echo esc_html( $quiz_chip ); ?></span>
             <?php endif; ?>
           </div>
-          <h3 style="color: #0B1437; font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 20px;"><?php echo esc_html( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : $quiz_title ); ?></h3>
+          <?php endif; ?>
+
+          <h3 class="cui-magnet-title"><?php echo esc_html( $quiz_title ); ?></h3>
+
           <?php if ( ! empty( $quiz_desc ) ) : ?>
-          <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px; line-height: 1.55;">
+          <p class="cui-magnet-desc" style="font-size: 0.9375rem; color: #475569; margin-bottom: 20px; line-height: 1.55;">
             <?php echo esc_html( $quiz_desc ); ?>
           </p>
           <?php endif; ?>
+
           <?php
-          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '367';
-          if ( ! empty( $hero_quiz_form ) && shortcode_exists( 'forminator_form' ) ) :
-              echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_quiz_form ) . '"]' );
-          else :
+          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
+          $has_bullets    = ( ! empty( $quiz_bullet_1 ) || ! empty( $quiz_bullet_2 ) || ! empty( $quiz_bullet_3 ) );
+
+          if ( empty( $hero_quiz_form ) || $has_bullets ) :
           ?>
-          <form class="readiness-inline-form cui-session-fallback-form" action="<?php echo esc_url( home_url( '/cui-session/' ) ); ?>" method="GET">
-            <div style="margin-bottom: 14px;">
-              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Full name</label>
-              <input type="text" name="name" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
-            </div>
-            <div style="margin-bottom: 14px;">
-              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Work email</label>
-              <input type="email" name="email" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
-            </div>
-            <div style="margin-bottom: 18px;">
-              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Company</label>
-              <input type="text" name="company" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px; background: #3B82F6; color: #ffffff; font-weight: 700; border-radius: 8px; border: none; font-size: 1rem;">
-              Check my CUI
-            </button>
-          </form>
+          <ul class="cui-magnet-bullets">
+            <?php if ( ! empty( $quiz_bullet_1 ) ) : ?>
+            <li class="cui-magnet-bullet-item">
+              <span class="cui-magnet-check" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="cui-magnet-bullet-text"><?php echo esc_html( $quiz_bullet_1 ); ?></span>
+            </li>
+            <?php endif; ?>
+
+            <?php if ( ! empty( $quiz_bullet_2 ) ) : ?>
+            <li class="cui-magnet-bullet-item">
+              <span class="cui-magnet-check" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="cui-magnet-bullet-text"><?php echo esc_html( $quiz_bullet_2 ); ?></span>
+            </li>
+            <?php endif; ?>
+
+            <?php if ( ! empty( $quiz_bullet_3 ) ) : ?>
+            <li class="cui-magnet-bullet-item">
+              <span class="cui-magnet-check" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="cui-magnet-bullet-text"><?php echo esc_html( $quiz_bullet_3 ); ?></span>
+            </li>
+            <?php endif; ?>
+          </ul>
+
+          <a href="<?php echo esc_url( strpos( $quiz_btn_url, 'http' ) === 0 ? $quiz_btn_url : home_url( $quiz_btn_url ) ); ?>" class="cui-magnet-btn">
+            <?php echo esc_html( $quiz_btn_text ); ?>
+          </a>
+
+          <?php elseif ( ! empty( $hero_quiz_form ) && shortcode_exists( 'forminator_form' ) ) : ?>
+            <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_quiz_form ) . '"]' ); ?>
           <?php endif; ?>
-          <p class="cui-magnet-card-note" style="font-size: 0.8125rem; color: #64748B; margin-top: 14px; margin-bottom: 0; text-align: left; line-height: 1.4;">
-            <?php echo esc_html( ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : 'No cost and no obligation. We never share your details.' ); ?>
+
+          <?php if ( ! empty( $quiz_note ) ) : ?>
+          <p class="cui-magnet-card-note">
+            <?php echo esc_html( $quiz_note ); ?>
           </p>
+          <?php endif; ?>
         </div>
       </div>
     </div>

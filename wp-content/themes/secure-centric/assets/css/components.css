@@ -2456,10 +2456,120 @@ body,
    ========================================================================== */
 .hero-readiness-card.cui-magnet-card {
   background: #ffffff !important;
-  border-radius: 20px !important;
-  padding: 32px 28px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 28px !important;
+  padding: 42px 36px 36px !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
   box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-title {
+  color: #0B1437 !important;
+  font-size: clamp(1.6rem, 2.3vw, 2rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 0 26px 0 !important;
+  font-family: inherit !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-bullets {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 32px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-bullet-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-check {
+  color: #5367F6 !important;
+  flex-shrink: 0 !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 2px !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-check svg {
+  display: block;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-bullet-text {
+  color: #1E293B !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  line-height: 1.48 !important;
+  font-family: inherit !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 56px !important;
+  background: #5367F6 !important;
+  color: #ffffff !important;
+  font-size: 1.0625rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 20px rgba(83, 103, 246, 0.3) !important;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-btn:hover {
+  background: #4054E8 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(83, 103, 246, 0.42) !important;
+  color: #ffffff !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-card-note {
+  font-size: 0.875rem !important;
+  color: #8E9AAF !important;
+  margin: 16px 0 0 0 !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+  font-weight: 400 !important;
+}
+
+@media (max-width: 640px) {
+  .hero-readiness-card.cui-magnet-card {
+    border-radius: 20px !important;
+    padding: 28px 20px 24px !important;
+  }
+  .hero-readiness-card.cui-magnet-card .cui-magnet-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 20px !important;
+  }
+  .hero-readiness-card.cui-magnet-card .cui-magnet-bullets {
+    margin-bottom: 24px !important;
+    gap: 16px !important;
+  }
+  .hero-readiness-card.cui-magnet-card .cui-magnet-bullet-text {
+    font-size: 0.95rem !important;
+  }
+  .hero-readiness-card.cui-magnet-card .cui-magnet-btn {
+    height: 50px !important;
+    font-size: 1rem !important;
+  }
 }
 
 .hero-readiness-card.cui-magnet-card .forminator-ui {

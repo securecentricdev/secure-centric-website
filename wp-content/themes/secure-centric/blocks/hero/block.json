@@ -140,19 +140,31 @@
     },
     "quizBadge": {
       "type": "string",
-      "default": "CMMC READINESS CHECK \u00b7 3 MINUTES"
+      "default": ""
     },
     "quizChip": {
       "type": "string",
-      "default": "Free Tool"
+      "default": ""
     },
     "quizTitle": {
       "type": "string",
-      "default": "Find out where you stand"
+      "default": "Not sure if you handle CUI?"
     },
     "quizDesc": {
       "type": "string",
-      "default": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit."
+      "default": ""
+    },
+    "quizBullet1": {
+      "type": "string",
+      "default": "Find out if you have CUI or FCI in your contracts and environment"
+    },
+    "quizBullet2": {
+      "type": "string",
+      "default": "See where it's likely showing up, before you spend time and money on CMMC"
+    },
+    "quizBullet3": {
+      "type": "string",
+      "default": "Get clear next steps in writing from our senior CMMC experts (if you have CUI or FCI)"
     },
     "quizPlaceholder": {
       "type": "string",
@@ -160,11 +172,15 @@
     },
     "quizBtnText": {
       "type": "string",
-      "default": "Start 3-Minute Readiness Check \u2192"
+      "default": "Book my free CUI session"
+    },
+    "quizBtnUrl": {
+      "type": "string",
+      "default": "/cui-session/"
     },
     "quizNote": {
       "type": "string",
-      "default": "\ud83d\udd12 Work email required. Never submit classified or CUI information."
+      "default": "No cost and no obligation."
     },
     "formId": {
       "type": "string",

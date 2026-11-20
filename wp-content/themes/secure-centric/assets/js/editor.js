@@ -935,48 +935,59 @@
           panels.push(
             el(
               PanelBody,
-              { title: 'Quick Quiz Widget Card', initialOpen: false },
-              el(TextControl, {
-                label: 'Quiz Badge',
-                value: attributes.quizBadge !== undefined ? attributes.quizBadge : 'CMMC READINESS CHECK · 3 MINUTES',
-                onChange: function (val) { setAttributes({ quizBadge: val }); }
-              }),
-              el(TextControl, {
-                label: 'Pill Tag',
-                value: attributes.quizChip !== undefined ? attributes.quizChip : 'Free Tool',
-                onChange: function (val) { setAttributes({ quizChip: val }); }
-              }),
+              { title: 'Hero Right Card / CUI CTA Card', initialOpen: false },
               el(TextControl, {
                 label: 'Card Title',
-                value: attributes.quizTitle !== undefined ? attributes.quizTitle : 'Find out where you stand',
+                value: attributes.quizTitle !== undefined ? attributes.quizTitle : 'Not sure if you handle CUI?',
                 onChange: function (val) { setAttributes({ quizTitle: val }); }
               }),
-              el(TextareaControl, {
-                label: 'Card Description',
-                rows: 3,
-                value: attributes.quizDesc !== undefined ? attributes.quizDesc : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.',
-                onChange: function (val) { setAttributes({ quizDesc: val }); }
+              el(TextControl, {
+                label: 'Checkmark Bullet 1',
+                value: attributes.quizBullet1 !== undefined ? attributes.quizBullet1 : 'Find out if you have CUI or FCI in your contracts and environment',
+                onChange: function (val) { setAttributes({ quizBullet1: val }); }
               }),
               el(TextControl, {
-                label: 'Input Placeholder',
-                value: attributes.quizPlaceholder !== undefined ? attributes.quizPlaceholder : 'Enter corporate work email',
-                onChange: function (val) { setAttributes({ quizPlaceholder: val }); }
+                label: 'Checkmark Bullet 2',
+                value: attributes.quizBullet2 !== undefined ? attributes.quizBullet2 : "See where it's likely showing up, before you spend time and money on CMMC",
+                onChange: function (val) { setAttributes({ quizBullet2: val }); }
+              }),
+              el(TextControl, {
+                label: 'Checkmark Bullet 3',
+                value: attributes.quizBullet3 !== undefined ? attributes.quizBullet3 : 'Get clear next steps in writing from our senior CMMC experts (if you have CUI or FCI)',
+                onChange: function (val) { setAttributes({ quizBullet3: val }); }
               }),
               el(TextControl, {
                 label: 'Button Text',
-                value: attributes.quizBtnText !== undefined ? attributes.quizBtnText : 'Start 3-Minute Readiness Check →',
+                value: attributes.quizBtnText !== undefined ? attributes.quizBtnText : 'Book my free CUI session',
                 onChange: function (val) { setAttributes({ quizBtnText: val }); }
               }),
               el(TextControl, {
-                label: 'Privacy Note',
-                value: attributes.quizNote !== undefined ? attributes.quizNote : '🔒 Work email required. Never submit classified or CUI information.',
+                label: 'Button Redirect URL',
+                value: attributes.quizBtnUrl !== undefined ? attributes.quizBtnUrl : '/cui-session/',
+                help: 'URL to redirect user when button is clicked (e.g. /cui-session/)',
+                onChange: function (val) { setAttributes({ quizBtnUrl: val }); }
+              }),
+              el(TextControl, {
+                label: 'Bottom Subtext Note',
+                value: attributes.quizNote !== undefined ? attributes.quizNote : 'No cost and no obligation.',
                 onChange: function (val) { setAttributes({ quizNote: val }); }
               }),
+              el(TextControl, {
+                label: 'Card Badge (Optional)',
+                value: attributes.quizBadge !== undefined ? attributes.quizBadge : '',
+                onChange: function (val) { setAttributes({ quizBadge: val }); }
+              }),
+              el(TextareaControl, {
+                label: 'Card Description (Optional)',
+                rows: 2,
+                value: attributes.quizDesc !== undefined ? attributes.quizDesc : '',
+                onChange: function (val) { setAttributes({ quizDesc: val }); }
+              }),
               el(SelectControl, {
-                label: 'Select Forminator Form',
-                value: attributes.formId !== undefined && attributes.formId !== '' ? String(attributes.formId) : '103',
-                options: getForminatorOptions(),
-                help: 'Select the Forminator form to render in this Hero widget (Default: ID 103 for Hero 3-Minute Readiness Check, or Form 101/104).',
+                label: 'Select Forminator Form (Optional)',
+                value: attributes.formId !== undefined && attributes.formId !== '' ? String(attributes.formId) : '',
+                options: [ { label: 'None (Use Checkmark CTA Card)', value: '' } ].concat(getForminatorOptions().filter(function(o){ return o.value !== ''; })),
+                help: 'Optional: Choose a Forminator form if you wish to embed an inline form instead of the checkmark CTA list.',
                 onChange: function (val) { setAttributes({ formId: val }); }
               })
             )
