@@ -2430,12 +2430,13 @@ body.mobile-preview-mode .roadmap-timeline-nav {
 
 .credentials-badges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 24px;
-  max-width: 1040px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
 }
 
 .badge-card {

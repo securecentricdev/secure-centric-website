@@ -83,7 +83,7 @@ if ( function_exists( 'sc_clean_text' ) ) {
     </div>
     <?php endif; ?>
 
-    <div class="credentials-badges-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; width: 100%; margin: 0 auto; align-items: center; justify-items: center;">
+    <div class="credentials-badges-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; width: 100%; max-width: 100%; margin: 0 auto; align-items: center; justify-items: center;">
       <?php foreach ( $badges as $badge ) : ?>
         <?php
         $badge_img     = ! empty( $badge['imageUrl'] ) ? $badge['imageUrl'] : '';
