@@ -104,15 +104,15 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
       $badge_nda      = get_template_directory_uri() . '/assets/img/badges/bilateral-nda-standard.svg';
     ?>
     <!-- Verified Credentials Badges Strip: Cyber AB RPO, Inc. 5000, Bilateral NDA Standard -->
-    <div class="why-badges-row why-badges-logos" style="display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; width: 100%; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); box-sizing: border-box; gap: 24px;">
-      <div class="why-badge-logo-col why-badge-logo-col--left" style="display: flex; justify-content: flex-start; align-items: center;">
-        <img src="<?php echo esc_url( $badge_cyber_ab ); ?>" alt="The Cyber AB Registered Provider Organization (RPO)" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
+    <div class="why-badges-row why-badges-logos" style="display: flex; align-items: center; justify-content: flex-start; gap: 28px; width: 100%; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); box-sizing: border-box; flex-wrap: wrap;">
+      <div class="why-badge-logo-item" style="display: flex; align-items: center;">
+        <img src="<?php echo esc_url( $badge_cyber_ab ); ?>" alt="The Cyber AB Registered Provider Organization (RPO)" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
       </div>
-      <div class="why-badge-logo-col why-badge-logo-col--center" style="display: flex; justify-content: center; align-items: center;">
-        <img src="<?php echo esc_url( $badge_inc_5000 ); ?>" alt="Inc. 5000 America's Fastest-Growing Private Companies" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
+      <div class="why-badge-logo-item" style="display: flex; align-items: center;">
+        <img src="<?php echo esc_url( $badge_inc_5000 ); ?>" alt="Inc. 5000 America's Fastest-Growing Private Companies" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
       </div>
-      <div class="why-badge-logo-col why-badge-logo-col--right" style="display: flex; justify-content: flex-end; align-items: center;">
-        <img src="<?php echo esc_url( $badge_nda ); ?>" alt="Bilateral NDA Standard - Defense Contractor Protected" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
+      <div class="why-badge-logo-item" style="display: flex; align-items: center;">
+        <img src="<?php echo esc_url( $badge_nda ); ?>" alt="Bilateral NDA Standard - Defense Contractor Protected" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
       </div>
     </div>
     <?php endif; ?>
