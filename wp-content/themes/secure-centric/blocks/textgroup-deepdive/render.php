@@ -196,7 +196,7 @@ if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
           <?php if ( ! empty( $sec_tag ) ) : ?>
             <span class="textgroup-item-tag" style="display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--color-electric-blue); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">// <?php echo esc_html( $sec_tag ); ?></span>
           <?php endif; ?>
-          <h3 class="textgroup-title"><span class="textgroup-num">§ <?php echo esc_html( $i + 1 ); ?></span> <?php echo esc_html( $sec_title ); ?></h3>
+          <h3 class="textgroup-title"><?php echo esc_html( $sec_title ); ?></h3>
           <?php if ( ! empty( $sec_sub ) ) : ?>
             <p class="textgroup-sub" style="font-size: 1.05rem; font-weight: 600; color: var(--color-navy); margin-bottom: 16px; line-height: 1.5;"><?php echo esc_html( $sec_sub ); ?></p>
           <?php endif; ?>

@@ -2061,7 +2061,7 @@
           <div class="textgroup-list">
             ${sections.map((sec, i) => `
               <div class="textgroup-item">
-                <h3 class="textgroup-title"><span class="textgroup-num">§ ${i + 1}</span> ${esc(sec.title)}</h3>
+                <h3 class="textgroup-title">${esc(sec.title)}</h3>
                 ${(sec.paragraphs || []).map(p => `
                   <p class="textgroup-para">${esc(p)}</p>
                 `).join('')}
