@@ -1123,7 +1123,11 @@
         <div class="testimonial-card" data-index="${i}">
           <div class="testimonial-card-header">
             <span class="testimonial-num">${esc(num)}</span>
-            <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
+            <span class="testimonial-quote-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.533-4.2 3.659-4.382 5.068.558-.293 1.258-.387 1.954-.263 1.637.29 2.766 1.678 2.628 3.322-.14 1.666-1.558 2.946-3.238 2.871a3.468 3.468 0 0 1-2.302-.878zM15.583 17.321C14.553 16.227 14 15 14 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.533-4.2 3.659-4.382 5.068.558-.293 1.258-.387 1.954-.263 1.637.29 2.766 1.678 2.628 3.322-.14 1.666-1.558 2.946-3.238 2.871a3.468 3.468 0 0 1-2.302-.878z"/>
+              </svg>
+            </span>
           </div>
           <div class="testimonial-body">
             <p class="testimonial-quote-text">${esc(quote)}</p>
@@ -1135,15 +1139,9 @@
               <div class="testimonial-author-name">${esc(name)}</div>
               <div class="testimonial-author-role">${esc(role)}, ${esc(company)}</div>
               ${hasLinkedIn ? `
-                <a href="https://www.linkedin.com/company/secure-centric/" target="_blank" rel="noopener noreferrer" class="testimonial-linkedin-link" title="Shared publicly on LinkedIn" onclick="event.stopPropagation();">
-                  <svg class="linkedin-badge-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect width="16" height="16" rx="3" fill="#0A66C2"/>
-                    <path d="M4.6 6.3H2.5V13H4.6V6.3Z" fill="white"/>
-                    <path d="M3.55 5.4C4.24 5.4 4.8 4.84 4.8 4.15C4.8 3.46 4.24 2.9 3.55 2.9C2.86 2.9 2.3 3.46 2.3 4.15C2.3 4.84 2.86 5.4 3.55 5.4Z" fill="white"/>
-                    <path d="M8.1 6.3H6.1V13H8.1V9.5C8.1 7.6 10.5 7.4 10.5 9.5V13H12.6V8.6C12.6 5.2 8.7 5.3 8.1 6.9V6.3Z" fill="white"/>
-                  </svg>
+                <span class="testimonial-linkedin-link" style="color: #00D4FF; cursor: default;">
                   <span>Shared publicly on LinkedIn</span>
-                </a>
+                </span>
               ` : ''}
             </div>
           </div>

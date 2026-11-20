@@ -1151,7 +1151,11 @@
         <div class="testimonial-card" data-index="${i}">
           <div class="testimonial-card-header">
             <span class="testimonial-num">${esc(num)}</span>
-            <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
+            <span class="testimonial-quote-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.533-4.2 3.659-4.382 5.068.558-.293 1.258-.387 1.954-.263 1.637.29 2.766 1.678 2.628 3.322-.14 1.666-1.558 2.946-3.238 2.871a3.468 3.468 0 0 1-2.302-.878zM15.583 17.321C14.553 16.227 14 15 14 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.533-4.2 3.659-4.382 5.068.558-.293 1.258-.387 1.954-.263 1.637.29 2.766 1.678 2.628 3.322-.14 1.666-1.558 2.946-3.238 2.871a3.468 3.468 0 0 1-2.302-.878z"/>
+              </svg>
+            </span>
           </div>
           <div class="testimonial-body">
             <p class="testimonial-quote-text">${esc(quote)}</p>
@@ -1163,7 +1167,7 @@
               <div class="testimonial-author-name">${esc(name)}</div>
               <div class="testimonial-author-role">${esc(role)}, ${esc(company)}</div>
               ${hasLinkedIn ? `
-                <span class="testimonial-linkedin-link" style="color: #0A66C2; cursor: default;">
+                <span class="testimonial-linkedin-link" style="color: #00D4FF; cursor: default;">
                   <span>Shared publicly on LinkedIn</span>
                 </span>
               ` : ''}
