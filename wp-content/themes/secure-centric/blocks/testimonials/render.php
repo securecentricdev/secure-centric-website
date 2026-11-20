@@ -184,7 +184,7 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
         </div>
       </div>
 
-      <?php $hold_delay = ! empty( $attributes['holdDelay'] ) ? intval( $attributes['holdDelay'] ) : 4500; ?>
+      <?php $hold_delay = ( ! empty( $attributes['holdDelay'] ) && 8000 !== intval( $attributes['holdDelay'] ) ) ? intval( $attributes['holdDelay'] ) : 4500; ?>
       <div class="testimonials-carousel-container" data-hold-delay="<?php echo esc_attr( $hold_delay ); ?>">
         <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
           <?php

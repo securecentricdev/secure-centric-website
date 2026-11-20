@@ -34,7 +34,7 @@
     },
     "holdDelay": {
       "type": "number",
-      "default": 8000
+      "default": 4500
     },
     "testimonialsData": {
       "type": "string",
