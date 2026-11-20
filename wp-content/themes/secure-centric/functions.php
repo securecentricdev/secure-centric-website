@@ -747,12 +747,9 @@ function secure_centric_forward_forminator_to_ghl( $form_id, $response, $entry_i
     $webhooks = array(
         // Flow 1 - Newsletter Signup
         106 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr',
-        // Flow 3 - Checklist & Lead Magnet Downloads
-        102 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
-        103 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
-        104 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6',
         // Flow 4 - Contact Us Form
         101 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/xF7p64ol6wtyvdgezRpJ',
+        // Note: Flow 3 (Checklist & Lead Magnet Downloads) is handled with full contextual matching & automated downloads in inc/ghl-flow3-lead-magnet.php
     );
 
     if ( ! isset( $webhooks[ $form_id ] ) ) {
@@ -816,3 +813,7 @@ function secure_centric_forward_forminator_to_ghl( $form_id, $response, $entry_i
 }
 add_action( 'forminator_form_after_save_entry', 'secure_centric_forward_forminator_to_ghl', 10, 3 );
 add_action( 'forminator_custom_form_after_save_entry', 'secure_centric_forward_forminator_to_ghl', 10, 3 );
+
+// GoHighLevel Flow 3: Lead Magnet Download Automation & Resource Mapping
+require_once get_template_directory() . '/inc/ghl-flow3-lead-magnet.php';
+
