@@ -737,19 +737,23 @@
   }
 
   const DEFAULT_CLIENT_LOGOS = [
-    { name: '', alt: 'Caltrol', imageUrl: 'assets/img/client-logos/caltrol.webp' },
-    { name: '', alt: 'Firefighters First Credit Union', imageUrl: 'assets/img/client-logos/firefighters-first.webp' },
-    { name: '', alt: 'Acadian Contractors', imageUrl: 'assets/img/client-logos/acadian-contractors.webp' },
-    { name: '', alt: 'Goodwin & Associates', imageUrl: 'assets/img/client-logos/goodwin-associates.webp' },
-    { name: '', alt: 'CMI Promex', imageUrl: 'assets/img/client-logos/cmi-promex.webp' },
-    { name: '', alt: 'HRD Aero Systems', imageUrl: 'assets/img/client-logos/hrd-aero-systems.webp' },
-    { name: '', alt: 'Yes Energy / PowerCore', imageUrl: 'assets/img/client-logos/yes-energy.webp' },
-    { name: '', alt: 'Lonestar Electric Supply', imageUrl: 'assets/img/client-logos/lonestar-electric.webp' },
-    { name: '', alt: 'Los Angeles Regional Food Bank', imageUrl: 'assets/img/client-logos/la-food-bank.webp' },
-    { name: '', alt: 'Rose Acre Farms', imageUrl: 'assets/img/client-logos/rose-acre-farms.webp' },
-    { name: '', alt: 'Safran Federal Systems', imageUrl: 'assets/img/client-logos/safran.webp' },
-    { name: '', alt: 'Tower Semiconductor', imageUrl: 'assets/img/client-logos/tower-semiconductor.webp' },
-    { name: '', alt: 'Weber Metals', imageUrl: 'assets/img/client-logos/weber-metals.webp' }
+    { name: '', alt: 'HRD Aero Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/hrd-aero-systems.webp' },
+    { name: '', alt: 'Avis Industrial Corporation', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/avis-industrial-corporation.webp' },
+    { name: '', alt: 'United Steelworkers', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/usw-united-steelworkers.webp' },
+    { name: '', alt: 'Weber Metals', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/weber-metals.webp' },
+    { name: '', alt: 'Safran Federal Systems', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/safran.webp' },
+    { name: '', alt: 'Tower Semiconductor', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/tower-semiconductor.webp' },
+    { name: '', alt: 'Caltrol', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/caltrol.webp' },
+    { name: '', alt: 'Firefighters First Credit Union', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/firefighters-first.webp' },
+    { name: '', alt: 'Acadian Contractors', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/acadian-contractors.webp' },
+    { name: '', alt: 'Goodwin & Associates', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/goodwin-associates.webp' },
+    { name: '', alt: 'CMI Promex', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/cmi-promex.webp' },
+    { name: '', alt: 'Yes Energy / PowerCore', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/yes-energy.webp' },
+    { name: '', alt: 'Lonestar Electric Supply', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/lonestar-electric.webp' },
+    { name: '', alt: 'Los Angeles Regional Food Bank', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/la-food-bank.webp' },
+    { name: '', alt: 'Rose Acre Farms', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/rose-acre-farms.webp' },
+    { name: '', alt: 'Pexco Aerospace', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/pexco-aerospace.webp' },
+    { name: '', alt: 'Santa Clara Unified School District', imageUrl: '/wp-content/themes/secure-centric/assets/img/client-logos/santa-clara-unified-school-district.webp' }
   ];
 
   /**
@@ -812,9 +816,20 @@
    * Render Block HTML: 8-Step CMMC Journey Roadmap
    */
   function renderJourney(block) {
-    const rawItems = (block && block.items && block.items.length) ? block.items : DEFAULT_JOURNEY_STEPS;
-    const items = DEFAULT_JOURNEY_STEPS.map((defStep, i) => {
-      const raw = rawItems[i];
+    const rawItems = (window.scRoadmapData && window.scRoadmapData.length) 
+      ? window.scRoadmapData 
+      : ((block && block.items && block.items.length) ? block.items : DEFAULT_JOURNEY_STEPS);
+
+    const items = rawItems.map((raw, i) => {
+      const defStep = DEFAULT_JOURNEY_STEPS[i] || {
+        no: String(i + 1).padStart(2, '0'),
+        name: 'Milestone',
+        phase: 'Phase ' + (i + 1),
+        help: '',
+        who: 'Secure-Centric Team and Your Team',
+        output: '',
+        link: '#contact'
+      };
       if (typeof raw === 'object' && raw !== null && raw.name) {
         return { ...defStep, ...raw };
       } else if (typeof raw === 'string') {
@@ -877,7 +892,7 @@
               <span class="section-eyebrow">// THE CMMC PROCESS</span>
               <h2>${esc(block.t)}</h2>
             </div>
-            <a href="#page-19" class="text-link">Click Here to Learn More -&gt;</a>
+            <a href="/cmmc/cmmc-process/" class="text-link">Click Here to Learn More -&gt;</a>
           </div>
 
           <!-- Interactive Milestone Flow Stepper -->
@@ -992,7 +1007,7 @@
               <div class="milestone-stepper-pills">
                 <span class="milestone-flow-badge ${isStep7 ? 'violet' : ''}">
                   <span class="pulse-dot" style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px;"></span>
-                  MILESTONE ${activeStep.no} OF 08 &bull; ${phaseName}
+                  MILESTONE ${activeStep.no} OF ${String(totalSteps).padStart(2, '0')} &bull; ${phaseName}
                 </span>
               </div>
 
@@ -1015,9 +1030,26 @@
             <div class="step-detail-left">
               <span class="section-eyebrow ${isStep7 ? 'violet' : ''}">MILESTONE ${activeStep.no} &bull; ${esc(activeStep.name).toUpperCase()}</span>
               <h3>${esc(activeStep.name)}</h3>
-              <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
-                ${esc(activeStep.help)}
-              </p>
+              ${activeStep.what_happens || activeStep.how_we_help ? `
+                <div class="milestone-desc-sections" style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 14px;">
+                  ${activeStep.what_happens ? `
+                    <div class="milestone-desc-block">
+                      <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-electric-blue); margin-bottom: 4px;">What Happens</span>
+                      <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">${esc(activeStep.what_happens)}</p>
+                    </div>
+                  ` : ''}
+                  ${activeStep.how_we_help ? `
+                    <div class="milestone-desc-block">
+                      <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-navy); margin-bottom: 4px;">How We Help</span>
+                      <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin: 0;">${esc(activeStep.how_we_help)}</p>
+                    </div>
+                  ` : ''}
+                </div>
+              ` : `
+                <p style="font-size: 1.0625rem; color: var(--color-body-text); line-height: 1.6; margin-bottom: 24px;">
+                  ${esc(activeStep.help)}
+                </p>
+              `}
               <div class="step-cta-group" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
                 ${isStep7 ? `
                   <a href="#page-19" class="btn btn-primary" style="background-color: var(--color-violet); border-color: var(--color-violet);">
@@ -2752,10 +2784,10 @@
           break;
         case 'badges':
           const badgeItems = block.badges || [
-            { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: 'assets/img/badges/cyber-ab-rpo.webp' },
-            { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: 'assets/img/badges/inc-5000-banner.webp' },
-            { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: 'assets/img/badges/inc-5000-badge.webp' },
-            { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: 'assets/img/badges/crn-msp-500.webp' }
+            { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp' },
+            { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-banner.webp' },
+            { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp' },
+            { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/crn-msp-500.webp' }
           ];
           contentHtml += `
             <section class="section-white py-section credentials-badges-section wp-block-inspect" data-wp-block="wp:group {backgroundColor:'white'}">
@@ -2778,10 +2810,10 @@
         case 'cards':
           if (block.t && block.t.toLowerCase().includes('credentials') && block.t.toLowerCase().includes('badges')) {
             const autoBadges = [
-              { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: 'assets/img/badges/cyber-ab-rpo.webp' },
-              { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: 'assets/img/badges/inc-5000-banner.webp' },
-              { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: 'assets/img/badges/inc-5000-badge.webp' },
-              { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: 'assets/img/badges/crn-msp-500.webp' }
+              { title: 'The Cyber AB Registered Provider Organization', alt: 'The Cyber AB Registered Practitioner Organization (RPO)', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp' },
+              { title: "Inc. 5000 America's Fastest-Growing Private Companies", alt: "Inc. 5000 No. 452 (2025)", imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-banner.webp' },
+              { title: 'Inc. 5000 2026 Honor Roll', alt: 'Inc. 5000 2026', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp' },
+              { title: 'CRN MSP 500 2024', alt: 'CRN MSP 500 2024', imageUrl: '/wp-content/themes/secure-centric/assets/img/badges/crn-msp-500.webp' }
             ];
             contentHtml += `
               <section class="section-white py-section credentials-badges-section wp-block-inspect" data-wp-block="wp:group {backgroundColor:'white'}">
@@ -3373,17 +3405,6 @@
     moveTo(0, false);
     startTimer();
   }
-      testimonialsObserver = new IntersectionObserver(() => {
-        handleTestimonialsScrollCheck();
-      }, {
-        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
-      });
-      testimonialsObserver.observe(section);
-    }
-
-    // Check immediately in case section is already in full view
-    handleTestimonialsScrollCheck();
-  }
 
   // Window scroll listener for both Roadmap and Testimonials focus detection
   window.addEventListener('scroll', () => {
@@ -3418,33 +3439,45 @@
 
     // Helper: update whole section DOM smoothly
     function finishStepTransition() {
-      activeRoadmapStep = newIdx;
-      const temp = document.createElement('div');
-      temp.innerHTML = renderJourney(block);
-      const newSection = temp.firstElementChild;
-      roadmapSection.replaceWith(newSection);
+      try {
+        activeRoadmapStep = newIdx;
+        const temp = document.createElement('div');
+        temp.innerHTML = renderJourney(block);
+        const newSection = temp.firstElementChild;
+        if (newSection && roadmapSection) {
+          roadmapSection.replaceWith(newSection);
 
-      alignWalkerToActiveStep(true);
+          alignWalkerToActiveStep(true);
 
-      const newWalker = newSection.querySelector('#roadmap-walker');
-      if (newWalker) {
-        newWalker.classList.remove('is-walking');
-        newWalker.classList.add('is-idle');
+          const newWalker = newSection.querySelector('#roadmap-walker');
+          if (newWalker) {
+            newWalker.classList.remove('is-walking');
+            newWalker.classList.add('is-idle');
+          }
+
+          // Safe local scroll for mobile horizontal rail only; NEVER scroll the browser window/page
+          const timelineNav = newSection.querySelector('#roadmap-timeline-nav') || newSection.querySelector('.roadmap-timeline-nav');
+          const activeBtn = newSection.querySelector('.step-node.active');
+          if (timelineNav && activeBtn && timelineNav.scrollWidth > timelineNav.clientWidth) {
+            const targetScrollLeft = activeBtn.offsetLeft - (timelineNav.clientWidth / 2) + (activeBtn.offsetWidth / 2);
+            timelineNav.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
+          }
+
+          // Reconnect observer to the new section DOM node
+          observeRoadmapVisibility();
+        }
+      } catch (err) {
+        console.error('Error during roadmap step transition:', err);
+      } finally {
+        isRoadmapWalking = false;
+        const currentWalker = document.querySelector('#roadmap-walker');
+        if (currentWalker) {
+          currentWalker.classList.remove('is-walking');
+          currentWalker.classList.add('is-idle');
+        }
+        // Continue autoplay loop only if section is currently in full focus
+        scheduleNextAutoplayStep();
       }
-
-      // Safe local scroll for mobile horizontal rail only; NEVER scroll the browser window/page
-      const timelineNav = newSection.querySelector('#roadmap-timeline-nav') || newSection.querySelector('.roadmap-timeline-nav');
-      const activeBtn = newSection.querySelector('.step-node.active');
-      if (timelineNav && activeBtn && timelineNav.scrollWidth > timelineNav.clientWidth) {
-        const targetScrollLeft = activeBtn.offsetLeft - (timelineNav.clientWidth / 2) + (activeBtn.offsetWidth / 2);
-        timelineNav.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
-      }
-
-      // Reconnect observer to the new section DOM node
-      observeRoadmapVisibility();
-
-      // Continue autoplay loop only if section is currently in full focus
-      scheduleNextAutoplayStep();
     }
 
     // On selecting previous or looping back (step before current), instant update without forward walk
@@ -3570,13 +3603,17 @@
   };
 
   window.openMobileDrawer = function () {
-    if (mobileDrawer) mobileDrawer.classList.add('open');
-    if (mobileBackdrop) mobileBackdrop.classList.add('open');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const backdrop = document.getElementById('mobile-nav-backdrop');
+    if (drawer) drawer.classList.add('open');
+    if (backdrop) backdrop.classList.add('open');
   };
 
   window.closeMobileDrawer = function () {
-    if (mobileDrawer) mobileDrawer.classList.remove('open');
-    if (mobileBackdrop) mobileBackdrop.classList.remove('open');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const backdrop = document.getElementById('mobile-nav-backdrop');
+    if (drawer) drawer.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
   };
 
   window.dismissPopup = function () {
@@ -3624,30 +3661,22 @@
   };
 
   /**
-   * Scroll listener to reveal bottom-right popup after 30% scroll
+   * Scroll listener to reveal bottom-right popup
    */
   function handleScrollPopup() {
     if (popupDismissed) return;
-    const doc = document.documentElement;
-    const body = document.body;
-    const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
-    const scrollHeight = Math.max(
-      body.scrollHeight, doc.scrollHeight,
-      body.offsetHeight, doc.offsetHeight,
-      body.clientHeight, doc.clientHeight
-    ) - window.innerHeight;
-
-    if (scrollHeight > 50) {
-      const percent = (scrollTop / scrollHeight) * 100;
-      if (percent >= 30) {
-        if (leadPopup) leadPopup.classList.add('visible');
-      }
+    if (window.scrollY > 300) {
+      if (leadPopup) leadPopup.classList.add('visible');
     }
   }
 
   window.addEventListener('scroll', handleScrollPopup, { passive: true });
-  // Check on load in case user is refreshed mid-page
-  setTimeout(handleScrollPopup, 500);
+  // Also show automatically after 3.5s if not already shown
+  setTimeout(() => {
+    if (!popupDismissed && leadPopup) {
+      leadPopup.classList.add('visible');
+    }
+  }, 3500);
 
   /**
    * Hash Route Listener

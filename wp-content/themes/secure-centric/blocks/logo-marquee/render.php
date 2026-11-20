@@ -15,6 +15,26 @@ $theme_uri = get_template_directory_uri();
 $default_logos = array(
     array(
         'name'     => '',
+        'alt'      => 'HRD Aero Systems',
+        'imageUrl' => $theme_uri . '/assets/img/client-logos/hrd-aero-systems.webp',
+    ),
+    array(
+        'name'     => '',
+        'alt'      => 'Avis Industrial Corporation',
+        'imageUrl' => $theme_uri . '/assets/img/client-logos/avis-industrial-corporation.webp',
+    ),
+    array(
+        'name'     => '',
+        'alt'      => 'United Steelworkers',
+        'imageUrl' => $theme_uri . '/assets/img/client-logos/usw-united-steelworkers.webp',
+    ),
+    array(
+        'name'     => '',
+        'alt'      => 'Weber Metals',
+        'imageUrl' => $theme_uri . '/assets/img/client-logos/weber-metals.webp',
+    ),
+    array(
+        'name'     => '',
         'alt'      => 'Safran Federal Systems',
         'imageUrl' => $theme_uri . '/assets/img/client-logos/safran.webp',
     ),
@@ -22,11 +42,6 @@ $default_logos = array(
         'name'     => '',
         'alt'      => 'Tower Semiconductor',
         'imageUrl' => $theme_uri . '/assets/img/client-logos/tower-semiconductor.webp',
-    ),
-    array(
-        'name'     => '',
-        'alt'      => 'Weber Metals',
-        'imageUrl' => $theme_uri . '/assets/img/client-logos/weber-metals.webp',
     ),
     array(
         'name'     => '',
@@ -52,11 +67,6 @@ $default_logos = array(
         'name'     => '',
         'alt'      => 'CMI Promex',
         'imageUrl' => $theme_uri . '/assets/img/client-logos/cmi-promex.webp',
-    ),
-    array(
-        'name'     => '',
-        'alt'      => 'HRD Aero Systems',
-        'imageUrl' => $theme_uri . '/assets/img/client-logos/hrd-aero-systems.webp',
     ),
     array(
         'name'     => '',
@@ -87,16 +97,6 @@ $default_logos = array(
         'name'     => '',
         'alt'      => 'Santa Clara Unified School District',
         'imageUrl' => $theme_uri . '/assets/img/client-logos/santa-clara-unified-school-district.webp',
-    ),
-    array(
-        'name'     => '',
-        'alt'      => 'United Steelworkers',
-        'imageUrl' => $theme_uri . '/assets/img/client-logos/usw-united-steelworkers.webp',
-    ),
-    array(
-        'name'     => '',
-        'alt'      => 'Avis Industrial Corporation',
-        'imageUrl' => $theme_uri . '/assets/img/client-logos/avis-industrial-corporation.webp',
     ),
 );
 
