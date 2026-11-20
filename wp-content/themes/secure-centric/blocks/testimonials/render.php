@@ -105,16 +105,11 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
             <div class="testimonial-author-meta">
               <div class="testimonial-author-name"><?php echo esc_html( $rev['author'] ); ?></div>
               <div class="testimonial-author-role"><?php echo esc_html( $rev['role'] ); ?></div>
-              <?php if ( ! empty( $rev['linkedin_url'] ) ) : ?>
-                <a href="<?php echo esc_url( $rev['linkedin_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="testimonial-linkedin-link" title="<?php echo esc_attr( $rev['linkedin_text'] ); ?>" onclick="event.stopPropagation();">
-                  <svg class="linkedin-badge-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect width="16" height="16" rx="3" fill="#0A66C2"></rect>
-                    <path d="M4.6 6.3H2.5V13H4.6V6.3Z" fill="white"></path>
-                    <path d="M3.55 5.4C4.24 5.4 4.8 4.84 4.8 4.15C4.8 3.46 4.24 2.9 3.55 2.9C2.86 2.9 2.3 3.46 2.3 4.15C2.3 4.84 2.86 5.4 3.55 5.4Z" fill="white"></path>
-                    <path d="M8.1 6.3H6.1V13H8.1V9.5C8.1 7.6 10.5 7.4 10.5 9.5V13H12.6V8.6C12.6 5.2 8.7 5.3 8.1 6.9V6.3Z" fill="white"></path>
-                  </svg>
-                  <span><?php echo esc_html( $rev['linkedin_text'] ); ?></span>
-                </a>
+              <?php if ( ! empty( $rev['linkedin_text'] ) || ! empty( $rev['linkedin_url'] ) ) : ?>
+                <?php $l_text = ! empty( $rev['linkedin_text'] ) ? $rev['linkedin_text'] : 'Shared publicly on LinkedIn'; ?>
+                <span class="testimonial-linkedin-link" style="color: #0A66C2; cursor: default; user-select: text;">
+                  <?php echo esc_html( $l_text ); ?>
+                </span>
               <?php endif; ?>
             </div>
           </div>

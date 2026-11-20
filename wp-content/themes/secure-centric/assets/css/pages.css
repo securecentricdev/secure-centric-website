@@ -924,12 +924,12 @@
   color: #0A66C2;
   text-decoration: none;
   margin-top: 5px;
-  transition: color 0.2s ease;
+  cursor: default;
 }
 
 .testimonial-linkedin-link:hover {
-  color: #004182;
-  text-decoration: underline;
+  color: #0A66C2;
+  text-decoration: none;
 }
 
 .testimonial-linkedin-link .linkedin-badge-icon {
