@@ -2593,12 +2593,16 @@
             }),
             el(TextControl, {
               label: 'Button Text',
-              value: attributes.btnText !== undefined ? attributes.btnText : 'Book a Discovery Call →',
+              placeholder: 'e.g. Book a Discovery Call → (leave empty to remove CTA)',
+              help: 'Leave empty to remove the CTA button from this FAQ section.',
+              value: attributes.btnText !== undefined ? attributes.btnText : '',
               onChange: function (val) { setAttributes({ btnText: val }); }
             }),
             el(TextControl, {
               label: 'Button URL',
-              value: attributes.btnUrl !== undefined ? attributes.btnUrl : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll',
+              placeholder: 'e.g. https://api.leadconnectorhq.com/... (optional)',
+              help: 'Defaults to primary booking link if Button Text is entered and URL is left empty.',
+              value: attributes.btnUrl !== undefined ? attributes.btnUrl : '',
               onChange: function (val) { setAttributes({ btnUrl: val }); }
             })
           ),

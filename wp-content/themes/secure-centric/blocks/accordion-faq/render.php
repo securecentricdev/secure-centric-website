@@ -13,9 +13,17 @@ $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 
 $title       = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Common questions';
 $has_explicit_desc = array_key_exists( 'description', $attributes ) || array_key_exists( 'subtitle', $attributes );
 $description = $has_explicit_desc ? ( array_key_exists( 'description', $attributes ) ? trim( (string) $attributes['description'] ) : trim( (string) $attributes['subtitle'] ) ) : 'Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.';
-$btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Book a Discovery Call →';
-$default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
-$btn_url     = ! empty( $attributes['btnUrl'] ) ? $attributes['btnUrl'] : $default_booking;
+$raw_btn_text = isset( $attributes['btnText'] ) ? trim( (string) $attributes['btnText'] ) : '';
+$raw_btn_url  = isset( $attributes['btnUrl'] ) ? trim( (string) $attributes['btnUrl'] ) : '';
+$has_cta      = ( '' !== $raw_btn_text || '' !== $raw_btn_url );
+$btn_text     = '';
+$btn_url      = '';
+
+if ( $has_cta ) {
+    $default_booking = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
+    $btn_text        = ! empty( $raw_btn_text ) ? $raw_btn_text : 'Book a Discovery Call →';
+    $btn_url         = ! empty( $raw_btn_url ) ? $raw_btn_url : $default_booking;
+}
 
 $faqs = array();
 
@@ -47,7 +55,9 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $eyebrow     = sc_clean_text( $eyebrow );
     $title       = sc_clean_text( $title );
     $description = sc_clean_text( $description );
-    $btn_text    = sc_clean_text( $btn_text );
+    if ( $has_cta ) {
+        $btn_text = sc_clean_text( $btn_text );
+    }
     $faqs        = sc_clean_text( $faqs );
 }
 
@@ -64,11 +74,13 @@ $anchor_attr = $anchor ? ' id="' . esc_attr( $anchor ) . '"' : '';
         <?php endif; ?>
         <h2<?php echo empty( $description ) ? ' style="margin-bottom: 24px;"' : ' style="margin-bottom: 16px;"'; ?>><?php echo esc_html( $title ); ?></h2>
         <?php if ( ! empty( $description ) ) : ?>
-        <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: 24px;">
+        <p style="color: var(--color-body-text); font-size: 0.9375rem; <?php echo $has_cta ? 'margin-bottom: 24px;' : 'margin-bottom: 0;'; ?>">
           <?php echo esc_html( $description ); ?>
         </p>
         <?php endif; ?>
+        <?php if ( $has_cta ) : ?>
         <a href="<?php echo esc_url( $btn_url ); ?>" class="btn btn-secondary-outline"><?php echo esc_html( $btn_text ); ?></a>
+        <?php endif; ?>
       </div>
 
       <div class="accordion-group">

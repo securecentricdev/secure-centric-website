@@ -1393,6 +1393,12 @@
    * Render Block HTML: Accordion FAQ
    */
   function renderFAQ(block) {
+    const rawBtnText = (block.btnText !== undefined ? block.btnText : (block.ctaText || '')).trim();
+    const rawBtnUrl = (block.btnUrl !== undefined ? block.btnUrl : (block.ctaUrl || '')).trim();
+    const hasCta = Boolean(rawBtnText || rawBtnUrl);
+    const ctaText = rawBtnText || 'Book a Discovery Call \u2192';
+    const ctaUrl = rawBtnUrl || '#contact';
+
     return `
       <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" 
                data-wp-block="wp:details-group" 
@@ -1402,10 +1408,10 @@
             <div class="faq-intro-col">
               <span class="section-eyebrow">// FREQUENTLY ASKED QUESTIONS</span>
               <h2 style="margin-bottom: 16px;">${esc(block.t)}</h2>
-              <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: 24px;">
+              <p style="color: var(--color-body-text); font-size: 0.9375rem; margin-bottom: ${hasCta ? '24px' : '0'};">
                 Still have questions regarding your specific CMMC clauses or audit dates? Speak directly with our lead Registered Practitioner.
               </p>
-              <a href="#contact" class="btn btn-secondary-outline">Book a Discovery Call &rarr;</a>
+              ${hasCta ? `<a href="${esc(ctaUrl)}" class="btn btn-secondary-outline">${esc(ctaText)}</a>` : ''}
             </div>
 
             <div class="accordion-group">

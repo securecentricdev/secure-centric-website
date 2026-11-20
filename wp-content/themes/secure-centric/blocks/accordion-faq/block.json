@@ -34,11 +34,11 @@
     },
     "btnText": {
       "type": "string",
-      "default": "Book a Discovery Call \u2192"
+      "default": ""
     },
     "btnUrl": {
       "type": "string",
-      "default": "https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll"
+      "default": ""
     },
     "faq1Q": {
       "type": "string",
