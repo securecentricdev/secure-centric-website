@@ -126,11 +126,11 @@
     },
     "showBadges": {
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "hideBadges": {
       "type": "boolean",
-      "default": false
+      "default": true
     }
   },
   "supports": {

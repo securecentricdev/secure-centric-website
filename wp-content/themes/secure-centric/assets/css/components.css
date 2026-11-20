@@ -1714,43 +1714,6 @@ body,
   box-sizing: border-box;
 }
 
-.why-badges-row.why-badges-logos {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 28px !important;
-  flex-wrap: wrap !important;
-  width: 100% !important;
-}
-
-.why-badge-logo-item {
-  display: flex;
-  align-items: center;
-}
-
-.why-badge-logo-img {
-  max-height: 64px;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-.why-badge-logo-img:hover {
-  transform: translateY(-2px);
-}
-
-@media (max-width: 680px) {
-  .why-badges-row.why-badges-logos {
-    gap: 18px !important;
-  }
-  .why-badge-logo-img {
-    max-height: 52px !important;
-  }
-}
-
 @media (max-width: 992px) {
   .why-proof-grid {
     grid-template-columns: 1fr !important;

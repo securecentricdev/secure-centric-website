@@ -1289,19 +1289,6 @@
               `).join('')}
             </div>
           </div>
-
-          <!-- Verified Credentials Badges Strip: Cyber AB RPO, Inc. 5000, Bilateral NDA Standard -->
-          <div class="why-badges-row why-badges-logos" style="display: flex; align-items: center; justify-content: flex-start; gap: 28px; width: 100%; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); box-sizing: border-box; flex-wrap: wrap;">
-            <div class="why-badge-logo-item" style="display: flex; align-items: center;">
-              <img src="/wp-content/themes/secure-centric/assets/img/badges/cyber-ab-rpo.webp" alt="The Cyber AB Registered Provider Organization (RPO)" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
-            </div>
-            <div class="why-badge-logo-item" style="display: flex; align-items: center;">
-              <img src="/wp-content/themes/secure-centric/assets/img/badges/inc-5000-badge.webp" alt="Inc. 5000 America's Fastest-Growing Private Companies" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
-            </div>
-            <div class="why-badge-logo-item" style="display: flex; align-items: center;">
-              <img src="/wp-content/themes/secure-centric/assets/img/badges/bilateral-nda-standard.svg" alt="Bilateral NDA Standard - Defense Contractor Protected" class="why-badge-logo-img" style="max-height: 64px; width: auto; object-fit: contain; display: block;" loading="lazy" />
-            </div>
-          </div>
         </div>
       </section>
     `;
