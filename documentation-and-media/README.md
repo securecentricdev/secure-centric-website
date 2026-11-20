@@ -16,6 +16,7 @@ This directory contains offline local copies of all project documentation PDFs a
 | 06 | [`06-About-Page-Guide.pdf`](./pdfs/06-About-Page-Guide.pdf) | 271 KB | About Us page, executive leadership bio grids, defense mission statement, and Cyber AB credentials. |
 | 07 | [`07-Contact-Page-Guide.pdf`](./pdfs/07-Contact-Page-Guide.pdf) | 305 KB | Contact page, direct consultation calendar embed, consultation inquiry form, and client logo carousel. |
 | 08 | [`08-Admin-Dashboard-and-Customizer-Guide.pdf`](./pdfs/08-Admin-Dashboard-and-Customizer-Guide.pdf) | 363 KB | Fundamentals of WP Admin: Dashboard, Gutenberg Block Editor, Pages management, and Theme Customizer (Global Colors/Fonts, Header, Footer, Custom CSS). |
+| 09 | [`09-Forms-and-Webhooks-Management-Guide.pdf`](./pdfs/09-Forms-and-Webhooks-Management-Guide.pdf) | 454 KB | Complete administrator guide: editing Forminator forms, labels, required settings, submit buttons, post-submit behaviors, and zero-code webhook configuration. |
 | — | [`Secure-Centric-WordPress-Block-Editor-Guide.pdf`](./pdfs/Secure-Centric-WordPress-Block-Editor-Guide.pdf) | 610 KB | Complete 44-page unified block editor master guide covering all custom blocks and template patterns. |
 | — | [`Secure-Centric-Website-Designs-Complete-Pack.pdf`](./pdfs/Secure-Centric-Website-Designs-Complete-Pack.pdf) | 20 MB | Comprehensive visual design pack and layout specifications across all 20 site pages. |
 
@@ -27,6 +28,7 @@ This directory contains offline local copies of all project documentation PDFs a
 |---|---|:---:|---|---|
 | [`GoHighLevel-Automation-and-Configuration-Guide.pdf`](./pdfs/GoHighLevel-Automation-and-Configuration-Guide.pdf) | **GoHighLevel Lead / Marketing Ops** | 5 | 436 KB | Pure step-by-step instructions for GoHighLevel CRM workflows, Inbound Webhook mapping, Tagging taxonomy, Custom Fields master dictionary, Dedicated Email Sending Subdomain (DNS: SPF/DKIM/DMARC), Email templates (A–E), consultation calendar sync, and staging validation. |
 | [`WordPress-Forms-and-Webhook-Integration-Guide-Dhruval.pdf`](./pdfs/WordPress-Forms-and-Webhook-Integration-Guide-Dhruval.pdf) | **Dhruval (WordPress / Frontend Lead)** | 5 | 435 KB | WordPress forms setup, Forminator hidden tracking fields (Source Page & UTMs), server-side secure webhook dispatch, fail-safe dual-routing (GHL + M365 SMTP backup), Turnstile bot defense, GA4 dataLayer events, lazy-loaded booking iframe, and staging checklist. |
+| [`WordPress-Forms-and-Webhooks-Admin-Guide.pdf`](./pdfs/WordPress-Forms-and-Webhooks-Admin-Guide.pdf) | **Website Administrators / Marketing** | 4 | 454 KB | Non-technical dashboard guide for editing form fields, labels, placeholders, submission redirects, and adding/editing Forminator CRM webhooks with zero code. |
 
 ---
 
