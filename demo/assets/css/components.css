@@ -1497,27 +1497,94 @@ body.admin-bar .on-this-page-toc {
   .contact-form-card {
     padding: 20px;
   }
-}
-
-@media (max-width: 480px) {
-  .btn {
-    padding: 10px 18px;
-    font-size: 0.875rem;
-  }
   .site-header .header-inner {
     height: 60px;
   }
   .site-logo {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .site-logo span {
+    white-space: nowrap;
   }
   .site-logo .site-logo-img {
-    height: 40px;
-    max-width: 50px;
+    height: 36px;
+    max-width: 44px;
+  }
+  .header-actions {
+    gap: 10px !important;
+  }
+  .site-header .header-inner .btn,
+  .site-header .header-cta-btn {
+    padding: 7px 12px;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+  .nav-mobile-toggle {
+    padding: 6px 10px;
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+  }
+  .site-header .header-inner {
+    height: 54px;
+  }
+  .site-logo {
+    font-size: 0.875rem;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .site-logo span {
+    white-space: nowrap;
+  }
+  .site-logo .site-logo-img {
+    height: 28px;
+    max-width: 34px;
   }
   .site-logo .logo-icon {
-    width: 28px;
-    height: 28px;
-    font-size: 0.95rem;
+    width: 26px;
+    height: 26px;
+    font-size: 0.875rem;
+  }
+  .header-actions {
+    gap: 8px !important;
+  }
+  .site-header .header-inner .btn,
+  .site-header .header-cta-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .nav-mobile-toggle {
+    padding: 5px 8px;
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-logo {
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+  .site-logo .site-logo-img {
+    height: 25px;
+    max-width: 30px;
+  }
+  .header-actions {
+    gap: 6px !important;
+  }
+  .site-header .header-inner .btn,
+  .site-header .header-cta-btn {
+    padding: 5px 7px;
+    font-size: 0.6875rem;
   }
 }
 
@@ -1529,21 +1596,39 @@ body.mobile-preview-mode .nav-links {
 }
 body.mobile-preview-mode .nav-mobile-toggle {
   display: flex !important;
+  padding: 5px 8px !important;
+  font-size: 1.05rem !important;
 }
 body.mobile-preview-mode .site-header .header-inner {
-  height: 60px !important;
+  height: 54px !important;
 }
 body.mobile-preview-mode .site-logo {
-  font-size: 1.15rem !important;
+  font-size: 0.875rem !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+}
+body.mobile-preview-mode .site-logo span {
+  white-space: nowrap !important;
 }
 body.mobile-preview-mode .site-logo .site-logo-img {
-  height: 40px !important;
-  max-width: 50px !important;
+  height: 28px !important;
+  max-width: 34px !important;
 }
 body.mobile-preview-mode .site-logo .logo-icon {
-  width: 28px !important;
-  height: 28px !important;
-  font-size: 0.95rem !important;
+  width: 26px !important;
+  height: 26px !important;
+  font-size: 0.875rem !important;
+}
+body.mobile-preview-mode .header-actions {
+  gap: 8px !important;
+}
+body.mobile-preview-mode .site-header .header-inner .btn,
+body.mobile-preview-mode .site-header .header-cta-btn {
+  padding: 6px 10px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  letter-spacing: -0.01em !important;
 }
 body.mobile-preview-mode .site-top-bar {
   font-size: 0.6875rem !important;
