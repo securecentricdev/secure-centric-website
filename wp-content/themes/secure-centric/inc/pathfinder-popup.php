@@ -162,12 +162,14 @@ function sc_render_pathfinder_popup() {
                     submitBtn.textContent = 'Subscribing...';
                 }
 
-                // Send lead data to GoHighLevel Flow 3 Webhook
-                var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6';
+                // Send lead data to GoHighLevel Flow 1 Newsletter Webhook
+                var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr';
                 var payload = {
                     full_name: fullName,
+                    name: fullName,
                     email: email,
                     activity_type: 'newsletter_subscription',
+                    form_name: 'Secure-Centric Newsletter Popup',
                     lead_magnet_name: 'Secure-Centric Newsletter Popup',
                     source_page_url: window.location.href,
                     tags: ['source - website', 'website - lead - newsletter'],
@@ -210,10 +212,11 @@ function sc_render_pathfinder_popup() {
                     footerSubmitBtn.textContent = 'Subscribing...';
                 }
 
-                var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6';
+                var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr';
                 var payload = {
                     email: email,
                     activity_type: 'newsletter_subscription',
+                    form_name: 'Footer Newsletter',
                     lead_magnet_name: 'Footer Newsletter',
                     source_page_url: window.location.href,
                     tags: ['source - website', 'website - lead - newsletter'],
@@ -231,6 +234,66 @@ function sc_render_pathfinder_popup() {
 
                 footerForm.style.display = 'none';
                 if (footerSuccess) footerSuccess.style.display = 'block';
+            });
+        }
+
+        // CUI Session Hero Form Redirect Controller (/cui-session/)
+        var cuiForm = document.getElementById('cui-session-booking-form');
+        if (cuiForm) {
+            cuiForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var nameInput = document.getElementById('cui-name');
+                var emailInput = document.getElementById('cui-email');
+                var companyInput = document.getElementById('cui-company');
+                var submitBtn = cuiForm.querySelector('button[type="submit"]');
+
+                var name = nameInput ? nameInput.value.trim() : '';
+                var email = emailInput ? emailInput.value.trim() : '';
+                var company = companyInput ? companyInput.value.trim() : '';
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Redirecting to booking...';
+                }
+
+                var targetBookingUrl = 'https://api.leadconnectorhq.com/widget/booking/eVwMlhdbXuKhKkkYMGa1';
+                var params = [];
+                if (name) params.push('name=' + encodeURIComponent(name));
+                if (email) params.push('email=' + encodeURIComponent(email));
+                if (company) params.push('company=' + encodeURIComponent(company));
+                if (params.length) {
+                    targetBookingUrl += (targetBookingUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
+                }
+
+                // Send lead data to GoHighLevel Flow 3 Webhook
+                var cuiWebhook = 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/JaplJZpdWAub1oAZHgh6';
+                var cuiPayload = {
+                    name: name,
+                    email: email,
+                    company_name: company,
+                    activity_type: 'cui_session_request',
+                    lead_magnet_name: 'Free CUI Identification Session',
+                    source_page_url: window.location.href,
+                    tags: ['source - website', 'website - lead - cui-session'],
+                    submitted_at: new Date().toISOString()
+                };
+
+                try {
+                    fetch(cuiWebhook, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(cuiPayload)
+                    }).finally(function () {
+                        window.location.href = targetBookingUrl;
+                    });
+                } catch (err) {
+                    window.location.href = targetBookingUrl;
+                }
+
+                setTimeout(function () {
+                    window.location.href = targetBookingUrl;
+                }, 600);
             });
         }
 

@@ -779,6 +779,7 @@ function secure_centric_forward_forminator_to_ghl( $form_id, $response, $entry_i
     $webhooks = array(
         // Flow 1 - Newsletter Signup
         106 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr',
+        103 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/d25QEncpiHDximq4fREr',
         // Flow 4 - Contact Us Form
         101 => 'https://services.leadconnectorhq.com/hooks/WMj6saOcBwOMZmggMv4l/webhook-trigger/xF7p64ol6wtyvdgezRpJ',
         // Note: Flow 3 (Checklist & Lead Magnet Downloads) is handled with full contextual matching & automated downloads in inc/ghl-flow3-lead-magnet.php

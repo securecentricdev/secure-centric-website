@@ -16,7 +16,11 @@ $title              = ! empty( $attributes['title'] ) ? $attributes['title'] : '
 $highlight_text     = ! empty( $attributes['highlightText'] ) ? $attributes['highlightText'] : 'Cyber AB RPO';
 $description        = ! empty( $attributes['description'] ) ? $attributes['description'] : 'We help defense contractors and suppliers get ready for CMMC and NIST SP 800-171, from the first site visit to the annual affirmation.';
 $primary_btn_text   = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
-$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : ( function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' );
+$default_booking_url = ( 'cui-session' === $layout || 'landing' === $layout ) ? 'https://api.leadconnectorhq.com/widget/booking/eVwMlhdbXuKhKkkYMGa1' : ( function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll' );
+$primary_btn_url    = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : $default_booking_url;
+if ( ( 'cui-session' === $layout || 'landing' === $layout ) && false !== strpos( $primary_btn_url, 'nZAjs4Kt86aEyfpwhcll' ) ) {
+    $primary_btn_url = 'https://api.leadconnectorhq.com/widget/booking/eVwMlhdbXuKhKkkYMGa1';
+}
 $secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? $attributes['secondaryBtnText'] : 'Explore Every Phase ↓';
 $secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? $attributes['secondaryBtnUrl'] : '#phases-detail';
 $sub_text           = ! empty( $attributes['subText'] ) ? $attributes['subText'] : '30 min · No sales pitch · Signed NDA';
@@ -709,7 +713,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             <?php if ( ! empty( $attributes['formId'] ) && shortcode_exists( 'forminator_form' ) ) : ?>
               <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $attributes['formId'] ) . '"]' ); ?>
             <?php else : ?>
-            <form id="cui-session-booking-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="GET" target="_blank">
+            <form id="cui-session-booking-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="GET">
               <div class="form-group" style="margin-bottom: 14px;">
                 <label class="form-label" for="cui-name">Full name*</label>
                 <input type="text" id="cui-name" name="name" class="form-input" placeholder="e.g. John Miller" required />
