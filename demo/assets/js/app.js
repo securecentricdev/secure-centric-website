@@ -115,25 +115,30 @@
               </div>
             </div>
             
-            <div class="hero-readiness-card">
-              <div class="eyebrow">
-                <span>${esc(block.leadCardBadge)}</span>
-                <span class="badge-chip accent" style="font-size: 0.65rem;">Free Tool</span>
+            <div class="hero-readiness-card cui-magnet-card" style="background: #ffffff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box;">
+              <div class="eyebrow" style="margin-bottom: 8px;">
+                <span style="color: #2563EB; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.5px; text-transform: uppercase;">STEP 1 OF 2</span>
               </div>
-              <h3>${esc(block.leadCardTitle)}</h3>
-              <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px;">
-                ${esc(block.leadCardDesc)}
-              </p>
-              <form class="readiness-inline-form" onsubmit="event.preventDefault(); window.triggerToolModal();">
-                <div style="margin-bottom: 12px;">
-                  <input type="email" class="form-input" placeholder="Enter corporate work email" required />
+              <h3 style="color: #0B1437; font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 20px;">Book your free CUI identification session</h3>
+              <form class="readiness-inline-form cui-session-form" action="/cui-session/" method="GET" onsubmit="window.location.href='/cui-session/'; return false;">
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Full name</label>
+                  <input type="text" name="name" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                  Start 3-Minute Readiness Check &rarr;
+                <div style="margin-bottom: 14px;">
+                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Work email</label>
+                  <input type="email" name="email" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
+                </div>
+                <div style="margin-bottom: 18px;">
+                  <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; text-align: left;">Company</label>
+                  <input type="text" name="company" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem; box-sizing: border-box;" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px; background: #3B82F6; color: #ffffff; font-weight: 700; border-radius: 8px; border: none; font-size: 1rem;">
+                  Check my CUI
                 </button>
               </form>
-              <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 10px; text-align: center;">
-                🔒 Work email required. Never submit classified or CUI information.
+              <p class="cui-magnet-card-note" style="font-size: 0.8125rem; color: #64748B; margin-top: 14px; margin-bottom: 0; text-align: left; line-height: 1.4;">
+                No cost and no obligation. We never share your details.
               </p>
             </div>
           </div>

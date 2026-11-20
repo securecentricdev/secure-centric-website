@@ -35,8 +35,8 @@ window.SITE_PAGES_DATA = [
         "wpBlock": "core/hero-home",
         "wpPattern": "secure-centric/hero-home",
         "eyebrow": "NIST SP 800-171 / CMMC Compliance Consultants",
-        "leadCardTitle": "Find out where you stand",
-        "leadCardBadge": "CMMC READINESS CHECK · 3 MINUTES",
+        "leadCardTitle": "Book your free CUI identification session",
+        "leadCardBadge": "STEP 1 OF 2",
         "leadCardDesc": "Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.",
         "topics": [
           {

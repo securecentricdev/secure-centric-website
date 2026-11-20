@@ -2103,7 +2103,7 @@ body,
   margin: 0 !important;
 }
 
-.hero-readiness-card .forminator-label,
+.hero-readiness-card:not(.cui-magnet-card) .forminator-label,
 .lead-magnet-band .forminator-label,
 .footer-col .forminator-label {
   display: none !important;
@@ -2448,3 +2448,89 @@ body,
 
 
 
+
+/* ==========================================================================
+   Hero CUI Magnet Card & Forminator Styling
+   ========================================================================== */
+.hero-readiness-card.cui-magnet-card {
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  padding: 32px 28px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+  box-sizing: border-box !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-ui {
+  margin: 0 !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-row {
+  margin-bottom: 14px !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-label {
+  display: block !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #1E293B !important;
+  margin-bottom: 6px !important;
+  text-align: left !important;
+  font-family: inherit !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-required {
+  display: none !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-input {
+  background: #ffffff !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 8px !important;
+  height: 44px !important;
+  padding: 8px 14px !important;
+  font-size: 0.9375rem !important;
+  color: #0F172A !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-input:focus {
+  border-color: #3B82F6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-button-submit {
+  width: 100% !important;
+  height: 48px !important;
+  background: #3B82F6 !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-top: 6px !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25) !important;
+  transition: background-color 0.2s ease, transform 0.15s ease !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-button-submit:hover {
+  background: #2563EB !important;
+  transform: translateY(-1px) !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-card-note {
+  font-size: 0.8125rem !important;
+  color: #64748B !important;
+  margin-top: 14px !important;
+  margin-bottom: 0 !important;
+  text-align: left !important;
+  line-height: 1.4 !important;
+}

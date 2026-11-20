@@ -50,7 +50,7 @@ $topic3_url   = ! empty( $attributes['topic3Url'] ) ? $attributes['topic3Url'] :
 $quiz_badge       = ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : 'CMMC READINESS CHECK · 3 MINUTES';
 $quiz_chip        = ! empty( $attributes['quizChip'] ) ? $attributes['quizChip'] : 'Free Tool';
 $quiz_title       = ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Find out where you stand';
-$quiz_desc        = ! empty( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.';
+$quiz_desc        = isset( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Assess your FCI/CUI boundaries and readiness score before a C3PAO audit.';
 $quiz_placeholder = ! empty( $attributes['quizPlaceholder'] ) ? $attributes['quizPlaceholder'] : 'Enter corporate work email';
 $quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtnText'] : 'Start 3-Minute Readiness Check →';
 $quiz_note        = ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : '🔒 Work email required. Never submit classified or CUI information.';
@@ -776,32 +776,45 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             </a>
           </div>
         </div>
-        <div class="hero-readiness-card">
-          <div class="eyebrow">
-            <span><?php echo esc_html( $quiz_badge ); ?></span>
+        <div class="hero-readiness-card cui-magnet-card" style="background: #ffffff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box;">
+          <div class="eyebrow" style="margin-bottom: 8px;">
+            <span style="color: #2563EB; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.5px; text-transform: uppercase;"><?php echo esc_html( ! empty( $attributes['quizBadge'] ) ? $attributes['quizBadge'] : $quiz_badge ); ?></span>
+            <?php if ( ! empty( $quiz_chip ) && 'Free Tool' !== $quiz_chip ) : ?>
             <span class="badge-chip accent" style="font-size: 0.65rem;"><?php echo esc_html( $quiz_chip ); ?></span>
+            <?php endif; ?>
           </div>
-          <h3><?php echo esc_html( $quiz_title ); ?></h3>
+          <h3 style="color: #0B1437; font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 20px;"><?php echo esc_html( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : $quiz_title ); ?></h3>
+          <?php if ( ! empty( $quiz_desc ) ) : ?>
           <p style="font-size: 0.875rem; color: var(--color-body-text); margin-bottom: 16px; line-height: 1.55;">
             <?php echo esc_html( $quiz_desc ); ?>
           </p>
+          <?php endif; ?>
           <?php
-          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
+          $hero_quiz_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '367';
           if ( ! empty( $hero_quiz_form ) && shortcode_exists( 'forminator_form' ) ) :
               echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_quiz_form ) . '"]' );
           else :
           ?>
-          <form class="readiness-inline-form" onsubmit="event.preventDefault(); if (typeof window.triggerToolModal === 'function') { window.triggerToolModal(); }">
-            <div style="margin-bottom: 12px;">
-              <input type="email" class="form-input" placeholder="<?php echo esc_attr( $quiz_placeholder ); ?>" required />
+          <form class="readiness-inline-form cui-session-fallback-form" action="<?php echo esc_url( home_url( '/cui-session/' ) ); ?>" method="GET">
+            <div style="margin-bottom: 14px;">
+              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Full name</label>
+              <input type="text" name="name" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px;">
-              <?php echo esc_html( $quiz_btn_text ); ?>
+            <div style="margin-bottom: 14px;">
+              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Work email</label>
+              <input type="email" name="email" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
+            </div>
+            <div style="margin-bottom: 18px;">
+              <label class="form-label" style="display: block; font-size: 0.875rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Company</label>
+              <input type="text" name="company" class="form-input" required style="width: 100%; height: 44px; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 14px; font-size: 0.9375rem;" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 48px; background: #3B82F6; color: #ffffff; font-weight: 700; border-radius: 8px; border: none; font-size: 1rem;">
+              Check my CUI
             </button>
           </form>
           <?php endif; ?>
-          <p style="font-size: 0.6875rem; color: var(--color-slate); margin-top: 12px; margin-bottom: 0; text-align: center;">
-            <?php echo esc_html( $quiz_note ); ?>
+          <p class="cui-magnet-card-note" style="font-size: 0.8125rem; color: #64748B; margin-top: 14px; margin-bottom: 0; text-align: left; line-height: 1.4;">
+            <?php echo esc_html( ! empty( $attributes['quizNote'] ) ? $attributes['quizNote'] : 'No cost and no obligation. We never share your details.' ); ?>
           </p>
         </div>
       </div>
