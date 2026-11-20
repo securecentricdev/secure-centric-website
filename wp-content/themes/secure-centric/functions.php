@@ -817,3 +817,7 @@ add_action( 'forminator_custom_form_after_save_entry', 'secure_centric_forward_f
 // GoHighLevel Flow 3: Lead Magnet Download Automation & Resource Mapping
 require_once get_template_directory() . '/inc/ghl-flow3-lead-magnet.php';
 
+// CMMC Pathfinder Floating Popup (Triggers after 30% page scroll on all pages)
+require_once get_template_directory() . '/inc/pathfinder-popup.php';
+
+
