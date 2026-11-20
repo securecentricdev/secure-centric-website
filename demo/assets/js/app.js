@@ -3497,22 +3497,30 @@
   };
 
   /**
-   * Scroll listener to reveal bottom-right popup
+   * Scroll listener to reveal bottom-right popup after 30% scroll
    */
   function handleScrollPopup() {
     if (popupDismissed) return;
-    if (window.scrollY > 300) {
-      if (leadPopup) leadPopup.classList.add('visible');
+    const doc = document.documentElement;
+    const body = document.body;
+    const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+    const scrollHeight = Math.max(
+      body.scrollHeight, doc.scrollHeight,
+      body.offsetHeight, doc.offsetHeight,
+      body.clientHeight, doc.clientHeight
+    ) - window.innerHeight;
+
+    if (scrollHeight > 50) {
+      const percent = (scrollTop / scrollHeight) * 100;
+      if (percent >= 30) {
+        if (leadPopup) leadPopup.classList.add('visible');
+      }
     }
   }
 
   window.addEventListener('scroll', handleScrollPopup, { passive: true });
-  // Also show automatically after 3.5s if not already shown
-  setTimeout(() => {
-    if (!popupDismissed && leadPopup) {
-      leadPopup.classList.add('visible');
-    }
-  }, 3500);
+  // Check on load in case user is refreshed mid-page
+  setTimeout(handleScrollPopup, 500);
 
   /**
    * Hash Route Listener
