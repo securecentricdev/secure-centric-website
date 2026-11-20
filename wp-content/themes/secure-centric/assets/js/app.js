@@ -1208,7 +1208,7 @@
     }
 
     return `
-      <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" 
+      <section class="section-ice py-section wp-block-inspect wp-pattern-inspect testimonials-section-compact" 
                data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" 
                data-wp-pattern="secure-centric/testimonials-carousel"
                id="testimonials-section">
@@ -1218,17 +1218,30 @@
               <span class="section-eyebrow">// ${esc(block.eyebrow || 'CLIENT REVIEWS')}</span>
               <h2>${esc(block.t || 'What Defense Contractors Say About Working With Us')}</h2>
             </div>
+            <div class="testimonials-nav-controls" aria-label="Testimonial navigation">
+              <button type="button" class="testimonial-nav-btn prev" aria-label="Previous testimonial">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button type="button" class="testimonial-nav-btn next" aria-label="Next testimonial">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="testimonials-carousel-container" 
-             onmouseenter="this.querySelector('.testimonials-carousel-track')?.classList.add('is-paused')" 
-             onmouseleave="this.querySelector('.testimonials-carousel-track')?.classList.remove('is-paused')"
-             onclick="this.querySelector('.testimonials-carousel-track')?.classList.toggle('is-paused')">
-          <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
-            ${cardsHtml}
-            ${cardsHtml}
-            ${cardsHtml}
+          <div class="testimonials-carousel-container" data-hold-delay="4500">
+            <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
+              ${cardsHtml}
+              ${cardsHtml}
+              ${cardsHtml}
+            </div>
+          </div>
+
+          <div class="testimonials-dots" aria-label="Testimonial pagination">
+            ${reviews.map((_, i) => `<button type="button" class="testimonial-dot${i === 1 ? ' is-active' : ''}" data-index="${i}" aria-label="Go to testimonial ${i + 1}"></button>`).join('')}
           </div>
         </div>
       </section>
@@ -3179,107 +3192,208 @@
   }
 
   // =========================================================================
-  // TESTIMONIALS CAROUSEL CONTROLLER
-  // Starts only after user reaches the section fully. Holds static for a few
-  // seconds (3.5s) to allow reading, then begins continuous smooth scrolling.
-  // Pauses when scrolled out of view.
+  // TESTIMONIALS 3-AT-A-TIME STEPPED CAROUSEL CONTROLLER
+  // Shows 3 cards at a time, highlights the center card, and advances 1 card
+  // step smoothly every few seconds (card 1 hides, card 4 shows).
+  // Pauses on hover/touch, supports next/prev arrow buttons and dot navigation.
   // =========================================================================
-  let testimonialsStartTimer = null;
-  let isTestimonialsStarted = false;
-  let isTestimonialsInView = false;
+  let testimonialsStepTimer = null;
+  let testimonialsCurrentIndex = 0;
+  let isTestimonialsPaused = false;
+  let isTestimonialsTransitioning = false;
+  let isTestimonialsInView = true;
   let testimonialsObserver = null;
-  const TESTIMONIALS_HOLD_DELAY = 8000; // 8.0s hold time before carousel starts
-
-  function isTestimonialsSectionFullyReached() {
-    const section = document.getElementById('testimonials-section');
-    if (!section) return false;
-    const rect = section.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-
-    const visibleTop = Math.max(0, rect.top);
-    const visibleBottom = Math.min(vh, rect.bottom);
-    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-    const sectionHeight = rect.height || 500;
-    const visibleRatio = visibleHeight / Math.min(sectionHeight, vh);
-
-    const isFullyContained = (rect.top >= -40 && rect.bottom <= vh + 60);
-    const isSubstantiallyVisible = (rect.top <= vh * 0.25 && visibleRatio >= 0.80);
-
-    return isFullyContained || isSubstantiallyVisible;
-  }
+  let testimonialsResizeHandler = null;
 
   function handleTestimonialsScrollCheck() {
-    const section = document.getElementById('testimonials-section');
-    if (!section) return;
-    const track = section.querySelector('.testimonials-carousel-track');
-    if (!track) return;
-
-    const isFullyReached = isTestimonialsSectionFullyReached();
-
-    if (isFullyReached) {
-      if (!isTestimonialsInView) {
-        isTestimonialsInView = true;
-        // User just reached the section fully
-        if (!isTestimonialsStarted) {
-          // Keep it static for a generous reading period (8.0s), then start carousel
-          const holdDelayAttr = section.querySelector('[data-hold-delay]')?.dataset.holdDelay;
-          const holdDelay = holdDelayAttr ? parseInt(holdDelayAttr, 10) : TESTIMONIALS_HOLD_DELAY;
-          if (!testimonialsStartTimer) {
-            testimonialsStartTimer = setTimeout(() => {
-              isTestimonialsStarted = true;
-              track.classList.add('is-running');
-              testimonialsStartTimer = null;
-            }, holdDelay);
-          }
-        } else {
-          // Already started previously, resume running
-          track.classList.add('is-running');
-        }
-      }
-    } else {
-      // Not in full view -> if user scrolled away, pause carousel
-      if (isTestimonialsInView) {
-        isTestimonialsInView = false;
-        if (testimonialsStartTimer) {
-          clearTimeout(testimonialsStartTimer);
-          testimonialsStartTimer = null;
-        }
-        track.classList.remove('is-running');
-      }
-    }
+    // Handled natively via IntersectionObserver inside initTestimonialsCarousel
   }
 
   function initTestimonialsCarousel() {
-    if (testimonialsStartTimer) {
-      clearTimeout(testimonialsStartTimer);
-      testimonialsStartTimer = null;
+    if (testimonialsStepTimer) {
+      clearInterval(testimonialsStepTimer);
+      testimonialsStepTimer = null;
     }
-    isTestimonialsStarted = false;
-    isTestimonialsInView = false;
+    if (testimonialsObserver) {
+      testimonialsObserver.disconnect();
+      testimonialsObserver = null;
+    }
 
     const section = document.getElementById('testimonials-section');
     if (!section) return;
 
-    const track = section.querySelector('.testimonials-carousel-track');
-    if (track) {
-      track.classList.remove('is-running');
-    }
+    const container = section.querySelector('.testimonials-carousel-container');
+    if (!container) return;
 
-    if (testimonialsObserver) {
-      testimonialsObserver.disconnect();
-    }
+    const track = container.querySelector('.testimonials-carousel-track');
+    if (!track) return;
 
-    if (typeof IntersectionObserver !== 'undefined') {
-      testimonialsObserver = new IntersectionObserver(() => {
-        handleTestimonialsScrollCheck();
-      }, {
-        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+    if (cards.length === 0) return;
+
+    const dots = Array.from(section.querySelectorAll('.testimonial-dot'));
+    const totalOriginal = dots.length > 0 ? dots.length : 5;
+
+    // Reset styles
+    track.style.animation = 'none';
+    track.classList.remove('is-running');
+
+    function updateCardLayout() {
+      const containerWidth = container.clientWidth;
+      if (!containerWidth) return;
+
+      const visibleCount = window.innerWidth >= 992 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+      const gap = window.innerWidth >= 992 ? 24 : 16;
+      const cardWidth = Math.floor((containerWidth - (visibleCount - 1) * gap) / visibleCount);
+
+      cards.forEach(card => {
+        card.style.width = cardWidth + 'px';
+        card.style.minWidth = cardWidth + 'px';
+        card.style.maxWidth = cardWidth + 'px';
       });
+
+      track.style.gap = gap + 'px';
+    }
+
+    function getStepWidth() {
+      if (cards.length < 2) return cards[0].offsetWidth;
+      const c0 = cards[0].getBoundingClientRect();
+      const c1 = cards[1].getBoundingClientRect();
+      const step = c1.left - c0.left;
+      return step > 0 ? step : cards[0].offsetWidth + 24;
+    }
+
+    function updateActiveStates() {
+      const visibleCount = window.innerWidth >= 992 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+      const centerOffset = visibleCount === 3 ? 1 : 0;
+      const centerIdx = testimonialsCurrentIndex + centerOffset;
+
+      cards.forEach((card, idx) => {
+        if (idx === centerIdx) {
+          card.classList.add('is-center');
+        } else {
+          card.classList.remove('is-center');
+        }
+      });
+
+      const realCenter = centerIdx % totalOriginal;
+      dots.forEach((dot, dIdx) => {
+        dot.classList.toggle('is-active', dIdx === realCenter);
+      });
+    }
+
+    function moveTo(index, smooth) {
+      testimonialsCurrentIndex = index;
+      const stepWidth = getStepWidth();
+      track.style.transition = smooth ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+      track.style.transform = `translateX(-${testimonialsCurrentIndex * stepWidth}px)`;
+      updateActiveStates();
+    }
+
+    function nextStep() {
+      if (isTestimonialsTransitioning) return;
+      isTestimonialsTransitioning = true;
+      testimonialsCurrentIndex++;
+      moveTo(testimonialsCurrentIndex, true);
+    }
+
+    function prevStep() {
+      if (isTestimonialsTransitioning) return;
+      isTestimonialsTransitioning = true;
+      if (testimonialsCurrentIndex <= 0) {
+        testimonialsCurrentIndex = totalOriginal;
+        moveTo(testimonialsCurrentIndex, false);
+        void track.offsetWidth;
+      }
+      testimonialsCurrentIndex--;
+      moveTo(testimonialsCurrentIndex, true);
+    }
+
+    track.ontransitionend = function() {
+      isTestimonialsTransitioning = false;
+      if (testimonialsCurrentIndex >= totalOriginal) {
+        testimonialsCurrentIndex = testimonialsCurrentIndex % totalOriginal;
+        moveTo(testimonialsCurrentIndex, false);
+      }
+    };
+
+    function startTimer() {
+      stopTimer();
+      const delayAttr = container.getAttribute('data-hold-delay');
+      const delay = delayAttr ? parseInt(delayAttr, 10) : 4500;
+      testimonialsStepTimer = setInterval(() => {
+        if (!isTestimonialsPaused && isTestimonialsInView && document.visibilityState === 'visible') {
+          nextStep();
+        }
+      }, delay);
+    }
+
+    function stopTimer() {
+      if (testimonialsStepTimer) {
+        clearInterval(testimonialsStepTimer);
+        testimonialsStepTimer = null;
+      }
+    }
+
+    // Hover & touch pause
+    container.onmouseenter = function() { isTestimonialsPaused = true; };
+    container.onmouseleave = function() { isTestimonialsPaused = false; };
+    container.ontouchstart = function() { isTestimonialsPaused = true; };
+    container.ontouchend = function() { isTestimonialsPaused = false; };
+
+    // Navigation buttons
+    const prevBtn = section.querySelector('.testimonial-nav-btn.prev');
+    const nextBtn = section.querySelector('.testimonial-nav-btn.next');
+    if (prevBtn) {
+      prevBtn.onclick = function() {
+        prevStep();
+        startTimer();
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = function() {
+        nextStep();
+        startTimer();
+      };
+    }
+
+    // Dots indicator clicks
+    dots.forEach((dot, dIdx) => {
+      dot.onclick = function() {
+        const visibleCount = window.innerWidth >= 992 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+        const centerOffset = visibleCount === 3 ? 1 : 0;
+        let targetIndex = dIdx - centerOffset;
+        if (targetIndex < 0) targetIndex += totalOriginal;
+        moveTo(targetIndex, true);
+        startTimer();
+      };
+    });
+
+    // Window resize handler
+    if (testimonialsResizeHandler) {
+      window.removeEventListener('resize', testimonialsResizeHandler);
+    }
+    testimonialsResizeHandler = function() {
+      updateCardLayout();
+      moveTo(testimonialsCurrentIndex, false);
+    };
+    window.addEventListener('resize', testimonialsResizeHandler);
+
+    // Visibility Observer to pause when scrolled out of view
+    isTestimonialsInView = true;
+    if (typeof IntersectionObserver !== 'undefined') {
+      testimonialsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isTestimonialsInView = entry.isIntersecting;
+        });
+      }, { threshold: 0.15 });
       testimonialsObserver.observe(section);
     }
 
-    // Check immediately in case section is already in full view
-    handleTestimonialsScrollCheck();
+    // Initialize layout and position
+    updateCardLayout();
+    moveTo(0, false);
+    startTimer();
   }
 
   // Window scroll listener for both Roadmap and Testimonials focus detection

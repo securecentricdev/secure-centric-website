@@ -158,7 +158,7 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
     </div>
   </section>
 <?php else : ?>
-  <section class="section-ice py-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-carousel" id="testimonials-section">
+  <section class="section-ice py-section wp-block-inspect wp-pattern-inspect testimonials-section-compact" data-wp-block="wp:group {align:'full', backgroundColor:'ice'}" data-wp-pattern="secure-centric/testimonials-carousel" id="testimonials-section">
     <div class="site-container">
       <div class="testimonials-header-row">
         <div>
@@ -167,24 +167,42 @@ if ( ! function_exists( 'sc_render_testimonial_card' ) ) {
           <?php endif; ?>
           <h2><?php echo esc_html( $title ); ?></h2>
           <?php if ( ! empty( $attributes['subtitle'] ) ) : ?>
-            <p style="color: var(--color-body-text); font-size: 1.05rem; margin-top: 8px;"><?php echo esc_html( $attributes['subtitle'] ); ?></p>
+            <p style="color: var(--color-body-text); font-size: 1.05rem; margin-top: 6px;"><?php echo esc_html( $attributes['subtitle'] ); ?></p>
           <?php endif; ?>
         </div>
+        <div class="testimonials-nav-controls" aria-label="Testimonial navigation">
+          <button type="button" class="testimonial-nav-btn prev" aria-label="Previous testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="testimonial-nav-btn next" aria-label="Next testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
-    <?php $hold_delay = ! empty( $attributes['holdDelay'] ) ? intval( $attributes['holdDelay'] ) : 8000; ?>
-    <div class="testimonials-carousel-container" data-hold-delay="<?php echo esc_attr( $hold_delay ); ?>" onmouseenter="this.querySelector('.testimonials-carousel-track')?.classList.add('is-paused')" onmouseleave="this.querySelector('.testimonials-carousel-track')?.classList.remove('is-paused')" onclick="this.querySelector('.testimonials-carousel-track')?.classList.toggle('is-paused')">
-      <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
-        <?php
-        $count = count( $reviews );
-        // Repeat at least twice (or enough to fill track) for smooth infinite loop marquee
-        $repeats = ( $count < 4 ) ? 3 : 2;
-        for ( $cycle = 0; $cycle < $repeats; $cycle++ ) {
-            foreach ( $reviews as $idx => $rev ) {
-                echo sc_render_testimonial_card( $rev, $idx + ( $cycle * $count ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            }
-        }
-        ?>
+
+      <?php $hold_delay = ! empty( $attributes['holdDelay'] ) ? intval( $attributes['holdDelay'] ) : 4500; ?>
+      <div class="testimonials-carousel-container" data-hold-delay="<?php echo esc_attr( $hold_delay ); ?>">
+        <div class="testimonials-carousel-track" role="region" aria-label="Client Testimonials Carousel">
+          <?php
+          $count = count( $reviews );
+          // Repeat 3 times to allow smooth continuous infinite stepping
+          for ( $cycle = 0; $cycle < 3; $cycle++ ) {
+              foreach ( $reviews as $idx => $rev ) {
+                  echo sc_render_testimonial_card( $rev, $idx + ( $cycle * $count ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              }
+          }
+          ?>
+        </div>
+      </div>
+
+      <div class="testimonials-dots" aria-label="Testimonial pagination">
+        <?php for ( $d = 0; $d < $count; $d++ ) : ?>
+          <button type="button" class="testimonial-dot<?php echo ( 1 === $d ? ' is-active' : '' ); ?>" data-index="<?php echo esc_attr( $d ); ?>" aria-label="Go to testimonial <?php echo esc_attr( $d + 1 ); ?>"></button>
+        <?php endfor; ?>
       </div>
     </div>
   </section>
