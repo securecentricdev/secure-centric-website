@@ -58,4 +58,34 @@
       </div>
     </div>
   </div>
+
+  <!-- Slide-out Mobile Navigation Drawer -->
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null"></div>
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <span class="site-logo">
+        <img src="/wp-content/themes/secure-centric/assets/img/logo.png?v=3.9.2" alt="Secure-Centric Logo" class="site-logo-img" />
+        <span>SECURE-CENTRIC</span>
+      </span>
+      <button type="button" class="mobile-drawer-close" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null" aria-label="Close navigation">✕</button>
+    </div>
+    <ul class="mobile-drawer-links">
+      <li>
+        <a href="/services/cmmc-consulting/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Services ▾</a>
+        <ul class="mobile-sublinks">
+          <li><a href="/services/cmmc-consulting/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">CMMC Consulting</a></li>
+          <li><a href="/services/nist-800-171-compliance/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">NIST SP 800-171 Compliance</a></li>
+        </ul>
+      </li>
+      <li><a href="/cmmc/cmmc-process/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">CMMC Process</a></li>
+      <li>
+        <a href="/resources/checklist/level-2/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Resources ▾</a>
+        <ul class="mobile-sublinks">
+          <li><a href="/resources/checklist/level-2/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Level 2 Compliance Checklist</a></li>
+        </ul>
+      </li>
+      <li><a href="/about/" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">About Secure-Centric</a></li>
+      <li><a href="https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll" target="_blank" rel="noopener noreferrer" onclick="window.closeMobileDrawer ? window.closeMobileDrawer() : null">Talk to an Expert</a></li>
+    </ul>
+  </div>
 </header>

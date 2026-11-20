@@ -426,6 +426,13 @@ body.mobile-preview-mode .site-header-sticky-wrapper {
   transform: translateX(0);
 }
 
+@media (min-width: 992px) {
+  .mobile-nav-drawer,
+  .mobile-nav-backdrop {
+    display: none !important;
+  }
+}
+
 .mobile-drawer-header {
   display: flex;
   justify-content: space-between;
