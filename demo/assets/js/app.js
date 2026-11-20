@@ -1052,7 +1052,7 @@
       name: "Alex Liu",
       role: "IT Manager",
       company: "Tower Semiconductor",
-      quote: "Secure-Centric gave us absolute clarity on what was inside our CUI boundary and what was not. We passed our official C3PAO Level 2 assessment on the first attempt with zero open items.",
+      quote: "Preparing for CMMC Level 2 certification is a monumental task, but Secure-Centric made all the difference for our organization.",
       linkedin: false
     },
     {
@@ -1060,7 +1060,7 @@
       name: "Patrick Shaw",
       role: "Cyber Security Analyst",
       company: "Safran Federal Systems",
-      quote: "Their team was on site at our facility within two weeks. They didn't hand us generic compliance templates—they helped configure our actual firewalls, SIEM, and author an ironclad SSP.",
+      quote: "Working with Secure-Centric felt like a true partnership rather than another vendor relationship. They challenged us when needed, helped us work through areas where we were unsure, and kept us focused on meeting the requirements rather than simply checking boxes.",
       linkedin: false
     },
     {
@@ -1068,7 +1068,7 @@
       name: "Rafael Omar Lemus",
       role: "IT Director",
       company: "Goodwin & Associates",
-      quote: "Most consultants sell managed IT products. Secure-Centric provided strictly independent advisory. They worked directly with our internal team and existing MSP without conflicts.",
+      quote: "Secure-Centric takes the time to understand your business, your existing technology, and your unique requirements before helping you develop a program tailored to your needs. Rather than selling you products or solutions you may not need, Secure-Centric focuses on providing the guidance, knowledge, and practical expertise necessary to help you make informed decisions.",
       linkedin: false
     },
     {
@@ -1082,9 +1082,9 @@
     {
       no: "05",
       name: "Albert Leon",
-      role: "CIO",
-      company: "HRD Aero Systems",
-      quote: "From scoping out shop-floor test equipment to submitting our SPRS score defense, Secure-Centric made what felt like an impossible 110-control standard manageable.",
+      role: "Chief Information Officer",
+      company: "HRD Aero Systems, Inc.",
+      quote: "Secure-Centric has made our CMMC journey less painful than I would've expected.",
       linkedin: true
     }
   ];
