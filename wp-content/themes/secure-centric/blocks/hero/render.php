@@ -59,6 +59,17 @@ $quiz_btn_text    = ! empty( $attributes['quizBtnText'] ) ? $attributes['quizBtn
 $quiz_btn_url     = ! empty( $attributes['quizBtnUrl'] ) ? $attributes['quizBtnUrl'] : '/cui-session/';
 $quiz_note        = isset( $attributes['quizNote'] ) ? $attributes['quizNote'] : 'No cost and no obligation.';
 
+if ( function_exists( 'sc_clean_text' ) ) {
+    $quiz_badge    = sc_clean_text( $quiz_badge );
+    $quiz_title    = sc_clean_text( $quiz_title );
+    $quiz_desc     = sc_clean_text( $quiz_desc );
+    $quiz_bullet_1 = sc_clean_text( $quiz_bullet_1 );
+    $quiz_bullet_2 = sc_clean_text( $quiz_bullet_2 );
+    $quiz_bullet_3 = sc_clean_text( $quiz_bullet_3 );
+    $quiz_btn_text = sc_clean_text( $quiz_btn_text );
+    $quiz_note     = sc_clean_text( $quiz_note );
+}
+
 // Multi-entry arrays for specialized layouts
 $phases_list = array(
     'Scope and site visit',

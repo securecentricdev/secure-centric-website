@@ -35,6 +35,7 @@ function sc_clean_text( $val ) {
         return str_replace(
             array(
                 '\u0022', 'u0022',
+                '\u0027', 'u0027', '&#039;', '&apos;',
                 'u0026amp;', '\u0026amp;',
                 'u0026#038;', '\u0026#038;',
                 '\u0026', 'u0026', 'U0026',
@@ -43,6 +44,7 @@ function sc_clean_text( $val ) {
             ),
             array(
                 '"', '"',
+                "'", "'", "'", "'",
                 '&', '&',
                 '&', '&',
                 '&', '&', '&',
