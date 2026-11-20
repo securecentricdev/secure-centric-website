@@ -877,7 +877,7 @@
               <span class="section-eyebrow">// THE CMMC PROCESS</span>
               <h2>${esc(block.t)}</h2>
             </div>
-            <a href="#page-19" class="text-link">View Detailed 8-Step Process &rarr;</a>
+            <a href="#page-19" class="text-link">Click Here to Learn More -&gt;</a>
           </div>
 
           <!-- Interactive Milestone Flow Stepper -->
