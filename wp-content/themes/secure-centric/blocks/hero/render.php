@@ -592,22 +592,38 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
             <?php echo esc_html( $card_desc ); ?>
           </p>
 
-          <?php if ( 'advisor_card' === $right_mode ) : ?>
+          <?php if ( 'advisor_card' === $right_mode || 'bullets' === $right_mode ) : ?>
+            <?php
+            $card_bullets = array();
+            if ( ! empty( $attributes['cardBullets'] ) ) {
+                $decoded_cb = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['cardBullets'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['cardBullets'] ), true );
+                if ( is_array( $decoded_cb ) && ! empty( $decoded_cb ) ) {
+                    $card_bullets = $decoded_cb;
+                }
+            }
+            if ( empty( $card_bullets ) && ! empty( $attributes['audiencesData'] ) ) {
+                $decoded_cb = function_exists( 'sc_decode_block_json' ) ? sc_decode_block_json( $attributes['audiencesData'] ) : json_decode( str_replace( array( '\u0022', 'u0022' ), '"', $attributes['audiencesData'] ), true );
+                if ( is_array( $decoded_cb ) && ! empty( $decoded_cb ) ) {
+                    $card_bullets = $decoded_cb;
+                }
+            }
+            if ( empty( $card_bullets ) ) {
+                $card_bullets = array(
+                    'Where you stand today against NIST 800-171',
+                    'Which level and scoping boundary fits your contracts',
+                    'A concrete, written first step before committing budget'
+                );
+            }
+            ?>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+              <?php foreach ( $card_bullets as $cb_text ) : ?>
               <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
                 <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-                <span>Where you stand today against NIST 800-171</span>
+                <span><?php echo esc_html( $cb_text ); ?></span>
               </div>
-              <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
-                <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-                <span>Which level and scoping boundary fits your contracts</span>
-              </div>
-              <div class="tick-item" style="display: flex; gap: 10px; font-size: 0.875rem;">
-                <span style="color: var(--color-electric-blue); font-weight: 800;">✓</span>
-                <span>A concrete, written first step before committing budget</span>
-              </div>
+              <?php endforeach; ?>
             </div>
-            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Discovery Call &rarr;</a>
+            <a href="<?php echo esc_url( $primary_btn_url ); ?>" class="btn btn-primary" style="width: 100%; justify-content: center;"><?php echo esc_html( ! empty( $attributes['cardBtnText'] ) ? $attributes['cardBtnText'] : $primary_btn_text ); ?> &rarr;</a>
           <?php else : ?>
             <?php if ( ! empty( $split_form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
               <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $split_form_id ) . '"]' ); ?>

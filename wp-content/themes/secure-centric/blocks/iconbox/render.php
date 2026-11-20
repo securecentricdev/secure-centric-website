@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// IN-PERSON VERIFICATION';
 $title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'On-Site Physical & Technical Walkthrough';
 $lead    = ! empty( $attributes['lead'] ) ? $attributes['lead'] : 'We inspect real hardware, server rooms, and shop floors.';
+$desc    = ! empty( $attributes['description'] ) ? $attributes['description'] : ( ! empty( $attributes['desc'] ) ? $attributes['desc'] : '' );
 
 $points = array();
 if ( ! empty( $attributes['pointsData'] ) ) {
@@ -22,7 +23,7 @@ if ( ! empty( $attributes['pointsData'] ) ) {
     }
 }
 
-if ( empty( $points ) ) {
+if ( empty( $points ) && empty( $desc ) ) {
     $points = array(
         'Physical inspection of server closets, network patch panels, and building ingress points',
         'Direct interviews with shop-floor technicians, CNC machinists, and engineers',
@@ -43,8 +44,12 @@ if ( empty( $points ) ) {
           <?php endif; ?>
           <h3 style="margin-bottom: 10px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h3>
           <p style="font-size: 1.0625rem; color: var(--color-navy); font-weight: 600;"><?php echo esc_html( $lead ); ?></p>
+          <?php if ( ! empty( $desc ) ) : ?>
+          <p style="font-size: 1rem; color: var(--color-body-text); line-height: 1.6; margin-top: 10px;"><?php echo esc_html( $desc ); ?></p>
+          <?php endif; ?>
         </div>
       </div>
+      <?php if ( ! empty( $points ) ) : ?>
       <div class="iconbox-points-grid">
         <?php foreach ( $points as $pt ) : ?>
           <div class="iconbox-point">
@@ -53,6 +58,7 @@ if ( empty( $points ) ) {
           </div>
         <?php endforeach; ?>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
