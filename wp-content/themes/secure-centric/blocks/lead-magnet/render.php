@@ -16,6 +16,7 @@ $doc_type    = ! empty( $attributes['docType'] ) ? $attributes['docType'] : 'PDF
 $placeholder = ! empty( $attributes['placeholder'] ) ? $attributes['placeholder'] : 'Enter corporate email address';
 $btn_text    = ! empty( $attributes['btnText'] ) ? $attributes['btnText'] : 'Instant Free Download →';
 $disclaimer  = ! empty( $attributes['disclaimer'] ) ? $attributes['disclaimer'] : 'Strictly confidential. No spam guarantee.';
+$subtitle    = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '';
 
 $ticks = array();
 if ( ! empty( $attributes['ticksData'] ) ) {
@@ -46,6 +47,9 @@ if ( empty( $ticks ) ) {
           <span class="section-eyebrow" style="font-size: 0.6875rem;"><?php echo esc_html( $eyebrow ); ?></span>
           <?php endif; ?>
           <h3 style="font-size: 1.25rem; margin-bottom: 8px;"><?php echo esc_html( $name ); ?></h3>
+          <?php if ( ! empty( $subtitle ) ) : ?>
+          <p style="font-size: 0.9375rem; color: var(--color-body-text); margin-bottom: 12px;"><?php echo esc_html( $subtitle ); ?></p>
+          <?php endif; ?>
           <ul class="checklist-bullet-list">
             <?php foreach ( $ticks as $t ) : ?>
               <li><?php echo esc_html( $t ); ?></li>

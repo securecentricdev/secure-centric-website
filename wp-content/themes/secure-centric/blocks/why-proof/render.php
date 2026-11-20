@@ -96,6 +96,10 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
       </div>
     </div>
 
+    <?php
+    $show_badges = ! empty( $attributes['showBadges'] ) && empty( $attributes['hideBadges'] );
+    if ( $show_badges ) :
+    ?>
     <!-- Verified Credentials Bottom Strip -->
     <div class="why-badges-row">
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -106,5 +110,6 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
       </div>
       <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);"><?php echo esc_html( $badge_note ); ?></span>
     </div>
+    <?php endif; ?>
   </div>
 </section>

@@ -123,6 +123,14 @@
     "badgeNote": {
       "type": "string",
       "default": "Los Angeles, California \u00b7 Nationwide On-Site Deployments"
+    },
+    "showBadges": {
+      "type": "boolean",
+      "default": false
+    },
+    "hideBadges": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {
