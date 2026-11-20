@@ -1303,7 +1303,7 @@
             help: 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply. We examine your environment, review contract requirements, and identify your applicable CMMC level.',
             what_happens: 'We visit your facility to understand your operations, review how you handle FCI and CUI, and determine which CMMC requirements apply.',
             how_we_help: 'We examine your environment, review contract requirements, and identify your applicable CMMC level.',
-            who: 'You + Secure-Centric',
+            who: 'Secure-Centric Team',
             output: 'Clear CMMC requirements and define the next steps.',
             link: '/services/cmmc-compliance/'
           },
@@ -1314,7 +1314,7 @@
             help: 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it. We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
             what_happens: 'Identify where CUI resides and which personnel, systems, devices, and facilities access or process it.',
             how_we_help: 'We trace FCI and CUI across your environment and establish accurate assessment boundaries.',
-            who: 'Secure-Centric + IT Leads',
+            who: 'Secure-Centric & Your Team',
             output: 'Verified CUI locations, asset inventory, and data-flow documentation.',
             link: '/services/cmmc-enclave/'
           },
@@ -1325,7 +1325,7 @@
             help: 'Compare your existing security practices against the applicable NIST SP 800-171 requirements. We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
             what_happens: 'Compare your existing security practices against the applicable NIST SP 800-171 requirements.',
             how_we_help: 'We review each requirement, verify existing controls, identify gaps, and calculate your estimated SPRS score.',
-            who: 'Secure-Centric',
+            who: 'Secure-Centric Team and Your Team',
             output: 'An estimated SPRS score and prioritized list of gaps.',
             link: '/services/cmmc-readiness-assessment/gap-assessment/'
           },
@@ -1336,7 +1336,7 @@
             help: 'Address security gaps through system configurations, security tools, processes, and training. We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
             what_happens: 'Address security gaps through system configurations, security tools, processes, and training.',
             how_we_help: 'We prioritize corrective actions, provide implementation guidance, and verify supporting evidence. Your IT team or MSP implements technical changes.',
-            who: 'Your IT/MSP (guided by us)',
+            who: 'Secure-Centric Team and Your Team',
             output: 'Implemented controls and verified supporting evidence.',
             link: '/services/cmmc-implementation-remediation/'
           },
@@ -1347,7 +1347,7 @@
             help: 'Document how your organization implements and maintains the required security controls. We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
             what_happens: 'Document how your organization implements and maintains the required security controls.',
             how_we_help: 'We develop and review your System Security Plan (SSP), security policies, procedures, and Plan of Action and Milestones (POA&M).',
-            who: 'Secure-Centric + You',
+            who: 'Secure-Centric Team and Your Team',
             output: 'An accurate SSP, documented policies, and a maintained POA&M.',
             link: '/services/cmmc-implementation-remediation/ssp-poam-development/'
           },
@@ -1358,7 +1358,7 @@
             help: 'Verify your security controls, documentation, and evidence before the formal assessment. We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
             what_happens: 'Verify your security controls, documentation, and evidence before the formal assessment.',
             how_we_help: 'We examine controls, conduct interviews, and test implementation using an assessor\'s approach. We identify remaining gaps and outline the corrective actions.',
-            who: 'Secure-Centric RPs',
+            who: 'Secure-Centric Team and Your Team',
             output: 'A verified readiness position and final list of corrective actions.',
             link: '/services/cmmc-readiness-assessment/'
           },
@@ -1380,7 +1380,7 @@
             help: 'Maintain CMMC compliance as your systems, personnel, and security requirements change. Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
             what_happens: 'Maintain CMMC compliance as your systems, personnel, and security requirements change.',
             how_we_help: 'Our vCISO services provide ongoing oversight of security controls, documentation, evidence reviews, SPRS updates, and annual affirmations.',
-            who: 'Virtual CISO / You',
+            who: 'Secure-Centric Team and Your Team',
             output: 'Current documentation, reviewed evidence, and ongoing compliance oversight.',
             link: '/services/virtual-ciso/'
           }
@@ -1506,7 +1506,7 @@
             }),
             el(TextControl, {
               label: 'Detailed Process Link Text',
-              value: attributes.detailedProcessLinkText !== undefined ? attributes.detailedProcessLinkText : 'View Detailed 8-Step Process →',
+              value: attributes.detailedProcessLinkText !== undefined ? attributes.detailedProcessLinkText : 'Click Here to Learn More ->',
               onChange: function (val) { setAttributes({ detailedProcessLinkText: val }); }
             }),
             el(TextControl, {

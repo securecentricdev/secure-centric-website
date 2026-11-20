@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $title            = ! empty( $attributes['title'] ) ? $attributes['title'] : 'Planning to get started on CMMC?';
 $description      = isset( $attributes['description'] ) ? $attributes['description'] : 'Talk with an accredited Cyber AB Registered Provider Organization. Get an actionable first step in writing within 30 minutes.';
-$primary_btn_text = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Book a Discovery Call →';
+$primary_btn_text = ! empty( $attributes['primaryBtnText'] ) ? $attributes['primaryBtnText'] : 'Schedule a 30-Minute Consultation';
 $default_booking  = function_exists( 'sc_get_booking_url' ) ? sc_get_booking_url() : 'https://api.leadconnectorhq.com/widget/booking/nZAjs4Kt86aEyfpwhcll';
 $primary_btn_url  = ! empty( $attributes['primaryBtnUrl'] ) ? $attributes['primaryBtnUrl'] : $default_booking;
-$secondary_btn_text = array_key_exists( 'secondaryBtnText', $attributes ) ? trim( (string) $attributes['secondaryBtnText'] ) : 'Submit Your Query';
+$secondary_btn_text = ! empty( $attributes['secondaryBtnText'] ) ? trim( (string) $attributes['secondaryBtnText'] ) : '';
 $secondary_btn_url  = ! empty( $attributes['secondaryBtnUrl'] ) ? ( function_exists( 'sc_resolve_page_url' ) ? sc_resolve_page_url( $attributes['secondaryBtnUrl'] ) : $attributes['secondaryBtnUrl'] ) : home_url( '/contact/' );
 
 $theme = ! empty( $attributes['theme'] ) ? sanitize_html_class( $attributes['theme'] ) : 'electric-blue';

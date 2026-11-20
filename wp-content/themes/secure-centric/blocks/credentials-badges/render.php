@@ -75,15 +75,15 @@ if ( function_exists( 'sc_clean_text' ) ) {
 }
 ?>
 
-<section class="section-white py-section credentials-badges-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'white'}" data-wp-pattern="secure-centric/credentials-badges">
+<section class="section-white credentials-badges-section wp-block-inspect wp-pattern-inspect" data-wp-block="wp:group {align:'full', backgroundColor:'white'}" data-wp-pattern="secure-centric/credentials-badges" style="padding-top: 10px; padding-bottom: 56px;">
   <div class="site-container">
     <?php if ( ! empty( $title ) ) : ?>
-    <div class="credentials-badges-header" style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
+    <div class="credentials-badges-header" style="text-align: center; max-width: 720px; margin: 0 auto 28px;">
       <h3 style="font-size: 1.75rem; color: var(--color-navy); margin: 0;"><?php echo esc_html( $title ); ?></h3>
     </div>
     <?php endif; ?>
 
-    <div class="credentials-badges-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; align-items: center; justify-items: center;">
+    <div class="credentials-badges-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; width: 100%; margin: 0 auto; align-items: center; justify-items: center;">
       <?php foreach ( $badges as $badge ) : ?>
         <?php
         $badge_img     = ! empty( $badge['imageUrl'] ) ? $badge['imageUrl'] : '';
@@ -95,21 +95,29 @@ if ( function_exists( 'sc_clean_text' ) ) {
             continue;
         }
         ?>
-        <div class="badge-card" style="width: 100%; max-width: 250px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 10px; padding: 22px 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px; box-shadow: 0 4px 14px rgba(11,20,55,0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
-          <div style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
+        <div class="badge-card" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 8px; transition: transform 0.25s ease;">
+          <div style="display: flex; align-items: center; justify-content: center; width: 100%; min-height: 120px;">
             <?php if ( ! empty( $badge_link ) ) : ?>
-              <a href="<?php echo esc_url( $badge_link ); ?>" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
-                <img src="<?php echo esc_url( $badge_img ); ?>" alt="<?php echo esc_attr( $badge_alt ); ?>" class="badge-card-img" style="max-height: 110px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
+              <a href="<?php echo esc_url( $badge_link ); ?>" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                <img src="<?php echo esc_url( $badge_img ); ?>" alt="<?php echo esc_attr( $badge_alt ); ?>" class="badge-card-img" style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
               </a>
             <?php else : ?>
-              <img src="<?php echo esc_url( $badge_img ); ?>" alt="<?php echo esc_attr( $badge_alt ); ?>" class="badge-card-img" style="max-height: 110px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
+              <img src="<?php echo esc_url( $badge_img ); ?>" alt="<?php echo esc_attr( $badge_alt ); ?>" class="badge-card-img" style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain; display: block;" loading="lazy" />
             <?php endif; ?>
           </div>
           <?php if ( ! empty( $badge_caption ) ) : ?>
-            <p class="badge-card-caption" style="font-size: 0.8125rem; color: var(--color-body-text); margin-top: 12px; margin-bottom: 0; text-align: center; line-height: 1.4; font-weight: 500;"><?php echo esc_html( $badge_caption ); ?></p>
+            <p class="badge-card-caption" style="font-size: 0.8125rem; color: var(--color-body-text); margin-top: 10px; margin-bottom: 0; text-align: center; line-height: 1.4; font-weight: 500;"><?php echo esc_html( $badge_caption ); ?></p>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
     </div>
   </div>
+  <style>
+    @media (max-width: 768px) {
+      .credentials-badges-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+      }
+    }
+  </style>
 </section>

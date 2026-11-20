@@ -34,17 +34,17 @@ $stat2_val    = ! empty( $m2[2] ) ? $m2[2] : '100';
 $stat2_prefix = ! empty( $m2[1] ) ? $m2[1] : '';
 $stat2_suffix = ! empty( $m2[3] ) ? $m2[3] : '%';
 
-// Keep only Cyber AB Authorized RPO and On-Site Walkthrough cards (2 cards matching 2 black cards in height and width)
+// Right 2 Cards: On-Site Guidance on top, 1 Dedicated Focus on bottom (matching docx item iii)
 $cards = array(
     1 => array(
-        'title' => ! empty( $attributes['card1Title'] ) ? $attributes['card1Title'] : 'Cyber AB Authorized RPO',
-        'text'  => ! empty( $attributes['card1Text'] ) ? $attributes['card1Text'] : 'Formally credentialed by the Cyber AB (RPO #3942) with certified Registered Practitioners (RPs) leading every client engagement on site.',
-        'icon'  => ! empty( $attributes['card1Icon'] ) ? $attributes['card1Icon'] : '🛡️',
+        'title' => ! empty( $attributes['card3Title'] ) ? $attributes['card3Title'] : ( ! empty( $attributes['card2Title'] ) && false !== stripos( $attributes['card2Title'], 'site' ) ? $attributes['card2Title'] : 'On-Site Guidance' ),
+        'text'  => ! empty( $attributes['card3Text'] ) ? $attributes['card3Text'] : ( ! empty( $attributes['card2Text'] ) && false !== stripos( $attributes['card2Text'], 'facilities' ) ? $attributes['card2Text'] : 'Every engagement starts with a site visit. We examine your environment, review CUI handling practices, and verify how security controls operate.' ),
+        'icon'  => ! empty( $attributes['card3Icon'] ) ? $attributes['card3Icon'] : '🏭',
     ),
     2 => array(
-        'title' => ! empty( $attributes['card3Title'] ) ? $attributes['card3Title'] : ( ! empty( $attributes['card2Title'] ) && false !== stripos( $attributes['card2Title'], 'site' ) ? $attributes['card2Title'] : 'On-Site Physical & Technical Walkthrough' ),
-        'text'  => ! empty( $attributes['card3Text'] ) ? $attributes['card3Text'] : ( ! empty( $attributes['card2Text'] ) && false !== stripos( $attributes['card2Text'], 'facilities' ) ? $attributes['card2Text'] : 'We walk your facilities, shop floors, and secure server rooms to physically map CUI flows and isolate enclave boundaries.' ),
-        'icon'  => ! empty( $attributes['card3Icon'] ) ? $attributes['card3Icon'] : '🏭',
+        'title' => ! empty( $attributes['card1Title'] ) ? $attributes['card1Title'] : '1 Dedicated Focus',
+        'text'  => ! empty( $attributes['card1Text'] ) ? $attributes['card1Text'] : 'CMMC and NIST SP 800-171. Nothing else.',
+        'icon'  => ! empty( $attributes['card1Icon'] ) ? $attributes['card1Icon'] : '🛡️',
     ),
 );
 

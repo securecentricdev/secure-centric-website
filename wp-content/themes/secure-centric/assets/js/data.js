@@ -90,7 +90,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "01",
             "name": "Site visit",
-            "who": "You + Secure-Centric",
+            "who": "Secure-Centric Team",
             "help": "In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.",
             "output": "Asset discovery baseline & boundary notes",
             "link": "#page-2"
@@ -98,7 +98,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "02",
             "name": "Scoping",
-            "who": "Secure-Centric + IT Leads",
+            "who": "Secure-Centric & Your Team",
             "help": "Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.",
             "output": "Formal Scope Document & Data-Flow Architecture",
             "link": "#page-16"
@@ -106,7 +106,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "03",
             "name": "Gap assessment",
-            "who": "Secure-Centric",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.",
             "output": "Defensible SPRS Score estimate & findings register",
             "link": "#page-5"
@@ -114,7 +114,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "04",
             "name": "Remediation",
-            "who": "Your IT/MSP (guided by us)",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.",
             "output": "Remediation Roadmap with owners and completion targets",
             "link": "#page-7"
@@ -122,7 +122,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "05",
             "name": "Documentation",
-            "who": "Secure-Centric + You",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Co-write your System Security Plan (SSP), POA&M, and all required operational policies.",
             "output": "Assessor-ready SSP and comprehensive policy suite",
             "link": "#page-8"
@@ -130,7 +130,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "06",
             "name": "Readiness review",
-            "who": "Secure-Centric RPs",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.",
             "output": "Readiness sign-off report & Evidence Binder index",
             "link": "#page-4"
@@ -146,7 +146,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "08",
             "name": "Maintain",
-            "who": "Virtual CISO / You",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.",
             "output": "Annual Affirmation pack & ongoing compliance posture",
             "link": "#page-11"
@@ -2101,7 +2101,7 @@ window.SITE_PAGES_DATA = [
           {
             "step": "02",
             "name": "Technical Fix Guidance",
-            "who": "Your IT/MSP (guided by us)",
+            "who": "Secure-Centric Team and Your Team",
             "output": "MFA, FIPS 140-3 & SIEM Configs"
           },
           {
@@ -2403,7 +2403,7 @@ window.SITE_PAGES_DATA = [
           {
             "step": "02",
             "name": "Control Implementation Statements",
-            "who": "Secure-Centric RPs",
+            "who": "Secure-Centric Team and Your Team",
             "output": "110 Detailed Narratives Matching NIST 800-171A"
           },
           {
@@ -4794,7 +4794,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "01",
             "name": "Site visit",
-            "who": "You + Secure-Centric",
+            "who": "Secure-Centric Team",
             "help": "In-person physical & technical walkthrough of facilities, server rooms, and shop-floor enclaves.",
             "output": "Asset discovery baseline & boundary notes",
             "link": "#page-2"
@@ -4802,7 +4802,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "02",
             "name": "Scoping",
-            "who": "Secure-Centric + IT Leads",
+            "who": "Secure-Centric & Your Team",
             "help": "Map CUI/FCI flows, identify people, systems, and network storage touching DoD contracts.",
             "output": "Formal Scope Document & Data-Flow Architecture",
             "link": "#page-16"
@@ -4810,7 +4810,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "03",
             "name": "Gap assessment",
-            "who": "Secure-Centric",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Audit all 110 NIST SP 800-171 controls against actual day-to-day operations.",
             "output": "Defensible SPRS Score estimate & findings register",
             "link": "#page-5"
@@ -4818,7 +4818,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "04",
             "name": "Remediation",
-            "who": "Your IT/MSP (guided by us)",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Prioritize fixes by risk weight; guide MFA, encryption, logging, and enclave deployments.",
             "output": "Remediation Roadmap with owners and completion targets",
             "link": "#page-7"
@@ -4826,7 +4826,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "05",
             "name": "Documentation",
-            "who": "Secure-Centric + You",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Co-write your System Security Plan (SSP), POA&M, and all required operational policies.",
             "output": "Assessor-ready SSP and comprehensive policy suite",
             "link": "#page-8"
@@ -4834,7 +4834,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "06",
             "name": "Readiness review",
-            "who": "Secure-Centric RPs",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Full rehearsal mock audit simulating C3PAO interview techniques and evidence requests.",
             "output": "Readiness sign-off report & Evidence Binder index",
             "link": "#page-4"
@@ -4850,7 +4850,7 @@ window.SITE_PAGES_DATA = [
           {
             "no": "08",
             "name": "Maintain",
-            "who": "Virtual CISO / You",
+            "who": "Secure-Centric Team and Your Team",
             "help": "Continuous compliance, annual SPRS reaffirmation, change management, and evidence refreshes.",
             "output": "Annual Affirmation pack & ongoing compliance posture",
             "link": "#page-11"

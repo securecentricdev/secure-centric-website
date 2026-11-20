@@ -648,7 +648,7 @@ function secure_centric_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'sc_footer_copyright', array(
-        'default'           => '© 2026 Secure-Centric LLC. All rights reserved.',
+        'default'           => '© 2026 Secure-Centric Inc. All rights reserved.',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
@@ -760,7 +760,7 @@ function secure_centric_filter_template_parts( $block_content, $block ) {
             }
             $footer_copy = get_theme_mod( 'sc_footer_copyright', '' );
             if ( ! empty( $footer_copy ) ) {
-                $block_content = preg_replace( '/&copy;\s*2026\s*Secure-Centric\s*LLC\.\s*All\s*rights\s*reserved\./i', esc_html( $footer_copy ), $block_content );
+                $block_content = preg_replace( '/&copy;\s*2026\s*Secure-Centric\s*(?:LLC|Inc)\.?\s*All\s*rights\s*reserved\./i', esc_html( $footer_copy ), $block_content );
             }
         }
     }
@@ -852,5 +852,20 @@ require_once get_template_directory() . '/inc/ghl-flow3-lead-magnet.php';
 
 // CMMC Pathfinder Floating Popup (Triggers after 30% page scroll on all pages)
 require_once get_template_directory() . '/inc/pathfinder-popup.php';
+
+/**
+ * Output Favicon and Apple Touch Icons
+ */
+function sc_output_favicon() {
+    $theme_uri = get_template_directory_uri();
+    echo '<link rel="shortcut icon" href="' . esc_url( $theme_uri . '/assets/img/favicon.ico' ) . '" type="image/x-icon" />' . "\n";
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="' . esc_url( $theme_uri . '/assets/img/favicon-32x32.png' ) . '" />' . "\n";
+    echo '<link rel="icon" type="image/png" sizes="16x16" href="' . esc_url( $theme_uri . '/assets/img/favicon-16x16.png' ) . '" />' . "\n";
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="' . esc_url( $theme_uri . '/assets/img/apple-touch-icon.png' ) . '" />' . "\n";
+}
+add_action( 'wp_head', 'sc_output_favicon', 2 );
+add_action( 'login_head', 'sc_output_favicon', 2 );
+add_action( 'admin_head', 'sc_output_favicon', 2 );
+
 
 
