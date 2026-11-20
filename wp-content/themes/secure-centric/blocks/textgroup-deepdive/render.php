@@ -69,6 +69,9 @@ if ( ! function_exists( 'sc_render_deepdive_section_content' ) ) {
 
         foreach ( $items as $raw_chunk ) {
             $text = trim( (string) $raw_chunk );
+            if ( function_exists( 'sc_clean_text' ) ) {
+                $text = sc_clean_text( $text );
+            }
             if ( '' === $text ) {
                 continue;
             }

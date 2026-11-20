@@ -42,7 +42,8 @@ function sc_clean_text( $val ) {
                 'u0026#038;', '\u0026#038;',
                 '\u0026', 'u0026', 'U0026',
                 '&amp;',
-                'IT\u005c/MSP', 'IT\/MSP', '\/', 'u005c/'
+                'IT\u005c/MSP', 'IT\/MSP', '\/', 'u005c/',
+                '\u005cn', 'u005cn', '\r\n', '\n'
             ),
             array(
                 '"', '"',
@@ -51,7 +52,8 @@ function sc_clean_text( $val ) {
                 '&', '&',
                 '&', '&', '&',
                 '&',
-                'IT/MSP', 'IT/MSP', '/', '/'
+                'IT/MSP', 'IT/MSP', '/', '/',
+                "\n", "\n", "\n", "\n"
             ),
             $val
         );

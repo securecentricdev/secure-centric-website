@@ -169,9 +169,10 @@
 }
 
 /* ---------- Top Bar & Header Navigation (Unified Sticky Group) ---------- */
+header.wp-block-template-part:has(.site-header-sticky-wrapper),
 .site-header-sticky-wrapper {
   position: sticky;
-  top: 48px; /* Sticks flush under the presentation HUD */
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
@@ -183,12 +184,19 @@
   padding: 0;
 }
 
-@media (max-width: 860px) {
-  .site-header-sticky-wrapper {
-    top: 42px; /* Sticks flush under the mobile presentation HUD */
+body.admin-bar header.wp-block-template-part:has(.site-header-sticky-wrapper),
+body.admin-bar .site-header-sticky-wrapper {
+  top: 32px !important;
+}
+
+@media screen and (max-width: 782px) {
+  body.admin-bar header.wp-block-template-part:has(.site-header-sticky-wrapper),
+  body.admin-bar .site-header-sticky-wrapper {
+    top: 46px !important;
   }
 }
 
+body.mobile-preview-mode header.wp-block-template-part:has(.site-header-sticky-wrapper),
 body.mobile-preview-mode .site-header-sticky-wrapper {
   position: sticky !important;
   top: 0 !important;
@@ -252,6 +260,7 @@ body.mobile-preview-mode .site-header-sticky-wrapper {
   font-weight: 800;
   font-size: 1.3rem;
   letter-spacing: -0.01em;
+  flex-shrink: 0;
 }
 
 .site-logo .site-logo-img {
@@ -977,28 +986,38 @@ body.admin-bar .on-this-page-toc {
 
 .custom-table {
   width: 100%;
-  min-width: 600px;
+  table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
   font-size: 0.875rem;
 }
 
+.custom-table th,
+.custom-table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
 .custom-table th {
-  background-color: var(--color-navy);
-  color: var(--color-white);
-  font-weight: 700;
-  padding: 14px 18px;
+  background-color: #FFFFFF !important;
+  color: #0B1437 !important;
+  font-weight: 800;
+  padding: 16px 20px;
   font-size: 0.8125rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-family: var(--font-primary);
+  font-family: var(--font-mono, monospace);
+  border-bottom: 2px solid #CBD5E1 !important;
 }
 
 .custom-table td {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-body-text);
-  background-color: var(--color-white);
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  background-color: #0B1437;
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
 .custom-table tr:last-child td {
@@ -1006,7 +1025,12 @@ body.admin-bar .on-this-page-toc {
 }
 
 .custom-table tr:nth-child(even) td {
-  background-color: #FAFBFF;
+  background-color: #101E56;
+}
+
+.custom-table tr td:last-child {
+  color: #38BDF8 !important;
+  font-weight: 600;
 }
 
 /* ---------- 14 Control Families Tiles (Page 13) ---------- */
@@ -1712,13 +1736,24 @@ body.mobile-preview-mode .btn {
    Removes Gutenberg core blockGap / vertical margin injection between
    full-width page sections so no dark body gaps appear between blocks.
    ========================================================================== */
-html,
+html {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+body:not(.admin-bar) {
+  margin-top: 0 !important;
+}
+
 body,
 .wp-site-blocks,
 .entry-content,
 .wp-block-post-content {
   background-color: var(--color-white) !important;
-  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
   padding: 0 !important;
 }
 
@@ -1988,7 +2023,529 @@ body,
 }
 
 /* ==========================================================================
-   Hero CUI Magnet Card Styling
+   Gutenberg Editor Block Wrapper & Selection States
+   Allows seamless clicking and selecting of dynamic ServerSideRender blocks
+   ========================================================================== */
+/* ==========================================================================
+   Backend Gutenberg Editor Full-Width Rules
+   Ensures all custom blocks and ServerSideRender previews span full width
+   ========================================================================== */
+.editor-styles-wrapper .wp-block[data-type^="secure-centric/"],
+.block-editor-block-list__layout .wp-block[data-type^="secure-centric/"],
+.is-root-container > .wp-block[data-type^="secure-centric/"],
+.wp-block[data-type^="secure-centric/"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.sc-gutenberg-block-wrapper {
+  position: relative;
+  cursor: pointer !important;
+  transition: box-shadow 0.2s ease, outline 0.2s ease;
+  user-select: none;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.sc-gutenberg-block-wrapper .components-server-side-render,
+.editor-styles-wrapper .components-server-side-render {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .sc-gutenberg-block-wrapper section,
+.editor-styles-wrapper [data-wp-pattern] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .site-container {
+  width: 100% !important;
+  max-width: 1240px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+.editor-styles-wrapper .card,
+.editor-styles-wrapper .card-white {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure clicks anywhere on preview elements select the Gutenberg block */
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper a,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper button,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper form,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper input,
+.block-editor-block-list__layout .sc-gutenberg-block-wrapper video,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper a,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper button,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper form,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper input,
+.editor-styles-wrapper .sc-gutenberg-block-wrapper video {
+  pointer-events: none !important;
+}
+
+.sc-gutenberg-block-wrapper:hover {
+  outline: 1px dashed rgba(47, 91, 255, 0.45) !important;
+  outline-offset: -1px;
+}
+
+.is-selected .sc-gutenberg-block-wrapper,
+.sc-gutenberg-block-wrapper.is-selected,
+.wp-block.is-selected > .sc-gutenberg-block-wrapper {
+  outline: 2px solid #2F5BFF !important;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 1px #FFFFFF, 0 4px 20px rgba(47, 91, 255, 0.15) !important;
+}
+
+/* ==========================================================================
+   Forminator Theme Integration Styles
+   Matches Secure-Centric Design Tokens (Navy, Electric Blue, Cyan)
+   ========================================================================== */
+.forminator-ui.forminator-custom-form {
+  font-family: var(--font-primary) !important;
+  color: var(--color-navy) !important;
+  margin: 0 !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-row {
+  margin-bottom: 12px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-label {
+  font-family: var(--font-primary) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--color-navy) !important;
+  margin-bottom: 6px !important;
+  text-transform: none !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-required {
+  color: #ef4444 !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input,
+.forminator-ui.forminator-custom-form .forminator-textarea {
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  color: var(--color-navy) !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0 14px !important;
+  height: 46px !important;
+  line-height: normal !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-textarea {
+  height: auto !important;
+  padding: 12px 14px !important;
+  min-height: 100px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input:focus,
+.forminator-ui.forminator-custom-form .forminator-textarea:focus {
+  border-color: var(--color-electric-blue) !important;
+  box-shadow: 0 0 0 4px rgba(47, 91, 255, 0.15) !important;
+  outline: none !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-input::placeholder,
+.forminator-ui.forminator-custom-form .forminator-textarea::placeholder {
+  color: var(--color-slate) !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-button-submit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, var(--color-navy) 0%, #1a365d 100%) !important;
+  color: #ffffff !important;
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 24px !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(10, 25, 47, 0.12) !important;
+  transition: all 0.2s ease !important;
+  height: 48px !important;
+}
+
+.forminator-ui.forminator-custom-form .forminator-button-submit:hover {
+  background: linear-gradient(135deg, #1a365d 0%, var(--color-navy) 100%) !important;
+  box-shadow: 0 4px 16px rgba(10, 25, 47, 0.22) !important;
+  transform: translateY(-1px);
+}
+
+/* Compact Forms (Hero Quiz Card, Lead Magnet, Footer) */
+.hero-readiness-card .forminator-ui,
+.lead-magnet-band .forminator-ui,
+.footer-col .forminator-ui {
+  margin: 0 !important;
+}
+
+.hero-readiness-card:not(.cui-magnet-card) .forminator-label,
+.lead-magnet-band .forminator-label,
+.footer-col .forminator-label {
+  display: none !important;
+}
+
+.hero-readiness-card .forminator-row,
+.lead-magnet-band .forminator-row,
+.footer-col .forminator-row {
+  margin-bottom: 8px !important;
+}
+
+.hero-readiness-card .forminator-button-submit {
+  background: var(--color-electric-blue) !important;
+  color: #ffffff !important;
+}
+
+.hero-readiness-card .forminator-button-submit:hover {
+  background: #254bda !important;
+}
+
+.lead-magnet-band .forminator-button-submit {
+  background: var(--color-electric-blue) !important;
+  color: #ffffff !important;
+}
+
+.lead-magnet-band .forminator-button-submit:hover {
+  background: #254bda !important;
+}
+
+.footer-col .forminator-input {
+  height: 38px !important;
+  font-size: 0.8125rem !important;
+}
+
+.footer-col .forminator-button-submit {
+  height: 38px !important;
+  padding: 8px 16px !important;
+  font-size: 0.8125rem !important;
+  background: var(--color-electric-blue) !important;
+}
+
+/* Forminator Response Alerts */
+.forminator-response-message.forminator-show {
+  padding: 14px 18px !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--font-primary) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 16px !important;
+}
+
+.forminator-response-message.forminator-success {
+  background: rgba(0, 212, 255, 0.1) !important;
+  border: 1.5px solid var(--color-cyber-cyan) !important;
+  color: var(--color-navy) !important;
+}
+
+.forminator-response-message.forminator-error {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1.5px solid #ef4444 !important;
+  color: #991b1b !important;
+}
+
+/* Gated Resource Download Modal (Full Screen with Padding) */
+.sc-gated-modal-overlay {
+  box-sizing: border-box;
+}
+
+.sc-gated-modal-card {
+  width: 100% !important;
+  max-width: 1200px !important;
+  box-sizing: border-box;
+}
+
+.sc-gated-form-container .forminator-ui,
+.sc-gated-form-container .forminator-custom-form {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .sc-gated-modal-card {
+    padding: 24px 18px !important;
+  }
+}
+
+/* ==========================================================================
+   Slim Strip Layout for Bullets Grid ("Who this is for" ribbon)
+   ========================================================================== */
+.py-strip {
+  padding: 32px 0 !important;
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.section-who-strip.section-ice {
+  background-color: #F8FAFC !important;
+}
+
+.section-who-strip.section-white {
+  background-color: var(--color-white) !important;
+}
+
+.section-who-strip.section-midnight {
+  background-color: var(--color-navy) !important;
+  border-bottom: 1px solid var(--color-dark-line);
+}
+
+.who-strip-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.who-strip-header {
+  margin-bottom: 0px;
+}
+
+.who-strip-title {
+  margin: 0 !important;
+  font-size: clamp(1.25rem, 2vw, 1.5rem) !important;
+  font-weight: 700 !important;
+  color: var(--color-navy);
+  letter-spacing: -0.01em;
+}
+
+.who-strip-subtitle {
+  margin: 4px 0 0 !important;
+  font-size: 0.9375rem !important;
+  color: var(--color-body-text);
+}
+
+.who-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .who-strip-grid.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .who-strip-grid.col-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .who-strip-grid.col-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 991px) and (min-width: 640px) {
+  .who-strip-grid.col-4,
+  .who-strip-grid.col-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.who-strip-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 8px);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+
+.who-strip-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-electric-blue);
+  box-shadow: 0 6px 16px rgba(47, 91, 255, 0.08);
+}
+
+.who-strip-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-soft-blue);
+  color: var(--color-electric-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.who-strip-text {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  line-height: 1.45;
+}
+
+.who-strip-desc {
+  font-size: 0.85rem;
+  color: var(--color-body-text);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Custom Heading Block (H1, H2, H3, H4)
+   ========================================================================== */
+.sc-heading-block {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sc-heading-block .sc-heading-title {
+  margin-top: 0;
+  font-family: var(--font-primary) !important;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.sc-heading-block .sc-heading-subtitle {
+  font-family: var(--font-primary);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sc-heading-align-left {
+  text-align: left;
+}
+
+.sc-heading-align-center {
+  text-align: center;
+}
+
+.sc-heading-align-right {
+  text-align: right;
+}
+
+/* ==========================================================================
+   Section Explainer Bullet Points & Typography
+   ========================================================================== */
+.section-explainer-content p {
+  font-size: 1.0625rem !important;
+  line-height: 1.75 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 20px !important;
+}
+
+.section-explainer-content ul.explainer-list {
+  list-style: disc !important;
+  margin: 0 0 24px 28px !important;
+  padding: 0 !important;
+}
+
+.section-explainer-content ol.explainer-list {
+  list-style: decimal !important;
+  margin: 0 0 24px 28px !important;
+  padding: 0 !important;
+}
+
+.section-explainer-content .explainer-list li {
+  font-size: 1.0625rem !important;
+  line-height: 1.7 !important;
+  color: var(--color-body-text) !important;
+  margin-bottom: 10px !important;
+  padding-left: 6px !important;
+}
+
+.section-explainer-content ul.explainer-list li::marker {
+  color: var(--color-electric-blue) !important;
+}
+
+/* ==========================================================================
+   CTA Banner Checklist & Theme Variants
+   ========================================================================== */
+.final-cta-section.theme-navy {
+  background-color: var(--color-navy) !important;
+}
+
+.final-cta-section.theme-white {
+  background-color: var(--color-white) !important;
+  color: var(--color-navy) !important;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.final-cta-section.theme-white h2 {
+  color: var(--color-navy) !important;
+}
+
+.final-cta-section.theme-white p {
+  color: var(--color-body-text) !important;
+}
+
+.cta-checklist {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 auto 32px !important;
+  max-width: 580px !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.cta-checklist li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  font-size: clamp(1rem, 1.8vw, 1.125rem) !important;
+  line-height: 1.5 !important;
+  color: #FFFFFF !important;
+}
+
+.final-cta-section.theme-white .cta-checklist li {
+  color: var(--color-navy) !important;
+}
+
+.cta-check-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.final-cta-section.theme-white .cta-check-icon {
+  background: rgba(0, 102, 255, 0.12) !important;
+  color: var(--color-electric-blue) !important;
+}
+
+.cta-check-text strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+
+
+
+
+/* ==========================================================================
+   Hero CUI Magnet Card & Forminator Styling
    ========================================================================== */
 .hero-readiness-card.cui-magnet-card {
   background: #ffffff !important;
@@ -2106,4 +2663,79 @@ body,
     height: 50px !important;
     font-size: 1rem !important;
   }
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-ui {
+  margin: 0 !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-row {
+  margin-bottom: 14px !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-label {
+  display: block !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #1E293B !important;
+  margin-bottom: 6px !important;
+  text-align: left !important;
+  font-family: inherit !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-required {
+  display: none !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-input {
+  background: #ffffff !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 8px !important;
+  height: 44px !important;
+  padding: 8px 14px !important;
+  font-size: 0.9375rem !important;
+  color: #0F172A !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-input:focus {
+  border-color: #3B82F6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-button-submit {
+  width: 100% !important;
+  height: 48px !important;
+  background: #3B82F6 !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-top: 6px !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25) !important;
+  transition: background-color 0.2s ease, transform 0.15s ease !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-readiness-card.cui-magnet-card .forminator-button-submit:hover {
+  background: #2563EB !important;
+  transform: translateY(-1px) !important;
+}
+
+.hero-readiness-card.cui-magnet-card .cui-magnet-card-note {
+  font-size: 0.8125rem !important;
+  color: #64748B !important;
+  margin-top: 14px !important;
+  margin-bottom: 0 !important;
+  text-align: left !important;
+  line-height: 1.4 !important;
 }
