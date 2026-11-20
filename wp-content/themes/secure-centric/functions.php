@@ -15,9 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function secure_centric_setup() {
     add_theme_support( 'wp-block-styles' );
     add_theme_support( 'editor-styles' );
-    add_editor_style( 'assets/css/variables.css' );
-    add_editor_style( 'assets/css/components.css' );
-    add_editor_style( 'assets/css/pages.css' );
+    add_editor_style( array(
+        'assets/css/variables.css',
+        'assets/css/components.css',
+        'assets/css/pages.css',
+    ) );
     add_theme_support( 'align-wide' );
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'post-thumbnails' );
@@ -338,23 +340,31 @@ function secure_centric_editor_assets() {
         array(),
         null
     );
+    $var_file  = get_template_directory() . '/assets/css/variables.css';
+    $comp_file = get_template_directory() . '/assets/css/components.css';
+    $page_file = get_template_directory() . '/assets/css/pages.css';
+
+    $var_ver  = file_exists( $var_file ) ? (string) filemtime( $var_file ) : time();
+    $comp_ver = file_exists( $comp_file ) ? (string) filemtime( $comp_file ) : time();
+    $page_ver = file_exists( $page_file ) ? (string) filemtime( $page_file ) : time();
+
     wp_enqueue_style(
         'secure-centric-editor-styles',
         get_template_directory_uri() . '/assets/css/variables.css',
         array(),
-        '3.9.4'
+        $var_ver
     );
     wp_enqueue_style(
         'secure-centric-editor-components',
         get_template_directory_uri() . '/assets/css/components.css',
         array( 'secure-centric-editor-styles' ),
-        '3.9.4'
+        $comp_ver
     );
     wp_enqueue_style(
         'secure-centric-editor-pages',
         get_template_directory_uri() . '/assets/css/pages.css',
         array( 'secure-centric-editor-components' ),
-        '3.9.5'
+        $page_ver
     );
 
     wp_enqueue_media();
@@ -371,6 +381,26 @@ function secure_centric_editor_assets() {
     );
 }
 add_action( 'enqueue_block_editor_assets', 'secure_centric_editor_assets' );
+
+/**
+ * Ensure editor canvas iframe loads the full stylesheets
+ */
+function secure_centric_block_canvas_assets() {
+    if ( is_admin() ) {
+        $var_file  = get_template_directory() . '/assets/css/variables.css';
+        $comp_file = get_template_directory() . '/assets/css/components.css';
+        $page_file = get_template_directory() . '/assets/css/pages.css';
+
+        $var_ver  = file_exists( $var_file ) ? (string) filemtime( $var_file ) : time();
+        $comp_ver = file_exists( $comp_file ) ? (string) filemtime( $comp_file ) : time();
+        $page_ver = file_exists( $page_file ) ? (string) filemtime( $page_file ) : time();
+
+        wp_enqueue_style( 'sc-canvas-variables', get_template_directory_uri() . '/assets/css/variables.css', array(), $var_ver );
+        wp_enqueue_style( 'sc-canvas-components', get_template_directory_uri() . '/assets/css/components.css', array( 'sc-canvas-variables' ), $comp_ver );
+        wp_enqueue_style( 'sc-canvas-pages', get_template_directory_uri() . '/assets/css/pages.css', array( 'sc-canvas-components' ), $page_ver );
+    }
+}
+add_action( 'enqueue_block_assets', 'secure_centric_block_canvas_assets' );
 
 /**
  * Global Booking / Discovery Call URL Helper
