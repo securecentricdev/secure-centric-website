@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="shieldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="60%" stop-color="#0B132B"/>
+      <stop offset="100%" stop-color="#060B18"/>
+    </linearGradient>
+    <!-- Gold / Bronze Premium Border Gradient -->
+    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="35%" stop-color="#F59E0B"/>
+      <stop offset="70%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <!-- Cyan / Electric Accent Gradient -->
+    <linearGradient id="cyanAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <!-- Shadow -->
+    <filter id="shieldShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shieldShadow)">
+    <!-- Outer Shield Crest -->
+    <path d="M 240 20
+             C 310 20, 410 35, 430 55
+             C 430 180, 435 315, 240 455
+             C 45 315, 50 180, 50 55
+             C 70 35, 170 20, 240 20 Z"
+          fill="url(#shieldBg)"
+          stroke="url(#goldBorder)"
+          stroke-width="6"
+          stroke-linejoin="round"/>
+
+    <!-- Inner Golden Dashed Border -->
+    <path d="M 240 34
+             C 305 34, 396 48, 414 65
+             C 414 175, 418 298, 240 432
+             C 62 298, 66 175, 66 65
+             C 84 48, 175 34, 240 34 Z"
+          fill="none"
+          stroke="#F59E0B"
+          stroke-width="1.8"
+          stroke-opacity="0.55"
+          stroke-dasharray="5,4"/>
+
+    <!-- Inner Panel -->
+    <path d="M 240 44
+             C 300 44, 385 56, 400 72
+             C 400 170, 404 285, 240 416
+             C 76 285, 80 170, 80 72
+             C 95 56, 180 44, 240 44 Z"
+          fill="#0B132B"
+          stroke="#1E293B"
+          stroke-width="2"/>
+  </g>
+
+  <!-- Top Security Padlock / Shield Icon -->
+  <g transform="translate(240, 124)">
+    <!-- Outer Subtle Aura -->
+    <circle cx="0" cy="0" r="44" fill="#0066FF" opacity="0.12"/>
+    
+    <!-- Heavy Duty Shackle -->
+    <path d="M -18 -10 L -18 -26 C -18 -40, 18 -40, 18 -26 L 18 -10" 
+          fill="none" 
+          stroke="url(#goldBorder)" 
+          stroke-width="7" 
+          stroke-linecap="round"/>
+    
+    <!-- Lock Body -->
+    <rect x="-26" y="-10" width="52" height="42" rx="8" 
+          fill="url(#goldBorder)" 
+          stroke="#78350F" 
+          stroke-width="2"/>
+    
+    <!-- Keyhole -->
+    <circle cx="0" cy="6" r="4.5" fill="#0B132B"/>
+    <polygon points="-3,6 3,6 4.5,20 -4.5,20" fill="#0B132B"/>
+
+    <!-- Side Security Stars -->
+    <g fill="url(#goldBorder)">
+      <path d="M -66 0 L -62 8 L -54 8 L -60 14 L -58 22 L -66 17 L -74 22 L -72 14 L -78 8 L -70 8 Z" transform="scale(0.7) translate(-35, -5)"/>
+      <path d="M 66 0 L 70 8 L 78 8 L 72 14 L 74 22 L 66 17 L 58 22 L 60 14 L 54 8 L 62 8 Z" transform="scale(0.7) translate(35, -5)"/>
+    </g>
+  </g>
+
+  <!-- Top Label: MUTUAL NON-DISCLOSURE -->
+  <text x="240" y="206" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="15" 
+        font-weight="800" 
+        letter-spacing="3" 
+        fill="#94A3B8">
+    MUTUAL CONFIDENTIALITY
+  </text>
+
+  <!-- Main Title: BILATERAL NDA -->
+  <text x="240" y="258" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+        font-size="36" 
+        font-weight="900" 
+        letter-spacing="2" 
+        fill="#FFFFFF">
+    BILATERAL NDA
+  </text>
+
+  <!-- Divider Line with Diamond Accent -->
+  <line x1="100" y1="276" x2="215" y2="276" stroke="url(#goldBorder)" stroke-width="2.5"/>
+  <rect x="234.5" y="270.5" width="11" height="11" transform="rotate(45 240 276)" fill="#F59E0B"/>
+  <line x1="265" y1="276" x2="380" y2="276" stroke="url(#goldBorder)" stroke-width="2.5"/>
+
+  <!-- Subheadline: STANDARD -->
+  <text x="240" y="322" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+        font-size="32" 
+        font-weight="900" 
+        letter-spacing="6" 
+        fill="url(#goldBorder)">
+    STANDARD
+  </text>
+
+  <!-- Bottom Capsule: DEFENSE GRADE COMPLIANCE -->
+  <g transform="translate(240, 368)">
+    <rect x="-145" y="-16" width="290" height="32" rx="16" 
+          fill="#1E293B" 
+          stroke="#38BDF8" 
+          stroke-width="1.8"/>
+    <text x="0" y="5" 
+          text-anchor="middle" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+          font-size="12" 
+          font-weight="800" 
+          letter-spacing="1.5" 
+          fill="#F8FAFC">
+      DEFENSE CONTRACTOR PROTECTED
+    </text>
+  </g>
+
+  <!-- Bottom Accent Star -->
+  <path d="M 240 405 L 243 412 L 250 412 L 244 417 L 246 424 L 240 419 L 234 424 L 236 417 L 230 412 L 237 412 Z" fill="url(#goldBorder)"/>
+</svg>

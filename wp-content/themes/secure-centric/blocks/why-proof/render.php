@@ -97,18 +97,23 @@ $badge_note = ! empty( $attributes['badgeNote'] ) ? $attributes['badgeNote'] : '
     </div>
 
     <?php
-    $show_badges = ! empty( $attributes['showBadges'] ) && empty( $attributes['hideBadges'] );
+    $show_badges = ! isset( $attributes['showBadges'] ) || ! empty( $attributes['showBadges'] );
     if ( $show_badges ) :
+      $badge_cyber_ab = get_template_directory_uri() . '/assets/img/badges/cyber-ab-rpo.webp';
+      $badge_inc_5000 = get_template_directory_uri() . '/assets/img/badges/inc-5000-badge.webp';
+      $badge_nda      = get_template_directory_uri() . '/assets/img/badges/bilateral-nda-standard.svg';
     ?>
-    <!-- Verified Credentials Bottom Strip -->
-    <div class="why-badges-row">
-      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <span style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-slate); font-weight: 700;">Official Badges:</span>
-        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;"><?php echo esc_html( $badge1 ); ?></span>
-        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;"><?php echo esc_html( $badge2 ); ?></span>
-        <span class="badge-chip" style="background: var(--color-soft-blue); color: var(--color-navy); border: 1px solid var(--color-border); font-size: 0.75rem;"><?php echo esc_html( $badge3 ); ?></span>
+    <!-- Verified Credentials Badges Strip: Cyber AB RPO, Inc. 5000, Bilateral NDA Standard -->
+    <div class="why-badges-row why-badges-logos" style="display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; width: 100%; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); box-sizing: border-box; gap: 24px;">
+      <div class="why-badge-logo-col why-badge-logo-col--left" style="display: flex; justify-content: flex-start; align-items: center;">
+        <img src="<?php echo esc_url( $badge_cyber_ab ); ?>" alt="The Cyber AB Registered Provider Organization (RPO)" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
       </div>
-      <span style="font-size: 0.8125rem; color: var(--color-slate); font-family: var(--font-mono);"><?php echo esc_html( $badge_note ); ?></span>
+      <div class="why-badge-logo-col why-badge-logo-col--center" style="display: flex; justify-content: center; align-items: center;">
+        <img src="<?php echo esc_url( $badge_inc_5000 ); ?>" alt="Inc. 5000 America's Fastest-Growing Private Companies" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
+      </div>
+      <div class="why-badge-logo-col why-badge-logo-col--right" style="display: flex; justify-content: flex-end; align-items: center;">
+        <img src="<?php echo esc_url( $badge_nda ); ?>" alt="Bilateral NDA Standard - Defense Contractor Protected" class="why-badge-logo-img" style="max-height: 48px; width: auto; max-width: 100%; object-fit: contain; display: block;" loading="lazy" />
+      </div>
     </div>
     <?php endif; ?>
   </div>

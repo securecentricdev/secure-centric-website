@@ -1714,6 +1714,58 @@ body,
   box-sizing: border-box;
 }
 
+.why-badges-row.why-badges-logos {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 24px !important;
+}
+
+.why-badge-logo-col {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.why-badge-logo-col--left {
+  justify-content: flex-start;
+}
+
+.why-badge-logo-col--center {
+  justify-content: center;
+}
+
+.why-badge-logo-col--right {
+  justify-content: flex-end;
+}
+
+.why-badge-logo-img {
+  max-height: 48px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.why-badge-logo-img:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 680px) {
+  .why-badges-row.why-badges-logos {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .why-badge-logo-img {
+    max-height: 38px !important;
+  }
+}
+
 @media (max-width: 992px) {
   .why-proof-grid {
     grid-template-columns: 1fr !important;
