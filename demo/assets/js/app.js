@@ -3795,7 +3795,8 @@
 
   /**
    * Increasing number animation when section comes into view/focus
-   * Smoothly animates numbers over 1.2 - 1.5 seconds and stabilizes with tabular digits
+   * Smoothly animates numbers over 1.2 - 1.4 seconds and stabilizes with tabular digits
+   * Re-triggers whenever user scrolls away and revisits the section
    */
   function initStatsCounters() {
     const counterEls = document.querySelectorAll('.sc-counter, .stats-number-block .number');
@@ -3804,6 +3805,11 @@
     function runCounter(el) {
       if (el.dataset.scAnimated === 'true') return;
       el.dataset.scAnimated = 'true';
+
+      if (el._scAnimFrame) {
+        cancelAnimationFrame(el._scAnimFrame);
+        el._scAnimFrame = null;
+      }
 
       const rawText = el.textContent.trim();
       let target = parseFloat(el.getAttribute('data-target'));
@@ -3824,7 +3830,7 @@
         suffix = (suffix !== null && suffix !== undefined) ? suffix : '';
       }
 
-      const duration = 1400; // ~1.4s - perfectly stabilizes within 1-2 seconds
+      const duration = 1300; // ~1.3s smooth count-up
       const startTime = performance.now();
 
       function easeOutCubic(t) {
@@ -3839,14 +3845,15 @@
         el.textContent = `${prefix}${currentVal}${suffix}`;
 
         if (progress < 1) {
-          requestAnimationFrame(update);
+          el._scAnimFrame = requestAnimationFrame(update);
         } else {
           el.textContent = `${prefix}${target}${suffix}`;
+          el._scAnimFrame = null;
         }
       }
 
       el.textContent = `${prefix}0${suffix}`;
-      requestAnimationFrame(update);
+      el._scAnimFrame = requestAnimationFrame(update);
     }
 
     if (!('IntersectionObserver' in window)) {
@@ -3854,22 +3861,26 @@
       return;
     }
 
-    const observer = new IntersectionObserver((entries, obs) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          obs.unobserve(entry.target);
           runCounter(entry.target);
+        } else {
+          // When user scrolls below or above the section, allow it to animate again upon revisit
+          entry.target.dataset.scAnimated = 'false';
+          if (entry.target._scAnimFrame) {
+            cancelAnimationFrame(entry.target._scAnimFrame);
+            entry.target._scAnimFrame = null;
+          }
         }
       });
     }, {
-      threshold: 0.2,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -30px 0px'
     });
 
     counterEls.forEach(el => {
-      if (el.dataset.scAnimated !== 'true') {
-        observer.observe(el);
-      }
+      observer.observe(el);
     });
   }
 
