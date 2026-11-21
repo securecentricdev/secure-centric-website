@@ -3187,23 +3187,23 @@
             { title: 'Form Card & Actions (Right Column)', initialOpen: true },
             el(TextControl, {
               label: 'Form Headline',
-              value: attributes.formTitle !== undefined ? attributes.formTitle : (attributes.title || 'Request a Discovery Call'),
+              value: attributes.formTitle !== undefined ? attributes.formTitle : (attributes.title || 'Get in touch'),
               onChange: function (val) { setAttributes({ formTitle: val, title: val }); }
             }),
             el(TextareaControl, {
               label: 'Form Subtitle',
-              value: attributes.formSubtitle !== undefined ? attributes.formSubtitle : (attributes.subtitle || 'Fields marked with * are required. We strictly respect your privacy.'),
+              value: attributes.formSubtitle !== undefined ? attributes.formSubtitle : (attributes.subtitle || 'Tell us a little about your company and our team will reach out.'),
               rows: 2,
               onChange: function (val) { setAttributes({ formSubtitle: val, subtitle: val }); }
             }),
             el(TextControl, {
               label: 'Submit Button Text',
-              value: attributes.submitBtnText !== undefined ? attributes.submitBtnText : 'Submit Discovery Call Request →',
+              value: attributes.submitBtnText !== undefined ? attributes.submitBtnText : 'Contact our team',
               onChange: function (val) { setAttributes({ submitBtnText: val }); }
             }),
             el(TextareaControl, {
               label: 'Privacy & Confidentiality Note',
-              value: attributes.privacyNote !== undefined ? attributes.privacyNote : '🔒 All communications are held under strict confidentiality. We do not sell or share contractor data.',
+              value: attributes.privacyNote !== undefined ? attributes.privacyNote : 'We never share your details.',
               rows: 2,
               onChange: function (val) { setAttributes({ privacyNote: val }); }
             }),

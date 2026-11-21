@@ -199,10 +199,10 @@ if ( $is_download_layout ) :
       );
   }
 
-  $contact_form_title    = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : ( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Request a Discovery Call' );
-  $contact_form_subtitle = ! empty( $attributes['formSubtitle'] ) ? $attributes['formSubtitle'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Fields marked with * are required. We strictly respect your privacy.' );
-  $submit_btn            = ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Submit Discovery Call Request →';
-  $privacy_note          = ! empty( $attributes['privacyNote'] ) ? $attributes['privacyNote'] : '🔒 All communications are held under strict confidentiality. We do not sell or share contractor data.';
+  $contact_form_title    = ! empty( $attributes['formTitle'] ) ? $attributes['formTitle'] : ( ! empty( $attributes['title'] ) ? $attributes['title'] : 'Get in touch' );
+  $contact_form_subtitle = ! empty( $attributes['formSubtitle'] ) ? $attributes['formSubtitle'] : ( ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : 'Tell us a little about your company and our team will reach out.' );
+  $submit_btn            = ! empty( $attributes['submitBtnText'] ) ? $attributes['submitBtnText'] : 'Contact our team';
+  $privacy_note          = ! empty( $attributes['privacyNote'] ) ? $attributes['privacyNote'] : 'We never share your details.';
   $form_id               = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '';
 
   if ( function_exists( 'sc_clean_text' ) ) {
@@ -303,42 +303,58 @@ if ( $is_download_layout ) :
             if ( ! empty( $split_form_id ) && shortcode_exists( 'forminator_form' ) ) :
             ?>
               <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $split_form_id ) . '"]' ); ?>
+              <div class="contact-form-privacy-note"><?php echo esc_html( $privacy_note ); ?></div>
             <?php else : ?>
-              <form id="contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our Registered Practitioners will review your scope within 2 business hours.');">
+              <form id="contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our team will reach out shortly.');">
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label" for="contact-name">NAME*</label>
-                    <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. John Miller" required />
+                    <label class="form-label" for="contact-name">Full name *</label>
+                    <input type="text" id="contact-name" name="name" class="form-input" required />
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="contact-company">Company Name*</label>
-                    <input type="text" id="contact-company" name="company" class="form-input" placeholder="e.g. Precision Aerospace LLC" required />
+                    <label class="form-label" for="contact-company">Company name *</label>
+                    <input type="text" id="contact-company" name="company" class="form-input" required />
                   </div>
                 </div>
 
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label" for="contact-email">Company Email*</label>
-                    <input type="email" id="contact-email" name="email" class="form-input" placeholder="john@defensecontractor.com" required />
+                    <label class="form-label" for="contact-email">Company email *</label>
+                    <input type="email" id="contact-email" name="email" class="form-input" required />
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="contact-phone">Phone Number*</label>
-                    <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="(555) 000-0000" required />
+                    <label class="form-label" for="contact-phone">Phone</label>
+                    <input type="tel" id="contact-phone" name="phone" class="form-input" />
                   </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 14px;">
+                  <label class="form-label" for="contact-help">How can we help? *</label>
+                  <select id="contact-help" name="help" class="form-input" required>
+                    <option value="" disabled selected>Select</option>
+                    <option value="CMMC Level 1">CMMC Level 1</option>
+                    <option value="CMMC Level 2">CMMC Level 2</option>
+                    <option value="NIST SP 800-171 compliance">NIST SP 800-171 compliance</option>
+                    <option value="Gap or mock assessment">Gap or mock assessment</option>
+                    <option value="Enclave support or GCC High migration">Enclave support or GCC High migration</option>
+                    <option value="Support after my CMMC assessment">Support after my CMMC assessment</option>
+                    <option value="Not sure if we handle CUI">Not sure if we handle CUI</option>
+                    <option value="Something else">Something else</option>
+                  </select>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="contact-message">how can we help you*</label>
-                  <textarea id="contact-message" name="message" class="form-textarea" rows="4" placeholder="Tell us about your upcoming contract renewals, DoD deadlines, or primary challenges with NIST SP 800-171." required></textarea>
+                  <label class="form-label" for="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" class="form-textarea" rows="3" placeholder="Anything we should know (optional)"></textarea>
                 </div>
 
-                <div style="margin-top: 20px;">
-                  <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+                <div style="margin-top: 18px;">
+                  <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; background: #4F6BFF;">
                     <?php echo esc_html( $submit_btn ); ?>
                   </button>
                 </div>
 
-                <div style="margin-top: 14px; font-size: 0.75rem; color: var(--color-slate); text-align: center; line-height: 1.4;">
+                <div class="contact-form-privacy-note">
                   <?php echo esc_html( $privacy_note ); ?>
                 </div>
               </form>

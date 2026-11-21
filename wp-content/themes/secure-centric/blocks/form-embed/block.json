@@ -71,19 +71,19 @@
     },
     "formTitle": {
       "type": "string",
-      "default": "Request a Discovery Call"
+      "default": "Get in touch"
     },
     "formSubtitle": {
       "type": "string",
-      "default": "Fields marked with * are required. We strictly respect your privacy."
+      "default": "Tell us a little about your company and our team will reach out."
     },
     "submitBtnText": {
       "type": "string",
-      "default": "Submit Discovery Call Request \u2192"
+      "default": "Contact our team"
     },
     "privacyNote": {
       "type": "string",
-      "default": "\ud83d\udd12 All communications are held under strict confidentiality. We do not sell or share contractor data."
+      "default": "We never share your details."
     },
     "formId": {
       "type": "string",

@@ -811,26 +811,34 @@ function secure_centric_forward_forminator_to_ghl( $form_id, $response, $entry_i
     $email   = isset( $raw_data['email-1'] ) ? trim( $raw_data['email-1'] ) : '';
     $phone   = isset( $raw_data['phone-1'] ) ? trim( $raw_data['phone-1'] ) : '';
     $company = isset( $raw_data['text-1'] ) ? trim( $raw_data['text-1'] ) : '';
-    $notes   = isset( $raw_data['textarea-1'] ) ? trim( $raw_data['textarea-1'] ) : '';
+    $help    = isset( $raw_data['select-1'] ) ? trim( $raw_data['select-1'] ) : '';
+    $message = isset( $raw_data['textarea-1'] ) ? trim( $raw_data['textarea-1'] ) : '';
+
+    $combined_notes = $message;
+    if ( ! empty( $help ) ) {
+        $combined_notes = "How can we help: " . $help . ( ! empty( $message ) ? "\nMessage: " . $message : '' );
+    }
 
     $form = Forminator_API::get_form( $form_id );
     $form_name = $form ? $form->name : 'Form ' . $form_id;
 
     $payload = array(
-        'first_name'   => $first_name,
-        'last_name'    => $last_name,
-        'name'         => $name,
-        'email'        => $email,
-        'phone'        => $phone,
-        'company_name' => $company,
-        'notes'        => $notes,
-        'form_id'      => $form_id,
-        'form_name'    => $form_name,
-        'entry_id'     => $entry_id,
-        'source'       => 'Secure-Centric Website',
-        'page_url'     => isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( $_SERVER['HTTP_REFERER'] ) : get_site_url(),
-        'submitted_at' => gmdate( 'c' ),
-        'raw_fields'   => $raw_data,
+        'first_name'       => $first_name,
+        'last_name'        => $last_name,
+        'name'             => $name,
+        'email'            => $email,
+        'phone'            => $phone,
+        'company_name'     => $company,
+        'how_can_we_help'  => $help,
+        'message'          => $message,
+        'notes'            => $combined_notes,
+        'form_id'          => $form_id,
+        'form_name'        => $form_name,
+        'entry_id'         => $entry_id,
+        'source'           => 'Secure-Centric Website',
+        'page_url'         => isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( $_SERVER['HTTP_REFERER'] ) : get_site_url(),
+        'submitted_at'     => gmdate( 'c' ),
+        'raw_fields'       => $raw_data,
     );
 
     wp_remote_post( $webhook_url, array(

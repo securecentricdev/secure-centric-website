@@ -282,15 +282,20 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
 
         <div class="resource-hero-right">
           <div class="resource-hero-card-form" id="contact-form-container">
-            <h3 style="margin-bottom: 6px; font-size: 1.35rem; color: var(--color-navy);">Request Your Compliance Pack</h3>
+            <?php
+            $res_card_title = ( ! empty( $attributes['cardTitle'] ) && 'Request Your Compliance Pack' !== $attributes['cardTitle'] ) ? $attributes['cardTitle'] : 'Get in touch';
+            $res_card_desc  = ( ! empty( $attributes['cardDesc'] ) && false === strpos( $attributes['cardDesc'], 'Complete the form below' ) ) ? $attributes['cardDesc'] : 'Tell us a little about your company and our team will reach out.';
+            ?>
+            <h3 style="margin-bottom: 6px; font-size: 1.35rem; color: var(--color-navy);"><?php echo esc_html( $res_card_title ); ?></h3>
             <p style="font-size: 0.8125rem; color: var(--color-slate); margin-bottom: 18px;">
-              Complete the form below to receive the official compliance checklist and speak with a Cyber AB Registered Practitioner.
+              <?php echo esc_html( $res_card_desc ); ?>
             </p>
 
             <?php
             $hero_pillar_form = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
             if ( ! empty( $hero_pillar_form ) && shortcode_exists( 'forminator_form' ) ) :
                 echo do_shortcode( '[forminator_form id="' . esc_attr( $hero_pillar_form ) . '"]' );
+                echo '<div class="contact-form-privacy-note">We never share your details.</div>';
             else :
             ?>
             <form id="resource-contact-form" onsubmit="event.preventDefault(); alert('Request submitted! Our Registered Practitioners will review your scope within 2 business hours.');">
@@ -453,8 +458,8 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
         <div>
           <?php
           $icp_right_mode = ! empty( $attributes['rightSideMode'] ) ? $attributes['rightSideMode'] : 'tiles';
-          $card_title     = ! empty( $attributes['cardTitle'] ) ? $attributes['cardTitle'] : 'Talk to a CMMC Advisor';
-          $card_desc      = ! empty( $attributes['cardDesc'] ) ? $attributes['cardDesc'] : 'Submit your details below to schedule your confidential 30-minute scoping review:';
+          $card_title     = ( ! empty( $attributes['cardTitle'] ) && 'Talk to a CMMC Advisor' !== $attributes['cardTitle'] ) ? $attributes['cardTitle'] : 'Get in touch';
+          $card_desc      = ( ! empty( $attributes['cardDesc'] ) && false === strpos( $attributes['cardDesc'], 'Submit your details below to schedule' ) ) ? $attributes['cardDesc'] : 'Tell us a little about your company and our team will reach out.';
           $icp_form_id    = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
           ?>
           <?php if ( 'form' === $icp_right_mode ) : ?>
@@ -467,6 +472,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
                   $f_html = do_shortcode( '[forminator_form id="' . esc_attr( $icp_form_id ) . '"]' );
                   if ( ! empty( $f_html ) && false === strpos( $f_html, 'forminator_form id=' ) ) {
                       echo $f_html;
+                      echo '<div class="contact-form-privacy-note">We never share your details.</div>';
                       $rendered_form = true;
                   }
               }
@@ -583,8 +589,8 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
         <div class="card-white" style="padding: 28px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
           <?php
           $right_mode    = ! empty( $attributes['rightSideMode'] ) ? $attributes['rightSideMode'] : 'form';
-          $card_title    = ! empty( $attributes['cardTitle'] ) ? $attributes['cardTitle'] : ( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Talk to a CMMC Advisor' );
-          $card_desc     = ! empty( $attributes['cardDesc'] ) ? $attributes['cardDesc'] : ( ! empty( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Submit your details below to schedule your confidential 30-minute scoping review:' );
+          $card_title    = ( ! empty( $attributes['cardTitle'] ) && 'Talk to a CMMC Advisor' !== $attributes['cardTitle'] ) ? $attributes['cardTitle'] : ( ! empty( $attributes['quizTitle'] ) ? $attributes['quizTitle'] : 'Get in touch' );
+          $card_desc     = ( ! empty( $attributes['cardDesc'] ) && false === strpos( $attributes['cardDesc'], 'Submit your details below to schedule' ) ) ? $attributes['cardDesc'] : ( ! empty( $attributes['quizDesc'] ) ? $attributes['quizDesc'] : 'Tell us a little about your company and our team will reach out.' );
           $split_form_id = ! empty( $attributes['formId'] ) ? $attributes['formId'] : '101';
           ?>
           <h3 style="color: var(--color-navy); margin-bottom: 8px; font-size: 1.35rem;"><?php echo esc_html( $card_title ); ?></h3>
@@ -627,6 +633,7 @@ $overlay_opacity = isset( $attributes['bgOverlayOpacity'] ) ? ( (float) $attribu
           <?php else : ?>
             <?php if ( ! empty( $split_form_id ) && shortcode_exists( 'forminator_form' ) ) : ?>
               <?php echo do_shortcode( '[forminator_form id="' . esc_attr( $split_form_id ) . '"]' ); ?>
+              <div class="contact-form-privacy-note">We never share your details.</div>
             <?php else : ?>
               <form class="hero-split-contact-form" action="<?php echo esc_url( $primary_btn_url ); ?>" method="POST" style="display: flex; flex-direction: column; gap: 12px;">
                 <div>

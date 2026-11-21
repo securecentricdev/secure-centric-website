@@ -188,11 +188,11 @@
     },
     "cardTitle": {
       "type": "string",
-      "default": "Talk to a CMMC Advisor"
+      "default": "Get in touch"
     },
     "cardDesc": {
       "type": "string",
-      "default": "Submit your details below to schedule your confidential 30-minute scoping review:"
+      "default": "Tell us a little about your company and our team will reach out."
     },
     "cardBadge": {
       "type": "string",
