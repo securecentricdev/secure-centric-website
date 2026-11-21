@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow            = ! empty( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '// RESOURCES';
+$eyebrow            = isset( $attributes['eyebrow'] ) ? trim( (string) $attributes['eyebrow'] ) : '';
 $breadcrumb_current = ! empty( $attributes['breadcrumbCurrent'] ) ? $attributes['breadcrumbCurrent'] : 'RESOURCES';
 $title              = ! empty( $attributes['title'] ) ? $attributes['title'] : 'CMMC Resources';
 $description        = ! empty( $attributes['description'] ) ? $attributes['description'] : 'Free checklists and videos to help defense contractors prepare for CMMC and NIST SP 800-171.';

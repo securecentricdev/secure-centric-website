@@ -19,7 +19,7 @@
   "attributes": {
     "eyebrow": {
       "type": "string",
-      "default": "// RESOURCES"
+      "default": ""
     },
     "breadcrumbCurrent": {
       "type": "string",
