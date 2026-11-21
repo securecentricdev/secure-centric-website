@@ -265,6 +265,7 @@ if ( $is_download_layout ) :
             </div>
           </div>
 
+          <?php if ( ! empty( $attributes['showSteps'] ) && ! empty( $steps ) ) : ?>
           <!-- Numbered Steps -->
           <div style="margin-top: 28px;">
             <h4 style="font-size: 0.9375rem; margin-bottom: 16px; color: var(--color-navy);"><?php echo esc_html( $steps_title ); ?></h4>
@@ -286,6 +287,7 @@ if ( $is_download_layout ) :
               <?php endforeach; ?>
             </div>
           </div>
+          <?php endif; ?>
         </div>
 
         <!-- Right Form Column -->

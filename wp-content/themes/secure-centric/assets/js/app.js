@@ -1625,29 +1625,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- 3-Step Process -->
-              <div style="margin-top: 28px;">
-                <h4 style="font-size: 1rem; margin-bottom: 14px; color: var(--color-navy);">What Happens After You Request a Call:</h4>
-                <div class="contact-step-item">
-                  <div class="contact-step-num">1</div>
-                  <div>
-                    <b>Mutual NDA Execution:</b> We sign a standard bilateral NDA within 2 business hours before discussing any contract details.
-                  </div>
-                </div>
-                <div class="contact-step-item">
-                  <div class="contact-step-num">2</div>
-                  <div>
-                    <b>30-Min Scoping Assessment:</b> We review CUI boundary requirements, your target level (Level 1 vs 2), and existing SPRS scores.
-                  </div>
-                </div>
-                <div class="contact-step-item">
-                  <div class="contact-step-num">3</div>
-                  <div>
-                    <b>Clear Fixed-Scope Roadmap:</b> You receive a written action plan detailing exact deliverables, milestones, and timeline.
-                  </div>
-                </div>
-              </div>
             </div>
 
             <!-- Right Interactive Form Column -->

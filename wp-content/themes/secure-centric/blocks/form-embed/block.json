@@ -57,6 +57,10 @@
       "type": "string",
       "default": "On-site facility assessments delivered nationwide"
     },
+    "showSteps": {
+      "type": "boolean",
+      "default": false
+    },
     "stepsTitle": {
       "type": "string",
       "default": "What Happens After You Request a Call:"

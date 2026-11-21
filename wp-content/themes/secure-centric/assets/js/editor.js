@@ -3144,12 +3144,17 @@
           (attributes.layout !== 'card') && el(
             PanelBody,
             { title: 'Process Steps (' + currentSteps.length + ')', initialOpen: false },
-            el(TextControl, {
+            el(ToggleControl, {
+              label: 'Display Process Steps',
+              checked: !!attributes.showSteps,
+              onChange: function (val) { setAttributes({ showSteps: val }); }
+            }),
+            attributes.showSteps && el(TextControl, {
               label: 'Steps Section Title',
               value: attributes.stepsTitle !== undefined ? attributes.stepsTitle : 'What Happens After You Request a Call:',
               onChange: function (val) { setAttributes({ stepsTitle: val }); }
             }),
-            currentSteps.map(function (st, idx) {
+            attributes.showSteps && currentSteps.map(function (st, idx) {
               return el('div', {
                 key: 'form-step-' + idx,
                 style: { background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }
@@ -3171,7 +3176,7 @@
                 })
               );
             }),
-            el(Button, {
+            attributes.showSteps && el(Button, {
               isPrimary: true,
               style: { width: '100%', justifyContent: 'center', marginTop: '8px' },
               onClick: addStep
