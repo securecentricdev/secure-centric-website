@@ -13,7 +13,7 @@ $level          = ! empty( $attributes['level'] ) && in_array( strtolower( $attr
 $heading        = ! empty( $attributes['heading'] ) ? $attributes['heading'] : ( ! empty( $attributes['title'] ) ? $attributes['title'] : '' );
 $subtitle       = ! empty( $attributes['subtitle'] ) ? $attributes['subtitle'] : '';
 $text_align     = ! empty( $attributes['textAlign'] ) ? $attributes['textAlign'] : 'left';
-$theme          = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'navy';
+$theme          = ! empty( $attributes['theme'] ) ? $attributes['theme'] : 'royal-blue';
 $wrap_container = isset( $attributes['wrapContainer'] ) ? (bool) $attributes['wrapContainer'] : true;
 $margin_bottom  = ! empty( $attributes['marginBottom'] ) ? $attributes['marginBottom'] : '32px';
 
@@ -26,11 +26,16 @@ if ( function_exists( 'sc_clean_text' ) ) {
     $subtitle = sc_clean_text( $subtitle );
 }
 
-$color_style = 'color: var(--color-navy);';
+// Dark distinguishable heading color from website palette (Electric Blue Pressed #1735B8)
+$color_style = 'color: var(--color-electric-blue-pressed, #1735B8);';
 if ( 'white' === $theme ) {
     $color_style = 'color: var(--color-white);';
 } elseif ( 'cyan' === $theme ) {
     $color_style = 'color: var(--color-cyber-cyan);';
+} elseif ( 'navy' === $theme ) {
+    $color_style = 'color: var(--color-navy);';
+} elseif ( 'royal-blue' === $theme || 'electric-blue-pressed' === $theme || 'blue' === $theme ) {
+    $color_style = 'color: var(--color-electric-blue-pressed, #1735B8);';
 }
 
 $sub_color_style = 'color: var(--color-body-text);';

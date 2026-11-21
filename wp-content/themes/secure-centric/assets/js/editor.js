@@ -1885,7 +1885,8 @@
           title: 'Explainer Content',
           initialOpen: true,
           fields: [
-            { name: 'eyebrow', label: 'Tag', default: '// SECTION EXPLAINER' },
+            { name: 'headingLevel', label: 'Heading Level (H2 or H3)', type: 'select', options: [{ label: 'H2 (Default Section Title)', value: 'h2' }, { label: 'H3 (Subsection below Heading module)', value: 'h3' }], default: 'h2' },
+            { name: 'eyebrow', label: 'Tag', default: '' },
             { name: 'title', label: 'Title', default: 'What is CMMC compliance?' },
             { name: 'p1', label: 'Paragraph 1', type: 'textarea', rows: 3, default: 'CMMC (Cybersecurity Maturity Model Certification) is the Department of War standard ensuring defense subcontractors safeguard Federal Contract Information (FCI) and Controlled Unclassified Information (CUI).' },
             { name: 'p2', label: 'Paragraph 2', type: 'textarea', rows: 3, default: 'Under 32 CFR Part 170 and DFARS 252.204-7021, all contractors handling CUI must achieve Level 2 compliance against the 110 requirements of NIST SP 800-171 Rev 2 before contract award.' },
@@ -5204,9 +5205,10 @@
             }),
             el(SelectControl, {
               label: 'Heading Color Theme',
-              value: attributes.theme || 'navy',
+              value: attributes.theme || 'royal-blue',
               options: [
-                { label: 'Deep Navy (Standard on Light Sections)', value: 'navy' },
+                { label: 'Royal Blue (Dark Distinguishable Accent - #1735B8)', value: 'royal-blue' },
+                { label: 'Deep Navy (Standard on Light Sections - #0B1437)', value: 'navy' },
                 { label: 'Pure White (For Midnight / Dark Sections)', value: 'white' },
                 { label: 'Cyber Cyan (Brand Accent)', value: 'cyan' }
               ],

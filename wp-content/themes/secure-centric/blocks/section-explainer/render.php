@@ -10,8 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '// SECTION EXPLAINER';
+$eyebrow = isset( $attributes['eyebrow'] ) ? trim( str_replace( array( 'U0026', 'u0026' ), '&', $attributes['eyebrow'] ) ) : '';
 $title   = ! empty( $attributes['title'] ) ? $attributes['title'] : 'What is CMMC compliance?';
+$heading_level = ! empty( $attributes['headingLevel'] ) && in_array( strtolower( $attributes['headingLevel'] ), array( 'h2', 'h3', 'h4' ), true ) ? strtolower( $attributes['headingLevel'] ) : ( ! empty( $attributes['level'] ) && in_array( strtolower( $attributes['level'] ), array( 'h2', 'h3', 'h4' ), true ) ? strtolower( $attributes['level'] ) : 'h2' );
 
 $paras = array();
 if ( ! empty( $attributes['parasData'] ) ) {
@@ -148,7 +149,7 @@ if ( ! function_exists( 'sc_render_explainer_paragraphs' ) ) {
     <?php if ( ! empty( $eyebrow ) ) : ?>
     <span class="section-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
     <?php endif; ?>
-    <h2 style="margin-bottom: 24px; color: var(--color-navy);"><?php echo esc_html( $title ); ?></h2>
+    <<?php echo esc_attr( $heading_level ); ?> class="section-explainer-title" style="margin-bottom: 24px; color: var(--color-navy); <?php echo 'h3' === $heading_level ? 'font-size: clamp(1.4rem, 2.2vw, 1.85rem); font-weight: 700; line-height: 1.35;' : 'font-size: clamp(1.75rem, 2.8vw, 2.25rem); font-weight: 800; line-height: 1.25;'; ?>"><?php echo esc_html( $title ); ?></<?php echo esc_attr( $heading_level ); ?>>
     <div class="section-explainer-content">
       <?php foreach ( $paras as $para ) : ?>
         <?php echo sc_render_explainer_paragraphs( $para ); ?>
