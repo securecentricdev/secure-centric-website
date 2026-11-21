@@ -863,6 +863,9 @@ require_once get_template_directory() . '/inc/ghl-flow3-lead-magnet.php';
 // CMMC Pathfinder Floating Popup (Triggers after 30% page scroll on all pages)
 require_once get_template_directory() . '/inc/pathfinder-popup.php';
 
+// Dynamic WordPress Menus for Header & Footer (Appearance -> Menus)
+require_once get_template_directory() . '/inc/dynamic-menus.php';
+
 /**
  * Output Favicon and Apple Touch Icons
  */
