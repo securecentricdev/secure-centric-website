@@ -1,0 +1,90 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "secure-centric/resources-archive",
+  "version": "1.0.0",
+  "title": "Resources Archive & Video Hub",
+  "category": "custom-blocks",
+  "icon": "portfolio",
+  "description": "Complete CMMC resources archive with dark hero, interactive filter tabs, downloadable checklist cards, and YouTube video gallery.",
+  "keywords": [
+    "resources",
+    "checklists",
+    "videos",
+    "archive",
+    "cmmc"
+  ],
+  "textdomain": "secure-centric",
+  "editorScript": "secure-centric-editor-blocks",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "// RESOURCES"
+    },
+    "breadcrumbCurrent": {
+      "type": "string",
+      "default": "RESOURCES"
+    },
+    "title": {
+      "type": "string",
+      "default": "CMMC Resources"
+    },
+    "description": {
+      "type": "string",
+      "default": "Free checklists and videos to help defense contractors prepare for CMMC and NIST SP 800-171."
+    },
+    "tabAllLabel": {
+      "type": "string",
+      "default": "All"
+    },
+    "tabChecklistsLabel": {
+      "type": "string",
+      "default": "Checklists"
+    },
+    "tabVideosLabel": {
+      "type": "string",
+      "default": "Videos"
+    },
+    "checklistsTitle": {
+      "type": "string",
+      "default": "Checklists"
+    },
+    "checklistsSubtitle": {
+      "type": "string",
+      "default": "Free downloads in Excel and PDF."
+    },
+    "checklistsData": {
+      "type": "string",
+      "default": "[{\"type\":\"Checklist\",\"title\":\"CMMC 2.0 Level 2 Compliance Checklist\",\"desc\":\"Track all 110 requirements, assign owners and line up your evidence before assessment day.\",\"tags\":\"110 requirements · Excel + PDF\",\"link\":\"/resources/checklist/level-2/\",\"ctaText\":\"Download free →\",\"icon\":\"checklist\"},{\"type\":\"Checklist\",\"title\":\"CMMC Level 1 Readiness Checklist\",\"desc\":\"Check your Federal Contract Information safeguards against all 15 requirements before your annual self-assessment.\",\"tags\":\"15 requirements · Excel + PDF\",\"link\":\"/resources/checklist/level-1/\",\"ctaText\":\"Download free →\",\"icon\":\"document\"},{\"type\":\"Checklist\",\"title\":\"How to Detect Unmarked CUI\",\"desc\":\"Find CUI that arrives without markings, across distribution statements, legacy labels and contracts.\",\"tags\":\"CUI identification · Excel + PDF\",\"link\":\"/resources/checklist/unmarked-cui/\",\"ctaText\":\"Download free →\",\"icon\":\"search\"}]"
+    },
+    "videosTitle": {
+      "type": "string",
+      "default": "Videos"
+    },
+    "videosSubtitle": {
+      "type": "string",
+      "default": "Episodes from CMMC Uncovered and CMMC With Clarity on our YouTube channel."
+    },
+    "videosChannelText": {
+      "type": "string",
+      "default": "All videos on YouTube →"
+    },
+    "videosChannelUrl": {
+      "type": "string",
+      "default": "https://www.youtube.com/@Secure-CentricCMMC/videos"
+    },
+    "videosData": {
+      "type": "string",
+      "default": "[{\"id\":\"SfBeeZirElw\",\"title\":\"What Is Actually CUI? A CUI Expert Explains\",\"duration\":\"48:19\",\"series\":\"Podcast\",\"url\":\"https://www.youtube.com/watch?v=SfBeeZirElw\"},{\"id\":\"5ylVKEE-YSA\",\"title\":\"We Reviewed 4 CMMC Contracts Line by Line: Do You Actually Have CUI?\",\"duration\":\"57:39\",\"series\":\"Podcast\",\"url\":\"https://www.youtube.com/watch?v=5ylVKEE-YSA\"},{\"id\":\"fqFrr5dj9Qg\",\"title\":\"What CMMC Level Do I Need? Level 1 vs Level 2 Explained\",\"duration\":\"8:44\",\"series\":\"Explainer\",\"url\":\"https://www.youtube.com/watch?v=fqFrr5dj9Qg\"},{\"id\":\"wX0CORfScFQ\",\"title\":\"The 2 Documents That Decide Your CMMC Assessment: SSP & POA&M\",\"duration\":\"14:14\",\"series\":\"Explainer\",\"url\":\"https://www.youtube.com/watch?v=wX0CORfScFQ\"},{\"id\":\"y9tcJSWFsfA\",\"title\":\"Does CMMC Level 2 Require GCC High?\",\"duration\":\"12:17\",\"series\":\"Explainer\",\"url\":\"https://www.youtube.com/watch?v=y9tcJSWFsfA\"},{\"id\":\"XKwheDyaroo\",\"title\":\"CMMC Enclave Explained for Defense Contractors\",\"duration\":\"9:07\",\"series\":\"Explainer\",\"url\":\"https://www.youtube.com/watch?v=XKwheDyaroo\"}]"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "render": "file:./render.php",
+  "example": {}
+}

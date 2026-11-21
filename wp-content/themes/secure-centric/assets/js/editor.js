@@ -5246,6 +5246,50 @@
       }
     });
 
+    // =========================================================================
+    // RESOURCES ARCHIVE & VIDEO HUB BLOCK
+    // =========================================================================
+    createBlockRegistration('secure-centric/resources-archive', {
+      title: 'Resources Archive & Video Hub',
+      icon: 'portfolio',
+      category: 'custom-blocks',
+      panels: [
+        {
+          title: 'Hero & Filter Settings',
+          initialOpen: true,
+          fields: [
+            { name: 'eyebrow', label: 'Tag / Eyebrow', default: '// RESOURCES' },
+            { name: 'breadcrumbCurrent', label: 'Breadcrumb Name', default: 'RESOURCES' },
+            { name: 'title', label: 'Page Title', default: 'CMMC Resources' },
+            { name: 'description', label: 'Lede / Subtitle', type: 'textarea', default: 'Free checklists and videos to help defense contractors prepare for CMMC and NIST SP 800-171.' },
+            { name: 'tabAllLabel', label: 'Tab "All" Label', default: 'All' },
+            { name: 'tabChecklistsLabel', label: 'Tab "Checklists" Label', default: 'Checklists' },
+            { name: 'tabVideosLabel', label: 'Tab "Videos" Label', default: 'Videos' }
+          ]
+        },
+        {
+          title: 'Checklists Grid',
+          initialOpen: true,
+          fields: [
+            { name: 'checklistsTitle', label: 'Checklists Section Heading', default: 'Checklists' },
+            { name: 'checklistsSubtitle', label: 'Checklists Section Subtitle', type: 'textarea', default: 'Free downloads in Excel and PDF.' },
+            { name: 'checklistsData', label: 'Checklists List', type: 'repeater' }
+          ]
+        },
+        {
+          title: 'YouTube Videos Grid',
+          initialOpen: true,
+          fields: [
+            { name: 'videosTitle', label: 'Videos Section Heading', default: 'Videos' },
+            { name: 'videosSubtitle', label: 'Videos Section Subtitle', type: 'textarea', default: 'Episodes from CMMC Uncovered and CMMC With Clarity on our YouTube channel.' },
+            { name: 'videosChannelText', label: 'YouTube Channel Link Text', default: 'All videos on YouTube →' },
+            { name: 'videosChannelUrl', label: 'YouTube Channel URL', default: 'https://www.youtube.com/@Secure-CentricCMMC/videos' },
+            { name: 'videosData', label: 'Videos List', type: 'repeater' }
+          ]
+        }
+      ]
+    });
+
     console.log('Secure-Centric Gutenberg Blocks Suite Registered Successfully!');
   }
 
